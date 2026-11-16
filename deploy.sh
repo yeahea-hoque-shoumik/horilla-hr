@@ -12,7 +12,8 @@
 #                                             With --db-user, the password is taken from
 #                                             DB_PASSWORD or asked for (hidden).
 #   ./deploy.sh setup-db                      Create Horilla's user + database in postgres_db
-#   ./deploy.sh [--skip-backup]               Check .env, back up the DB, build, start, verify
+#   ./deploy.sh [--skip-backup]               Check .env, back up the DB, stop, rebuild
+#                                             (no cache), start, verify, follow logs
 #   ./deploy.sh status                        Show containers
 #   ./deploy.sh logs [service]                Follow logs
 #   ./deploy.sh stop                          Stop the stack (data is kept)
@@ -149,12 +150,16 @@ cmd_deploy() {
   check_env
   if [ "$skip_backup" -eq 0 ]; then backup_db; fi
 
+  step "Stopping the current stack"
+  "${COMPOSE[@]}" down --remove-orphans
+
+  # --no-cache: always rebuild from scratch so no stale layer survives.
   step "Building images"
-  "${COMPOSE[@]}" build
+  "${COMPOSE[@]}" build --no-cache --pull
 
   # Migrations and collectstatic run in the web container's entrypoint.
   step "Starting the stack"
-  "${COMPOSE[@]}" up -d --remove-orphans
+  "${COMPOSE[@]}" up -d --force-recreate --remove-orphans
 
   wait_for_web
 
@@ -167,6 +172,9 @@ cmd_deploy() {
   docker image prune -f >/dev/null || true
   printf '\nDeployed. Horilla HR is running on http://localhost:%s/ (https://%s/ through your tunnel).\n' \
     "$HTTP_PORT" "$(env_get ALLOWED_HOSTS | cut -d, -f1)"
+
+  step "Following logs (Ctrl+C stops following; the stack keeps running)"
+  "${COMPOSE[@]}" logs -f --tail 200
 }
 
 cmd_init_env() {
