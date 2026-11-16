@@ -11,14 +11,14 @@ help: ## Show help
 dev: ## Start development stack (web + db + redis; bind-mount source)
 	$(COMPOSE) up --build
 
-prod: ## Start production overlay (no source bind-mount; requires .env)
+prod: ## Start production overlay (no source bind-mount, no nginx; requires .env)
 	@test -f .env || (echo "Missing .env — copy .env.dist and set production secrets:" && echo "  cp .env.dist .env" && exit 1)
 	$(COMPOSE_PROD) up --build -d
 
 build: ## Build images
 	$(COMPOSE) build
 
-stop: ## Stop services (includes prod overlay / nginx)
+stop: ## Stop services (includes prod overlay)
 	$(COMPOSE_PROD) down
 
 logs: ## Show logs (all services)

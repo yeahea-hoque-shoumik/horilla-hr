@@ -32,8 +32,11 @@ services:
     volumes: !override
       - staticfiles:/app/staticfiles
       - media:/app/media
+    # No nginx in front: gunicorn is published directly on host port 1000,
+    # which is where the Cloudflare Tunnel points. Static files are served by
+    # WhiteNoise; /media/ goes through Django's protected_media() as before.
     ports: !override
-      - "8000:8000"
+      - "${HTTP_PORT:-1000}:8000"
     # db and redis are external (see below), so there is nothing to wait for.
     depends_on: !reset {}
     # Come back after a crash or a host reboot. The base file only sets this
@@ -71,11 +74,5 @@ services:
   redis:
     profiles: ["bundled-db"]
 
-  nginx:
-    # Clear the "production" profile so nginx starts with `make prod`
-    # without requiring --profile production.
-    profiles: !reset
-    # The app is served on host port 1000 (the Cloudflare Tunnel points here).
-    ports: !override
-      - "${HTTP_PORT:-1000}:80"
-    restart: unless-stopped
+  # nginx is not used in production; it keeps the base file's "production"
+  # profile, so it only starts if asked for with --profile production.

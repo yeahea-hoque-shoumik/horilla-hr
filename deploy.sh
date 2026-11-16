@@ -2,8 +2,8 @@
 # Deploy Horilla HR to production with Docker on this host.
 #
 # Runs the same stack as `make prod` (docker-compose.yml + docker-compose.prod.yml:
-# web, scheduler, nginx), configured from .env. The app is served by nginx on
-# host port 1000. PostgreSQL and Redis are the ones already running on this host
+# web, scheduler), configured from .env. Gunicorn is served directly on host
+# port 1000 (no nginx; Cloudflare sits in front). PostgreSQL and Redis are the ones already running on this host
 # (the postgres_db and redis containers), reached at 172.17.0.1.
 #
 # Usage:
@@ -158,10 +158,10 @@ cmd_deploy() {
 
   wait_for_web
 
-  step "Checking nginx on port $HTTP_PORT"
+  step "Checking the app on port $HTTP_PORT"
   local code
   code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://localhost:$HTTP_PORT/health/" || echo 000)"
-  [[ "$code" == [23]?? ]] || die "nginx did not answer on http://localhost:$HTTP_PORT/ (HTTP $code). See: ./deploy.sh logs nginx"
+  [[ "$code" == [23]?? ]] || die "The app did not answer on http://localhost:$HTTP_PORT/ (HTTP $code). See: ./deploy.sh logs web"
   info "HTTP $code"
 
   docker image prune -f >/dev/null || true

@@ -48,7 +48,7 @@ A complete, step-by-step guide to running Horilla HR using Docker. Covers develo
 | Service | Port | Required For |
 |---------|------|-------------|
 | Web App | 8000 | Development access |
-| Nginx | 80 | Production HTTP |
+| Web App | 1000 (host) → 8000 | Production HTTP (Cloudflare Tunnel target; no nginx) |
 | PostgreSQL | 5432 | Internal only (not exposed in production) |
 | Redis | 6379 | Internal only (not exposed in production) |
 
@@ -106,7 +106,7 @@ make logs
                           ┌─────────────────────────────┐
                           │         Browser             │
                           └─────────┬───────────────────┘
-                                    │ :8000 (dev) / :80 (prod)
+                                    │ :8000 (dev) / :1000 (prod)
                ┌────────────────────┼────────────────────┐
                │  Docker Network    │                    │
                │                    ▼                    │
@@ -148,7 +148,7 @@ make logs
 | **scheduler** | Custom (Dockerfile) | Single process running `manage.py run_scheduler`. Payroll, leave resets, backups and report subscriptions do **not** run inside gunicorn workers. |
 | **db** | `postgres:16-alpine` | Primary database for all application data |
 | **redis** | `redis:7-alpine` | Caching, session storage (password-protected, AOF persistence) |
-| **nginx** | `nginx:alpine` | Reverse proxy and static file serving (production only). Does **not** serve `/media/` directly — that path is proxied to Django so `protected_media()` can enforce auth and content-type gates. |
+| **nginx** | `nginx:alpine` | Optional reverse proxy, **not started by `make prod`** (opt in with `--profile production`). Production serves gunicorn directly on host port 1000 behind Cloudflare; WhiteNoise serves static files. Does **not** serve `/media/` directly — that path is proxied to Django so `protected_media()` can enforce auth and content-type gates. |
 
 > **Upgrade:** if you deploy without this Compose file, start **exactly one** `python manage.py run_scheduler` process. Missing it is silent — those jobs simply never fire. `GET /ready/` includes `"scheduler": "ok"|"missing"`. Set `HORILLA_REQUIRE_SCHEDULER=1` to make `/ready/` return 503 while jobs are unregistered — only where a failing readiness probe will not pull web out of the load balancer, since a stopped scheduler delays background jobs but does not stop the app serving requests.
 
@@ -301,11 +301,11 @@ make prod
 # or: docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
 ```
 
-This builds without bind-mounting source, forces `DEBUG=0`, and enables Nginx.
+This builds without bind-mounting source, forces `DEBUG=0`, and publishes gunicorn on host port 1000 (no Nginx).
 
 ### Step 4: Set Up SSL/TLS
 
-For HTTPS, add a `443` listener to `docker/nginx.conf`:
+The default production setup terminates TLS at Cloudflare (Tunnel → `localhost:1000`), so nothing is needed here. Only if you opt back in to nginx, add a `443` listener to `docker/nginx.conf`:
 
 ```nginx
 server {
@@ -651,7 +651,7 @@ Before going to production, verify the following:
 - [ ] Database/Redis passwords are strong and unique
 - [ ] SSL/TLS configured; set `SECURE_SSL_REDIRECT=True` behind TLS
 - [ ] Database and Redis ports are NOT exposed to the host
-- [ ] Started via `make prod` (Nginx on, no source bind-mount)
+- [ ] Started via `make prod` (no source bind-mount; Cloudflare in front)
 - [ ] `/health/` and `/ready/` both return OK
 - [ ] Regular backups are configured
 - [ ] Container images are kept up to date
@@ -663,7 +663,7 @@ Before going to production, verify the following:
 | Command | Description |
 |---------|-------------|
 | `make dev` | Start all services (web + db + redis) |
-| `make prod` | Start production with nginx |
+| `make prod` | Start production (gunicorn on port 1000, no nginx) |
 | `make build` | Build Docker images |
 | `make stop` | Stop all services |
 | `make logs` | Follow all service logs |
