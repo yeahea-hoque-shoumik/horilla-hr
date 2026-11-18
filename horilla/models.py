@@ -13,6 +13,7 @@ import re
 from uuid import uuid4
 
 from auditlog.models import AuditlogHistoryField
+from django.utils import timezone as dj_tz
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -143,7 +144,7 @@ class HorillaModel(models.Model, metaclass=HorillaModelBase):
         """
         get_created_at_date
         """
-        return self.created_at.date()
+        return dj_tz.localtime(self.created_at).date()
 
     class Meta:
         """

@@ -2,6 +2,7 @@
 middleware.py
 """
 
+import logging
 from urllib.parse import urlparse
 
 from django.apps import apps
@@ -27,6 +28,8 @@ from employee.models import (
 from horilla.horilla_middlewares import _thread_locals, set_selected_company
 from horilla.methods import get_horilla_model_class
 from horilla_documents.models import DocumentRequest
+
+logger = logging.getLogger(__name__)
 
 CACHE_KEY = "horilla_company_models_cache_key"
 
@@ -499,3 +502,61 @@ class TwoFactorAuthMiddleware:
                 return self.get_response(request)
 
         return self.get_response(request)
+
+
+def resolve_user_timezone(user):
+    """
+    Display zone for a user: their work-info zone, else their company's,
+    else settings.TIME_ZONE. Returns a ZoneInfo, never raises.
+
+    Queries the work-info row directly (same reason as
+    horilla_api.authentication.resolve_company_id: the reverse OneToOne cached
+    on request.user can be stale).
+    """
+    from zoneinfo import ZoneInfo
+
+    default = ZoneInfo(settings.TIME_ZONE)
+    if user is None or not getattr(user, "is_authenticated", False):
+        return default
+    try:
+        from employee.models import EmployeeWorkInformation
+
+        row = (
+            EmployeeWorkInformation.objects.entire()
+            .filter(employee_id__employee_user_id=user.pk)
+            .values_list("timezone", "company_id__timezone")
+            .first()
+        )
+        if row:
+            own, company = row
+            if own or company:
+                return ZoneInfo(own or company)
+    except Exception:
+        logger.exception("Could not resolve timezone for user_id=%s", user.pk)
+    return default
+
+
+class UserTimezoneMiddleware:
+    """
+    Activate the signed-in user's zone for the request.
+
+    The DB keeps every DateTimeField in UTC (USE_TZ=True); Django converts to
+    the *active* zone when rendering templates, forms and DRF responses, and
+    timezone.localtime()/localdate() also use it. Activating per user is what
+    makes "shown in the user's own zone" true. API requests are authenticated
+    later, inside DRF, so TenantScopedJWTAuthentication activates it there.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        from django.utils import timezone
+
+        timezone.activate(resolve_user_timezone(getattr(request, "user", None)))
+        try:
+            return self.get_response(request)
+        finally:
+            # Threads are reused by gthread workers; never leak a zone into the
+            # next request.
+            timezone.deactivate()

@@ -8,6 +8,7 @@ import calendar
 import json
 from datetime import date, timedelta
 
+from django.utils import timezone as dj_tz
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
 from django.http import HttpResponse, JsonResponse
@@ -926,7 +927,7 @@ def dashboard_announcements(request):
                     "title": ann.title,
                     "description": (ann.description or "")[:160],
                     "date": (
-                        ann.created_at.strftime("%b %d, %Y") if ann.created_at else ""
+                        dj_tz.localtime(ann.created_at).strftime("%b %d, %Y") if ann.created_at else ""
                     ),
                     "expire_date": (
                         ann.expire_date.strftime("%b %d") if ann.expire_date else None
@@ -979,7 +980,7 @@ def dashboard_announcement_detail(request, pk):
             "title": ann.title,
             "description": ann.description or "",
             "date": (
-                ann.created_at.strftime("%B %d, %Y at %I:%M %p")
+                dj_tz.localtime(ann.created_at).strftime("%B %d, %Y at %I:%M %p")
                 if ann.created_at
                 else ""
             ),

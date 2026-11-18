@@ -13,6 +13,7 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db import models
 from django.db.models import Q, Sum
+from django.utils import timezone as dj_timezone
 from django.utils.translation import gettext_lazy as _
 
 from base.methods import get_pagination
@@ -221,6 +222,26 @@ def geofence_denial_web(request, company):
     if distance > fence.radius_in_meters:
         return _("Check-In Restricted: You are outside the permitted work location.")
     return None
+
+
+def employee_localtime(employee=None):
+    """
+    Current aware time in the employee's zone: their own work-info zone,
+    else their company's, else settings.TIME_ZONE (Employee.get_timezone).
+
+    Clock-in/out derive the stored attendance date and HH:MM wall time from
+    this, so every punch is dated in the zone the employee actually works in.
+    """
+    # Resolved from a fresh query, not employee.employee_work_info: that
+    # reverse OneToOne is cached on the instance (request.user.employee_get)
+    # and can predate a zone change. resolve_user_timezone never raises and
+    # falls back to TIME_ZONE, so a bad zone can't block a punch.
+    from base.middleware import resolve_user_timezone
+
+    tz = None
+    if employee is not None:
+        tz = resolve_user_timezone(getattr(employee, "employee_user_id", None))
+    return dj_timezone.localtime(timezone=tz)
 
 
 def employee_exists(request):

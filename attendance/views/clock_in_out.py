@@ -23,6 +23,7 @@ from django.utils.translation import gettext_lazy as _
 from attendance.methods.utils import (
     activity_datetime,
     employee_exists,
+    employee_localtime,
     format_time,
     geofence_denial_web,
     get_client_ip,
@@ -271,18 +272,22 @@ def clock_in(request):
                 return HorillaRedirect(request)
 
         employee, work_info = employee_exists(request)
-        datetime_now = timezone.localtime()
+        # One clock read, in the employee's zone (own > company > TIME_ZONE),
+        # for date, time and datetime. date.today()/datetime.now() follow the
+        # container's OS timezone and could put the punch on the wrong day.
+        local_now = employee_localtime(employee)
+        datetime_now = local_now
         if request.__dict__.get("datetime"):
             datetime_now = request.datetime
         if employee and work_info is not None:
             shift = work_info.shift_id
-            date_today = date.today()
+            date_today = local_now.date()
             if request.__dict__.get("date"):
                 date_today = request.date
             attendance_date = date_today
             day = date_today.strftime("%A").lower()
             day = EmployeeShiftDay.objects.get(day=day)
-            now = datetime.now().strftime("%H:%M")
+            now = local_now.strftime("%H:%M")
             if request.__dict__.get("time"):
                 now = request.time.strftime("%H:%M")
             now_sec = strtime_seconds(now)
@@ -534,12 +539,15 @@ def clock_out(request):
                 messages.error(request, geofence_error)
                 return HorillaRedirect(request)
 
-        datetime_now = timezone.localtime()
+        # Same single clock read in the employee's zone as clock_in, so both
+        # sides agree on the date the punch belongs to.
+        employee, work_info = employee_exists(request)
+        local_now = employee_localtime(employee)
+        datetime_now = local_now
         if request.__dict__.get("datetime"):
             datetime_now = request.datetime
-        employee, work_info = employee_exists(request)
         shift = work_info.shift_id
-        date_today = date.today()
+        date_today = local_now.date()
         if request.__dict__.get("date"):
             date_today = request.date
         day = date_today.strftime("%A").lower()
@@ -555,7 +563,7 @@ def clock_out(request):
                 attendance.attendance_day = EmployeeShiftDay.objects.get(day=day_name)
                 attendance.save(update_fields=["attendance_day"])
             day = attendance.attendance_day
-        now = datetime.now().strftime("%H:%M")
+        now = local_now.strftime("%H:%M")
         if request.__dict__.get("time"):
             now = request.time.strftime("%H:%M")
         minimum_hour, start_time_sec, end_time_sec = shift_schedule_today(

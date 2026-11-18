@@ -89,6 +89,17 @@ def clear_messages(request):
         pass
 
 
+def timezone_choices():
+    """Every IANA zone zoneinfo can load, sorted, as (value, label) pairs.
+
+    Passed to the field as a callable (Django 5+), so migrations store a
+    reference to this function instead of ~600 literal choices.
+    """
+    import zoneinfo
+
+    return [(tz, tz) for tz in sorted(zoneinfo.available_timezones())]
+
+
 class Company(HorillaModel):
     """
     Company model
@@ -109,6 +120,37 @@ class Company(HorillaModel):
     objects = models.Manager()
     date_format = models.CharField(max_length=30, blank=True, null=True)
     time_format = models.CharField(max_length=20, blank=True, null=True)
+    # IANA name, e.g. "Asia/Dhaka". Blank means settings.TIME_ZONE. Choices
+    # make every ModelForm/admin render a dropdown and reject unknown names.
+    timezone = models.CharField(
+        max_length=64,
+        blank=True,
+        null=True,
+        choices=timezone_choices,
+        verbose_name=_("Time Zone"),
+        help_text=_("Leave blank to use the server default time zone."),
+    )
+
+    def clean_fields(self, exclude=None):
+        # HorillaModel.clean_fields replaces Django's (XSS check only), so the
+        # field's choices are never enforced at model level; do it here.
+        super().clean_fields(exclude=exclude)
+        if (
+            self.timezone
+            and "timezone" not in (exclude or [])
+            and self.timezone not in dict(timezone_choices())
+        ):
+            raise ValidationError(
+                {"timezone": _("%(value)s is not a valid time zone.") % {"value": self.timezone}}
+            )
+
+    def get_timezone(self):
+        """Return this company's ZoneInfo, falling back to settings.TIME_ZONE."""
+        from zoneinfo import ZoneInfo
+
+        from django.conf import settings
+
+        return ZoneInfo(self.timezone or settings.TIME_ZONE)
 
     class Meta:
         """

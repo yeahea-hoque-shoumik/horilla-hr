@@ -213,6 +213,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Horilla-specific middlewares
     "base.middleware.CompanyMiddleware",
+    # Needs request.user; makes templates/forms render datetimes (stored in
+    # UTC) in the user's zone: work-info zone > company zone > TIME_ZONE.
+    "base.middleware.UserTimezoneMiddleware",
     "base.middleware.ForcePasswordChangeMiddleware",
     "base.middleware.TwoFactorAuthMiddleware",
     "accessibility.middlewares.AccessibilityMiddleware",

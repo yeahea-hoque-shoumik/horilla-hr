@@ -39,6 +39,7 @@ from django.utils.translation import gettext_lazy as _
 
 from base.methods import get_session_company, reload_queryset
 from base.models import (
+    timezone_choices,
     Announcement,
     AnnouncementComment,
     AnnouncementExpire,
@@ -727,6 +728,7 @@ class CompanyForm(ModelForm):
         "state": 12,
         "city": 12,
         "zip": 12,
+        "timezone": 12,
     }
 
     class Meta:
@@ -741,6 +743,16 @@ class CompanyForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["icon"].required = False
+        if "timezone" in self.fields:
+            from django.conf import settings
+
+            # Model choices already make this a dropdown; relabel the blank
+            # "---------" option so it says what blank actually means.
+            field = self.fields["timezone"]
+            field.choices = [
+                ("", _("Default (%(tz)s)") % {"tz": settings.TIME_ZONE})
+            ] + timezone_choices()
+            field.widget.attrs["class"] = "oh-select oh-select-2 w-100"
 
     def validate_image(self, file):
         max_size = 5 * 1024 * 1024

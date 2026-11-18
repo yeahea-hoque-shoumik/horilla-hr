@@ -8,6 +8,7 @@ All data is scoped to request.user.employee_get; no cross-employee access.
 import calendar
 from datetime import date, timedelta
 
+from django.utils import timezone as dj_tz
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import JsonResponse
@@ -694,7 +695,7 @@ def ess_announcements(request):
                     "title": ann.title,
                     "description": (ann.description or "")[:160],
                     "date": (
-                        ann.created_at.strftime("%b %d, %Y") if ann.created_at else ""
+                        dj_tz.localtime(ann.created_at).strftime("%b %d, %Y") if ann.created_at else ""
                     ),
                     "expire_date": (
                         ann.expire_date.strftime("%b %d") if ann.expire_date else None

@@ -115,4 +115,12 @@ class TenantScopedJWTAuthentication(JWTAuthentication):
                 getattr(user, "pk", None),
             )
             raise PermissionDenied(_("This account is not assigned to a company."))
+        # Same reason as the company ContextVar: UserTimezoneMiddleware ran
+        # while the user was still anonymous. It deactivates in its finally,
+        # so this does not leak past the request.
+        from django.utils import timezone
+
+        from base.middleware import resolve_user_timezone
+
+        timezone.activate(resolve_user_timezone(user))
         return user, validated_token

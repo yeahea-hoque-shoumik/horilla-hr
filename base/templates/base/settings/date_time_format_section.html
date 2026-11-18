@@ -41,6 +41,24 @@
         <button onclick="saveTimeFormat()" class="btn h-[35px] flex items-center">{% trans "Save" %}</button>
     </div>
 {% endif %}
+<hr class="pt-5 border-[#ebebeb]">
+{% if perms.base.change_company %}
+    <label>{% trans "Select Time Zone:" %}</label>
+    <p class="text-xs text-gray-500 mt-1 pb-2">
+        {% trans "Time zone used for attendance punches and other dates for the selected company." %}
+    </p>
+    <div class="flex gap-2 pb-5 pt-2 items-center">
+        <div class="flex-1">
+            <select id="companyTimezone" name="companyTimezone" class="oh-select oh-select-2">
+                <option value="">{% blocktrans %}Default ({{ default_timezone }}){% endblocktrans %}</option>
+                {% for value, label in timezone_choices %}
+                    <option value="{{ value }}" {% if current_company.timezone == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button onclick="saveCompanyTimezone()" class="btn h-[35px] flex items-center">{% trans "Save" %}</button>
+    </div>
+{% endif %}
 <script>
     (function () {
         var dateFormatValue = "{{current_company.date_format|default_if_none:'' }}";
@@ -63,4 +81,18 @@
         $(setInitialFormatValues);
         $(window).on("load", setInitialFormatValues);
     })();
+
+    function saveCompanyTimezone() {
+        $.ajax({
+            url: "{% url 'save-timezone' %}",
+            method: "POST",
+            data: {
+                selected_timezone: $("#companyTimezone").val(),
+                csrfmiddlewaretoken: getCookie("csrftoken"),
+            },
+            complete: function () {
+                window.location.reload();
+            },
+        });
+    }
 </script>

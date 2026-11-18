@@ -46,7 +46,7 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_noop
 from django.views import View
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, require_POST
 from django.views.generic import RedirectView, TemplateView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
@@ -137,6 +137,7 @@ from base.methods import (
     sortby,
 )
 from base.models import (
+    timezone_choices,
     WEEK_DAYS,
     WEEKS,
     AnnouncementExpire,
@@ -6161,6 +6162,8 @@ def _system_preferences_context(request):
         "companies": companies,
         "selected_company_id": selected_company_id,
         "current_company": companies.first(),
+        "timezone_choices": timezone_choices(),
+        "default_timezone": settings.TIME_ZONE,
         "languages": settings.LANGUAGES,
         "enabled_languages": enabled_languages,
         "language_employee_count": language_employee_count,
@@ -6309,6 +6312,43 @@ def save_date_format(request):
 
     # Return a JSON response for unsupported methods
     return JsonResponse({"error": "Unsupported method"}, status=405)
+
+
+@login_required
+@permission_required("base.change_company")
+@require_POST
+def save_timezone(request):
+    """
+    Save the time zone for the selected company (or every company when a
+    superuser has "all" selected). Blank resets to settings.TIME_ZONE.
+    """
+    selected = (request.POST.get("selected_timezone") or "").strip()
+    if selected and selected not in dict(timezone_choices()):
+        messages.error(request, _("Invalid time zone."))
+        return JsonResponse({"success": False, "error": "Invalid time zone."}, status=400)
+
+    value = selected or None
+    if request.user.is_superuser:
+        selected_company = request.session.get("selected_company")
+        if selected_company == "all" or not selected_company:
+            companies = Company.objects.all()
+        else:
+            companies = Company.objects.filter(id=selected_company)
+    else:
+        work_info = getattr(
+            getattr(request.user, "employee_get", None), "employee_work_info", None
+        )
+        company = getattr(work_info, "company_id", None)
+        if company is None:
+            messages.warning(
+                request, _("Time zone cannot be saved. You are not in a company.")
+            )
+            return JsonResponse({"success": False}, status=400)
+        companies = Company.objects.filter(pk=company.pk)
+
+    companies.update(timezone=value)
+    messages.success(request, _("Time zone saved successfully."))
+    return JsonResponse({"success": True})
 
 
 @login_required

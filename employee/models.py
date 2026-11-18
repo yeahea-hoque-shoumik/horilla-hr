@@ -26,6 +26,7 @@ from PIL import Image
 from accessibility.accessibility import ACCESSBILITY_FEATURE
 from base.horilla_company_manager import HorillaCompanyManager
 from base.models import (
+    timezone_choices,
     Company,
     Department,
     EmployeeShift,
@@ -279,6 +280,18 @@ class Employee(models.Model):
 
     def get_email(self):
         return self.get_mail()
+
+    def get_timezone(self):
+        """
+        Effective ZoneInfo for this employee: their own work-info zone if set,
+        else their company's, else settings.TIME_ZONE.
+        """
+        from zoneinfo import ZoneInfo
+
+        work_info = getattr(self, "employee_work_info", None)
+        if work_info is not None:
+            return work_info.get_timezone()
+        return ZoneInfo(settings.TIME_ZONE)
 
     def get_work_type(self):
         """
@@ -978,6 +991,16 @@ class EmployeeWorkInformation(models.Model):
     location = models.CharField(
         max_length=254, null=True, blank=True, verbose_name=_("Work Location")
     )
+    # Optional per-employee override (e.g. a remote worker). Blank means the
+    # company's timezone, then settings.TIME_ZONE -- see get_timezone().
+    timezone = models.CharField(
+        max_length=64,
+        null=True,
+        blank=True,
+        choices=timezone_choices,
+        verbose_name=_("Time Zone"),
+        help_text=_("Leave blank to use the company time zone."),
+    )
     company_id = models.ForeignKey(
         Company,
         on_delete=models.PROTECT,
@@ -1020,6 +1043,16 @@ class EmployeeWorkInformation(models.Model):
 
     def __str__(self) -> str:
         return f"{self.employee_id} - {self.job_position_id}"
+
+    def get_timezone(self):
+        """Employee's own zone, else the company's, else settings.TIME_ZONE."""
+        from zoneinfo import ZoneInfo
+
+        if self.timezone:
+            return ZoneInfo(self.timezone)
+        if self.company_id_id:
+            return self.company_id.get_timezone()
+        return ZoneInfo(settings.TIME_ZONE)
 
     def save(self, *args, **kwargs):
         self.full_clean()

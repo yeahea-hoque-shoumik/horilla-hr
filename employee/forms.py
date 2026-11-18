@@ -344,6 +344,16 @@ class EmployeeForm(ModelForm):
         return badge_id
 
 
+def _label_timezone_blank(form):
+    """Make the blank time-zone option say it means "use the company's"."""
+    field = form.fields.get("timezone")
+    if field is None:
+        return
+    field.choices = [("", _("Company default"))] + [
+        choice for choice in field.choices if choice[0]
+    ]
+
+
 class EmployeeWorkInformationForm(ModelForm):
     """
     Form for EmployeeWorkInformation model
@@ -372,6 +382,7 @@ class EmployeeWorkInformationForm(ModelForm):
                 "onchange": "jobChange($(this))",
             }
         )
+        _label_timezone_blank(self)
 
         for field in self.fields:
             self.fields[field].widget.attrs["placeholder"] = self.fields[field].label
@@ -493,6 +504,7 @@ class EmployeeWorkInformationUpdateForm(ModelForm):
                 "hx-get": "/employee/get-job-roles-hx",
             }
         )
+        _label_timezone_blank(self)
 
     def as_p(self, *args, **kwargs):
         context = {"form": self}

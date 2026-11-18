@@ -23,6 +23,7 @@ from attendance.models import (
     EmployeeShiftDay,
 )
 from attendance.views.clock_in_out import *
+from attendance.methods.utils import employee_localtime
 from attendance.views.clock_in_out import clock_out
 from attendance.views.dashboard import (
     find_expected_attendances,
@@ -143,18 +144,21 @@ class ClockInAPIView(APIView):
             if denial is not None:
                 return denial
             employee, work_info = employee_exists(request)
-            datetime_now = datetime.now()
+            # Aware, in the employee's zone (own > company > TIME_ZONE); was a
+            # naive datetime.now() in the container's OS timezone.
+            local_now = employee_localtime(employee)
+            datetime_now = local_now
             if request.__dict__.get("datetime"):
                 datetime_now = request.datetime
             if employee and work_info is not None:
                 shift = work_info.shift_id
-                date_today = date.today()
+                date_today = local_now.date()
                 if request.__dict__.get("date"):
                     date_today = request.date
                 attendance_date = date_today
                 day = date_today.strftime("%A").lower()
                 day = EmployeeShiftDay.objects.get(day=day)
-                now = datetime.now().strftime("%H:%M")
+                now = local_now.strftime("%H:%M")
                 if request.__dict__.get("time"):
                     now = request.time.strftime("%H:%M")
                 now_sec = strtime_seconds(now)
@@ -219,9 +223,10 @@ class ClockOutAPIView(APIView):
         if denial is not None:
             return denial
         if request.user.employee_get.check_online():
-            current_date = date.today()
-            current_time = datetime.now().time()
-            current_datetime = datetime.now()
+            local_now = employee_localtime(request.user.employee_get)
+            current_date = local_now.date()
+            current_time = local_now.time()
+            current_datetime = local_now
 
             try:
                 clock_out(

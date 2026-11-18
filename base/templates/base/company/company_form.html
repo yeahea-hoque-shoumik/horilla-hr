@@ -66,6 +66,12 @@
                 {{ form.zip }} {{ form.zip.errors }}
             </div>
 
+            <!-- Time Zone -->
+            <div class="oh-input-group mb-2">
+                <label for="{{ form.timezone.id_for_label }}" class="mb-1">{{ form.timezone.label }}</label>
+                {{ form.timezone }} {{ form.timezone.errors }}
+            </div>
+
             <!-- Icon -->
             <div class="oh-input-group mb-2">
                 <label for="{{ form.icon.id_for_label }}" class="mb-1">{{ form.icon.label }}</label>
