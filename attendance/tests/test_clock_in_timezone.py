@@ -65,8 +65,10 @@ class ClockInUsesSettingsTimezoneTests(TestCase):
     def test_web_clock_in_dates_the_punch_in_settings_timezone(self):
         AttendanceGeneralSetting.objects.create(company_id=None, enable_check_in=True)
         client = Client()
-        client.force_login(self.user)
+        # Log in under the mocked clock: a session created at real time looks
+        # expired once now() jumps to INSTANT_UTC.
         with mock.patch("django.utils.timezone.now", return_value=INSTANT_UTC):
+            client.force_login(self.user)
             response = client.get(reverse("clock-in"), HTTP_HX_REQUEST="true")
         self.assertEqual(response.status_code, 200, _messages(response))
         self._assert_punch_is_local()
@@ -122,8 +124,10 @@ class ClockInUsesEmployeeTimezoneTests(ClockInUsesSettingsTimezoneTests):
         self._set_zones(employee_tz="Europe/London")
         AttendanceGeneralSetting.objects.create(company_id=None, enable_check_in=True)
         client = Client()
-        client.force_login(self.user)
+        # Log in under the mocked clock: a session created at real time looks
+        # expired once now() jumps to INSTANT_UTC.
         with mock.patch("django.utils.timezone.now", return_value=INSTANT_UTC):
+            client.force_login(self.user)
             response = client.get(reverse("clock-in"), HTTP_HX_REQUEST="true")
         self.assertEqual(response.status_code, 200, _messages(response))
         attendance = Attendance.objects.get(employee_id=self.employee)
