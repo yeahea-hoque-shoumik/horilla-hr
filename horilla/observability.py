@@ -202,12 +202,21 @@ _SENSITIVE_KEY_PARTS = (
     "ifsc",
 )
 
+# Whole-key matches for names too short or generic to substring-match without
+# hitting innocent fields ("access" would catch "accessibility"). "access" and
+# "refresh" are the JWT pair horilla_api's login endpoint returns.
+_SENSITIVE_EXACT_KEYS = frozenset(
+    {"access", "refresh", "jwt", "pin", "cvv", "key", "cookie", "sessionid"}
+)
+
 _SCRUBBED = "[scrubbed]"
 
 
 def _is_sensitive_key(key) -> bool:
     lowered = str(key).lower()
-    return any(part in lowered for part in _SENSITIVE_KEY_PARTS)
+    return lowered in _SENSITIVE_EXACT_KEYS or any(
+        part in lowered for part in _SENSITIVE_KEY_PARTS
+    )
 
 
 def _scrub(value, _depth=0):
@@ -282,6 +291,106 @@ def init_sentry(*, dsn, environment, release, traces_sample_rate=0.0):
     )
 
     return True
+
+
+# ========================================
+# ACCESS LOG BODIES
+# ========================================
+# gunicorn writes the access line after the response is sent, but it never sees
+# the bodies: the app consumed the request stream and the response is an opaque
+# iterable. Django's request.META *is* the WSGI environ dict gunicorn passes to
+# its access logger, so this middleware leaves a pre-rendered, scrubbed summary
+# in environ and docker/gunicorn.conf.py's logger prints it.
+#
+# JSON only: HTML pages and HTMX fragments are huge and say nothing useful, and
+# form-encoded posts (login, password change) are skipped rather than parsed so
+# a scrubbing miss can never put a password in the log.
+
+ACCESS_LOG_REQ_BODY = "horilla.access_log.req_body"
+ACCESS_LOG_RESP_BODY = "horilla.access_log.resp_body"
+
+_BODY_LOG_LIMIT = 256
+_BODY_LOG_HALF = 128
+# Bodies above this are not parsed at all -- json.loads on a multi-MB export on
+# every request is a cost the access log is not worth.
+_BODY_PARSE_MAX_BYTES = 1024 * 1024
+
+
+def _is_json_content_type(content_type) -> bool:
+    media_type = (content_type or "").split(";", 1)[0].strip().lower()
+    return media_type == "application/json" or media_type.endswith("+json")
+
+
+def _clip(text: str) -> str:
+    """Keep at most 256 chars: first 128, ``****``, last 128."""
+    if len(text) <= _BODY_LOG_LIMIT:
+        return text
+    return f"{text[:_BODY_LOG_HALF]}****{text[-_BODY_LOG_HALF:]}"
+
+
+def render_body_for_log(raw: bytes, content_type) -> str:
+    """
+    Scrubbed, single-line, clipped JSON for the access log, or ``-``.
+
+    Never returns the raw bytes: anything that is not parseable JSON is
+    replaced by a placeholder, because scrubbing works on keys and an
+    unparsed body has none.
+    """
+    if not raw or not _is_json_content_type(content_type):
+        return "-"
+    if len(raw) > _BODY_PARSE_MAX_BYTES:
+        return f"<{len(raw)} bytes, not logged>"
+    try:
+        data = json.loads(raw)
+    except (ValueError, UnicodeDecodeError):
+        return "<invalid json>"
+    rendered = json.dumps(
+        _scrub(data), separators=(",", ":"), ensure_ascii=False, default=str
+    )
+    return _clip(rendered)
+
+
+class AccessLogBodyMiddleware:
+    """Stash scrubbed JSON request/response bodies for gunicorn's access log."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        environ = request.META
+        environ[ACCESS_LOG_REQ_BODY] = self._request_body(request)
+
+        response = self.get_response(request)
+
+        try:
+            if getattr(response, "streaming", False):
+                environ[ACCESS_LOG_RESP_BODY] = "-"
+            else:
+                environ[ACCESS_LOG_RESP_BODY] = render_body_for_log(
+                    response.content, response.get("Content-Type")
+                )
+        except Exception:  # pragma: no cover - logging must never break a response
+            environ[ACCESS_LOG_RESP_BODY] = "-"
+        return response
+
+    @staticmethod
+    def _request_body(request) -> str:
+        if not _is_json_content_type(request.META.get("CONTENT_TYPE")):
+            # Do not touch request.body for forms/uploads: reading it here
+            # would buffer whole file uploads into memory.
+            return "-"
+        try:
+            length = int(request.META.get("CONTENT_LENGTH") or 0)
+        except ValueError:
+            length = 0
+        if length > _BODY_PARSE_MAX_BYTES:
+            return f"<{length} bytes, not logged>"
+        try:
+            # Django caches .body and re-wraps the stream, so DRF can still
+            # read it afterwards.
+            return render_body_for_log(request.body, request.META.get("CONTENT_TYPE"))
+        except Exception:
+            return "-"
 
 
 # ========================================

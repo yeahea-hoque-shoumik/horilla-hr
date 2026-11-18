@@ -324,3 +324,82 @@ class ReadinessSchedulerTests(TestCase):
 
         self.assertEqual(response.status_code, 503)
         self.assertEqual(response.json()["scheduler"], "missing")
+
+
+class AccessLogBodyTests(SimpleTestCase):
+    """Bodies stashed in environ for gunicorn's access log."""
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def _run(self, request, response):
+        from horilla.observability import AccessLogBodyMiddleware
+
+        AccessLogBodyMiddleware(lambda req: response)(request)
+        return request.META
+
+    def test_json_request_and_response_are_scrubbed(self):
+        from django.http import JsonResponse
+
+        from horilla.observability import ACCESS_LOG_REQ_BODY, ACCESS_LOG_RESP_BODY
+
+        request = self.factory.post(
+            "/api/auth/login/",
+            data=json.dumps({"username": "a", "password": "hunter2"}),
+            content_type="application/json",
+        )
+        env = self._run(request, JsonResponse({"access": "jwt-a", "refresh": "jwt-r", "ok": 1}))
+
+        self.assertEqual(env[ACCESS_LOG_REQ_BODY], '{"username":"a","password":"[scrubbed]"}')
+        self.assertEqual(
+            env[ACCESS_LOG_RESP_BODY],
+            '{"access":"[scrubbed]","refresh":"[scrubbed]","ok":1}',
+        )
+        self.assertNotIn("hunter2", env[ACCESS_LOG_REQ_BODY])
+
+    def test_html_and_form_bodies_are_not_logged(self):
+        from django.http import HttpResponse
+
+        from horilla.observability import ACCESS_LOG_REQ_BODY, ACCESS_LOG_RESP_BODY
+
+        request = self.factory.post("/login/", {"password": "hunter2"})
+        env = self._run(request, HttpResponse("<html>secret</html>"))
+
+        self.assertEqual(env[ACCESS_LOG_REQ_BODY], "-")
+        self.assertEqual(env[ACCESS_LOG_RESP_BODY], "-")
+
+    def test_long_body_is_clipped_to_head_and_tail(self):
+        from horilla.observability import render_body_for_log
+
+        body = json.dumps({"note": "x" * 1000}).encode()
+        out = render_body_for_log(body, "application/json")
+
+        self.assertEqual(len(out), 128 + 4 + 128)
+        self.assertEqual(out[128:132], "****")
+        self.assertTrue(out.startswith('{"note":"xxx'))
+        self.assertTrue(out.endswith('xxx"}'))
+
+    def test_invalid_json_is_never_echoed_raw(self):
+        from horilla.observability import render_body_for_log
+
+        self.assertEqual(
+            render_body_for_log(b'{"password": "hunter2"', "application/json"),
+            "<invalid json>",
+        )
+
+    def test_request_body_still_readable_downstream(self):
+        from django.http import HttpResponse
+
+        from horilla.observability import AccessLogBodyMiddleware
+
+        seen = {}
+
+        def view(req):
+            seen["body"] = req.read()
+            return HttpResponse("ok")
+
+        request = self.factory.post(
+            "/api/x/", data='{"a":1}', content_type="application/json"
+        )
+        AccessLogBodyMiddleware(view)(request)
+        self.assertEqual(seen["body"], b'{"a":1}')

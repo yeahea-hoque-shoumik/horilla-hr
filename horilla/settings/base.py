@@ -196,6 +196,9 @@ MIDDLEWARE = [
     # First, so every log line emitted while handling the request -- including
     # ones from middleware below -- carries the correlation id.
     "horilla.observability.RequestIDMiddleware",
+    # Second: reads the request body before anything else consumes the stream,
+    # and sees the final response after every other middleware has run.
+    "horilla.observability.AccessLogBodyMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
