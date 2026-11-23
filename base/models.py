@@ -9,7 +9,7 @@ from django.apps import apps
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
-from django.db import models
+from django.db import models, transaction
 from django.db.models import Case, Q, When
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -130,6 +130,26 @@ class Company(HorillaModel):
         verbose_name=_("Time Zone"),
         help_text=_("Leave blank to use the server default time zone."),
     )
+    # Required in the database. blank=True only lets save() provision an
+    # "Office" option for a company created from just a name.
+    default_work_from = models.ForeignKey(
+        "base.WorkFrom",
+        on_delete=models.PROTECT,
+        blank=True,
+        related_name="default_for_companies",
+        verbose_name=_("Default Work From"),
+        help_text=_("Used at check-in for employees without their own default."),
+    )
+
+    def save(self, *args, **kwargs):
+        if self.default_work_from_id is not None:
+            return super().save(*args, **kwargs)
+        with transaction.atomic():
+            office = WorkFrom.objects.create(work_from="Office")
+            self.default_work_from = office
+            result = super().save(*args, **kwargs)
+            office.company_id.add(self)
+        return result
 
     def clean_fields(self, exclude=None):
         # HorillaModel.clean_fields replaces Django's (XSS check only), so the

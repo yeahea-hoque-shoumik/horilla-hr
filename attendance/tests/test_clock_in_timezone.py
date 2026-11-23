@@ -69,7 +69,13 @@ class ClockInUsesSettingsTimezoneTests(TestCase):
         # expired once now() jumps to INSTANT_UTC.
         with mock.patch("django.utils.timezone.now", return_value=INSTANT_UTC):
             client.force_login(self.user)
-            response = client.post(reverse("clock-in"), HTTP_HX_REQUEST="true")
+            response = client.post(
+                reverse("clock-in"),
+                {
+                    "work_from": self.employee.employee_work_info.company_id.default_work_from_id
+                },
+                HTTP_HX_REQUEST="true",
+            )
         self.assertEqual(response.status_code, 200, _messages(response))
         self._assert_punch_is_local()
 
@@ -128,7 +134,13 @@ class ClockInUsesEmployeeTimezoneTests(ClockInUsesSettingsTimezoneTests):
         # expired once now() jumps to INSTANT_UTC.
         with mock.patch("django.utils.timezone.now", return_value=INSTANT_UTC):
             client.force_login(self.user)
-            response = client.post(reverse("clock-in"), HTTP_HX_REQUEST="true")
+            response = client.post(
+                reverse("clock-in"),
+                {
+                    "work_from": self.employee.employee_work_info.company_id.default_work_from_id
+                },
+                HTTP_HX_REQUEST="true",
+            )
         self.assertEqual(response.status_code, 200, _messages(response))
         attendance = Attendance.objects.get(employee_id=self.employee)
         self.assertEqual(attendance.attendance_date, date(2026, 11, 18))

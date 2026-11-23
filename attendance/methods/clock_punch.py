@@ -56,6 +56,53 @@ def resolve_work_from(employee, raw_id):
     return work_from
 
 
+def effective_work_from(employee):
+    """The employee's own default if usable, otherwise their company's."""
+    work_info = getattr(employee, "employee_work_info", None)
+    company = _company(employee)
+    if company is None:
+        return None
+    work_froms = available_work_froms(employee)
+    for pk in (work_info.work_from_id_id, company.default_work_from_id):
+        work_from = work_froms.filter(pk=pk).first() if pk else None
+        if work_from:
+            return work_from
+    return None
+
+
+def has_approved_work_from_request(employee, work_from, on_date):
+    """True when an approved request for this option covers the given day."""
+    from base.models import WorkFromRequest
+
+    return (
+        WorkFromRequest.objects.entire()
+        .filter(
+            employee_id=employee,
+            work_from_id=work_from,
+            approved=True,
+            canceled=False,
+            is_active=True,
+            requested_date__lte=on_date,
+        )
+        .filter(Q(requested_till__gte=on_date) | Q(is_permanent_work_from=True))
+        .exists()
+    )
+
+
+def ensure_work_from_allowed(employee, work_from, on_date):
+    """Anything but the effective default needs an approved request."""
+    if work_from is None:
+        return
+    default = effective_work_from(employee)
+    if default and default.pk == work_from.pk:
+        return
+    if not has_approved_work_from_request(employee, work_from, on_date):
+        raise PunchError(
+            _("You are not allowed to work from %(work_from)s.")
+            % {"work_from": work_from.work_from}
+        )
+
+
 def parse_punch_time(data, local_now):
     """
     Return an aware datetime on the employee's current date. An unchanged

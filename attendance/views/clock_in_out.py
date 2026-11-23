@@ -24,6 +24,8 @@ from django.utils.translation import gettext_lazy as _
 from attendance.methods.clock_punch import (
     PunchError,
     available_work_froms,
+    effective_work_from,
+    ensure_work_from_allowed,
     current_open_activity,
     ensure_after_check_in,
     ensure_after_last_punch,
@@ -276,11 +278,15 @@ def _render_clock_modal(request, error="", extra_work_date=None):
 
     posted = request.POST if request.method == "POST" else {}
     time_edited = bool(posted.get("punch_hour"))
+    selected_work_from = posted.get("work_from", "")
+    if mode == "in" and "work_from" not in posted:
+        default = effective_work_from(employee)
+        selected_work_from = str(default.pk) if default else ""
     context = {
         "mode": mode,
         "activity": activity,
         "work_froms": work_froms,
-        "selected_work_from": posted.get("work_from", ""),
+        "selected_work_from": selected_work_from,
         "error": error,
         "extra_work_date": extra_work_date,
         "needs_geo": needs_geo,
@@ -427,6 +433,11 @@ def clock_in(request):
                 start_time_sec,
                 end_time_sec,
             ) = resolve_shift_day(shift, date_today, now_sec)
+            if not request.__dict__.get("datetime"):
+                try:
+                    ensure_work_from_allowed(employee, work_from, attendance_date)
+                except PunchError as error:
+                    return _render_clock_modal(request, error=str(error))
             # Device and import punches carry their own datetime: no one to ask.
             if (
                 not request.__dict__.get("datetime")

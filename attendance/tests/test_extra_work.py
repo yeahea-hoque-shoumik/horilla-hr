@@ -349,7 +349,9 @@ class ClockInConfirmationTests(ExtraWorkBase):
 
     def _web_clock_in(self, confirm=False):
         client = Client()
-        data = {"confirm_extra_work": MONDAY.isoformat()} if confirm else {}
+        data = {"work_from": self.company.default_work_from_id}
+        if confirm:
+            data["confirm_extra_work"] = MONDAY.isoformat()
         with mock.patch("django.utils.timezone.now", return_value=MONDAY_10AM_UTC):
             client.force_login(self.user)
             return client.post(reverse("clock-in"), data, HTTP_HX_REQUEST="true")

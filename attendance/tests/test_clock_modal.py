@@ -20,6 +20,7 @@ from base.models import (
     EmployeeShiftDay,
     EmployeeShiftSchedule,
     WorkFrom,
+    WorkFromRequest,
 )
 from employee.models import EmployeeWorkInformation
 from horilla.horilla_middlewares import set_selected_company
@@ -74,8 +75,12 @@ class ClockModalBase(TestCase):
         set_selected_company(None)
 
     def work_from(self, name="Office", company=None, **fields):
+        company = company or self.company
+        default = company.default_work_from
+        if default.work_from == name and not fields:
+            return default
         work_from = WorkFrom.objects.create(work_from=name, **fields)
-        work_from.company_id.add(company or self.company)
+        work_from.company_id.add(company)
         return work_from
 
     def get_modal(self, now=INSTANT):
@@ -83,6 +88,9 @@ class ClockModalBase(TestCase):
             return self.client.get(reverse("clock-modal"), HTTP_HX_REQUEST="true")
 
     def post(self, url_name, data, now=INSTANT):
+        if url_name == "clock-in" and "omit_work_from" not in data:
+            data = {"work_from": self.company.default_work_from_id, **data}
+        data = {key: value for key, value in data.items() if key != "omit_work_from"}
         with mock.patch("django.utils.timezone.now", return_value=now):
             return self.client.post(reverse(url_name), data, HTTP_HX_REQUEST="true")
 
@@ -107,16 +115,16 @@ class ModalDisplayTests(ClockModalBase):
         self.assertContains(response, '<option value="04" selected>04</option>')
 
     def test_lists_only_active_locations_of_own_company(self):
-        self.location("Head Office")
-        self.location("Closed Branch", is_active=False)
-        self.location("Other Office", company=self.other_company)
+        self.work_from("Head Office")
+        self.work_from("Closed Branch", is_active=False)
+        self.work_from("Other Office", company=self.other_company)
         response = self.get_modal()
         self.assertContains(response, "Head Office")
         self.assertNotContains(response, "Closed Branch")
         self.assertNotContains(response, "Other Office")
 
     def test_checkout_shows_check_in_and_no_location_field(self):
-        place = self.location("Head Office")
+        place = self.work_from("Head Office")
         self.post("clock-in", at(9, "15", work_from=place.pk))
         response = self.get_modal(INSTANT + timedelta(hours=1))
         self.assertContains(response, "clockCheckInSummary")
@@ -212,15 +220,93 @@ class PunchTimeTests(ClockModalBase):
 
 
 class WorkFromChoiceTests(ClockModalBase):
-    def test_required_when_company_has_work_froms(self):
-        self.work_from()
-        response = self.post("clock-in", at(9))
-        self.assertContains(response, "select your work location")
+    def approve(self, work_from, start=TODAY, end=TODAY, **fields):
+        fields.setdefault("approved", True)
+        return WorkFromRequest.objects.bulk_create(
+            [
+                WorkFromRequest(
+                    employee_id=self.employee,
+                    work_from_id=work_from,
+                    requested_date=start,
+                    requested_till=end,
+                    description="test",
+                    **fields,
+                )
+            ]
+        )[0]
+
+    def set_employee_default(self, work_from):
+        EmployeeWorkInformation.objects.filter(employee_id=self.employee).update(
+            work_from_id=work_from
+        )
+
+    def test_new_company_gets_required_default(self):
+        default = self.company.default_work_from
+        self.assertEqual(default.work_from, "Office")
+        self.assertIn(self.company, default.company_id.all())
+
+    def test_modal_preselects_company_default(self):
+        response = self.get_modal()
+        self.assertContains(
+            response,
+            f'value="{self.company.default_work_from_id}"\n'
+            "                                    selected",
+        )
+
+    def test_modal_prefers_employee_default(self):
+        home = self.work_from("Home")
+        self.set_employee_default(home)
+        response = self.get_modal()
+        self.assertContains(
+            response, f'value="{home.pk}"\n                                    selected'
+        )
+
+    def test_effective_default_needs_no_request(self):
+        home = self.work_from("Home")
+        self.set_employee_default(home)
+        self.post("clock-in", at(9, work_from=home.pk))
+        self.assertEqual(self.activities().get().work_from_id, home)
+
+    def test_company_default_blocked_when_employee_has_own(self):
+        self.set_employee_default(self.work_from("Home"))
+        office = self.company.default_work_from
+        response = self.post("clock-in", at(9, work_from=office.pk))
+        self.assertContains(response, "You are not allowed to work from Office")
         self.assertFalse(self.activities().exists())
 
-    def test_not_required_without_work_froms(self):
-        self.post("clock-in", at(9))
-        self.assertIsNone(self.activities().get().work_from_id)
+    def test_change_without_request_fails(self):
+        home = self.work_from("Home")
+        response = self.post("clock-in", at(9, work_from=home.pk))
+        self.assertContains(response, "You are not allowed to work from Home")
+        self.assertFalse(self.activities().exists())
+
+    def test_unusable_requests_do_not_allow(self):
+        home = self.work_from("Home")
+        other = self.work_from("Ministry")
+        yesterday = TODAY - timedelta(days=1)
+        self.approve(home, approved=False)
+        self.approve(home, canceled=True)
+        self.approve(home, start=yesterday, end=yesterday)
+        self.approve(other)
+        response = self.post("clock-in", at(9, work_from=home.pk))
+        self.assertContains(response, "You are not allowed to work from Home")
+        self.assertFalse(self.activities().exists())
+
+    def test_permanent_request_allows(self):
+        home = self.work_from("Home")
+        self.approve(
+            home,
+            start=TODAY - timedelta(days=30),
+            end=None,
+            is_permanent_work_from=True,
+        )
+        self.post("clock-in", at(9, work_from=home.pk))
+        self.assertEqual(self.activities().get().work_from_id, home)
+
+    def test_required_when_company_has_work_froms(self):
+        response = self.post("clock-in", at(9, omit_work_from=True))
+        self.assertContains(response, "select your work location")
+        self.assertFalse(self.activities().exists())
 
     def test_saved_on_activity_and_attendance(self):
         place = self.work_from()
@@ -235,6 +321,7 @@ class WorkFromChoiceTests(ClockModalBase):
         EmployeeWorkInformation.objects.filter(employee_id=self.employee).update(
             work_from_id=default
         )
+        self.approve(home)
         self.post("clock-in", at(9, work_from=home.pk))
         attendance = Attendance.objects.get(employee_id=self.employee)
         self.assertEqual(attendance.work_from_id, home)

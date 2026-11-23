@@ -16,7 +16,8 @@
       "zip": "89101",
       "icon": "base/icon/Horilla_2.png",
       "date_format": null,
-      "time_format": null
+      "time_format": null,
+      "default_work_from": 1
     }
   },
   {
@@ -36,7 +37,8 @@
       "zip": "560001",
       "icon": "base/icon/Horilla_3.png",
       "date_format": null,
-      "time_format": null
+      "time_format": null,
+      "default_work_from": 1
     }
   },
   {
@@ -56,7 +58,8 @@
       "zip": "SE1 1LB",
       "icon": "base/icon/Horilla_1.png",
       "date_format": null,
-      "time_format": null
+      "time_format": null,
+      "default_work_from": 1
     }
   },
   {

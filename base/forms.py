@@ -743,6 +743,21 @@ class CompanyForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["icon"].required = False
+        if self.instance.pk:
+            field = self.fields["default_work_from"]
+            field.required = True
+            field.queryset = (
+                WorkFrom.objects.entire()
+                .filter(
+                    Q(company_id=self.instance) | Q(company_id__isnull=True),
+                    is_active=True,
+                )
+                .distinct()
+                .order_by("work_from")
+            )
+            field.widget.attrs["class"] = "oh-select oh-select-2 w-100"
+        else:
+            del self.fields["default_work_from"]
         if "timezone" in self.fields:
             from django.conf import settings
 

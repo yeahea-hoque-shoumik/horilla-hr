@@ -1,6 +1,7 @@
 import datetime
 
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 from rest_framework.fields import get_error_detail
@@ -28,6 +29,16 @@ class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
         fields = "__all__"
+
+    def validate_default_work_from(self, value):
+        scope = Q(company_id__isnull=True)
+        if self.instance:
+            scope |= Q(company_id=self.instance)
+        if not WorkFrom.objects.entire().filter(scope, pk=value.pk, is_active=True).exists():
+            raise serializers.ValidationError(
+                _("This work from is not available for the company.")
+            )
+        return value
 
 
 class JobPositionSerializer(serializers.ModelSerializer):

@@ -66,6 +66,14 @@
                 {{ form.zip }} {{ form.zip.errors }}
             </div>
 
+            {% if form.default_work_from %}
+            <!-- Default Work From -->
+            <div class="oh-input-group mb-2">
+                <label for="{{ form.default_work_from.id_for_label }}" class="mb-1">{{ form.default_work_from.label }}</label>
+                {{ form.default_work_from }} {{ form.default_work_from.errors }}
+            </div>
+            {% endif %}
+
             <!-- Time Zone -->
             <div class="oh-input-group mb-2">
                 <label for="{{ form.timezone.id_for_label }}" class="mb-1">{{ form.timezone.label }}</label>
