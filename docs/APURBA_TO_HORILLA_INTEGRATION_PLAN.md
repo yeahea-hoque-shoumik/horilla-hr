@@ -87,7 +87,7 @@ Legend: **Reuse** = Horilla already does it, so only configure or map. **Extend*
 | Per-employee timezone ("today" in employee zone) | Only `TIME_ZONE` (`horilla/settings/base.py:376`). `clock_in`/`clock_out` use `date.today()`/`datetime.now()` (`attendance/views/clock_in_out.py:206`, `:474`) | **New** `employee_today()` helper used by web, API and jobs | P3 |
 | Multi-region jobs (BD + USA), with no hard-coded shift IDs | One scheduler in the project timezone | **New** jobs that run every 15 min and act per employee local time | P3 |
 | PRESENT / LATE / half-day-late at clock-in, 0.5-day deduction | Late/early via `GraceTime` + `AttendanceLateComeEarlyOut` (`late_come`, `clock_in_out.py:73`). `WorkRecords` HDP status | **Extend**: late threshold → `GraceTime` per shift; half-day threshold + ledger event | P3 |
-| Office-IP rule vs Home/WFH location | IP check in web clock-in only (`clock_in_out.py` ~228–262). API clock-in skips it. `WorkType` has no home/office flag | **Extend**: flags on `WorkType`, `wfh_eligible` per employee, the same gate in the API | P3 |
+| Office-IP rule vs Home/WFH location | IP check in web clock-in only (`clock_in_out.py` ~228–262). API clock-in skips it. `WorkFrom` has no home/office flag | **Extend**: flags on `WorkFrom`, `wfh_eligible` per employee, the same gate in the API | P3 |
 | 18 h span cap, clock-out future window, edit today's times | Not present | **New** validation in `clock_out` + an "edit today" form | P3 |
 | Holiday/weekend clock-in → extra work | Compensatory leave requests exist (`is_compensatory_leave`) | **Extend**: confirm dialog → pending compensatory request | P3 |
 | Auto 0.5-day extra work when span > 1.5 × shift | Not present (overtime is paid via payroll buckets, `payroll/methods/payslip_calc.py:1106`) | **New**: day-close job | P3 |
@@ -101,7 +101,7 @@ Legend: **Reuse** = Horilla already does it, so only configure or map. **Extend*
 | Bulk approval assignor (check / replace / merge) | Not present | **New** | P4 |
 | Approver history page | Partial (per-request history) | **New**: combined history view | P4 |
 | Reporting managers with levels and effective dates | Single `reporting_manager_id` | **New** `ReportingLine` model. Level 1 is synced to `reporting_manager_id` | P1 / P4 |
-| WFH requests (date range, half day, attachment, overlap rules) | `WorkTypeRequest` (`base/models.py:1451`) + `switch_work_type`/`undo_work_type` (`base/scheduler.py:321`, `:356`) | **Extend**: WFH = request for the "Home" work type, plus the extra fields and rules | P4 |
+| WFH requests (date range, half day, attachment, overlap rules) | `WorkFromRequest` (`base/models.py:1451`) + `switch_work_from`/`undo_work_from` (`base/scheduler.py:321`, `:356`) | **Extend**: WFH = request for the "Home" work from, plus the extra fields and rules | P4 |
 | Leave on behalf (HR creates, auto-approved) | HR can create, but it is auto-approved only when the type needs no approval | **Extend**: new permission + approve through the ledger | P2 |
 | Mandatory emergency contact (another active employee) | `Employee.emergency_contact` is free text (`employee/models.py:123`). `LeaveRequest` has nothing | **Extend**: FK on leave request, required by company setting | P2 |
 | Probation: can't apply for leave; auto-promotion to full-time | Probation end only on `Candidate` (`recruitment/models.py`) | **Extend**: probation fields on the employee policy + daily job | P1 / P2 |
@@ -142,7 +142,7 @@ Every new app follows the repo rules:
 | App | Models | Services / jobs |
 |---|---|---|
 | `leave_ledger` | `LeaveLedgerEntry`: employee, leave type, available_leave FK, event_type, delta_available, delta_carryforward, old/new values, source_type, source_id, attendance_date, actor_user, actor_employee, idempotency_key (unique), note, created_at | `apply_balance_change()`, `record_balance_set()`, `resolve_balance()` (configurable penalty leave-type order per company, which fixes Apurba's "lowest id" rule), reconcile (ledger sum vs balance) |
-| `hr_policy` | `EmployeePolicy` (one-to-one Employee): timezone, attendance_restriction, email_restriction, wfh_eligible, attendance_track, employment_period, probation_end, annual_allowance, blood_group, national_id/tin (encrypted). `ShiftPolicy` (one-to-one `EmployeeShift`): late/half-day thresholds, clock-in/out windows, clock_out_penalty, duration_for_one_leave (540), max_span_hours (18), reminder times, day-close time. `WorkTypePolicy` (one-to-one `WorkType`): is_office_location, requires_wfh_approval. `Team`, `WorkingDayException`, `ClaimPolicy` (per company: max_claim_count = 2, cutoff_day = 5), `AttendanceClaim` (one-to-one attendance request: reason, source timezone), `WorkDeficit`, `DayCloseLog`, `ReminderLog` | `employee_today(employee)`, `employee_now(employee)`, `is_working_day(employee, date)`, the clock-in decision service, the claim checks. Jobs: `day_close` (every 15 min), `weekly_late_penalty` (hourly, keyed by ISO week), `clock_in_reminders` (every 15 min), `probation_promotion` (daily), `work_deficit_month` (daily, acts on day 1) |
+| `hr_policy` | `EmployeePolicy` (one-to-one Employee): timezone, attendance_restriction, email_restriction, wfh_eligible, attendance_track, employment_period, probation_end, annual_allowance, blood_group, national_id/tin (encrypted). `ShiftPolicy` (one-to-one `EmployeeShift`): late/half-day thresholds, clock-in/out windows, clock_out_penalty, duration_for_one_leave (540), max_span_hours (18), reminder times, day-close time. `WorkFromPolicy` (one-to-one `WorkFrom`): is_office_location, requires_wfh_approval. `Team`, `WorkingDayException`, `ClaimPolicy` (per company: max_claim_count = 2, cutoff_day = 5), `AttendanceClaim` (one-to-one attendance request: reason, source timezone), `WorkDeficit`, `DayCloseLog`, `ReminderLog` | `employee_today(employee)`, `employee_now(employee)`, `is_working_day(employee, date)`, the clock-in decision service, the claim checks. Jobs: `day_close` (every 15 min), `weekly_late_penalty` (hourly, keyed by ISO week), `clock_in_reminders` (every 15 min), `probation_promotion` (daily), `work_deficit_month` (daily, acts on day 1) |
 | `approval_assignment` | `ApproverAssignment`: employee, approver, request_type (leave / attendance_claim / extra_work / wfh), level, effective_from/to, is_active. `ReportingLine`: employee, manager, level, effective dates. `ApprovalAction`: request type + id, approver, level, action (approve / reject / remark), remarks, at | `approvers_for(employee, type, on_date)`, `can_finalise()`, `inbox_queryset()`, bulk assignor (check / replace / merge) |
 | `onboarding_quiz` | `QuizQuestion`, `QuizOption`, `QuizAnswer` (case_sensitive, trim, partial), `QuizResponse` (attempt_number), `QuizStatus`, `QuizAuditLog` | `OnboardingQuizMiddleware`, placed after `ForcePasswordChangeMiddleware` |
 | `evaluations` | `EvaluationRecord`, `GitUsernameMapping` | HRM-AI proxy (`HRM_AI_BASE_URL`, timeout → 504, bad upstream → 502) |
@@ -157,8 +157,8 @@ The policy models are **one-to-one side tables**, not `_inherit` field injection
 | `leave` | Every balance write goes through `leave_ledger.apply_balance_change` (list in §5 P2). New fields: `emergency_contact_employee` and `created_on_behalf`. Probation block in the self-service forms and the API |
 | `attendance/views/clock_in_out.py` | Call the clock-in decision service from `clock_in`/`clock_out`. Replace `date.today()`/`datetime.now()` with `employee_today/now`. Add confirm dialogs (HTMX) for holiday/weekend and approved leave |
 | `horilla_api/api_views/attendance/views.py` | `ClockInAPIView`/`ClockOutAPIView` use the same service, so the IP/WFH gate applies to mobile too |
-| `base` (`WorkTypeRequest`) | WFH fields and rules. `switch_work_type`/`undo_work_type` stay as they are |
-| Approval views (leave approve `leave/views.py:1044`, attendance request approve, compensatory approve, work-type approve) | `approval_assignment.can_finalise()` + `ApprovalAction` rows. Inbox querysets filtered by `inbox_queryset()` |
+| `base` (`WorkFromRequest`) | WFH fields and rules. `switch_work_from`/`undo_work_from` stay as they are |
+| Approval views (leave approve `leave/views.py:1044`, attendance request approve, compensatory approve, work-from approve) | `approval_assignment.can_finalise()` + `ApprovalAction` rows. Inbox querysets filtered by `inbox_queryset()` |
 | `horilla_meet` | Free/busy best-time finder, conflict check, day schedule, `MeetingTemplate`, public-holiday import into `Holidays` |
 | `biometric` | ADMS device type and `/iclock/cdata`, `/iclock/getrequest`, `/iclock/devicecmd`. PIN = `badge_id`. Punches go through the existing `clock_in`/`clock_out` request pattern used by the other device types in `biometric/views.py` |
 | `base` login | "Sign in with Google" button + callback. The user is matched by stored Google id or verified e-mail, then logged in normally so axes, 2FA and forced password change still apply |
@@ -215,7 +215,7 @@ Each phase ends with its exit criteria met, CI green (Postgres, `makemigrations 
 
 **Goal:** every Apurba employee can log in to staging Horilla with their own password and sees correct org data.
 
-1. **Models (`hr_policy`):** `EmployeePolicy`, `ShiftPolicy`, `WorkTypePolicy`, `Team`, `WorkingDayException`. Admin screens use `HorillaListView`/`HorillaFormView`, under Settings → Attendance / Organization.
+1. **Models (`hr_policy`):** `EmployeePolicy`, `ShiftPolicy`, `WorkFromPolicy`, `Team`, `WorkingDayException`. Admin screens use `HorillaListView`/`HorillaFormView`, under Settings → Attendance / Organization.
 2. **`approval_assignment.ReportingLine`:** a signal syncs the active level-1 line to `EmployeeWorkInformation.reporting_manager_id`. Add an org-hierarchy view by level.
 3. **Probation:** `probation_end` + `employment_period` on the policy, and the daily `probation_promotion` job (switches `employee_type_id` to Full-Time on the day).
 4. **Importer, phases `config`, `org`, `people`** (§6.3 rows 1–30). Steps:
@@ -307,12 +307,12 @@ Each phase ends with its exit criteria met, CI green (Postgres, `makemigrations 
 
 1. **`ApproverAssignment` + `approvers_for()`** (active and effective on the request date).
 2. **Leave:** when a leave request is saved in `requested` status (`LeaveRequest.save`, where `LeaveRequestConditionApproval` rows are built), use the assignments when the company is in assignment mode (O1). Level 1 finalises, levels 2+ can only remark (`ApprovalAction`). A Super Admin can override; after a Super Admin acts, only a Super Admin or an approve-permission holder can change the result; an approver can't change their own decision.
-3. **Attendance claims, extra work (compensatory) and WFH:** the same `can_finalise()` in their approve/reject views (`attendance/views/requests.py` approve/reject, the compensatory approve view in `leave/views.py`, the work-type approve view `base/views.py` ~4670).
+3. **Attendance claims, extra work (compensatory) and WFH:** the same `can_finalise()` in their approve/reject views (`attendance/views/requests.py` approve/reject, the compensatory approve view in `leave/views.py`, the work-from approve view `base/views.py` ~4670).
 4. **Inbox scoping** (O2) via `inbox_queryset()`, in web views and the API. **IDOR tests:** an approver can't act on, or see, a non-assignee's request by id.
 5. **Bulk approval assignor:** pick employees, request types, levels and approvers; preview the existing rows; apply as **replace** or **merge**.
 6. **Approver history page:** `ApprovalAction` across all four types, filterable.
 7. **WFH**
-   1. "Home" work type with `requires_wfh_approval`. A WFH request is a `WorkTypeRequest` with end date, optional half day, reason ≤ 1000 characters and an attachment.
+   1. "Home" work from with `requires_wfh_approval`. A WFH request is a `WorkFromRequest` with end date, optional half day, reason ≤ 1000 characters and an attachment.
    2. Working-days-only rule.
    3. Overlap blocked against WFH and leave.
    4. The owner can edit or cancel only while pending (an edit resets approvals). No balance effect.
@@ -455,7 +455,7 @@ See §7.2.
 | 20 | `office` | work-info `location` + company choice | |
 | 21 | `shift` | `EmployeeShift` + `EmployeeShiftSchedule` (per weekday) + `GraceTime` + `ShiftPolicy` | `late_threshold_minutes` → grace time; thresholds, penalty, `duration_for_one_leave`, timezone and cron times → policy |
 | 22 | `shift_assignment` | work-info `shift_id` (current); future-dated → roster; past → archive | |
-| 23 | `work_location` | `WorkType` + `WorkTypePolicy` | Office / Home flags |
+| 23 | `work_location` | `WorkFrom` + `WorkFromPolicy` | Office / Home flags |
 | 24 | `ip_address` | `AttendanceAllowedIP` per company | IPv4/IPv6, active only |
 | 25 | `holiday_set` | company (BD / USA) | If there are more than 2 sets, use employee-specific `Holidays` |
 | 26 | `yearly_holiday` | `Holidays` | Per company |
@@ -488,7 +488,7 @@ See §7.2.
 | 50 | `extra_work` | Compensatory leave request + `Attendance` (holiday) | `half_day_type` kept |
 | 51 | `extra_work_approval` | `ApproverAssignment(type=extra_work)` | |
 | 52 | `extra_work_approval_history` | `ApprovalAction` | |
-| 53 | `wfh_request` | `WorkTypeRequest` (Home) + WFH fields | Attachment downloaded |
+| 53 | `wfh_request` | `WorkFromRequest` (Home) + WFH fields | Attachment downloaded |
 | 54 | `wfh_approval_history` | `ApprovalAction` | |
 | **approvals** ||||
 | 55 | `approval_request` | request-type choices | No rows needed |
@@ -702,11 +702,11 @@ To be confirmed in P0. Apurba roles: `ADMIN` → Horilla **Admin** group (or HR 
 | `leave_request.view/edit/clear` | `leave.view/change/delete_leaverequest` |
 | `leave_request.create_on_behalf` | new `leave.add_leave_on_behalf` |
 | `leave_cancellation.clear` | `leave.change_leaverequest` |
-| `wfh_request.view/edit/clear` | `base.view/change/delete_worktyperequest` |
+| `wfh_request.view/edit/clear` | `base.view/change/delete_workfromrequest` |
 | `extra_work.view/approve/clear` | compensatory leave request view / approve (new) / delete |
 | `attendance_claim.view/approve/clear` | `attendance.view_attendance` / new `hr_policy.approve_attendanceclaim` / `attendance.delete_attendance` |
 | `bulk_approval_assignor.manage` | `approval_assignment.change_approverassignment` |
-| `utilities_dashboard.view/manage` | Settings permissions in `base` (view / change on shifts, work types, holidays, …) |
+| `utilities_dashboard.view/manage` | Settings permissions in `base` (view / change on shifts, work from options, holidays, …) |
 | `restrictions.view/create/edit/delete` | `hr_policy.view/add/change/delete_employeepolicy` |
 | `question_builder.*` | `onboarding_quiz.*_quizquestion` |
 | `commit_evaluation.view` | `evaluations.view_evaluationrecord` |

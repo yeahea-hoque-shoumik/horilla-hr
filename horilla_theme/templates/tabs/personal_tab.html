@@ -317,16 +317,16 @@
                                 </dd>
                             </div>
                             <div class="flex items-baseline justify-between gap-3 py-2">
-                                <dt class="text-xs font-medium text-color-600">{% trans "Work Type" %}</dt>
-                                <dd class="text-right {% if work_info.work_type_id %}{% if not perms.base.view_worktype %}text-sm font-medium text-dark-500{% endif %}{% else %}text-sm italic text-dark-100{% endif %}">
-                                    {% if work_info.work_type_id %}
-                                        {% if perms.base.view_worktype %}
+                                <dt class="text-xs font-medium text-color-600">{% trans "Work From" %}</dt>
+                                <dd class="text-right {% if work_info.work_from_id %}{% if not perms.base.view_workfrom %}text-sm font-medium text-dark-500{% endif %}{% else %}text-sm italic text-dark-100{% endif %}">
+                                    {% if work_info.work_from_id %}
+                                        {% if perms.base.view_workfrom %}
                                             <a
-                                                href="{% url 'employee-settings-view' %}?tab=work-type"
+                                                href="{% url 'employee-settings-view' %}?tab=work-from"
                                                 class="group inline-flex max-w-full items-center gap-2 rounded-full border border-[#ebebeb] bg-white py-1 px-2.5 transition-colors hover:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-1"
                                             >
                                                 <span class="min-w-0 truncate text-sm font-medium text-dark-500 group-hover:text-primary-600">
-                                                    {{ work_info.work_type_id }}
+                                                    {{ work_info.work_from_id }}
                                                 </span>
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -343,7 +343,7 @@
                                                 </svg>
                                             </a>
                                         {% else %}
-                                            {{ work_info.work_type_id }}
+                                            {{ work_info.work_from_id }}
                                         {% endif %}
                                     {% else %}
                                         {% trans "Not set" %}

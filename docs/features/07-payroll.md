@@ -26,7 +26,7 @@ This area works out and records pay. It holds employee contracts, salary structu
 
 ### Pay items: allowances and deductions
 
-- An allowance (earning) can be a fixed amount, a percentage of basic pay or of another item, a custom formula over other items (for example "(BASIC + DA) × 0.12"), the balance left of the package in a CTC Down structure, an amount per child, or, when attendance is installed, based on overtime (regular, weekly-day-off or holiday overtime), shift, work type or days attended.
+- An allowance (earning) can be a fixed amount, a percentage of basic pay or of another item, a custom formula over other items (for example "(BASIC + DA) × 0.12"), the balance left of the package in a CTC Down structure, an amount per child, or, when attendance is installed, based on overtime (regular, weekly-day-off or holiday overtime), shift, work from or days attended.
 - A deduction can be a fixed amount, a percentage of basic, gross, taxable gross or net pay or of another item, or a custom formula. It is marked as before tax or after tax, and can be marked as the income tax itself.
 - An item can apply to everyone, to chosen employees or to everyone except chosen employees, can apply on one date only, and can depend on conditions about the employee (for example children, marital status, experience, gender, country, pay frequency, wage type or department) or on an amount (for example "only if basic pay is above a figure").
 - An item can have a maximum amount. A monthly figure is shared out when the pay period is shorter than a month. Reason (from a code comment): a joiner paid for ten days should get ten days' worth of a monthly figure, not a whole month's (`payroll/methods/proration.py`).

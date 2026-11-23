@@ -78,11 +78,11 @@ def rotating_shift_assign_accessibility(request, submenu, user_perms, *args, **k
     ) or is_reportingmanager(request.user)
 
 
-def rotating_work_type_assign_accessibility(
+def rotating_work_from_assign_accessibility(
     request, submenu, user_perms, *args, **kwargs
 ):
     return request.user.has_perm(
-        "base.view_rotatingworktypeassign"
+        "base.view_rotatingworkfromassign"
     ) or is_reportingmanager(request.user)
 
 
@@ -97,7 +97,7 @@ def work_schedules_accessibility(request, submenu, user_perms, *args, **kwargs):
         rotating_shift_assign_accessibility(
             request, submenu, user_perms, *args, **kwargs
         )
-        or rotating_work_type_assign_accessibility(
+        or rotating_work_from_assign_accessibility(
             request, submenu, user_perms, *args, **kwargs
         )
         or shift_roster_accessibility(request, submenu, user_perms, *args, **kwargs)
@@ -109,8 +109,8 @@ def employee_settings_accessibility(request, submenu, user_perms, *args, **kwarg
         employee_shift_accessibility(request, submenu, user_perms, *args, **kwargs)
         or shift_schedule_accessibility(request, submenu, user_perms, *args, **kwargs)
         or rotating_shift_accessibility(request, submenu, user_perms, *args, **kwargs)
-        or work_type_accessibility(request, submenu, user_perms, *args, **kwargs)
-        or rotating_work_type_accessibility(
+        or work_from_accessibility(request, submenu, user_perms, *args, **kwargs)
+        or rotating_work_from_accessibility(
             request, submenu, user_perms, *args, **kwargs
         )
         or employee_type_accessibility(request, submenu, user_perms, *args, **kwargs)
@@ -146,12 +146,12 @@ def employee_accessibility(request, submenu, user_perms, *args, **kwargs):
 # ---------------------------------------------------------------------------
 
 
-def work_type_accessibility(request, submenu, user_perms, *args, **kwargs):
-    return request.user.has_perm("base.view_worktype")
+def work_from_accessibility(request, submenu, user_perms, *args, **kwargs):
+    return request.user.has_perm("base.view_workfrom")
 
 
-def rotating_work_type_accessibility(request, submenu, user_perms, *args, **kwargs):
-    return request.user.has_perm("base.view_rotatingworktype")
+def rotating_work_from_accessibility(request, submenu, user_perms, *args, **kwargs):
+    return request.user.has_perm("base.view_rotatingworkfrom")
 
 
 def employee_shift_accessibility(request, submenu, user_perms, *args, **kwargs):

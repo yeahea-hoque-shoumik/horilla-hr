@@ -63,10 +63,10 @@ Level 0 = no deps. Level N = 1 + max level of parents. Create/load tables level 
 - `base_driverviewed` → `horilla_auth_horillauser`
 - `base_employeetype` → `horilla_auth_horillauser`
 - `base_historicalrotatingshiftassign` → `horilla_auth_horillauser`
-- `base_historicalrotatingworktypeassign` → `horilla_auth_horillauser`
+- `base_historicalrotatingworkfromassign` → `horilla_auth_horillauser`
 - `base_historicalshiftrequest` → `horilla_auth_horillauser`
-- `base_historicalworktyperequest` → `horilla_auth_horillauser`
-- `base_worktype` → `horilla_auth_horillauser`
+- `base_historicalworkfromrequest` → `horilla_auth_horillauser`
+- `base_workfrom` → `horilla_auth_horillauser`
 - `django_admin_log` → `django_content_type`, `horilla_auth_horillauser`
 - `django_apscheduler_djangojobexecution` → `django_apscheduler_djangojob`
 - `employee_actiontype` → `horilla_auth_horillauser`
@@ -162,9 +162,9 @@ Level 0 = no deps. Level N = 1 + max level of parents. Create/load tables level 
 - `base_employeeshiftday_company_id` → `base_company`, `base_employeeshiftday`
 - `base_employeetype_company_id` → `base_company`, `base_employeetype`
 - `base_historicalrotatingshiftassign_history_tags` → `base_historicalrotatingshiftassign`, `horilla_audit_audittag`
-- `base_historicalrotatingworktypeassign_history_tags` → `base_historicalrotatingworktypeassign`, `horilla_audit_audittag`
+- `base_historicalrotatingworkfromassign_history_tags` → `base_historicalrotatingworkfromassign`, `horilla_audit_audittag`
 - `base_historicalshiftrequest_history_tags` → `base_historicalshiftrequest`, `horilla_audit_audittag`
-- `base_historicalworktyperequest_history_tags` → `base_historicalworktyperequest`, `horilla_audit_audittag`
+- `base_historicalworkfromrequest_history_tags` → `base_historicalworkfromrequest`, `horilla_audit_audittag`
 - `base_holidays` → `base_company`, `horilla_auth_horillauser`
 - `base_horillamailtemplate` → `base_company`, `horilla_auth_horillauser`
 - `base_integrationapps` → `base_company`, `horilla_auth_horillauser`
@@ -172,12 +172,12 @@ Level 0 = no deps. Level N = 1 + max level of parents. Create/load tables level 
 - `base_multipleapprovalcondition` → `base_company`, `base_department`, `horilla_auth_horillauser`
 - `base_notificationsound` → `employee_employee`
 - `base_rosterpublishlog` → `base_department`, `employee_employee`
-- `base_rotatingworktype` → `base_worktype`, `horilla_auth_horillauser`
+- `base_rotatingworkfrom` → `base_workfrom`, `horilla_auth_horillauser`
 - `base_setupchecklistdismissal` → `base_company`, `horilla_auth_horillauser`
 - `base_tags` → `base_company`, `horilla_auth_horillauser`
 - `base_tracklatecomeearlyout` → `base_company`, `horilla_auth_horillauser`
-- `base_worktype_company_id` → `base_company`, `base_worktype`
-- `base_worktyperequest` → `base_worktype`, `employee_employee`, `horilla_auth_horillauser`
+- `base_workfrom_company_id` → `base_company`, `base_workfrom`
+- `base_workfromrequest` → `base_workfrom`, `employee_employee`, `horilla_auth_horillauser`
 - `biometric_biometricdevices` → `base_company`, `horilla_auth_horillauser`
 - `employee_bonuspoint` → `employee_employee`, `horilla_auth_horillauser`
 - `employee_disciplinaryaction` → `employee_actiontype`, `horilla_auth_horillauser`
@@ -276,7 +276,7 @@ Level 0 = no deps. Level N = 1 + max level of parents. Create/load tables level 
 - `asset_assetitem` → `asset_asset`, `horilla_auth_horillauser`
 - `asset_assetreport` → `asset_asset`, `horilla_auth_horillauser`
 - `asset_assetrequestcomment` → `asset_assetrequest`, `employee_employee`, `horilla_auth_horillauser`
-- `attendance_attendance` → `attendance_batchattendance`, `base_employeeshift`, `base_employeeshiftday`, `base_worktype`, `employee_employee`, `horilla_auth_horillauser`
+- `attendance_attendance` → `attendance_batchattendance`, `base_employeeshift`, `base_employeeshiftday`, `base_workfrom`, `employee_employee`, `horilla_auth_horillauser`
 - `attendance_attendancevalidationcondition_shift_ids` → `attendance_attendancevalidationcondition`, `base_employeeshift`
 - `base_announcement_job_position` → `base_announcement`, `base_jobposition`
 - `base_employeeshift_company_id` → `base_company`, `base_employeeshift`
@@ -289,9 +289,9 @@ Level 0 = no deps. Level N = 1 + max level of parents. Create/load tables level 
 - `base_multipleapprovalmanagers` → `base_multipleapprovalcondition`
 - `base_roster` → `base_department`, `base_employeeshift`, `employee_employee`, `horilla_auth_horillauser`
 - `base_rotatingshift` → `base_employeeshift`, `horilla_auth_horillauser`
-- `base_rotatingworktypeassign` → `base_rotatingworktype`, `base_worktype`, `employee_employee`, `horilla_auth_horillauser`
+- `base_rotatingworkfromassign` → `base_rotatingworkfrom`, `base_workfrom`, `employee_employee`, `horilla_auth_horillauser`
 - `base_shiftrequest` → `base_employeeshift`, `employee_employee`, `horilla_auth_horillauser`
-- `base_worktyperequestcomment` → `base_worktyperequest`, `employee_employee`, `horilla_auth_horillauser`
+- `base_workfromrequestcomment` → `base_workfromrequest`, `employee_employee`, `horilla_auth_horillauser`
 - `biometric_biometricemployees` → `biometric_biometricdevices`, `employee_employee`
 - `biometric_cosecattendancearguments` → `biometric_biometricdevices`
 - `employee_disciplinaryaction_employee_id` → `employee_disciplinaryaction`, `employee_employee`
@@ -313,7 +313,7 @@ Level 0 = no deps. Level N = 1 + max level of parents. Create/load tables level 
 - `leave_restrictleave_spesific_leave_types` → `leave_leavetype`, `leave_restrictleave`
 - `offboarding_offboarding_managers` → `employee_employee`, `offboarding_offboarding`
 - `offboarding_offboardingstage` → `horilla_auth_horillauser`, `offboarding_offboarding`
-- `payroll_allowance` → `base_company`, `base_employeeshift`, `base_worktype`, `horilla_auth_horillauser`
+- `payroll_allowance` → `base_company`, `base_employeeshift`, `base_workfrom`, `horilla_auth_horillauser`
 - `payroll_deduction_apply_conditions` → `payroll_applycondition`, `payroll_deduction`
 - `payroll_deduction_exclude_employees` → `employee_employee`, `payroll_deduction`
 - `payroll_deduction_other_conditions` → `payroll_deduction`, `payroll_multiplecondition`
@@ -355,8 +355,8 @@ Level 0 = no deps. Level N = 1 + max level of parents. Create/load tables level 
 - `base_jobrole_company_id` → `base_company`, `base_jobrole`
 - `base_rotatingshiftassign` → `base_employeeshift`, `base_rotatingshift`, `employee_employee`, `horilla_auth_horillauser`
 - `base_shiftrequestcomment` → `base_shiftrequest`, `employee_employee`, `horilla_auth_horillauser`
-- `base_worktyperequestcomment_files` → `base_baserequestfile`, `base_worktyperequestcomment`
-- `employee_employeeworkinformation` → `base_company`, `base_department`, `base_employeeshift`, `base_employeetype`, `base_jobposition`, `base_jobrole`, `base_worktype`, `employee_employee`
+- `base_workfromrequestcomment_files` → `base_baserequestfile`, `base_workfromrequestcomment`
+- `employee_employeeworkinformation` → `base_company`, `base_department`, `base_employeeshift`, `base_employeetype`, `base_jobposition`, `base_jobrole`, `base_workfrom`, `employee_employee`
 - `helpdesk_claimrequest` → `employee_employee`, `helpdesk_ticket`, `horilla_auth_horillauser`
 - `helpdesk_comment` → `employee_employee`, `helpdesk_ticket`, `horilla_auth_horillauser`
 - `helpdesk_faq_tags` → `base_tags`, `helpdesk_faq`
@@ -378,7 +378,7 @@ Level 0 = no deps. Level N = 1 + max level of parents. Create/load tables level 
 - `payroll_allowance_exclude_employees` → `employee_employee`, `payroll_allowance`
 - `payroll_allowance_other_conditions` → `payroll_allowance`, `payroll_multiplecondition`
 - `payroll_allowance_specific_employees` → `employee_employee`, `payroll_allowance`
-- `payroll_contract` → `base_department`, `base_employeeshift`, `base_jobposition`, `base_jobrole`, `base_worktype`, `employee_employee`, `horilla_auth_horillauser`, `payroll_filingstatus`, `payroll_salarystructure`
+- `payroll_contract` → `base_department`, `base_employeeshift`, `base_jobposition`, `base_jobrole`, `base_workfrom`, `employee_employee`, `horilla_auth_horillauser`, `payroll_filingstatus`, `payroll_salarystructure`
 - `payroll_loanaccount` → `asset_asset`, `employee_employee`, `horilla_auth_horillauser`, `payroll_allowance`
 - `payroll_overrideleaverequest` → `leave_leaverequest`
 - `payroll_payrollbatchline` → `employee_employee`, `horilla_auth_horillauser`, `payroll_payrollbatch`, `payroll_payslip`
@@ -488,7 +488,7 @@ base_attachment
 ```
 base_baserequestfile
 ├── `base_shiftrequestcomment_files` (baserequestfile_id)
-└── `base_worktyperequestcomment_files` (baserequestfile_id)
+└── `base_workfromrequestcomment_files` (baserequestfile_id)
 ```
 
 ### `base_employeeshiftday`  (direct dependents: 4, total: 11)
@@ -541,9 +541,9 @@ horilla_audit_audittag
 ├── `attendance_historicalattendance_history_tags` (audittag_id)
 ├── `attendance_historicalattendanceactivity_history_tags` (audittag_id)
 ├── `base_historicalrotatingshiftassign_history_tags` (audittag_id)
-├── `base_historicalrotatingworktypeassign_history_tags` (audittag_id)
+├── `base_historicalrotatingworkfromassign_history_tags` (audittag_id)
 ├── `base_historicalshiftrequest_history_tags` (audittag_id)
-├── `base_historicalworktyperequest_history_tags` (audittag_id)
+├── `base_historicalworkfromrequest_history_tags` (audittag_id)
 ├── `employee_historicalbonuspoint_history_tags` (audittag_id)
 ├── `employee_historicalemployeeworkinformation_history_tags` (audittag_id)
 ├── `helpdesk_historicalticket_history_tags` (audittag_id)
@@ -708,7 +708,7 @@ horilla_auth_horillauser
 │   │   ├── `helpdesk_faq_tags` (tags_id)
 │   │   └── `helpdesk_ticket_tags` (tags_id)
 │   ├── `base_tracklatecomeearlyout` (company_id_id)
-│   ├── `base_worktype_company_id` (company_id)
+│   ├── `base_workfrom_company_id` (company_id)
 │   ├── `biometric_biometricdevices` (company_id_id)
 │   │   ├── `biometric_biometricemployees` (device_id_id)
 │   │   └── `biometric_cosecattendancearguments` (device_id_id)
@@ -942,12 +942,12 @@ horilla_auth_horillauser
 │   └── `employee_employeeworkinformation` (employee_type_id_id) ↩
 ├── `base_historicalrotatingshiftassign` (history_user_id)
 │   └── `base_historicalrotatingshiftassign_history_tags` (historicalrotatingshiftassign_id)
-├── `base_historicalrotatingworktypeassign` (history_user_id)
-│   └── `base_historicalrotatingworktypeassign_history_tags` (historicalrotatingworktypeassign_id)
+├── `base_historicalrotatingworkfromassign` (history_user_id)
+│   └── `base_historicalrotatingworkfromassign_history_tags` (historicalrotatingworkfromassign_id)
 ├── `base_historicalshiftrequest` (history_user_id)
 │   └── `base_historicalshiftrequest_history_tags` (historicalshiftrequest_id)
-├── `base_historicalworktyperequest` (history_user_id)
-│   └── `base_historicalworktyperequest_history_tags` (historicalworktyperequest_id)
+├── `base_historicalworkfromrequest` (history_user_id)
+│   └── `base_historicalworkfromrequest_history_tags` (historicalworkfromrequest_id)
 ├── `base_holidays` (created_by_id,modified_by_id) ↩
 ├── `base_horillamailtemplate` (created_by_id,modified_by_id) ↩
 ├── `base_integrationapps` (created_by_id,modified_by_id)
@@ -958,27 +958,27 @@ horilla_auth_horillauser
 ├── `base_roster` (modified_by_id)
 ├── `base_rotatingshift` (created_by_id,modified_by_id) ↩
 ├── `base_rotatingshiftassign` (created_by_id,modified_by_id)
-├── `base_rotatingworktype` (created_by_id,modified_by_id)
-│   └── `base_rotatingworktypeassign` (rotating_work_type_id_id)
-├── `base_rotatingworktypeassign` (created_by_id,modified_by_id)
+├── `base_rotatingworkfrom` (created_by_id,modified_by_id)
+│   └── `base_rotatingworkfromassign` (rotating_work_from_id_id)
+├── `base_rotatingworkfromassign` (created_by_id,modified_by_id)
 ├── `base_setupchecklistdismissal` (user_id)
 ├── `base_shiftrequest` (created_by_id,modified_by_id) ↩
 ├── `base_shiftrequestcomment` (created_by_id,modified_by_id) ↩
 ├── `base_tags` (created_by_id,modified_by_id) ↩
 ├── `base_tracklatecomeearlyout` (created_by_id,modified_by_id)
-├── `base_worktype` (created_by_id,modified_by_id)
-│   ├── `attendance_attendance` (work_type_id_id) ↩
-│   ├── `base_rotatingworktype` (work_type1_id,work_type2_id) ↩
-│   ├── `base_rotatingworktypeassign` (current_work_type_id,next_work_type_id)
-│   ├── `base_worktype_company_id` (worktype_id)
-│   ├── `base_worktyperequest` (previous_work_type_id_id,work_type_id_id)
-│   │   └── `base_worktyperequestcomment` (request_id_id)
-│   │       └── `base_worktyperequestcomment_files` (worktyperequestcomment_id)
-│   ├── `employee_employeeworkinformation` (work_type_id_id) ↩
-│   ├── `payroll_allowance` (work_type_id_id) ↩
-│   └── `payroll_contract` (work_type_id)
-├── `base_worktyperequest` (created_by_id,modified_by_id) ↩
-├── `base_worktyperequestcomment` (created_by_id,modified_by_id) ↩
+├── `base_workfrom` (created_by_id,modified_by_id)
+│   ├── `attendance_attendance` (work_from_id_id) ↩
+│   ├── `base_rotatingworkfrom` (work_from1_id,work_from2_id) ↩
+│   ├── `base_rotatingworkfromassign` (current_work_from_id,next_work_from_id)
+│   ├── `base_workfrom_company_id` (workfrom_id)
+│   ├── `base_workfromrequest` (previous_work_from_id_id,work_from_id_id)
+│   │   └── `base_workfromrequestcomment` (request_id_id)
+│   │       └── `base_workfromrequestcomment_files` (workfromrequestcomment_id)
+│   ├── `employee_employeeworkinformation` (work_from_id_id) ↩
+│   ├── `payroll_allowance` (work_from_id_id) ↩
+│   └── `payroll_contract` (work_from_id)
+├── `base_workfromrequest` (created_by_id,modified_by_id) ↩
+├── `base_workfromrequestcomment` (created_by_id,modified_by_id) ↩
 ├── `biometric_biometricdevices` (created_by_id,modified_by_id) ↩
 ├── `django_admin_log` (user_id)
 ├── `employee_actiontype` (created_by_id,modified_by_id)
@@ -1015,11 +1015,11 @@ horilla_auth_horillauser
 │   ├── `base_roster` (created_by_id,employee_id)
 │   ├── `base_rosterpublishlog` (published_by_id)
 │   ├── `base_rotatingshiftassign` (employee_id_id)
-│   ├── `base_rotatingworktypeassign` (employee_id_id)
+│   ├── `base_rotatingworkfromassign` (employee_id_id)
 │   ├── `base_shiftrequest` (employee_id_id,reallocate_to_id) ↩
 │   ├── `base_shiftrequestcomment` (employee_id_id) ↩
-│   ├── `base_worktyperequest` (employee_id_id) ↩
-│   ├── `base_worktyperequestcomment` (employee_id_id) ↩
+│   ├── `base_workfromrequest` (employee_id_id) ↩
+│   ├── `base_workfromrequestcomment` (employee_id_id) ↩
 │   ├── `biometric_biometricemployees` (employee_id_id)
 │   ├── `employee_bonuspoint` (employee_id_id) ↩
 │   ├── `employee_disciplinaryaction_employee_id` (employee_id)
@@ -1391,7 +1391,7 @@ For each table: direct parents, and total transitive ancestors (everything that 
 | `asset_assetservicerequest` | 5 | `asset_assetassignment`, `employee_employee`, `horilla_auth_horillauser` | 7 | 1 | 1 |
 | `asset_assetservicerequestnote` | 6 | `asset_assetservicerequest`, `employee_employee`, `horilla_auth_horillauser` | 8 | 0 | 0 |
 | `asset_returnimages` | 1 | `horilla_auth_horillauser` | 1 | 2 | 2 |
-| `attendance_attendance` | 3 | `attendance_batchattendance`, `base_employeeshift`, `base_employeeshiftday`, `base_worktype`, `employee_employee`, `horilla_auth_horillauser` | 7 | 4 | 6 |
+| `attendance_attendance` | 3 | `attendance_batchattendance`, `base_employeeshift`, `base_employeeshiftday`, `base_workfrom`, `employee_employee`, `horilla_auth_horillauser` | 7 | 4 | 6 |
 | `attendance_attendanceactivity` | 2 | `base_employeeshiftday`, `employee_employee`, `horilla_auth_horillauser` | 3 | 0 | 0 |
 | `attendance_attendanceconflictresolution` | 2 | `employee_employee`, `horilla_auth_horillauser` | 2 | 0 | 0 |
 | `attendance_attendancedailyhours` | 2 | `employee_employee`, `horilla_auth_horillauser` | 2 | 0 | 0 |
@@ -1459,12 +1459,12 @@ For each table: direct parents, and total transitive ancestors (everything that 
 | `base_employeetype_company_id` | 2 | `base_company`, `base_employeetype` | 3 | 0 | 0 |
 | `base_historicalrotatingshiftassign` | 1 | `horilla_auth_horillauser` | 1 | 1 | 1 |
 | `base_historicalrotatingshiftassign_history_tags` | 2 | `base_historicalrotatingshiftassign`, `horilla_audit_audittag` | 3 | 0 | 0 |
-| `base_historicalrotatingworktypeassign` | 1 | `horilla_auth_horillauser` | 1 | 1 | 1 |
-| `base_historicalrotatingworktypeassign_history_tags` | 2 | `base_historicalrotatingworktypeassign`, `horilla_audit_audittag` | 3 | 0 | 0 |
+| `base_historicalrotatingworkfromassign` | 1 | `horilla_auth_horillauser` | 1 | 1 | 1 |
+| `base_historicalrotatingworkfromassign_history_tags` | 2 | `base_historicalrotatingworkfromassign`, `horilla_audit_audittag` | 3 | 0 | 0 |
 | `base_historicalshiftrequest` | 1 | `horilla_auth_horillauser` | 1 | 1 | 1 |
 | `base_historicalshiftrequest_history_tags` | 2 | `base_historicalshiftrequest`, `horilla_audit_audittag` | 3 | 0 | 0 |
-| `base_historicalworktyperequest` | 1 | `horilla_auth_horillauser` | 1 | 1 | 1 |
-| `base_historicalworktyperequest_history_tags` | 2 | `base_historicalworktyperequest`, `horilla_audit_audittag` | 3 | 0 | 0 |
+| `base_historicalworkfromrequest` | 1 | `horilla_auth_horillauser` | 1 | 1 | 1 |
+| `base_historicalworkfromrequest_history_tags` | 2 | `base_historicalworkfromrequest`, `horilla_audit_audittag` | 3 | 0 | 0 |
 | `base_holidays` | 2 | `base_company`, `horilla_auth_horillauser` | 2 | 3 | 3 |
 | `base_holidays_department` | 3 | `base_department`, `base_holidays` | 4 | 0 | 0 |
 | `base_holidays_employees` | 3 | `base_holidays`, `employee_employee` | 4 | 0 | 0 |
@@ -1483,19 +1483,19 @@ For each table: direct parents, and total transitive ancestors (everything that 
 | `base_rosterpublishlog` | 2 | `base_department`, `employee_employee` | 3 | 0 | 0 |
 | `base_rotatingshift` | 3 | `base_employeeshift`, `horilla_auth_horillauser` | 3 | 1 | 1 |
 | `base_rotatingshiftassign` | 4 | `base_employeeshift`, `base_rotatingshift`, `employee_employee`, `horilla_auth_horillauser` | 5 | 0 | 0 |
-| `base_rotatingworktype` | 2 | `base_worktype`, `horilla_auth_horillauser` | 2 | 1 | 1 |
-| `base_rotatingworktypeassign` | 3 | `base_rotatingworktype`, `base_worktype`, `employee_employee`, `horilla_auth_horillauser` | 4 | 0 | 0 |
+| `base_rotatingworkfrom` | 2 | `base_workfrom`, `horilla_auth_horillauser` | 2 | 1 | 1 |
+| `base_rotatingworkfromassign` | 3 | `base_rotatingworkfrom`, `base_workfrom`, `employee_employee`, `horilla_auth_horillauser` | 4 | 0 | 0 |
 | `base_setupchecklistdismissal` | 2 | `base_company`, `horilla_auth_horillauser` | 2 | 0 | 0 |
 | `base_shiftrequest` | 3 | `base_employeeshift`, `employee_employee`, `horilla_auth_horillauser` | 4 | 1 | 2 |
 | `base_shiftrequestcomment` | 4 | `base_shiftrequest`, `employee_employee`, `horilla_auth_horillauser` | 5 | 1 | 1 |
 | `base_shiftrequestcomment_files` | 5 | `base_baserequestfile`, `base_shiftrequestcomment` | 7 | 0 | 0 |
 | `base_tags` | 2 | `base_company`, `horilla_auth_horillauser` | 2 | 2 | 2 |
 | `base_tracklatecomeearlyout` | 2 | `base_company`, `horilla_auth_horillauser` | 2 | 0 | 0 |
-| `base_worktype` | 1 | `horilla_auth_horillauser` | 1 | 8 | 28 |
-| `base_worktype_company_id` | 2 | `base_company`, `base_worktype` | 3 | 0 | 0 |
-| `base_worktyperequest` | 2 | `base_worktype`, `employee_employee`, `horilla_auth_horillauser` | 3 | 1 | 2 |
-| `base_worktyperequestcomment` | 3 | `base_worktyperequest`, `employee_employee`, `horilla_auth_horillauser` | 4 | 1 | 1 |
-| `base_worktyperequestcomment_files` | 4 | `base_baserequestfile`, `base_worktyperequestcomment` | 6 | 0 | 0 |
+| `base_workfrom` | 1 | `horilla_auth_horillauser` | 1 | 8 | 28 |
+| `base_workfrom_company_id` | 2 | `base_company`, `base_workfrom` | 3 | 0 | 0 |
+| `base_workfromrequest` | 2 | `base_workfrom`, `employee_employee`, `horilla_auth_horillauser` | 3 | 1 | 2 |
+| `base_workfromrequestcomment` | 3 | `base_workfromrequest`, `employee_employee`, `horilla_auth_horillauser` | 4 | 1 | 1 |
+| `base_workfromrequestcomment_files` | 4 | `base_baserequestfile`, `base_workfromrequestcomment` | 6 | 0 | 0 |
 | `biometric_biometricdevices` | 2 | `base_company`, `horilla_auth_horillauser` | 2 | 2 | 2 |
 | `biometric_biometricemployees` | 3 | `biometric_biometricdevices`, `employee_employee` | 4 | 0 | 0 |
 | `biometric_cosecattendancearguments` | 3 | `biometric_biometricdevices` | 3 | 0 | 0 |
@@ -1516,7 +1516,7 @@ For each table: direct parents, and total transitive ancestors (everything that 
 | `employee_employeenote` | 2 | `employee_employee`, `horilla_auth_horillauser` | 2 | 1 | 1 |
 | `employee_employeenote_note_files` | 3 | `employee_employeenote`, `employee_notefiles` | 4 | 0 | 0 |
 | `employee_employeetag` | 1 | `horilla_auth_horillauser` | 1 | 1 | 1 |
-| `employee_employeeworkinformation` | 4 | `base_company`, `base_department`, `base_employeeshift`, `base_employeetype`, `base_jobposition`, `base_jobrole`, `base_worktype`, `employee_employee` | 10 | 1 | 1 |
+| `employee_employeeworkinformation` | 4 | `base_company`, `base_department`, `base_employeeshift`, `base_employeetype`, `base_jobposition`, `base_jobrole`, `base_workfrom`, `employee_employee` | 10 | 1 | 1 |
 | `employee_employeeworkinformation_tags` | 5 | `employee_employeetag`, `employee_employeeworkinformation` | 12 | 0 | 0 |
 | `employee_historicalbonuspoint` | 1 | `horilla_auth_horillauser` | 1 | 1 | 1 |
 | `employee_historicalbonuspoint_history_tags` | 2 | `employee_historicalbonuspoint`, `horilla_audit_audittag` | 3 | 0 | 0 |
@@ -1645,13 +1645,13 @@ For each table: direct parents, and total transitive ancestors (everything that 
 | `onboarding_onboardingtask` | 5 | `horilla_auth_horillauser`, `onboarding_onboardingstage` | 5 | 3 | 3 |
 | `onboarding_onboardingtask_candidates` | 6 | `onboarding_onboardingtask`, `recruitment_candidate` | 11 | 0 | 0 |
 | `onboarding_onboardingtask_employee_id` | 6 | `employee_employee`, `onboarding_onboardingtask` | 7 | 0 | 0 |
-| `payroll_allowance` | 3 | `base_company`, `base_employeeshift`, `base_worktype`, `horilla_auth_horillauser` | 5 | 7 | 11 |
+| `payroll_allowance` | 3 | `base_company`, `base_employeeshift`, `base_workfrom`, `horilla_auth_horillauser` | 5 | 7 | 11 |
 | `payroll_allowance_apply_conditions` | 4 | `payroll_allowance`, `payroll_applycondition` | 7 | 0 | 0 |
 | `payroll_allowance_exclude_employees` | 4 | `employee_employee`, `payroll_allowance` | 7 | 0 | 0 |
 | `payroll_allowance_other_conditions` | 4 | `payroll_allowance`, `payroll_multiplecondition` | 7 | 0 | 0 |
 | `payroll_allowance_specific_employees` | 4 | `employee_employee`, `payroll_allowance` | 7 | 0 | 0 |
 | `payroll_applycondition` | 0 | — | 0 | 2 | 2 |
-| `payroll_contract` | 4 | `base_department`, `base_employeeshift`, `base_jobposition`, `base_jobrole`, `base_worktype`, `employee_employee`, `horilla_auth_horillauser`, `payroll_filingstatus`, `payroll_salarystructure` | 11 | 0 | 0 |
+| `payroll_contract` | 4 | `base_department`, `base_employeeshift`, `base_jobposition`, `base_jobrole`, `base_workfrom`, `employee_employee`, `horilla_auth_horillauser`, `payroll_filingstatus`, `payroll_salarystructure` | 11 | 0 | 0 |
 | `payroll_deduction` | 2 | `base_company`, `horilla_auth_horillauser` | 2 | 7 | 7 |
 | `payroll_deduction_apply_conditions` | 3 | `payroll_applycondition`, `payroll_deduction` | 4 | 0 | 0 |
 | `payroll_deduction_exclude_employees` | 3 | `employee_employee`, `payroll_deduction` | 4 | 0 | 0 |
@@ -1800,7 +1800,7 @@ For each table: direct parents, and total transitive ancestors (everything that 
 - `base_jobposition` — 31 descendants, 14 direct
 - `recruitment_linkedinaccount` — 30 descendants, 1 direct
 - `recruitment_recruitment` — 29 descendants, 10 direct
-- `base_worktype` — 28 descendants, 8 direct
+- `base_workfrom` — 28 descendants, 8 direct
 - `horilla_audit_audittag` — 26 descendants, 26 direct
 - `leave_leavetype` — 23 descendants, 9 direct
 - `recruitment_stage` — 18 descendants, 3 direct

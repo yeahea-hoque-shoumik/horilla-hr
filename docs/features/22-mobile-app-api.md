@@ -19,7 +19,7 @@ The system offers an **API**, a way for other software to talk to it, which the 
 
 ### What the app can do, by area
 
-- Organisation and shifts: companies, departments, job positions, job roles, work types, shifts and schedules, rotations, and shift and work-type requests with approval and cancellation.
+- Organisation and shifts: companies, departments, job positions, job roles, work from options, shifts and schedules, rotations, and shift and work-from requests with approval and cancellation.
 - Employees: employee lists and profiles, work information, bank details, archiving, bulk updates, policies, disciplinary actions, and document requests with approval.
 - Attendance: check-in and check-out (the same steps as the web, including the employee's time zone), attendance records, validation, overtime approval, hours balance, late arrival and early departure, today's attendance, who has not checked in, and attendance requests. The location check (**geofence**) and face check are used here; see [Attendance](05-attendance.md).
 - Leave: balances, leave types, requests, approval, rejection, cancellation, bulk actions, requests for extra days, holidays and weekly days off.

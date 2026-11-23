@@ -18,7 +18,7 @@ from django_filters import DateFilter, DateFromToRangeFilter
 
 from base.filters import FilterSet
 from base.methods import reload_queryset
-from base.models import Company, Department, EmployeeShift, JobPosition, WorkType
+from base.models import Company, Department, EmployeeShift, JobPosition, WorkFrom
 from employee.models import Employee
 from horilla.filters import HorillaFilterSet
 from pms.models import (
@@ -962,12 +962,12 @@ class MeetingsFilter(HorillaFilterSet):
             "search_fields": ["job_position", "department_id__department"],
             "placeholder": _("Select job position..."),
         },
-        "employee_id__employee_work_info__work_type_id": {
-            "key": "meeting-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "employee_id__employee_work_info__work_from_id": {
+            "key": "meeting-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
     }
 
@@ -981,7 +981,7 @@ class MeetingsFilter(HorillaFilterSet):
             "employee_id__employee_work_info__department_id",
             "employee_id__employee_work_info__company_id",
             "employee_id__employee_work_info__job_position_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
             "employee_id__employee_work_info__shift_id",
             "employee_id__employee_work_info__reporting_manager_id",
         ]

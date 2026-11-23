@@ -17,7 +17,7 @@ from base.models import (
     EmployeeType,
     JobPosition,
     JobRole,
-    WorkType,
+    WorkFrom,
 )
 from employee.models import Employee
 from horilla.filters import HorillaFilterSet, filter_name_or_badge_terms
@@ -506,7 +506,7 @@ class PipelineEmployeeFilter(HorillaFilterSet):
         return queryset.filter(exitreason__title=value)
 
     # HorillaFilterSet.ajax_fields (generic AJAX-loaded combobox mechanism)
-    # -- Department/Job Position/Job Role/Employee Type/Shift/Work Type
+    # -- Department/Job Position/Job Role/Employee Type/Shift/Work From
     # opt into AJAX-searched comboboxes instead of pre-rendering their
     # whole queryset as <option> tags.
     ajax_fields = {
@@ -549,12 +549,12 @@ class PipelineEmployeeFilter(HorillaFilterSet):
             "search_fields": ["employee_shift"],
             "placeholder": _("Select shift..."),
         },
-        "employee_id__employee_work_info__work_type_id": {
-            "key": "exit-process-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "employee_id__employee_work_info__work_from_id": {
+            "key": "exit-process-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
     }
 
@@ -568,7 +568,7 @@ class PipelineEmployeeFilter(HorillaFilterSet):
             "employee_id__employee_work_info__job_role_id",
             "employee_id__employee_work_info__employee_type_id",
             "employee_id__employee_work_info__shift_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
         ]
 
     def search_method(self, queryset, _, value):

@@ -1,5 +1,5 @@
 """
-This page is handling the cbv methods of work type and shift tab in employee profile page.
+This page is handling the cbv methods of work from and shift tab in employee profile page.
 """
 
 import json

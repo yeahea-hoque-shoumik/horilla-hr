@@ -1,7 +1,7 @@
 """
 employee/employee_settings.py
 
-Employee Configuration landing page with tabbed shift, schedule, work type, and tag sections.
+Employee Configuration landing page with tabbed shift, schedule, work from, and tag sections.
 """
 
 from django.contrib.auth.decorators import login_required
@@ -45,17 +45,17 @@ def employee_settings_rotating_shift_tab(request):
 
 @login_required
 @hx_request_required
-def employee_settings_work_type_tab(request):
-    """HTMX tab body for work types under configuration."""
-    return render(request, "employee_settings/employee_settings_work_type_tab.html")
+def employee_settings_work_from_tab(request):
+    """HTMX tab body for work from options under configuration."""
+    return render(request, "employee_settings/employee_settings_work_from_tab.html")
 
 
 @login_required
 @hx_request_required
-def employee_settings_rotating_work_type_tab(request):
-    """HTMX tab body for rotating work types under configuration."""
+def employee_settings_rotating_work_from_tab(request):
+    """HTMX tab body for rotating work from options under configuration."""
     return render(
-        request, "employee_settings/employee_settings_rotating_work_type_tab.html"
+        request, "employee_settings/employee_settings_rotating_work_from_tab.html"
     )
 
 

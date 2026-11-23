@@ -43,7 +43,7 @@ msgstr "職位"
 msgid "Department"
 msgstr "部門"
 
-msgid "Work Type"
+msgid "Work From"
 msgstr "工作類型"
 
 msgid "Employee Type"
@@ -1629,7 +1629,7 @@ msgstr "已选轮班"
 
 #, fuzzy
 #| msgid "Selected Worktypes"
-msgid "Select work type..."
+msgid "Select work from..."
 msgstr "已选工作类型"
 
 msgid "Clock In"
@@ -2112,7 +2112,7 @@ msgstr "搜索范围：天"
 msgid "Search in : Shift"
 msgstr "搜索范围：轮班"
 
-msgid "Search in : Work Type"
+msgid "Search in : Work From"
 msgstr "搜索范围：工作类型"
 
 msgid "Search in : Department"
@@ -2377,7 +2377,7 @@ msgstr "目前没有部门。"
 
 #, fuzzy
 #| msgid "Work Types"
-msgid "Work Type Distribution"
+msgid "Work From Distribution"
 msgstr "工作类型"
 
 msgid "Remote, on-site, hybrid, etc."
@@ -2581,7 +2581,7 @@ msgstr ""
 
 #, fuzzy
 #| msgid "Next work type"
-msgid "No work type data"
+msgid "No work from data"
 msgstr "下次工作类型"
 
 #, fuzzy
@@ -3966,7 +3966,7 @@ msgstr "限制日更新成功。"
 msgid "New Weekly Off Day Created Successfully"
 msgstr "新假期已成功创建。"
 
-msgid "Requested Work Type"
+msgid "Requested Work From"
 msgstr "申请的工作类型"
 
 msgid "Requested Shift"
@@ -4290,19 +4290,19 @@ msgstr "轮班分配创建成功"
 msgid "You are added to rotating shift"
 msgstr "您已被添加到轮班制"
 
-msgid "Rotating Work Type"
+msgid "Rotating Work From"
 msgstr "轮换工作类型"
 
 msgid "Based On"
 msgstr "基于"
 
-msgid "Current Work Type"
+msgid "Current Work From"
 msgstr "当前工作类型"
 
-msgid "Next Work Type"
+msgid "Next Work From"
 msgstr "下次工作类型"
 
-msgid "Rotating Work Type Assign"
+msgid "Rotating Work From Assign"
 msgstr "轮换工作类型分配"
 
 msgid "Rotating Work Assign Updated Successfully"
@@ -4311,34 +4311,34 @@ msgstr "轮换工作分配更新成功"
 msgid "Rotating Work Assigned"
 msgstr "已分配轮换工作"
 
-msgid "You are added to rotating work type"
+msgid "You are added to rotating work from"
 msgstr "您已被添加到轮班工作类型"
 
 msgid "Rotating Work Assign Created"
 msgstr "轮换工作分配已创建"
 
-msgid "Work Type 1"
+msgid "Work From 1"
 msgstr "工作类型 1"
 
-msgid "Work Type 2"
+msgid "Work From 2"
 msgstr "工作类型 2"
 
-msgid "Additional Work Types"
+msgid "Additional Work From Options"
 msgstr "附加工作类型"
 
-msgid "Create Rotating Work Type"
+msgid "Create Rotating Work From"
 msgstr "创建轮班工作类型"
 
-msgid "Rotating Work Type Created"
+msgid "Rotating Work From Created"
 msgstr "轮换工作类型已创建"
 
-msgid "Update Rotating Work Type"
+msgid "Update Rotating Work From"
 msgstr "更新轮班工作类型"
 
-msgid "Update Work Type"
+msgid "Update Work From"
 msgstr "更新工作类型"
 
-msgid "Rotating Work Type Updated"
+msgid "Rotating Work From Updated"
 msgstr "轮换工作类型已更新"
 
 msgid "Canceled"
@@ -4412,10 +4412,10 @@ msgstr "休假分配申请已更新"
 msgid "You have a new shift reallocation request from %(employee)s."
 msgstr "休假分配申请已更新"
 
-msgid "Work type request"
+msgid "Work from request"
 msgstr "工作类型请求"
 
-msgid "Rotating work type"
+msgid "Rotating work from"
 msgstr "轮换工作类型"
 
 msgid "Shift request"
@@ -4426,45 +4426,45 @@ msgstr "轮班请求"
 msgid "Shift Allocation"
 msgstr "分配"
 
-msgid "Work Type Request"
+msgid "Work From Request"
 msgstr "工作类型申请"
 
 msgid "Shift Request"
 msgstr "轮班申请"
 
-msgid "Previous/current Work Type"
+msgid "Previous/current Work From"
 msgstr "先前/当前工作类型"
 
-msgid "Work Type Requests"
+msgid "Work From Requests"
 msgstr "工作类型申请列表"
 
-msgid "current Work Type"
+msgid "current Work From"
 msgstr "当前工作类型"
 
-msgid "Previous Work Type"
+msgid "Previous Work From"
 msgstr "先前工作类型"
 
-msgid "Is Permanent Work Type"
+msgid "Is Permanent Work From"
 msgstr "是否为永久工作类型"
 
-msgid "Create Work Type"
+msgid "Create Work From"
 msgstr "创建工作类型"
 
-msgid "New Work Type Created"
+msgid "New Work From Created"
 msgstr "新工作类型已创建"
 
-msgid "Work Type Updated"
+msgid "Work From Updated"
 msgstr "工作类型已更新。"
 
 msgid "Request Updated Successfully"
 msgstr "请求更新成功"
 
-msgid "Work type Request Created"
+msgid "Work from Request Created"
 msgstr "工作类型申请已创建"
 
 #, fuzzy, python-format
 #| msgid "You have a new leave request to validate."
-msgid "You have new work type request to validate for %(employee)s"
+msgid "You have new work from request to validate for %(employee)s"
 msgstr "您有一个新的请假申请需要验证。"
 
 #, fuzzy
@@ -4620,7 +4620,7 @@ msgstr "工作角色已成功创建！"
 msgid "Role already exists under %(position)s"
 msgstr "角色已存在于%(position)s下"
 
-msgid "---Choose Work Type---"
+msgid "---Choose Work From---"
 msgstr "---选择工作类型---"
 
 msgid "Rotate after day"
@@ -4846,10 +4846,10 @@ msgstr "用户组已分配。"
 msgid "This department already exists in this company"
 msgstr "该公司中已存在此部门"
 
-msgid "Work Types"
+msgid "Work From Options"
 msgstr "工作类型"
 
-msgid "This work type already exists in this company"
+msgid "This work from already exists in this company"
 msgstr "该工作类型已在该公司存在"
 
 #, fuzzy
@@ -4857,10 +4857,10 @@ msgstr "该工作类型已在该公司存在"
 msgid "All Company"
 msgstr "全公司"
 
-msgid "Rotating Work Types"
+msgid "Rotating Work From Options"
 msgstr "轮换工作类型"
 
-msgid "Select different work type continuously"
+msgid "Select different work from continuously"
 msgstr "连续选择不同的工作类型"
 
 msgid "Rotate After Day"
@@ -4872,7 +4872,7 @@ msgstr "每周末轮换"
 msgid "Rotate Every Month"
 msgstr "每月轮换"
 
-msgid "Rotating Work Type Assigns"
+msgid "Rotating Work From Assigns"
 msgstr "轮换工作类型分配"
 
 msgid "Date must be greater than or equal to today"
@@ -4974,7 +4974,7 @@ msgstr "已发布"
 msgid "Roster Publish Logs"
 msgstr ""
 
-msgid "Requesting Work Type"
+msgid "Requesting Work From"
 msgstr "申请工作类型"
 
 msgid "Permanent Request"
@@ -4986,7 +4986,7 @@ msgstr "请求条目无法删除。"
 msgid "End date must be greater than or equal to start date"
 msgstr "结束日期必须大于或等于开始日期"
 
-msgid "A work type request already exists during this time period."
+msgid "A work from request already exists during this time period."
 msgstr "此时间段内已存在工作类型申请。"
 
 msgid "Requested till field is required."
@@ -5167,7 +5167,7 @@ msgstr "罚款账户"
 
 #, fuzzy
 #| msgid "Your work type request has been canceled."
-msgid "Your Work Type has been changed."
+msgid "Your Work From has been changed."
 msgstr "您的工作类型申请已被取消。"
 
 #, fuzzy
@@ -5185,10 +5185,10 @@ msgstr ""
 
 #, fuzzy
 #| msgid "Work Types"
-msgid "Work Type Changes notification"
+msgid "Work From Changes notification"
 msgstr "工作类型"
 
-msgid "Work type changes notification, Requested date expired."
+msgid "Work from changes notification, Requested date expired."
 msgstr ""
 
 msgid "General"
@@ -6425,43 +6425,43 @@ msgstr "否"
 msgid "Are you sure you want to delete this rotating shift?"
 msgstr "您确定要删除此轮班吗？"
 
-msgid "Add more work types.."
+msgid "Add more work from options.."
 msgstr "添加更多工作类型..."
 
-msgid "Select All Worktypes"
+msgid "Select All WorkFroms"
 msgstr "全选工作类型"
 
-msgid "Unselect All Worktypes"
+msgid "Unselect All WorkFroms"
 msgstr "取消全选工作类型"
 
-msgid "Export Worktypes"
+msgid "Export WorkFroms"
 msgstr "导出工作类型"
 
-msgid "Do you Want to archive this rotating work type assign?"
+msgid "Do you Want to archive this rotating work from assign?"
 msgstr "您要归档此轮班工作类型分配吗？"
 
-msgid "Do you Want to un-archive this rotating work type assign?"
+msgid "Do you Want to un-archive this rotating work from assign?"
 msgstr "您要取消归档此轮班工作类型分配吗？"
 
-msgid "Are you sure you want to delete this rotating work type assign?"
+msgid "Are you sure you want to delete this rotating work from assign?"
 msgstr "您确定要删除此轮班工作类型分配吗？"
 
-msgid "Do you want to archive this rotating work type assign?"
+msgid "Do you want to archive this rotating work from assign?"
 msgstr "您要归档此轮班工作类型分配吗？"
 
-msgid "There are no rotating work type assigned to this employee."
+msgid "There are no rotating work from assigned to this employee."
 msgstr "该员工未分配轮班工作类型。"
 
-msgid "Selected Worktypes"
+msgid "Selected WorkFroms"
 msgstr "已选工作类型"
 
-msgid "No Employees Assigned to Rotating Work Types."
+msgid "No Employees Assigned to Rotating Work From Options."
 msgstr "没有员工被分配至轮换工作类型。"
 
-msgid "Do you want to un-archive this rotating work type assign?"
+msgid "Do you want to un-archive this rotating work from assign?"
 msgstr "您确定要取消归档此轮班工作类型分配吗？"
 
-msgid "Are you sure you want to delete this rotating work type?"
+msgid "Are you sure you want to delete this rotating work from?"
 msgstr "您确定要删除此轮班工作类型吗？"
 
 #, fuzzy
@@ -6749,7 +6749,7 @@ msgstr "前缀"
 msgid "Are you sure you want to delete this ticket type?"
 msgstr "您确定要删除此工单类型吗？"
 
-msgid "Are you sure you want to delete this work type?"
+msgid "Are you sure you want to delete this work from?"
 msgstr "您确定要删除此工作类型吗？"
 
 #, fuzzy
@@ -6785,10 +6785,10 @@ msgstr "经理"
 msgid "Export Rotating Shift Assigns"
 msgstr "导出轮班分配"
 
-msgid "Do you want to Un-archive this rotating work type assign?"
+msgid "Do you want to Un-archive this rotating work from assign?"
 msgstr "您确定要取消归档此轮班工作类型分配吗？"
 
-msgid "Export Rotating Work Type Assigns"
+msgid "Export Rotating Work From Assigns"
 msgstr "导出轮班工作类型分配"
 
 #, fuzzy
@@ -6841,10 +6841,10 @@ msgstr "未标记"
 msgid "Reallocate Shift."
 msgstr "重新分配轮班"
 
-msgid "Are you sure you want to delete this work type request?"
+msgid "Are you sure you want to delete this work from request?"
 msgstr "您确定要删除此工作类型请求吗？"
 
-msgid "Export Work Type Requests"
+msgid "Export Work From Requests"
 msgstr "导出工作类型请求"
 
 msgid "There are no company leaves at the moment."
@@ -6912,7 +6912,7 @@ msgstr "您是否要取消此请求？"
 msgid "cancel"
 msgstr "取消"
 
-msgid "Previous/ Current Work Type"
+msgid "Previous/ Current Work From"
 msgstr "先前/当前工作类型"
 
 msgid "Reallocate to"
@@ -6948,27 +6948,27 @@ msgstr "您是否要拒绝此请求？"
 msgid "'s shift request"
 msgstr "[user:name] 的轮班请求"
 
-msgid "There are currently no work type requests to consider."
+msgid "There are currently no work from requests to consider."
 msgstr "目前没有需要处理的工作类型请求。"
 
-msgid "Previous/Current Work Type"
+msgid "Previous/Current Work From"
 msgstr "先前/当前工作类型"
 
-msgid "'s worktype request"
+msgid "'s workfrom request"
 msgstr "[user:name] 的工作类型请求"
 
-msgid "Requested work type"
+msgid "Requested work from"
 msgstr "请求的工作类型"
 
-msgid "Previous work type"
+msgid "Previous work from"
 msgstr "先前的工作类型"
 
-msgid "Is permenent work type"
+msgid "Is permenent work from"
 msgstr "是否为永久工作类型"
 
 #, fuzzy
 #| msgid "There are no work type requets to display."
-msgid "There are no work type requests to display."
+msgid "There are no work from requests to display."
 msgstr "没有可显示的工作类型请求。"
 
 msgid "monday"
@@ -7040,13 +7040,13 @@ msgstr "您的资产申请已获批准！"
 msgid "Your asset request rejected!."
 msgstr "您的资产申请已被拒绝！"
 
-msgid "Your work type request has been canceled."
+msgid "Your work from request has been canceled."
 msgstr "您的工作类型申请已被取消。"
 
-msgid "Your work type request has been approved."
+msgid "Your work from request has been approved."
 msgstr "您的工作类型申请已获批准。"
 
-msgid "Your work type request has been deleted."
+msgid "Your work from request has been deleted."
 msgstr "您的工作类型申请已被删除。"
 
 msgid "Your shift request has been canceled."
@@ -7154,7 +7154,7 @@ msgstr "单次请假扣除金额"
 msgid "Deduct leave from basic pay"
 msgstr "从基本工资中扣除请假"
 
-msgid "Work type"
+msgid "Work from"
 msgstr "工作类型"
 
 msgid "Pay frequency"
@@ -7181,7 +7181,7 @@ msgstr "仪表板"
 msgid "SHIFT REQUESTS"
 msgstr "轮班请求"
 
-msgid "WORK TYPE REQUESTS"
+msgid "WORK FROM REQUESTS"
 msgstr "工作类型请求"
 
 msgid "Single"
@@ -7286,10 +7286,10 @@ msgstr "下次变更日期"
 msgid "Next shift"
 msgstr "下次轮班"
 
-msgid "Current work type"
+msgid "Current work from"
 msgstr "当前工作类型"
 
-msgid "Next work type"
+msgid "Next work from"
 msgstr "下次工作类型"
 
 msgid "Start date from"
@@ -7418,7 +7418,7 @@ msgstr "入职门户..."
 msgid "Employee work information"
 msgstr "员工工作信息"
 
-msgid "Rotating work type assign"
+msgid "Rotating work from assign"
 msgstr "轮班工作类型分配"
 
 msgid "Employee shift schedule"
@@ -7478,13 +7478,13 @@ msgstr "员工视图"
 msgid "shift-request-view"
 msgstr "轮班申请视图"
 
-msgid "work-type-request-view"
+msgid "work-from-request-view"
 msgstr "工作类型申请视图"
 
 msgid "rotating-shift-assign"
 msgstr "轮班分配"
 
-msgid "rotating-work-type-assign"
+msgid "rotating-work-from-assign"
 msgstr "轮换工作类型分配"
 
 msgid "view-payroll-dashboard"
@@ -7633,10 +7633,10 @@ msgstr "职位视图"
 msgid "job-role-view"
 msgstr "角色视图"
 
-msgid "work-type-view"
+msgid "work-from-view"
 msgstr "工作类型视图"
 
-msgid "rotating-work-type-view"
+msgid "rotating-work-from-view"
 msgstr "轮班工作类型视图"
 
 msgid "employee-type-view"
@@ -7748,7 +7748,7 @@ msgstr ""
 msgid "job_role"
 msgstr "职位角色"
 
-msgid "work_type"
+msgid "work_from"
 msgstr "工作类型"
 
 msgid "company"
@@ -8112,7 +8112,7 @@ msgstr "性别图表"
 msgid "Shift Request to Approve"
 msgstr "待批准的轮班请求"
 
-msgid "Work Type Request to Approve"
+msgid "Work From Request to Approve"
 msgstr "待批准的工作类型请求"
 
 msgid "Overtime to Approve"
@@ -8339,25 +8339,25 @@ msgstr "职位已成功创建！"
 msgid "Job role updated."
 msgstr "工作角色已更新。"
 
-msgid "Work Type has been created successfully!"
+msgid "Work From has been created successfully!"
 msgstr "工作类型已成功创建！"
 
-msgid "Work type updated."
+msgid "Work from updated."
 msgstr "工作类型已更新。"
 
-msgid "Rotating work type created."
+msgid "Rotating work from created."
 msgstr "轮班工作类型已创建。"
 
-msgid "Rotating work type updated."
+msgid "Rotating work from updated."
 msgstr "轮班工作类型已更新。"
 
-msgid "Rotating work type assigned."
+msgid "Rotating work from assigned."
 msgstr "轮班工作类型已分配。"
 
-msgid "Rotating work type assign updated."
+msgid "Rotating work from assign updated."
 msgstr "轮班工作类型分配已更新。"
 
-msgid "Rotating work type assign not found."
+msgid "Rotating work from assign not found."
 msgstr "未找到轮班工作类型分配。"
 
 msgid "Already on record is active"
@@ -8370,20 +8370,20 @@ msgid "archived"
 msgstr "已归档"
 
 #, python-brace-format
-msgid "Rotating work type assign is {}"
+msgid "Rotating work from assign is {}"
 msgstr "轮班工作类型分配状态为 {}"
 
 #, fuzzy
 #| msgid "No %(verbose_name)s found matching the query"
-msgid "No rotatingworktype found matching the query."
+msgid "No rotatingworkfrom found matching the query."
 msgstr "未找到与查询匹配的 %(verbose_name)s"
 
 #, python-brace-format
-msgid "Rotating work type for {employee_id} already exists"
+msgid "Rotating work from for {employee_id} already exists"
 msgstr "{employee_id} 的轮班工作类型已存在"
 
 #, python-brace-format
-msgid "Rotating work type for {count} employees is {message}"
+msgid "Rotating work from for {count} employees is {message}"
 msgstr "{count} 名员工的轮班工作类型状态为 {message}"
 
 #, python-brace-format
@@ -8391,17 +8391,17 @@ msgid "{employee} deleted."
 msgstr "{employee} 已删除。"
 
 #, python-brace-format
-msgid "{rwork_type_assign} not found."
-msgstr "未找到 {rwork_type_assign}。"
+msgid "{rwork_from_assign} not found."
+msgstr "未找到 {rwork_from_assign}。"
 
 #, python-brace-format
-msgid "You cannot delete {rwork_type_assign}"
-msgstr "您无法删除 {rwork_type_assign}"
+msgid "You cannot delete {rwork_from_assign}"
+msgstr "您无法删除 {rwork_from_assign}"
 
-msgid "Rotating work type assign deleted."
+msgid "Rotating work from assign deleted."
 msgstr "轮班工作类型分配已删除。"
 
-msgid "You cannot delete this rotating work type."
+msgid "You cannot delete this rotating work from."
 msgstr "您无法删除此轮班工作类型。"
 
 msgid "Employee type created."
@@ -8488,49 +8488,49 @@ msgstr "未找到该员工"
 msgid "Employee permission assigned."
 msgstr "员工权限已分配。"
 
-msgid "Work type request added."
+msgid "Work from request added."
 msgstr "工作类型请求已添加。"
 
-msgid "Work type request not found."
+msgid "Work from request not found."
 msgstr "未找到工作类型请求。"
 
 msgid "You don't have permission"
 msgstr "您没有权限"
 
-msgid "Work type request has been rejected."
+msgid "Work from request has been rejected."
 msgstr "工作类型请求已被拒绝。"
 
 #, fuzzy
 #| msgid "Your work type request has been deleted."
-msgid "Your work type request has been rejected."
+msgid "Your work from request has been rejected."
 msgstr "您的工作类型申请已被删除。"
 
 #, fuzzy
 #| msgid "No %(verbose_name)s found matching the query"
-msgid "No worktype request found matching the query."
+msgid "No workfrom request found matching the query."
 msgstr "未找到与查询匹配的 %(verbose_name)s"
 
-msgid "Work type request has been canceled."
+msgid "Work from request has been canceled."
 msgstr "工作类型请求已取消。"
 
-msgid "Work type request has been approved."
+msgid "Work from request has been approved."
 msgstr "工作类型请求已批准。"
 
-msgid "An approved work type request already exists during this time period."
+msgid "An approved work from request already exists during this time period."
 msgstr "在此时间段内已存在一个已批准的工作类型请求。"
 
-msgid "Work type request deleted."
+msgid "Work from request deleted."
 msgstr "工作类型请求已删除。"
 
-msgid "You cannot delete this work type request."
+msgid "You cannot delete this work from request."
 msgstr "您无法删除此工作类型请求。"
 
 #, python-brace-format
-msgid "You cannot delete {employee} work type request for the date {date}."
+msgid "You cannot delete {employee} work from request for the date {date}."
 msgstr "您无法删除 {employee} 在 {date} 的工作类型请求。"
 
 #, python-brace-format
-msgid "{} work type requests deleted."
+msgid "{} work from requests deleted."
 msgstr "{} 个工作类型请求已删除。"
 
 msgid "Shift request added"
@@ -8723,12 +8723,12 @@ msgstr "未找到文档"
 
 #, fuzzy, python-format
 #| msgid "There are no compensatory leave requests at the moment."
-msgid "%(employee)s's work type request has received a comment."
+msgid "%(employee)s's work from request has received a comment."
 msgstr "目前没有补休申请。"
 
 #, fuzzy
 #| msgid "Your Leave request has been approved"
-msgid "Your work type request has received a comment."
+msgid "Your work from request has received a comment."
 msgstr "您的请假申请已获批准"
 
 msgid "Default pagination updated."
@@ -9535,7 +9535,7 @@ msgstr "员工编号"
 msgid "Date of Joining"
 msgstr "入职日期"
 
-msgid "Work Type & Shift"
+msgid "Work From & Shift"
 msgstr "工作类型与轮班"
 
 msgid "Groups & Permissions"
@@ -10807,7 +10807,7 @@ msgstr "今日面试"
 msgid "No interviews are scheduled for this candidate"
 msgstr "该候选人没有安排任何面试"
 
-msgid "No work type request has been created."
+msgid "No work from request has been created."
 msgstr "尚未创建工作类型请求"
 
 msgid "Rotate every 1st day of month "
@@ -10843,7 +10843,7 @@ msgstr "每月最后一天轮换"
 msgid "th day of month "
 msgstr "每月的第 [th] 天"
 
-msgid "No rotating work type has been assigned."
+msgid "No rotating work from has been assigned."
 msgstr "未分配轮换工作类型。"
 
 msgid "No Shift request has been created."
@@ -12041,7 +12041,7 @@ msgstr "如果基于轮班，则必须填写轮班。"
 
 #, fuzzy
 #| msgid "If based on is work type, then work type must be filled."
-msgid "If 'based_on' is 'work_type_id', 'work_type_id' is required."
+msgid "If 'based_on' is 'work_from_id', 'work_from_id' is required."
 msgstr "如果基于工作类型，则必须填写工作类型。"
 
 #, fuzzy
@@ -12155,12 +12155,12 @@ msgstr "未找到公司请假记录"
 
 #, fuzzy
 #| msgid "Work type request not found."
-msgid "WorkType not found"
+msgid "WorkFrom not found"
 msgstr "未找到工作类型请求。"
 
 #, fuzzy
 #| msgid "Work type request not found."
-msgid "WorkTypeRequest not found"
+msgid "WorkFromRequest not found"
 msgstr "未找到工作类型请求。"
 
 #, fuzzy
@@ -12170,7 +12170,7 @@ msgstr "您没有访问此功能的权限"
 
 #, fuzzy
 #| msgid "Rotating work type assign not found."
-msgid "RotatingWorkTypeAssign not found"
+msgid "RotatingWorkFromAssign not found"
 msgstr "未找到轮班工作类型分配。"
 
 #, fuzzy
@@ -12200,7 +12200,7 @@ msgstr "未找到轮班请求。"
 
 #, fuzzy
 #| msgid "Rotating work type assign not found."
-msgid "RotatingWorkType not found"
+msgid "RotatingWorkFrom not found"
 msgstr "未找到轮班工作类型分配。"
 
 msgid "Already request exits on same date"
@@ -14646,7 +14646,7 @@ msgstr "该员工未分配轮班。"
 
 #, fuzzy
 #| msgid "There are no rotating work type assigned to this employee."
-msgid "Set up rotating work type patterns for employees."
+msgid "Set up rotating work from patterns for employees."
 msgstr "该员工未分配轮班工作类型。"
 
 msgid "Configure day-wise schedules linked to each shift."
@@ -14806,7 +14806,7 @@ msgstr "报销"
 
 #, fuzzy
 #| msgid "Work Type Request"
-msgid "Create Work Type Request"
+msgid "Create Work From Request"
 msgstr "工作类型申请"
 
 msgid "Create Leave Request"
@@ -15099,7 +15099,7 @@ msgstr "创建公告"
 msgid "Shift Requests to Approve"
 msgstr "待批准的轮班请求"
 
-msgid "Work Type Requests to Approve"
+msgid "Work From Requests to Approve"
 msgstr "待批准的工作类型请求"
 
 msgid "Employee Work Information"
@@ -16869,7 +16869,7 @@ msgstr ""
 msgid "Submit and manage your shift change requests for approval."
 msgstr ""
 
-msgid "Submit and manage requests to change your work type assignment."
+msgid "Submit and manage requests to change your work from assignment."
 msgstr ""
 
 msgid "Company-specific settings"
@@ -17090,7 +17090,7 @@ msgstr "周"
 msgid "Shift Roster"
 msgstr "轮班申请"
 
-msgid "No Comments have been added for this worktype request"
+msgid "No Comments have been added for this workfrom request"
 msgstr "该员工尚未添加任何备注"
 
 #, fuzzy
@@ -20605,7 +20605,7 @@ msgstr "如果基于考勤，则必须填写每次考勤的固定金额。"
 msgid "If based on is shift, then shift must be filled."
 msgstr "如果基于轮班，则必须填写轮班。"
 
-msgid "If based on is work type, then work type must be filled."
+msgid "If based on is work from, then work from must be filled."
 msgstr "如果基于工作类型，则必须填写工作类型。"
 
 msgid "The amount per children must be filled."
@@ -25084,7 +25084,7 @@ msgstr "所有公司"
 
 #, fuzzy
 #| msgid "Next work type"
-msgid "All work types"
+msgid "All work from options"
 msgstr "下次工作类型"
 
 #, fuzzy

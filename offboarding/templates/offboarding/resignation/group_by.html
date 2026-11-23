@@ -3,30 +3,30 @@
 {% load static %}
 {% load i18n %}
 {% include 'filter_tags.html' %}
-{% comment %} {% if perms.base.view_worktyperequest %}
+{% comment %} {% if perms.base.view_workfromrequest %}
 	<div
 	class="oh-checkpoint-badge text-success mb-2"
-	id="selectAllWorktypes"
+	id="selectAllWorkFroms"
 	style="cursor: pointer"
 	>
-	{% trans "Select All Worktypes" %}
+	{% trans "Select All WorkFroms" %}
 	</div>
 	<div
 	class="oh-checkpoint-badge text-secondary mb-2"
-	id="unselectAllWorktypes"
+	id="unselectAllWorkFroms"
 	style="cursor: pointer;display: none;"
 	>
-	{% trans "Unselect All Worktypes" %}
+	{% trans "Unselect All WorkFroms" %}
 	</div>
 {% endif %}
 <div
 class="oh-checkpoint-badge text-info mb-2"
-id="exportWorktypes"
+id="exportWorkFroms"
 style="cursor: pointer; display: none"
 >
-  {% trans "Export Worktypes" %}
+  {% trans "Export WorkFroms" %}
 </div>
-<div class="oh-checkpoint-badge text-danger mb-2" id="selectedShowWorktypes" style="display: none"></div> {% endcomment %}
+<div class="oh-checkpoint-badge text-danger mb-2" id="selectedShowWorkFroms" style="display: none"></div> {% endcomment %}
 
 <div class="oh-card oh-wrapper">
     {% for letter_list in letters %}
@@ -323,7 +323,7 @@ style="cursor: pointer; display: none"
 <!-- start of comment modal -->
 <div
 	class="oh-modal"
-	id="WorktypecommentModal"
+	id="WorkFromcommentModal"
 	role="dialog"
 	aria-labelledby="emptagModal"
 	aria-hidden="true"
@@ -337,7 +337,7 @@ style="cursor: pointer; display: none"
 				<ion-icon name="close-outline"></ion-icon>
 			</button>
 		</div>
-		<div class="oh-modal__dialog-body" id="WorktypeRequestCommentForm"></div>
+		<div class="oh-modal__dialog-body" id="WorkFromRequestCommentForm"></div>
 	</div>
 </div>
 <!-- end of comment modal -->

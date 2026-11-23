@@ -57,13 +57,13 @@ FILTER_CATALOG: dict[str, dict[str, Any]] = {
         "label_key": "employee_type",
         "empty_label": _("All types"),
     },
-    "work_type_id": {
-        "label": _("Work type"),
+    "work_from_id": {
+        "label": _("Work from"),
         "control": "select",
-        "options_key": "work_types",
+        "options_key": "work_froms",
         "value_key": "id",
-        "label_key": "work_type",
-        "empty_label": _("All work types"),
+        "label_key": "work_from",
+        "empty_label": _("All work from options"),
     },
     "shift_id": {
         "label": _("Shift"),
@@ -164,7 +164,7 @@ DOMAIN_DEFAULT_FILTERS: dict[str, tuple[str, ...]] = {
         "job_position_id",
         "job_role_id",
         "employee_type_id",
-        "work_type_id",
+        "work_from_id",
         "shift_id",
         "company_id",
         "location",
@@ -175,7 +175,7 @@ DOMAIN_DEFAULT_FILTERS: dict[str, tuple[str, ...]] = {
         "employment_status",
         "department_id",
         "job_position_id",
-        "work_type_id",
+        "work_from_id",
         "shift_id",
         "company_id",
         "gender",
@@ -320,8 +320,8 @@ def build_filter_options(definition: ReportDefinition) -> dict[str, list]:
             "base.EmployeeType", ("id", "employee_type")
         )
 
-    if "work_types" in needed:
-        options["work_types"] = _safe_values("base.WorkType", ("id", "work_type"))
+    if "work_froms" in needed:
+        options["work_froms"] = _safe_values("base.WorkFrom", ("id", "work_from"))
 
     if "shifts" in needed:
         options["shifts"] = _safe_values("base.EmployeeShift", ("id", "employee_shift"))

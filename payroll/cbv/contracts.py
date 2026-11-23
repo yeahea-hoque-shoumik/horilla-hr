@@ -162,7 +162,7 @@ class ContractsList(HorillaListView):
         ("employee_id__employee_work_info__department_id", _("Department")),
         ("contract_status", _("Status")),
         ("employee_id__employee_work_info__shift_id", _("Shift")),
-        ("employee_id__employee_work_info__work_type_id", _("Work Type")),
+        ("employee_id__employee_work_info__work_from_id", _("Work From")),
         ("employee_id__employee_work_info__job_role_id", _("Job Role")),
         (
             "employee_id__employee_work_info__reporting_manager_id",
@@ -256,7 +256,7 @@ class ContractsNav(HorillaNavView):
         ("employee_id__employee_work_info__department_id", _("Department")),
         ("contract_status", _("Status")),
         ("employee_id__employee_work_info__shift_id", _("Shift")),
-        ("employee_id__employee_work_info__work_type_id", _("Work Type")),
+        ("employee_id__employee_work_info__work_from_id", _("Work From")),
         ("employee_id__employee_work_info__job_role_id", _("Job Role")),
         (
             "employee_id__employee_work_info__reporting_manager_id",

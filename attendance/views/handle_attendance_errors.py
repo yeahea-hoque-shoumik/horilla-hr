@@ -26,7 +26,7 @@ def handle_attendance_errors(error_list):
     error_data = {
         "Badge ID": [],
         "Shift": [],
-        "Work type": [],
+        "Work from": [],
         "Attendance date": [],
         "Check-in date": [],
         "Check-in": [],
@@ -36,7 +36,7 @@ def handle_attendance_errors(error_list):
         "Minimum hour": [],
         "Badge ID Error": [],
         "Shift Error": [],
-        "Work Type Error": [],
+        "Work From Error": [],
         "Check-in Validation Error": [],
         "Check-out Validation Error": [],
         "Attendance Error": [],

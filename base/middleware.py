@@ -18,7 +18,7 @@ from django.utils.translation import gettext_lazy as _
 from base.backends import ConfiguredEmailBackend
 from base.context_processors import AllCompany, AllMyCompanies
 from base.horilla_company_manager import HorillaCompanyManager
-from base.models import Company, ShiftRequest, WorkTypeRequest
+from base.models import Company, ShiftRequest, WorkFromRequest
 from employee.models import (
     DisciplinaryAction,
     Employee,
@@ -148,7 +148,7 @@ CACHE_KEY = "horilla_company_models_cache_key"
 #             company_models = [
 #                 Employee,
 #                 ShiftRequest,
-#                 WorkTypeRequest,
+#                 WorkFromRequest,
 #                 DocumentRequest,
 #                 DisciplinaryAction,
 #                 EmployeeBankDetails,

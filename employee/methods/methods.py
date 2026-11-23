@@ -24,7 +24,7 @@ from base.models import (
     EmployeeType,
     JobPosition,
     JobRole,
-    WorkType,
+    WorkFrom,
 )
 from employee.models import Employee, EmployeeWorkInformation
 from horilla_auth.methods import generate_random_password
@@ -46,7 +46,7 @@ error_data_template = {
         "Department",
         "Job Position",
         "Job Role",
-        "Work Type",
+        "Work From",
         "Shift",
         "Employee Type",
         "Reporting Manager",
@@ -240,7 +240,7 @@ def valid_import_file_headers(data_frame):
         "Department",
         "Job Position",
         "Job Role",
-        "Work Type",
+        "Work From",
         "Shift",
         "Employee Type",
         "Reporting Manager",
@@ -733,28 +733,28 @@ def bulk_create_job_role_import(success_lists):
             )
 
 
-def bulk_create_work_types(success_lists):
+def bulk_create_work_froms(success_lists):
     """
-    Bulk creation of work type instances based on the excel import of employees
+    Bulk creation of work from instances based on the excel import of employees
     """
-    # Extract unique work types, filtering out None values
-    work_types_to_import = {
-        wt for work_info in success_lists if (wt := work_info.get("Work Type"))
+    # Extract unique work from options, filtering out None values
+    work_froms_to_import = {
+        wt for work_info in success_lists if (wt := work_info.get("Work From"))
     }
 
-    # Get existing work types in one optimized query
-    existing_work_types = set(WorkType.objects.values_list("work_type", flat=True))
+    # Get existing work from options in one optimized query
+    existing_work_froms = set(WorkFrom.objects.values_list("work_from", flat=True))
 
-    # Create new work type objects
-    new_work_types = [
-        WorkType(work_type=wt) for wt in work_types_to_import - existing_work_types
+    # Create new work from objects
+    new_work_froms = [
+        WorkFrom(work_from=wt) for wt in work_froms_to_import - existing_work_froms
     ]
 
-    # Bulk create if there are new work types
-    if new_work_types:
+    # Bulk create if there are new work from options
+    if new_work_froms:
         with transaction.atomic():
-            WorkType.objects.bulk_create(
-                new_work_types, batch_size=None if is_postgres else 999
+            WorkFrom.objects.bulk_create(
+                new_work_froms, batch_size=None if is_postgres else 999
             )
 
 
@@ -884,7 +884,7 @@ def import_contract_salaries(success_lists, employees_by_badge, work_infos):
                 job_position=work_info.job_position_id,
                 job_role=work_info.job_role_id,
                 shift=work_info.shift_id,
-                work_type=work_info.work_type_id,
+                work_from=work_info.work_from_id,
                 wage_type="hourly" if hourly and not basic else "monthly",
                 wage=basic or 0,
                 hourly_wage=hourly,
@@ -913,7 +913,7 @@ def bulk_create_work_info_import(success_lists):
     departments = set(row.get("Department") for row in success_lists)
     job_positions = set(row.get("Job Position") for row in success_lists)
     job_roles = set(row.get("Job Role") for row in success_lists)
-    work_types = set(row.get("Work Type") for row in success_lists)
+    work_froms = set(row.get("Work From") for row in success_lists)
     employee_types = set(row.get("Employee Type") for row in success_lists)
     shifts = set(row.get("Shift") for row in success_lists)
     companies = set(row.get("Company") for row in success_lists)
@@ -964,9 +964,9 @@ def bulk_create_work_info_import(success_lists):
         .select_related("job_position_id")
         .only("job_position_id", "job_role")
     }
-    existing_work_types = {
-        wt.work_type: wt
-        for wt in WorkType.objects.filter(work_type__in=work_types).only("work_type")
+    existing_work_froms = {
+        wt.work_from: wt
+        for wt in WorkFrom.objects.filter(work_from__in=work_froms).only("work_from")
     }
     existing_shifts = {
         es.employee_shift: es
@@ -1008,7 +1008,7 @@ def bulk_create_work_info_import(success_lists):
         )
         job_role_obj = existing_job_roles.get(job_role_key)
 
-        work_type_obj = existing_work_types.get(work_info.get("Work Type"))
+        work_from_obj = existing_work_froms.get(work_info.get("Work From"))
         employee_type_obj = existing_employee_types.get(work_info.get("Employee Type"))
         shift_obj = existing_shifts.get(work_info.get("Shift"))
         reporting_manager = work_info.get("Reporting Manager")
@@ -1040,7 +1040,7 @@ def bulk_create_work_info_import(success_lists):
                 department_id=department_obj,
                 job_position_id=job_position_obj,
                 job_role_id=job_role_obj,
-                work_type_id=work_type_obj,
+                work_from_id=work_from_obj,
                 employee_type_id=employee_type_obj,
                 shift_id=shift_obj,
                 reporting_manager_id=reporting_manager_obj,
@@ -1060,7 +1060,7 @@ def bulk_create_work_info_import(success_lists):
             employee_work_info.department_id = department_obj
             employee_work_info.job_position_id = job_position_obj
             employee_work_info.job_role_id = job_role_obj
-            employee_work_info.work_type_id = work_type_obj
+            employee_work_info.work_from_id = work_from_obj
             employee_work_info.employee_type_id = employee_type_obj
             employee_work_info.shift_id = shift_obj
             employee_work_info.reporting_manager_id = reporting_manager_obj
@@ -1085,7 +1085,7 @@ def bulk_create_work_info_import(success_lists):
                 "department_id",
                 "job_position_id",
                 "job_role_id",
-                "work_type_id",
+                "work_from_id",
                 "employee_type_id",
                 "shift_id",
                 "reporting_manager_id",

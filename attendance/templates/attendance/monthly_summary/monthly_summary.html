@@ -334,18 +334,18 @@
                     </select>
                   </div>
                   <div class="oh-input-group">
-                    <label class="oh-label">{% trans "Work Type" %}</label>
-                    <select name="work_type_id" multiple class="oh-select-ajax w-100"
-                            data-ajax-url="{% url 'horilla-ajax-choices' 'employee-work-type' %}"
-                            data-placeholder="{% trans 'Select work type...' %}">
-                      {% for wt in selected_work_types %}
-                        <option value="{{ wt.pk }}" selected>{{ wt.work_type }}</option>
+                    <label class="oh-label">{% trans "Work From" %}</label>
+                    <select name="work_from_id" multiple class="oh-select-ajax w-100"
+                            data-ajax-url="{% url 'horilla-ajax-choices' 'employee-work-from' %}"
+                            data-placeholder="{% trans 'Select work from...' %}">
+                      {% for wt in selected_work_froms %}
+                        <option value="{{ wt.pk }}" selected>{{ wt.work_from }}</option>
                       {% endfor %}
                     </select>
                   </div>
                   <!-- Company/Reporting Manager/Employee Tag -- same
                        accordion as Employee/Department/Job Position/Shift/
-                       Work Type above, matching where EmployeeFilter's own
+                       Work From above, matching where EmployeeFilter's own
                        two panels (employee/templates/employee_filters.html,
                        employee/templates/cbv/employees_view/
                        filter_employee.html) both place these three fields:
@@ -621,7 +621,7 @@ var MS_MULTI_FIELDS = [
   { name: 'department_id', label: "{% trans 'Department'|escapejs %}" },
   { name: 'job_position_id', label: "{% trans 'Job Position'|escapejs %}" },
   { name: 'shift_id', label: "{% trans 'Shift'|escapejs %}" },
-  { name: 'work_type_id', label: "{% trans 'Work Type'|escapejs %}" },
+  { name: 'work_from_id', label: "{% trans 'Work From'|escapejs %}" },
   { name: 'employee_work_info__company_id', label: "{% trans 'Company'|escapejs %}" },
   { name: 'employee_work_info__reporting_manager_id', label: "{% trans 'Reporting Manager'|escapejs %}" },
   { name: 'employee_work_info__tags', label: "{% trans 'Employee Tag'|escapejs %}" },

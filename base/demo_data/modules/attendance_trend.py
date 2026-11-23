@@ -350,7 +350,7 @@ def backfill_zero_coverage_attendance(today: date | None = None) -> int:
     work_info_by_employee = {
         wi["employee_id"]: wi
         for wi in EmployeeWorkInformation._base_manager.values(
-            "employee_id", "shift_id", "work_type_id"
+            "employee_id", "shift_id", "work_from_id"
         )
     }
     uncovered_ids = [
@@ -375,7 +375,7 @@ def backfill_zero_coverage_attendance(today: date | None = None) -> int:
                 employee_id_id=employee_id,
                 attendance_date=attendance_date,
                 shift_id_id=work_info.get("shift_id"),
-                work_type_id_id=work_info.get("work_type_id"),
+                work_from_id_id=work_info.get("work_from_id"),
                 attendance_day_id=shift_day_pk,
                 attendance_clock_in_date=attendance_date,
                 attendance_clock_in=NEW_COVERAGE_CLOCK_IN,
@@ -450,7 +450,7 @@ def backfill_attendance_density(today: date | None = None) -> int:
         wi["employee_id"]: wi
         for wi in EmployeeWorkInformation._base_manager.filter(
             shift_id__isnull=False
-        ).values("employee_id", "shift_id", "work_type_id")
+        ).values("employee_id", "shift_id", "work_from_id")
     }
     active_ids = set(
         Employee._base_manager.filter(is_active=True).values_list("id", flat=True)
@@ -527,7 +527,7 @@ def backfill_attendance_density(today: date | None = None) -> int:
                     employee_id_id=employee_id,
                     attendance_date=attendance_date,
                     shift_id_id=shift_id,
-                    work_type_id_id=work_info.get("work_type_id"),
+                    work_from_id_id=work_info.get("work_from_id"),
                     attendance_day_id=shift_day_pk,
                     attendance_clock_in_date=attendance_date,
                     attendance_clock_in=DENSITY_CLOCK_IN,

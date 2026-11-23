@@ -15,7 +15,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
     shift_name = serializers.CharField(source="shift_id.employee_shift", read_only=True)
     badge_id = serializers.CharField(source="employee_id.badge_id", read_only=True)
     employee_profile_url = serializers.SerializerMethodField(read_only=True)
-    work_type = serializers.CharField(source="work_type_id.work_type", read_only=True)
+    work_from = serializers.CharField(source="work_from_id.work_from", read_only=True)
 
     class Meta:
         model = Attendance
@@ -96,7 +96,7 @@ class AttendanceRequestSerializer(serializers.ModelSerializer):
                 "attendance_clock_out_date"
             ),
             "shift_id": validated_data.get("shift_id"),
-            "work_type_id": validated_data.get("work_type_id"),
+            "work_from_id": validated_data.get("work_from_id"),
             "attendance_worked_hour": validated_data.get("attendance_worked_hour"),
             "minimum_hour": validated_data.get("minimum_hour"),
         }
@@ -115,7 +115,7 @@ class AttendanceRequestSerializer(serializers.ModelSerializer):
                 if data["attendance_clock_out_date"] == "None"
                 else data["attendance_clock_out_date"]
             )
-            data["work_type_id"] = self.data["work_type_id"]
+            data["work_from_id"] = self.data["work_from_id"]
             data["shift_id"] = self.data["shift_id"]
             attendance = attendances.first()
             for key, value in data.items():

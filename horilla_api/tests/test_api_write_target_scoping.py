@@ -17,7 +17,7 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 
 from attendance.models import Attendance
-from base.models import RotatingWorkType, RotatingWorkTypeAssign, WorkType
+from base.models import RotatingWorkFrom, RotatingWorkFromAssign, WorkFrom
 from employee.models import EmployeeWorkInformation
 from horilla.testkit import make_company, make_employee, make_user
 from horilla.testkit.factories import make_attendance
@@ -26,7 +26,7 @@ from horilla_documents.models import Document
 VALIDATE = "/api/v1/attendance/attendance-validate/{}"
 OVERTIME_APPROVE = "/api/v1/attendance/overtime-approve/{}"
 REQUEST_APPROVE = "/api/v1/attendance/attendance-request-approve/{}"
-ROTATING_ASSIGN = "/api/v1/base/rotating-worktype-assigns/{}/"
+ROTATING_ASSIGN = "/api/v1/base/rotating-workfrom-assigns/{}/"
 DOC_APPROVE = "/api/v1/employee/document-request-approve-reject/{}/{}/"
 DOC_BULK = "/api/v1/employee/document-bulk-approve-reject/"
 
@@ -68,13 +68,13 @@ class WriteTargetScopingTests(TestCase):
         self.client.force_authenticate(user=self.attacker_user)
 
     def _rotating_assignment(self, employee, name):
-        rotating = RotatingWorkType.objects.create(
+        rotating = RotatingWorkFrom.objects.create(
             name=name,
-            work_type1=WorkType.objects.create(work_type=f"{name} A"),
-            work_type2=WorkType.objects.create(work_type=f"{name} B"),
+            work_from1=WorkFrom.objects.create(work_from=f"{name} A"),
+            work_from2=WorkFrom.objects.create(work_from=f"{name} B"),
         )
-        return RotatingWorkTypeAssign.objects.create(
-            employee_id=employee, rotating_work_type_id=rotating
+        return RotatingWorkFromAssign.objects.create(
+            employee_id=employee, rotating_work_from_id=rotating
         )
 
     def _attendance(self, employee, validated=False, overtime=3600):
@@ -127,7 +127,7 @@ class WriteTargetScopingTests(TestCase):
         self.assertEqual(response.status_code, 200, response.data)
         self.assertTrue(Attendance.objects.get(pk=record.pk).attendance_validated)
 
-    # --- rotating work type assignment ------------------------------------
+    # --- rotating work from assignment ------------------------------------
 
     def test_cannot_read_or_delete_a_stranger_rotating_assignment(self):
         assignment = self._rotating_assignment(self.victim, "Rotate A")
@@ -138,7 +138,7 @@ class WriteTargetScopingTests(TestCase):
             self.client.delete(ROTATING_ASSIGN.format(assignment.pk)).status_code, 403
         )
         self.assertTrue(
-            RotatingWorkTypeAssign.objects.filter(pk=assignment.pk).exists()
+            RotatingWorkFromAssign.objects.filter(pk=assignment.pk).exists()
         )
 
     def test_own_rotating_assignment_is_still_readable(self):

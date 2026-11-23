@@ -7,7 +7,7 @@
       </div>
       <div class="oh-accordion-body">
         <!-- Full width -- Department/Job Position/Job Role/Employee
-             Type/Shift/Work Type are now AJAX-searched Select2
+             Type/Shift/Work From are now AJAX-searched Select2
              comboboxes (see offboarding/filters.py's
              PipelineEmployeeFilter.ajax_fields) and need real room for
              their selected chips/placeholder text, same reasoning as
@@ -45,8 +45,8 @@
           </div>
           <div class="col-sm-12 col-md-12 col-lg-12 mb-1">
             <div class="oh-input-group">
-              <label class="oh-label">{% trans 'Work Type' %}</label>
-              {{employee_filter.form.employee_id__employee_work_info__work_type_id}}
+              <label class="oh-label">{% trans 'Work From' %}</label>
+              {{employee_filter.form.employee_id__employee_work_info__work_from_id}}
             </div>
           </div>
         </div>

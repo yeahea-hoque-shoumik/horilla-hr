@@ -16,7 +16,7 @@ Two things it does not show, and says it does not show:
   * income tax — unless a filing status is chosen for the example. A contract
     carries one in real life; here it is picked, and the tax is worked out by
     the same compute_yearly_tax a payslip uses.
-  * components that measure attendance — overtime, shift and work-type rates
+  * components that measure attendance — overtime, shift and work-from rates
     need a real employee's hours. Reported per-line rather than guessed at.
 
 Everything is read-only. No Payslip, no Contract, nothing is saved.
@@ -44,7 +44,7 @@ SAMPLE_WORKING_DAYS = 22
 NEEDS_ATTENDANCE = {
     "attendance",
     "shift_id",
-    "work_type_id",
+    "work_from_id",
     "overtime",
     "week_off_overtime",
     "holiday_overtime",

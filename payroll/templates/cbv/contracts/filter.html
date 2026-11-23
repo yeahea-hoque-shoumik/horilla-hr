@@ -70,7 +70,7 @@
       </div>
       <div class="oh-accordion-body">
         <!-- Full width -- Company/Department/Job Position/Job Role/
-             Shift/Work Type are now AJAX-searched Select2 comboboxes
+             Shift/Work From are now AJAX-searched Select2 comboboxes
              (see payroll/filters.py's ContractFilter.ajax_fields) and
              need real room for their selected chips/placeholder text,
              same reasoning as every other modernized panel. -->
@@ -107,8 +107,8 @@
           </div>
           <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="oh-input-group">
-              <label class="oh-label" for="{{form.work_type.id_for_label}}">{% trans "Work Type" %}</label>
-              {{ form.work_type }}
+              <label class="oh-label" for="{{form.work_from.id_for_label}}">{% trans "Work From" %}</label>
+              {{ form.work_from }}
             </div>
           </div>
         </div>

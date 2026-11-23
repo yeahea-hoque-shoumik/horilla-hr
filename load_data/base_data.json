@@ -1046,55 +1046,55 @@
     }
   },
   {
-    "model": "base.worktype",
+    "model": "base.workfrom",
     "pk": 1,
     "fields": {
       "created_at": "2025-07-22T08:28:42.978Z",
       "created_by": 1,
       "modified_by": 1,
       "is_active": true,
-      "work_type": "Work From Office",
+      "work_from": "Work From Office",
       "company_id": []
     }
   },
   {
-    "model": "base.worktype",
+    "model": "base.workfrom",
     "pk": 2,
     "fields": {
       "created_at": "2025-07-22T08:28:55.690Z",
       "created_by": 1,
       "modified_by": 1,
       "is_active": true,
-      "work_type": "Work From Home",
+      "work_from": "Work From Home",
       "company_id": []
     }
   },
   {
-    "model": "base.worktype",
+    "model": "base.workfrom",
     "pk": 3,
     "fields": {
       "created_at": "2025-07-22T08:29:04.529Z",
       "created_by": 1,
       "modified_by": 1,
       "is_active": true,
-      "work_type": "Hybrid",
+      "work_from": "Hybrid",
       "company_id": []
     }
   },
   {
-    "model": "base.worktype",
+    "model": "base.workfrom",
     "pk": 4,
     "fields": {
       "created_at": "2025-07-22T08:29:11.796Z",
       "created_by": 1,
       "modified_by": 1,
       "is_active": true,
-      "work_type": "Remote",
+      "work_from": "Remote",
       "company_id": []
     }
   },
   {
-    "model": "base.rotatingworktype",
+    "model": "base.rotatingworkfrom",
     "pk": 1,
     "fields": {
       "created_at": "2025-07-22T08:29:31.860Z",
@@ -1102,13 +1102,13 @@
       "modified_by": 1,
       "is_active": true,
       "name": "WFH to WFO",
-      "work_type1": 2,
-      "work_type2": 1,
+      "work_from1": 2,
+      "work_from2": 1,
       "additional_data": {}
     }
   },
   {
-    "model": "base.rotatingworktype",
+    "model": "base.rotatingworkfrom",
     "pk": 2,
     "fields": {
       "created_at": "2025-07-22T08:29:47.665Z",
@@ -1116,13 +1116,13 @@
       "modified_by": 1,
       "is_active": true,
       "name": "WFO to WFH",
-      "work_type1": 1,
-      "work_type2": 2,
+      "work_from1": 1,
+      "work_from2": 2,
       "additional_data": {}
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 1,
     "fields": {
       "created_at": "2025-07-05T09:54:25.663Z",
@@ -1130,23 +1130,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 37,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 2,
     "fields": {
       "created_at": "2025-07-05T09:54:25.749Z",
@@ -1154,23 +1154,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 36,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 3,
     "fields": {
       "created_at": "2025-07-05T09:54:25.793Z",
@@ -1178,23 +1178,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 9,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 4,
     "fields": {
       "created_at": "2025-07-05T09:54:25.845Z",
@@ -1202,23 +1202,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 71,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 5,
     "fields": {
       "created_at": "2025-07-05T09:54:25.892Z",
@@ -1226,23 +1226,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 58,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 6,
     "fields": {
       "created_at": "2025-07-05T09:54:25.938Z",
@@ -1250,23 +1250,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 44,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 7,
     "fields": {
       "created_at": "2025-07-05T09:54:25.991Z",
@@ -1274,23 +1274,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 8,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 8,
     "fields": {
       "created_at": "2025-07-05T09:54:26.038Z",
@@ -1298,23 +1298,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 39,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 9,
     "fields": {
       "created_at": "2025-07-05T09:54:26.087Z",
@@ -1322,23 +1322,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 75,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 10,
     "fields": {
       "created_at": "2025-07-05T09:54:26.135Z",
@@ -1346,23 +1346,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 43,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 11,
     "fields": {
       "created_at": "2025-07-05T09:54:26.181Z",
@@ -1370,23 +1370,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 70,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 12,
     "fields": {
       "created_at": "2025-07-05T09:54:26.220Z",
@@ -1394,23 +1394,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 66,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 13,
     "fields": {
       "created_at": "2025-07-05T09:54:26.277Z",
@@ -1418,23 +1418,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 20,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 14,
     "fields": {
       "created_at": "2025-07-05T09:54:26.319Z",
@@ -1442,23 +1442,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 32,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 15,
     "fields": {
       "created_at": "2025-07-05T09:54:26.376Z",
@@ -1466,23 +1466,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 6,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 16,
     "fields": {
       "created_at": "2025-07-05T09:54:26.425Z",
@@ -1490,23 +1490,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 10,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 17,
     "fields": {
       "created_at": "2025-07-05T09:54:26.467Z",
@@ -1514,23 +1514,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 2,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 18,
     "fields": {
       "created_at": "2025-07-05T09:54:26.514Z",
@@ -1538,23 +1538,23 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 17,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
   {
-    "model": "base.rotatingworktypeassign",
+    "model": "base.rotatingworkfromassign",
     "pk": 19,
     "fields": {
       "created_at": "2025-07-05T09:54:26.554Z",
@@ -1562,18 +1562,18 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 42,
-      "rotating_work_type_id": 2,
+      "rotating_work_from_id": 2,
       "start_date": "2025-07-05",
       "next_change_date": "2025-07-11",
-      "current_work_type": 1,
-      "next_work_type": 1,
+      "current_work_from": 1,
+      "next_work_from": 1,
       "based_on": "after",
       "rotate_after_day": 3,
       "rotate_every_weekend": "monday",
       "rotate_every": "1",
       "additional_data": {
         "next_shift_index": 1,
-        "next_work_type_index": 1
+        "next_work_from_index": 1
       }
     }
   },
@@ -2274,7 +2274,7 @@
     }
   },
   {
-    "model": "base.worktyperequest",
+    "model": "base.workfromrequest",
     "pk": 1,
     "fields": {
       "created_at": "2025-07-23T03:42:49.581Z",
@@ -2282,19 +2282,19 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 1,
-      "work_type_id": 2,
-      "previous_work_type_id": null,
+      "work_from_id": 2,
+      "previous_work_from_id": null,
       "requested_date": "2025-07-01",
       "requested_till": "2025-07-30",
       "description": "need work from home for a month",
-      "is_permanent_work_type": false,
+      "is_permanent_work_from": false,
       "approved": false,
       "canceled": false,
-      "work_type_changed": false
+      "work_from_changed": false
     }
   },
   {
-    "model": "base.worktyperequest",
+    "model": "base.workfromrequest",
     "pk": 2,
     "fields": {
       "created_at": "2025-07-23T03:43:59.915Z",
@@ -2302,19 +2302,19 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 37,
-      "work_type_id": 2,
-      "previous_work_type_id": null,
+      "work_from_id": 2,
+      "previous_work_from_id": null,
       "requested_date": "2025-07-10",
       "requested_till": "2025-07-15",
       "description": "requesting for work from home",
-      "is_permanent_work_type": false,
+      "is_permanent_work_from": false,
       "approved": false,
       "canceled": false,
-      "work_type_changed": false
+      "work_from_changed": false
     }
   },
   {
-    "model": "base.worktyperequest",
+    "model": "base.workfromrequest",
     "pk": 3,
     "fields": {
       "created_at": "2025-07-23T03:44:35.523Z",
@@ -2322,19 +2322,19 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 13,
-      "work_type_id": 1,
-      "previous_work_type_id": null,
+      "work_from_id": 1,
+      "previous_work_from_id": null,
       "requested_date": "2025-07-01",
       "requested_till": "2025-07-10",
-      "description": "need a work type change",
-      "is_permanent_work_type": false,
+      "description": "need a work from change",
+      "is_permanent_work_from": false,
       "approved": false,
       "canceled": false,
-      "work_type_changed": false
+      "work_from_changed": false
     }
   },
   {
-    "model": "base.worktyperequest",
+    "model": "base.workfromrequest",
     "pk": 4,
     "fields": {
       "created_at": "2025-07-23T03:45:05.899Z",
@@ -2342,19 +2342,19 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 32,
-      "work_type_id": 2,
-      "previous_work_type_id": null,
+      "work_from_id": 2,
+      "previous_work_from_id": null,
       "requested_date": "2025-07-04",
       "requested_till": "2025-07-15",
       "description": "requesting for work from home",
-      "is_permanent_work_type": false,
+      "is_permanent_work_from": false,
       "approved": false,
       "canceled": false,
-      "work_type_changed": false
+      "work_from_changed": false
     }
   },
   {
-    "model": "base.worktyperequest",
+    "model": "base.workfromrequest",
     "pk": 5,
     "fields": {
       "created_at": "2025-07-23T03:46:16.058Z",
@@ -2362,15 +2362,15 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 20,
-      "work_type_id": 4,
-      "previous_work_type_id": null,
+      "work_from_id": 4,
+      "previous_work_from_id": null,
       "requested_date": "2025-07-01",
       "requested_till": "2025-07-30",
-      "description": "remote work type for a month",
-      "is_permanent_work_type": false,
+      "description": "remote work from for a month",
+      "is_permanent_work_from": false,
       "approved": false,
       "canceled": false,
-      "work_type_changed": false
+      "work_from_changed": false
     }
   },
   {
@@ -3694,7 +3694,7 @@
     }
   },
   {
-    "model": "base.worktyperequest",
+    "model": "base.workfromrequest",
     "pk": 6,
     "fields": {
       "created_at": "2025-07-19T09:00:00.000Z",
@@ -3702,19 +3702,19 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 3,
-      "work_type_id": 3,
-      "previous_work_type_id": 1,
+      "work_from_id": 3,
+      "previous_work_from_id": 1,
       "requested_date": "2025-07-19",
       "requested_till": "2025-08-19",
-      "description": "Requesting a temporary work-type change.",
-      "is_permanent_work_type": false,
+      "description": "Requesting a temporary work-from change.",
+      "is_permanent_work_from": false,
       "approved": false,
       "canceled": false,
-      "work_type_changed": false
+      "work_from_changed": false
     }
   },
   {
-    "model": "base.worktyperequest",
+    "model": "base.workfromrequest",
     "pk": 7,
     "fields": {
       "created_at": "2025-07-19T09:00:00.000Z",
@@ -3722,19 +3722,19 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 9,
-      "work_type_id": 4,
-      "previous_work_type_id": 2,
+      "work_from_id": 4,
+      "previous_work_from_id": 2,
       "requested_date": "2025-07-19",
       "requested_till": "2025-08-19",
-      "description": "Requesting a temporary work-type change.",
-      "is_permanent_work_type": false,
+      "description": "Requesting a temporary work-from change.",
+      "is_permanent_work_from": false,
       "approved": true,
       "canceled": false,
-      "work_type_changed": true
+      "work_from_changed": true
     }
   },
   {
-    "model": "base.worktyperequest",
+    "model": "base.workfromrequest",
     "pk": 8,
     "fields": {
       "created_at": "2025-07-19T09:00:00.000Z",
@@ -3742,19 +3742,19 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 20,
-      "work_type_id": 2,
-      "previous_work_type_id": 1,
+      "work_from_id": 2,
+      "previous_work_from_id": 1,
       "requested_date": "2025-07-19",
       "requested_till": "2025-08-19",
-      "description": "Requesting a temporary work-type change.",
-      "is_permanent_work_type": false,
+      "description": "Requesting a temporary work-from change.",
+      "is_permanent_work_from": false,
       "approved": true,
       "canceled": false,
-      "work_type_changed": true
+      "work_from_changed": true
     }
   },
   {
-    "model": "base.worktyperequest",
+    "model": "base.workfromrequest",
     "pk": 9,
     "fields": {
       "created_at": "2025-07-19T09:00:00.000Z",
@@ -3762,19 +3762,19 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 38,
-      "work_type_id": 3,
-      "previous_work_type_id": 2,
+      "work_from_id": 3,
+      "previous_work_from_id": 2,
       "requested_date": "2025-07-19",
       "requested_till": "2025-08-19",
-      "description": "Requesting a temporary work-type change.",
-      "is_permanent_work_type": false,
+      "description": "Requesting a temporary work-from change.",
+      "is_permanent_work_from": false,
       "approved": false,
       "canceled": false,
-      "work_type_changed": false
+      "work_from_changed": false
     }
   },
   {
-    "model": "base.worktyperequest",
+    "model": "base.workfromrequest",
     "pk": 10,
     "fields": {
       "created_at": "2025-07-19T09:00:00.000Z",
@@ -3782,15 +3782,15 @@
       "modified_by": 1,
       "is_active": true,
       "employee_id": 60,
-      "work_type_id": 4,
-      "previous_work_type_id": 1,
+      "work_from_id": 4,
+      "previous_work_from_id": 1,
       "requested_date": "2025-07-19",
       "requested_till": "2025-08-19",
-      "description": "Requesting a temporary work-type change.",
-      "is_permanent_work_type": false,
+      "description": "Requesting a temporary work-from change.",
+      "is_permanent_work_from": false,
       "approved": true,
       "canceled": false,
-      "work_type_changed": true
+      "work_from_changed": true
     }
   },
   {

@@ -63,7 +63,7 @@ Most apps register their own URL prefix in `AppConfig.ready()`, not in `horilla/
 
 | App | Purpose |
 |---|---|
-| `base` | Company, department, job position/role, shifts, work types, rosters, requests, announcements, holidays, mail servers/templates, approvals, settings, dashboards, setup wizard, media protection |
+| `base` | Company, department, job position/role, shifts, work from options, rosters, requests, announcements, holidays, mail servers/templates, approvals, settings, dashboards, setup wizard, media protection |
 | `horilla` | Project package: settings, root URLs, `HorillaModel`, decorators, scheduling registry, model-extension (`inherit`), observability, testkit |
 | `horilla_auth` | Custom user model `HorillaUser` (`AUTH_USER_MODEL`) |
 | `horilla_api` | REST API for the mobile app (`/api/`) |
@@ -101,17 +101,17 @@ Most apps register their own URL prefix in `AppConfig.ready()`, not in `horilla/
 ### 3.1 Organisation and company setup (`base`)
 
 - **Multi-company**: several `Company` records in one install. The user switches company in the navbar, and company-scoped data is filtered to the selected company (see §7.3).
-- **Org structure**: departments (with manager), job positions, job roles, employee types, work types, tags.
+- **Org structure**: departments (with manager), job positions, job roles, employee types, work from options, tags.
 - **First-run setup wizard** (`initialize_database*` views): creates the first admin user, company, departments and job positions. It is protected by `DB_INIT_PASSWORD`.
 - **Setup checklist** banner per user and company (`SetupChecklistDismissal`).
 - **System preferences**: default records per page (`DynamicPagination`, per user), badge-ID prefix, currency symbol and position, date and time formats (`HORILLA_DATE_FORMATS` / `HORILLA_TIME_FORMATS`), the languages enabled per company (`CompanyLanguageSetting`) and announcement expiry days.
 - **Default export permission** per company: either everyone may export, or export falls back to the per-model `export_<model>` permissions.
 
-### 3.2 Shifts, work types and rosters (`base`)
+### 3.2 Shifts, work from options and rosters (`base`)
 
 - **Shifts** (`EmployeeShift`) with a per-weekday schedule (`EmployeeShiftSchedule`: start/end, minimum working hours, auto check-out time).
-- **Rotating shifts** and **rotating work types**. An employee is assigned a rotation that switches *after N days*, *every weekend* or *on a set day/date each month*. The scheduler applies the rotations.
-- **Shift requests / work type requests**: employees request a change for a date range, and managers approve, reject or cancel them, individually or in bulk. Requests support comments and attachments. The scheduler switches the shift or work type on the start date and reverts it after the end date.
+- **Rotating shifts** and **rotating work from options**. An employee is assigned a rotation that switches *after N days*, *every weekend* or *on a set day/date each month*. The scheduler applies the rotations.
+- **Shift requests / work from requests**: employees request a change for a date range, and managers approve, reject or cancel them, individually or in bulk. Requests support comments and attachments. The scheduler switches the shift or work from on the start date and reverts it after the end date.
 - **Roster**: forward planning of one employee, one date, one shift. Rosters are published (`RosterPublishLog` audit trail), and employees see published entries in *My Roster*. A scheduled job syncs roster entries into shifts.
 
 ### 3.3 Holidays, weekly offs and announcements (`base`)
@@ -123,7 +123,7 @@ Most apps register their own URL prefix in `AppConfig.ready()`, not in `horilla/
 
 ### 3.4 Employees (`employee`)
 
-- **Employee record**: personal info, `EmployeeWorkInformation` (company, department, job position/role, shift, work type, reporting manager, employee type, location, joining date, salary details), `EmployeeBankDetails`, tags and profile picture.
+- **Employee record**: personal info, `EmployeeWorkInformation` (company, department, job position/role, shift, work from, reporting manager, employee type, location, joining date, salary details), `EmployeeBankDetails`, tags and profile picture.
 - **Lifecycle actions**: create, update, archive, replace (hand responsibilities to another employee), delete (blocked while the employee is still referenced), and bulk archive, delete or update. Admins can reset passwords singly or in bulk and send invitation emails singly or in bulk.
 - **Login blocking**: an admin can block or unblock an employee's login account (`AccountBlockUnblock`).
 - **Self-service**: an employee edits their own profile when the *Profile Edit* feature is granted (`ProfileEditFeature`, accessibility rule).
@@ -144,7 +144,7 @@ Most apps register their own URL prefix in `AppConfig.ready()`, not in `horilla/
   - **Geofencing**: mobile check-in must fall within a radius of the company location (`geopy` geodesic distance).
   - **Face detection**: a face image per employee is stored for the mobile app's face check.
   - **Check-in/out enable toggle** per company.
-- **Attendance record** per employee per day: shift, work type, check-in/out times, worked hours, minimum hours, overtime, and whether it is validated.
+- **Attendance record** per employee per day: shift, work from, check-in/out times, worked hours, minimum hours, overtime, and whether it is validated.
 - **Validation**: a manager validates attendance. Records that don't meet `AttendanceValidationCondition` (e.g. worked hours below the threshold or overtime above the cutoff) are flagged. Revalidation is supported.
 - **Overtime**: `AttendanceOverTime` monthly hour accounts. Overtime requires approval, singly or in bulk.
 - **Grace time** (`GraceTime`): a per-shift or default allowance before a check-in counts as late, optionally applied to check-out too.
@@ -210,7 +210,7 @@ The most extensive module (≈850 tests).
   - basic pay, or a percentage of another component (by code)
   - a **custom formula**: a safe AST-evaluated expression such as `(BASIC + DA) * 0.12`
   - balance of CTC, or number of children
-  - with attendance installed: regular, week-off or holiday overtime, shift, work type, or attendance
+  - with attendance installed: regular, week-off or holiday overtime, shift, work from, or attendance
   - fixed or computed, taxable or not, with conditions (`if` field/operator/value), a maximum limit prorated for partial periods, and specific or excluded employees
 - **Deductions**, based on basic, gross, taxable gross or net pay, another component, or a formula. They can be pre-tax or post-tax, employer contributions, one-time (on a date), or *exceed handling* (skip or cap when the deduction exceeds pay).
 - **Component engine** (`methods/component_engine.py`): an ordered evaluation (explicit `sequence`) in which each component can read earlier results.
@@ -461,7 +461,7 @@ Most newer screens are built from the same generic CBVs, so they share behaviour
 - **Modern dashboard** (`/dashboard/modern/`): KPI cards and ApexCharts.
 - **Employee self-service dashboard** (`/my-dashboard/`): personal data only.
 - **Dashboard customisation**: show or hide charts and reorder them per user (`DashboardEmployeeCharts`).
-- A **requests and approvals** panel on the dashboard (leave, attendance, shift and work-type requests).
+- A **requests and approvals** panel on the dashboard (leave, attendance, shift and work-from requests).
 - Each module has its own dashboard: employee, attendance, leave, payroll, recruitment, onboarding, offboarding, PMS, project, asset and helpdesk.
 
 ### 6.5 Theming, i18n and onboarding UX
@@ -565,9 +565,9 @@ Domain models extend `HorillaModel`, which provides:
 | Job | App | Schedule | What it does |
 |---|---|---|---|
 | `rotate_shift` (job1) | base | every 4 h | Applies rotating-shift assignments |
-| `rotate_work_type` (job2) | base | every 4 h | Applies rotating work types |
+| `rotate_work_from` (job2) | base | every 4 h | Applies rotating work from options |
 | `switch_shift` / `undo_shift` (job4/job3) | base | every 4 h | Applies approved shift requests on the start date and reverts them after the end date |
-| `switch_work_type` / `undo_work_type` (job5/job6) | base | every 4 h | Same for work-type requests |
+| `switch_work_from` / `undo_work_from` (job5/job6) | base | every 4 h | Same for work-from requests |
 | `recurring_holiday` | base | every 4 h | Rolls recurring holidays forward to the next year |
 | `sync_roster_shifts` | base | every 4 h | Applies published roster entries |
 | `update_experience` | employee | every 4 h | Recalculates employee experience |

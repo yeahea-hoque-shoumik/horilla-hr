@@ -168,7 +168,7 @@ def run_report(slug: str, filters: ReportFilters) -> dict:
             "department_id": filters.department_id,
             "job_position_id": filters.job_position_id,
             "employee_type_id": filters.employee_type_id,
-            "work_type_id": filters.work_type_id,
+            "work_from_id": filters.work_from_id,
             "company_id": filters.company_id,
             "reporting_manager_id": filters.reporting_manager_id,
             "location": filters.location,

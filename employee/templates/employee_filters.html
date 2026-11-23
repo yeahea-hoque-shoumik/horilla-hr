@@ -28,7 +28,7 @@
                 {% comment %}
                     Full width, not a col-lg-6 half -- Employee/Company/
                     Department/Shift/Employee Tag/Reporting Manager/Job
-                    Position/Work Type are all AJAX-loaded Select2
+                    Position/Work From are all AJAX-loaded Select2
                     comboboxes now (see EmployeeFilter.ajax_fields) and
                     need real room for their selected chips/placeholder
                     text, same fix already applied to the CBV filter panel
@@ -91,8 +91,8 @@
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="oh-input-group">
-                        <label class="oh-label" for="{{f.form.employee_work_info__work_type_id.id_for_label}}">{% trans "Work Type" %}</label>
-                        {{f.form.employee_work_info__work_type_id}}
+                        <label class="oh-label" for="{{f.form.employee_work_info__work_from_id.id_for_label}}">{% trans "Work From" %}</label>
+                        {{f.form.employee_work_info__work_from_id}}
                     </div>
                 </div>
                 {% if "attendance"|app_installed %}

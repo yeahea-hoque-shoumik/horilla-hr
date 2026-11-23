@@ -1,0 +1,56 @@
+{% load i18n %}
+<div>
+    {% include "generic/horilla_form.html" %}
+</div>
+<div id="moreWorkFromContainer_{{form.work_from_counts}}" class="pt-2" style="text-align: end;">
+<button
+    hidden
+      id="hidden"
+      hx-target="#moreWorkFromContainer_{{form.work_from_counts}}"
+      hx-swap="outerHTML"
+      hx-post="{% url 'add-remove-work-from-fields' %}"
+      role="button"
+      class="text-primary-600"
+    >
+      {% trans "Add more work from options.." %}
+    </button>
+</div>
+
+
+<script>
+
+    $(document).ready(function() {
+        // Field widths are driven server-side (RotatingWorkFromForm.cols),
+        // so every work_from field already renders full width here.
+        var test = {{ form.work_from_counts }};
+
+        var divElement = document.createElement('div');
+        divElement.id = 'moreWorkFromContainer_{{form.work_from_counts}}';
+        divElement.className = 'pt-2 text-primary-600';
+        divElement.style.textAlign = 'end';
+
+        var anchorElement = document.createElement('a');
+        anchorElement.setAttribute('role', 'button');
+        anchorElement.setAttribute('id', 'link');
+        anchorElement.innerText = 'Add more Work From Options..';
+
+        divElement.appendChild(anchorElement);
+
+        var parentDivId = "id_work_from" + test + "_parent_div";
+        var parentDiv = document.getElementById(parentDivId);
+        if (!document.getElementById('link')) {
+            if (parentDiv) {
+                parentDiv.insertAdjacentElement('afterend', divElement);
+            } else {
+                var parentDiv = document.getElementById('id_work_from2_parent_div');
+                parentDiv.insertAdjacentElement('afterend', divElement);
+            }
+        }
+
+        $(document).off('click', '#link').on('click', '#link', function(e) {
+            e.preventDefault();
+            $('#hidden').trigger('click');
+        });
+    });
+
+</script>

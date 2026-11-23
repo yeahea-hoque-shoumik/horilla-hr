@@ -15,11 +15,11 @@ from base.models import (
     JobRole,
     RotatingShift,
     RotatingShiftAssign,
-    RotatingWorkType,
-    RotatingWorkTypeAssign,
+    RotatingWorkFrom,
+    RotatingWorkFromAssign,
     ShiftRequest,
-    WorkType,
-    WorkTypeRequest,
+    WorkFrom,
+    WorkFromRequest,
 )
 from horilla import horilla_middlewares
 
@@ -55,15 +55,15 @@ class DepartmentSerializer(serializers.ModelSerializer):
         return obj
 
 
-class WorkTypeSerializer(serializers.ModelSerializer):
+class WorkFromSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = WorkType
+        model = WorkFrom
         fields = "__all__"
 
     def validate(self, attrs):
         # Create an instance of the model with the provided data
-        instance = WorkType(**attrs)
+        instance = WorkFrom(**attrs)
 
         # Call the model's clean method for validation
         try:
@@ -85,14 +85,14 @@ class WorkTypeSerializer(serializers.ModelSerializer):
         return instance
 
 
-class RotatingWorkTypeSerializer(serializers.ModelSerializer):
+class RotatingWorkFromSerializer(serializers.ModelSerializer):
     class Meta:
-        model = RotatingWorkType
+        model = RotatingWorkFrom
         fields = "__all__"
 
     def validate(self, attrs):
         # Create an instance of the model with the provided data
-        instance = RotatingWorkType(**attrs)
+        instance = RotatingWorkFrom(**attrs)
 
         # Call the model's clean method for validation
         try:
@@ -114,41 +114,41 @@ class RotatingWorkTypeSerializer(serializers.ModelSerializer):
         return instance
 
 
-class RotatingWorkTypeAssignSerializer(serializers.ModelSerializer):
-    rotating_work_type_name = serializers.SerializerMethodField(read_only=True)
-    current_work_type_name = serializers.SerializerMethodField(read_only=True)
-    next_work_type_name = serializers.SerializerMethodField(read_only=True)
+class RotatingWorkFromAssignSerializer(serializers.ModelSerializer):
+    rotating_work_from_name = serializers.SerializerMethodField(read_only=True)
+    current_work_from_name = serializers.SerializerMethodField(read_only=True)
+    next_work_from_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = RotatingWorkTypeAssign
+        model = RotatingWorkFromAssign
         fields = "__all__"
 
-    def get_current_work_type_name(self, instance):
-        current_work_type = instance.current_work_type
-        if current_work_type:
-            return current_work_type.work_type
+    def get_current_work_from_name(self, instance):
+        current_work_from = instance.current_work_from
+        if current_work_from:
+            return current_work_from.work_from
         else:
-            return None  # Return null if previous_work_type_id doesn't exist
+            return None  # Return null if previous_work_from_id doesn't exist
 
-    def get_next_work_type_name(self, instance):
-        next_work_type = instance.next_work_type
-        if next_work_type:
-            return next_work_type.work_type
+    def get_next_work_from_name(self, instance):
+        next_work_from = instance.next_work_from
+        if next_work_from:
+            return next_work_from.work_from
         else:
-            return None  # Return null if previous_work_type_id doesn't exist
+            return None  # Return null if previous_work_from_id doesn't exist
 
-    def get_rotating_work_type_name(self, instance):
-        rotating_work_type_id = instance.rotating_work_type_id
-        if rotating_work_type_id:
-            return rotating_work_type_id.name
+    def get_rotating_work_from_name(self, instance):
+        rotating_work_from_id = instance.rotating_work_from_id
+        if rotating_work_from_id:
+            return rotating_work_from_id.name
         else:
-            return None  # Return null if previous_work_type_id doesn't exist
+            return None  # Return null if previous_work_from_id doesn't exist
 
     def validate(self, attrs):
         if self.instance:
             return attrs
         # Create an instance of the model with the provided data
-        instance = RotatingWorkTypeAssign(**attrs)
+        instance = RotatingWorkFromAssign(**attrs)
         # Call the model's clean method for validation
         try:
             instance.clean()
@@ -297,21 +297,21 @@ class RotatingShiftAssignSerializer(serializers.ModelSerializer):
         if rotating_shift_id:
             return rotating_shift_id.name
         else:
-            return None  # Return null if previous_work_type_id doesn't exist
+            return None  # Return null if previous_work_from_id doesn't exist
 
     def get_next_shift_name(self, instance):
         next_shift = instance.next_shift
         if next_shift:
             return next_shift.employee_shift
         else:
-            return None  # Return null if previous_work_type_id doesn't exist
+            return None  # Return null if previous_work_from_id doesn't exist
 
     def get_current_shift_name(self, instance):
         current_shift = instance.current_shift
         if current_shift:
             return current_shift.employee_shift
         else:
-            return None  # Return null if previous_work_type_id doesn't exist
+            return None  # Return null if previous_work_from_id doesn't exist
 
     def update(self, instance, validated_data):
         for attr, value in validated_data.items():
@@ -321,22 +321,22 @@ class RotatingShiftAssignSerializer(serializers.ModelSerializer):
         return instance
 
 
-class WorkTypeRequestSerializer(serializers.ModelSerializer):
+class WorkFromRequestSerializer(serializers.ModelSerializer):
     employee_first_name = serializers.CharField(
         source="employee_id.employee_first_name", read_only=True
     )
     employee_last_name = serializers.CharField(
         source="employee_id.employee_last_name", read_only=True
     )
-    work_type_name = serializers.CharField(
-        source="work_type_id.work_type", read_only=True
+    work_from_name = serializers.CharField(
+        source="work_from_id.work_from", read_only=True
     )
-    previous_work_type_name = serializers.SerializerMethodField(read_only=True)
+    previous_work_from_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = WorkTypeRequest
+        model = WorkFromRequest
         fields = "__all__"
-        read_only_fields = ("approved", "canceled", "work_type_changed")
+        read_only_fields = ("approved", "canceled", "work_from_changed")
 
     def validate(self, attrs):
         request = getattr(horilla_middlewares._thread_locals, "request", None)
@@ -365,18 +365,18 @@ class WorkTypeRequestSerializer(serializers.ModelSerializer):
                 }
             )
 
-        # Check if any work type request already exists
-        if self.instance and self.instance.is_any_work_type_request_exists():
+        # Check if any work from request already exists
+        if self.instance and self.instance.is_any_work_from_request_exists():
             raise serializers.ValidationError(
                 {
                     "error": _(
-                        "A work type request already exists during this time period."
+                        "A work from request already exists during this time period."
                     )
                 }
             )
 
-        # Validate if `is_permanent_work_type` is False, `requested_till` must be provided
-        if not attrs.get("is_permanent_work_type", False):
+        # Validate if `is_permanent_work_from` is False, `requested_till` must be provided
+        if not attrs.get("is_permanent_work_from", False):
             if not requested_till:
                 raise serializers.ValidationError(
                     {"requested_till": _("Requested till field is required.")}
@@ -387,12 +387,12 @@ class WorkTypeRequestSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return super().create(validated_data)
 
-    def get_previous_work_type_name(self, instance):
-        previous_work_type = instance.previous_work_type_id
-        if previous_work_type:
-            return previous_work_type.work_type
+    def get_previous_work_from_name(self, instance):
+        previous_work_from = instance.previous_work_from_id
+        if previous_work_from:
+            return previous_work_from.work_from
         else:
-            return None  # Return null if previous_work_type_id doesn't exist
+            return None  # Return null if previous_work_from_id doesn't exist
 
     def update(self, instance, validated_data):
         for attr, value in validated_data.items():

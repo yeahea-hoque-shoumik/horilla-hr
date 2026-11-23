@@ -166,7 +166,7 @@ def _pending_approvals(request):
     count only for callers who could act on them.
     """
     from base.methods import filtersubordinates
-    from base.models import ShiftRequest, WorkTypeRequest
+    from base.models import ShiftRequest, WorkFromRequest
     from horilla_api.api_methods.base.methods import permission_based_queryset
 
     employee = request.user.employee_get
@@ -209,7 +209,7 @@ def _pending_approvals(request):
 
     for kind, model, perm in (
         ("shift", ShiftRequest, "base.view_shiftrequest"),
-        ("work_type", WorkTypeRequest, "base.view_worktyperequest"),
+        ("work_from", WorkFromRequest, "base.view_workfromrequest"),
     ):
         by_kind[kind] = (
             permission_based_queryset(

@@ -26,7 +26,7 @@ from attendance.models import (
     strtime_seconds,
 )
 from base.filters import FilterSet
-from base.models import Company, Department, EmployeeShift, JobPosition, WorkType
+from base.models import Company, Department, EmployeeShift, JobPosition, WorkFrom
 from employee.filters import EmployeeFilter
 from employee.models import Employee
 from horilla.filters import HorillaFilterSet, filter_by_name, filter_name_or_badge_terms
@@ -123,7 +123,7 @@ class AttendanceOverTimeFilter(HorillaFilterSet):
             "employee_id__employee_work_info__location",
             "employee_id__employee_work_info__reporting_manager_id",
             "employee_id__employee_work_info__shift_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
         ]
 
     def __init__(self, data=None, queryset=None, *, request=None, prefix=None):
@@ -223,12 +223,12 @@ class LateComeEarlyOutFilter(HorillaFilterSet):
             "search_fields": ["employee_shift"],
             "placeholder": _("Select shift..."),
         },
-        "attendance_id__work_type_id": {
-            "key": "late-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "attendance_id__work_from_id": {
+            "key": "late-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
     }
 
@@ -310,7 +310,7 @@ class LateComeEarlyOutFilter(HorillaFilterSet):
             "employee_id__employee_work_info__location",
             "employee_id__employee_work_info__reporting_manager_id",
             "attendance_id__shift_id",
-            "attendance_id__work_type_id",
+            "attendance_id__work_from_id",
             "attendance_date__gte",
             "attendance_date__lte",
             "attendance_clock_in__lte",
@@ -528,12 +528,12 @@ class AttendanceActivityFilter(HorillaFilterSet):
             "search_fields": ["employee_shift"],
             "placeholder": _("Select shift..."),
         },
-        "employee_id__employee_work_info__work_type_id": {
-            "key": "activity-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "employee_id__employee_work_info__work_from_id": {
+            "key": "activity-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
     }
 
@@ -557,7 +557,7 @@ class AttendanceActivityFilter(HorillaFilterSet):
             "employee_id__employee_work_info__department_id",
             "employee_id__employee_work_info__company_id",
             "employee_id__employee_work_info__shift_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
             "employee_id__employee_work_info__job_position_id",
             "employee_id__employee_work_info__location",
             "employee_id__employee_work_info__reporting_manager_id",
@@ -789,12 +789,12 @@ class AttendanceFilters(HorillaFilterSet):
             "search_fields": ["employee_shift"],
             "placeholder": _("Select shift..."),
         },
-        "work_type_id": {
-            "key": "attendance-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "work_from_id": {
+            "key": "attendance-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
     }
 
@@ -1009,7 +1009,7 @@ class AttendanceFilters(HorillaFilterSet):
             "employee_id__employee_work_info__reporting_manager_id",
             "attendance_day",
             "attendance_date",
-            "work_type_id",
+            "work_from_id",
             "shift_id",
             "minimum_hour",
             "attendance_validated",
@@ -1070,13 +1070,13 @@ class AttendanceFilters(HorillaFilterSet):
         # Call the imported function
         """
         This method allows filtering by the employee's first and/or last name or by other
-        fields such as day, shift, work type, department, job position, or company, depending
+        fields such as day, shift, work from, department, job position, or company, depending
         on the value of `search_field` provided in the request data.
         """
         filter_method = {
             "day": "attendance_day__day__icontains",
             "shift": "shift_id__employee_shift__icontains",
-            "work_type": "work_type_id__work_type__icontains",
+            "work_from": "work_from_id__work_from__icontains",
             "department": "employee_id__employee_work_info__department_id__department__icontains",
             "job_position": "employee_id__employee_work_info__\
                 job_position_id__job_position__icontains",
@@ -1122,7 +1122,7 @@ class LateComeEarlyOutReGroup:
         ("type", "Type"),
         ("attendance_id__attendance_date", "Attendance Date"),
         ("attendance_id__shift_id", "Shift"),
-        ("attendance_id__work_type_id", "Work Type"),
+        ("attendance_id__work_from_id", "Work From"),
         ("attendance_id__minimum_hour", "Minimum Hour"),
         ("attendance_id__employee_id__country", "Country"),
         (
@@ -1153,7 +1153,7 @@ class AttendanceReGroup:
         ("batch_attendance_id", "Batch"),
         ("attendance_date", "Attendance Date"),
         ("shift_id", "Shift"),
-        ("work_type_id", "Work Type"),
+        ("work_from_id", "Work From"),
         ("minimum_hour", "Minimum Hour"),
         ("employee_id__country", "Country"),
         ("employee_id__employee_work_info__reporting_manager_id", "Reporting Manager"),
@@ -1177,7 +1177,7 @@ class AttendanceOvertimeReGroup:
         ("employee_id__country", "Country"),
         ("employee_id__employee_work_info__reporting_manager_id", "Reporting Manager"),
         ("employee_id__employee_work_info__shift_id", "Shift"),
-        ("employee_id__employee_work_info__work_type_id", "Work Type"),
+        ("employee_id__employee_work_info__work_from_id", "Work From"),
         ("employee_id__employee_work_info__department_id", "Department"),
         ("employee_id__employee_work_info__job_position_id", "Job Position"),
         ("employee_id__employee_work_info__employee_type_id", "Employment Type"),
@@ -1200,7 +1200,7 @@ class AttendanceActivityReGroup:
         ("employee_id__country", "Country"),
         ("employee_id__employee_work_info__reporting_manager_id", "Reporting Manager"),
         ("employee_id__employee_work_info__shift_id", "Shift"),
-        ("employee_id__employee_work_info__work_type_id", "Work Type"),
+        ("employee_id__employee_work_info__work_from_id", "Work From"),
         ("employee_id__employee_work_info__department_id", "Department"),
         ("employee_id__employee_work_info__job_position_id", "Job Position"),
         ("employee_id__employee_work_info__employee_type_id", "Employment Type"),
@@ -1223,7 +1223,7 @@ class AttendanceRequestReGroup:
         ("employee_id__country", "Country"),
         ("employee_id__employee_work_info__reporting_manager_id", "Reporting Manager"),
         ("employee_id__employee_work_info__shift_id", "Shift"),
-        ("employee_id__employee_work_info__work_type_id", "Work Type"),
+        ("employee_id__employee_work_info__work_from_id", "Work From"),
         ("employee_id__employee_work_info__department_id", "Department"),
         ("employee_id__employee_work_info__job_position_id", "Job Position"),
         ("employee_id__employee_work_info__employee_type_id", "Employment Type"),

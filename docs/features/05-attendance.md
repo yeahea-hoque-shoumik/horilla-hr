@@ -32,7 +32,7 @@ This area records when employees work. It takes check-ins and check-outs from th
 
 ### The daily attendance record
 
-- Each day's record holds the shift, work type, first check-in, last check-out, worked hours, minimum hours, **overtime** and whether it has been validated.
+- Each day's record holds the shift, work from, first check-in, last check-out, worked hours, minimum hours, **overtime** and whether it has been validated.
 - Rule: overtime for a day is worked hours minus minimum hours, and never below zero. Reason: not stated in the code.
 - Rule: on a holiday or weekly day off the minimum is zero, so the whole day counts as overtime. Reason: not stated in the code.
 - Rule: a check-in date cannot be before the attendance date, and a check-out cannot be before the check-in or in the future. Reason: not stated in the code.
@@ -111,7 +111,7 @@ This area records when employees work. It takes check-ins and check-outs from th
 
 ### Things the comparison with Apurba HRM lists as missing
 
-> Flag (gap): there is no automatic leave deduction for a shortfall in worked hours, no monthly limit on attendance correction requests, and no separate work-from-home request type (work-type requests can be used for it). Checked in the code: no such features exist. (Comparison document, sections 2.2 and 2.3)
+> Flag (gap): there is no automatic leave deduction for a shortfall in worked hours, no monthly limit on attendance correction requests, and no separate work-from-home request type (work-from requests can be used for it). Checked in the code: no such features exist. (Comparison document, sections 2.2 and 2.3)
 
 ## Who can do what
 

@@ -55,7 +55,7 @@ class AccessibilityFilter(HorillaFilterSet):
     verbose_name = {
         "employee_work_info__job_position_id": _("Job Position"),
         "employee_work_info__department_id": _("Department"),
-        "employee_work_info__work_type_id": _("Work Type"),
+        "employee_work_info__work_from_id": _("Work From"),
         "employee_work_info__employee_type_id": _("Employee Type"),
         "employee_work_info__job_role_id": _("Job Role"),
         "employee_work_info__company_id": _("Company"),
@@ -75,7 +75,7 @@ class AccessibilityFilter(HorillaFilterSet):
             "pk",
             "employee_work_info__job_position_id",
             "employee_work_info__department_id",
-            "employee_work_info__work_type_id",
+            "employee_work_info__work_from_id",
             "employee_work_info__employee_type_id",
             "employee_work_info__job_role_id",
             "employee_work_info__company_id",

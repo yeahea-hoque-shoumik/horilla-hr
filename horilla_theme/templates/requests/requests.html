@@ -30,7 +30,7 @@
         }
 
         /* Quick-filter status dots (Canceled/Approved/Requested) used by the
-           Shift Requests and Work Type Requests tabs. These classes have no
+           Shift Requests and Work From Requests tabs. These classes have no
            definition elsewhere on this unified page, so the dot renders
            colorless without this. */
         .approved--dot {
@@ -65,10 +65,10 @@
             <button
                 type="button"
                 class="oh-tabs__tab requests-tab-btn"
-                data-tab-id="work-type"
-                data-url="{% url 'requests-work-type-tab' %}"
+                data-tab-id="work-from"
+                data-url="{% url 'requests-work-from-tab' %}"
             >
-                {% trans "Work Type Requests" %}
+                {% trans "Work From Requests" %}
             </button>
             <button
                 type="button"

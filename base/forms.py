@@ -64,15 +64,15 @@ from base.models import (
     Roster,
     RotatingShift,
     RotatingShiftAssign,
-    RotatingWorkType,
-    RotatingWorkTypeAssign,
+    RotatingWorkFrom,
+    RotatingWorkFromAssign,
     ShiftRequest,
     ShiftRequestComment,
     Tags,
     TrackLateComeEarlyOut,
-    WorkType,
-    WorkTypeRequest,
-    WorkTypeRequestComment,
+    WorkFrom,
+    WorkFromRequest,
+    WorkFromRequestComment,
 )
 from base.widgets import CustomModelChoiceWidget
 from employee.filters import EmployeeFilter
@@ -1089,19 +1089,19 @@ class JobRoleForm(ModelForm):
         super().save(commit, *args, **kwargs)
 
 
-class WorkTypeForm(ModelForm):
+class WorkFromForm(ModelForm):
     """
-    WorkType model's form
+    WorkFrom model's form
     """
 
-    cols = {"work_type": 12, "company_id": 12}
+    cols = {"work_from": 12, "company_id": 12}
 
     class Meta:
         """
         Meta class for additional options
         """
 
-        model = WorkType
+        model = WorkFrom
         fields = "__all__"
         exclude = ["is_active"]
 
@@ -1115,15 +1115,15 @@ class WorkTypeForm(ModelForm):
                 self.initial["company_id"] = Company.objects.filter(id=company_id)
 
 
-class RotatingWorkTypeForm(ModelForm):
+class RotatingWorkFromForm(ModelForm):
     """
-    RotatingWorkType model's form
+    RotatingWorkFrom model's form
     """
 
     cols = {
         "name": 12,
-        "work_type1": 12,
-        "work_type2": 12,
+        "work_from1": 12,
+        "work_from2": 12,
     }
 
     class Meta:
@@ -1131,7 +1131,7 @@ class RotatingWorkTypeForm(ModelForm):
         Meta class for additional options
         """
 
-        model = RotatingWorkType
+        model = RotatingWorkFrom
         fields = "__all__"
         exclude = ["employee_id", "is_active"]
         widgets = {
@@ -1141,99 +1141,99 @@ class RotatingWorkTypeForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        work_type_counts = 0
+        work_from_counts = 0
 
-        def create_work_type_field(work_type_key, required, initial=None, label=""):
+        def create_work_from_field(work_from_key, required, initial=None, label=""):
 
-            self.fields[work_type_key] = forms.ModelChoiceField(
-                queryset=WorkType.objects.all(),
+            self.fields[work_from_key] = forms.ModelChoiceField(
+                queryset=WorkFrom.objects.all(),
                 widget=CustomModelChoiceWidget(
-                    delete_url="/add-remove-work-type-fields",
+                    delete_url="/add-remove-work-from-fields",
                     attrs={
                         "class": "oh-select oh-select-2 mb-3 ",
-                        "name": work_type_key,
-                        "id": f"id_{work_type_key}",
+                        "name": work_from_key,
+                        "id": f"id_{work_from_key}",
                     },
                 ),
                 required=required,
-                empty_label=_("---Choose Work Type---"),
+                empty_label=_("---Choose Work From---"),
                 initial=initial,
                 label=label,
             )
 
         for key in self.data.keys():
-            if key.startswith("work_type"):
-                work_type_counts += 1
-                # work_type1/work_type2 already carry their model verbose_name
+            if key.startswith("work_from"):
+                work_from_counts += 1
+                # work_from1/work_from2 already carry their model verbose_name
                 # label; preserve it instead of blanking it out like the
-                # dynamically added (3rd+) work type fields.
+                # dynamically added (3rd+) work from fields.
                 existing_field = self.fields.get(key)
                 label = existing_field.label if existing_field else ""
-                create_work_type_field(key, work_type_counts <= 2, label=label)
+                create_work_from_field(key, work_from_counts <= 2, label=label)
 
         if not self.is_bound:
-            # Unbound form (initial GET): work_type1 and work_type2 always
+            # Unbound form (initial GET): work_from1 and work_from2 always
             # exist as base fields. When editing an existing instance, its
-            # saved additional work types (from self.initial, populated by
+            # saved additional work from options (from self.initial, populated by
             # ModelForm from the instance) seed the extra fields here. Once
             # the form is bound (POST, valid or invalid-reload), the loop
-            # above already rebuilt every work_type field from what was
+            # above already rebuilt every work_from field from what was
             # actually submitted, so this stale, DB-only snapshot must not
             # run and clobber that count/fields with outdated data.
-            work_type_counts = 2
+            work_from_counts = 2
             additional_data = self.initial.get("additional_data")
-            additional_work_types = (
-                additional_data.get("additional_work_types")
+            additional_work_froms = (
+                additional_data.get("additional_work_froms")
                 if additional_data
                 else None
             )
-            if additional_work_types:
-                for work_type_id in additional_work_types:
-                    work_type_counts += 1
-                    create_work_type_field(
-                        f"work_type{work_type_counts}",
+            if additional_work_froms:
+                for work_from_id in additional_work_froms:
+                    work_from_counts += 1
+                    create_work_from_field(
+                        f"work_from{work_from_counts}",
                         False,
-                        initial=work_type_id,
+                        initial=work_from_id,
                     )
 
-        self.work_type_counts = work_type_counts
-        # Every work_type field (base or dynamically added) should render
+        self.work_from_counts = work_from_counts
+        # Every work_from field (base or dynamically added) should render
         # full width; relying on client-side JS to fix this up after the
         # fact is fragile, so drive it from the same col() lookup the
         # template already uses for every other field.
         self.cols = {
             **self.cols,
-            **{f"work_type{i}": 12 for i in range(1, work_type_counts + 1)},
+            **{f"work_from{i}": 12 for i in range(1, work_from_counts + 1)},
         }
 
     def as_p(self, *args, **kwargs):
         context = {"form": self}
         return render_to_string(
-            "base/rotating_work_type/htmx/rotating_work_type_as_p.html", context
+            "base/rotating_work_from/htmx/rotating_work_from_as_p.html", context
         )
 
     def clean(self):
         cleaned_data = super().clean()
-        additional_work_types = []
+        additional_work_froms = []
         model_fields = list(self.instance.__dict__.keys())
 
         for key, value in self.data.items():
             if (
                 f"{key}_id" not in model_fields
-                and key.startswith("work_type")
+                and key.startswith("work_from")
                 and value
             ):
-                additional_work_types.append(value)
+                additional_work_froms.append(value)
 
-        if additional_work_types:
+        if additional_work_froms:
             if (
                 "additional_data" not in cleaned_data
                 or cleaned_data["additional_data"] is None
             ):
                 cleaned_data["additional_data"] = {}
             cleaned_data["additional_data"][
-                "additional_work_types"
-            ] = additional_work_types
+                "additional_work_froms"
+            ] = additional_work_froms
 
         return cleaned_data
 
@@ -1242,9 +1242,9 @@ class RotatingWorkTypeForm(ModelForm):
         if self.cleaned_data.get("additional_data"):
             if instance.additional_data is None:
                 instance.additional_data = {}
-            instance.additional_data["additional_work_types"] = self.cleaned_data[
+            instance.additional_data["additional_work_froms"] = self.cleaned_data[
                 "additional_data"
-            ].get("additional_work_types")
+            ].get("additional_work_froms")
         else:
             instance.additional_data = None
 
@@ -1254,14 +1254,14 @@ class RotatingWorkTypeForm(ModelForm):
         return instance
 
 
-class RotatingWorkTypeAssignForm(ModelForm):
+class RotatingWorkFromAssignForm(ModelForm):
     """
-    RotatingWorkTypeAssign model's form
+    RotatingWorkFromAssign model's form
     """
 
     cols = {
         "employee_id": 12,
-        "rotating_work_type_id": 12,
+        "rotating_work_from_id": 12,
         "start_date": 12,
         "based_on": 12,
         "rotate_after_day": 12,
@@ -1290,12 +1290,12 @@ class RotatingWorkTypeAssignForm(ModelForm):
         Meta class for additional options
         """
 
-        model = RotatingWorkTypeAssign
+        model = RotatingWorkFromAssign
         fields = "__all__"
         exclude = [
             "next_change_date",
-            "current_work_type",
-            "next_work_type",
+            "current_work_from",
+            "next_work_from",
             "is_active",
             "additional_data",
         ]
@@ -1375,16 +1375,16 @@ class RotatingWorkTypeAssignForm(ModelForm):
 
         if self.instance.pk:
             employee = Employee.objects.get(id=self.instance.pk)
-            rotating_work_type_assign = RotatingWorkTypeAssign()
-            rotating_work_type = RotatingWorkType.objects.get(
-                id=self.data["rotating_work_type_id"]
+            rotating_work_from_assign = RotatingWorkFromAssign()
+            rotating_work_from = RotatingWorkFrom.objects.get(
+                id=self.data["rotating_work_from_id"]
             )
-            rotating_work_type_assign.next_change_date = self.cleaned_data["start_date"]
-            rotating_work_type_assign.current_work_type = (
-                employee.employee_work_info.work_type_id
+            rotating_work_from_assign.next_change_date = self.cleaned_data["start_date"]
+            rotating_work_from_assign.current_work_from = (
+                employee.employee_work_info.work_from_id
             )
-            rotating_work_type_assign.next_work_type = rotating_work_type.work_type1
-            rotating_work_type_assign.additional_data["next_work_type_index"] = 1
+            rotating_work_from_assign.next_work_from = rotating_work_from.work_from1
+            rotating_work_from_assign.additional_data["next_work_from_index"] = 1
             based_on = self.cleaned_data["based_on"]
             start_date = self.instance.start_date
             if based_on == "weekly":
@@ -1403,59 +1403,59 @@ class RotatingWorkTypeAssignForm(ModelForm):
 
         else:
             employee_ids = self.data.getlist("employee_id")
-            rotating_work_type = RotatingWorkType.objects.get(
-                id=self.data["rotating_work_type_id"]
+            rotating_work_from = RotatingWorkFrom.objects.get(
+                id=self.data["rotating_work_from_id"]
             )
             for employee_id in employee_ids:
                 employee = Employee.objects.filter(id=employee_id).first()
-                rotating_work_type_assign = RotatingWorkTypeAssign()
-                rotating_work_type_assign.rotating_work_type_id = rotating_work_type
-                rotating_work_type_assign.employee_id = employee
-                rotating_work_type_assign.based_on = self.cleaned_data["based_on"]
-                rotating_work_type_assign.start_date = self.cleaned_data["start_date"]
-                rotating_work_type_assign.next_change_date = self.cleaned_data[
+                rotating_work_from_assign = RotatingWorkFromAssign()
+                rotating_work_from_assign.rotating_work_from_id = rotating_work_from
+                rotating_work_from_assign.employee_id = employee
+                rotating_work_from_assign.based_on = self.cleaned_data["based_on"]
+                rotating_work_from_assign.start_date = self.cleaned_data["start_date"]
+                rotating_work_from_assign.next_change_date = self.cleaned_data[
                     "start_date"
                 ]
-                rotating_work_type_assign.rotate_after_day = self.data.get(
+                rotating_work_from_assign.rotate_after_day = self.data.get(
                     "rotate_after_day"
                 )
-                rotating_work_type_assign.rotate_every = self.cleaned_data[
+                rotating_work_from_assign.rotate_every = self.cleaned_data[
                     "rotate_every"
                 ]
-                rotating_work_type_assign.rotate_every_weekend = self.cleaned_data[
+                rotating_work_from_assign.rotate_every_weekend = self.cleaned_data[
                     "rotate_every_weekend"
                 ]
-                rotating_work_type_assign.next_change_date = self.cleaned_data[
+                rotating_work_from_assign.next_change_date = self.cleaned_data[
                     "start_date"
                 ]
-                rotating_work_type_assign.current_work_type = (
-                    employee.employee_work_info.work_type_id
+                rotating_work_from_assign.current_work_from = (
+                    employee.employee_work_info.work_from_id
                 )
-                rotating_work_type_assign.next_work_type = rotating_work_type.work_type2
-                rotating_work_type_assign.additional_data["next_shift_index"] = 1
+                rotating_work_from_assign.next_work_from = rotating_work_from.work_from2
+                rotating_work_from_assign.additional_data["next_shift_index"] = 1
                 based_on = self.cleaned_data["based_on"]
                 start_date = self.cleaned_data["start_date"]
                 if based_on == "weekly":
                     next_date = get_next_week_date(target_day, start_date)
-                    rotating_work_type_assign.next_change_date = next_date
+                    rotating_work_from_assign.next_change_date = next_date
                 elif based_on == "monthly":
                     # 0, 1, 2, ..., 31, or "last"
                     rotate_every = self.cleaned_data["rotate_every"]
                     start_date = self.cleaned_data["start_date"]
                     next_date = get_next_monthly_date(start_date, rotate_every)
-                    rotating_work_type_assign.next_change_date = next_date
+                    rotating_work_from_assign.next_change_date = next_date
                 elif based_on == "after":
-                    rotating_work_type_assign.next_change_date = (
-                        rotating_work_type_assign.start_date
+                    rotating_work_from_assign.next_change_date = (
+                        rotating_work_from_assign.start_date
                         + timedelta(days=int(self.data.get("rotate_after_day")))
                     )
 
-                rotating_work_type_assign.save()
+                rotating_work_from_assign.save()
 
 
-class RotatingWorkTypeAssignUpdateForm(forms.ModelForm):
+class RotatingWorkFromAssignUpdateForm(forms.ModelForm):
     """
-    RotatingWorkTypeAssign model's form
+    RotatingWorkFromAssign model's form
     """
 
     based_on = forms.ChoiceField(choices=BASED_ON, initial="daily", label=_("Based on"))
@@ -1465,12 +1465,12 @@ class RotatingWorkTypeAssignUpdateForm(forms.ModelForm):
         Meta class for additional options
         """
 
-        model = RotatingWorkTypeAssign
+        model = RotatingWorkFromAssign
         fields = "__all__"
         exclude = [
             "next_change_date",
-            "current_work_type",
-            "next_work_type",
+            "current_work_from",
+            "next_work_from",
             "is_active",
             "additional_data",
         ]
@@ -1529,7 +1529,7 @@ class RotatingWorkTypeAssignUpdateForm(forms.ModelForm):
                 "style": " height:50px; border-radius:0;",
             }
         )
-        self.fields["rotating_work_type_id"].widget.attrs.update(
+        self.fields["rotating_work_from_id"].widget.attrs.update(
             {
                 "class": "oh-select oh-select-2",
             }
@@ -2400,9 +2400,9 @@ class ShiftAllocationForm(ModelForm):
         return super().save(commit)
 
 
-class WorkTypeRequestForm(ModelForm):
+class WorkFromRequestForm(ModelForm):
     """
-    WorkTypeRequest model's form
+    WorkFromRequest model's form
     """
 
     cols = {"description": 12}
@@ -2413,14 +2413,14 @@ class WorkTypeRequestForm(ModelForm):
         Meta class for additional options
         """
 
-        model = WorkTypeRequest
+        model = WorkFromRequest
         fields = "__all__"
         exclude = (
             "approved",
             "canceled",
-            "previous_work_type_id",
+            "previous_work_from_id",
             "is_active",
-            "work_type_changed",
+            "work_from_changed",
         )
         widgets = {
             "requested_date": DateInput(attrs={"type": "date"}),
@@ -2444,10 +2444,10 @@ class WorkTypeRequestForm(ModelForm):
         if not self.instance.approved:
             employee = self.instance.employee_id
             if hasattr(employee, "employee_work_info"):
-                self.instance.previous_work_type_id = (
-                    employee.employee_work_info.work_type_id
+                self.instance.previous_work_from_id = (
+                    employee.employee_work_info.work_from_id
                 )
-                if self.instance.is_permanent_work_type:
+                if self.instance.is_permanent_work_from:
                     self.instance.requested_till = None
         return super().save(commit)
 
@@ -2632,7 +2632,7 @@ excluded_fields = [
     "reallocate_approved",
     "reallocate_canceled",
     "shift_changed",
-    "work_type_changed",
+    "work_from_changed",
     "created_at",
     "created_by",
     "modified_by",
@@ -2663,8 +2663,8 @@ class ShiftRequestColumnForm(forms.Form):
     )
 
 
-class WorkTypeRequestColumnForm(forms.Form):
-    model_fields = WorkTypeRequest._meta.get_fields()
+class WorkFromRequestColumnForm(forms.Form):
+    model_fields = WorkFromRequest._meta.get_fields()
     field_choices = [
         (field.name, field.verbose_name)
         for field in model_fields
@@ -2675,7 +2675,7 @@ class WorkTypeRequestColumnForm(forms.Form):
         widget=forms.CheckboxSelectMultiple,
         initial=[
             "employee_id",
-            "work_type_id",
+            "work_from_id",
             "requested_date",
             "requested_till",
             "previous_shift_id",
@@ -2706,8 +2706,8 @@ class RotatingShiftAssignExportForm(forms.Form):
     )
 
 
-class RotatingWorkTypeAssignExportForm(forms.Form):
-    model_fields = RotatingWorkTypeAssign._meta.get_fields()
+class RotatingWorkFromAssignExportForm(forms.Form):
+    model_fields = RotatingWorkFromAssign._meta.get_fields()
     field_choices = [
         (field.name, field.verbose_name)
         for field in model_fields
@@ -2718,11 +2718,11 @@ class RotatingWorkTypeAssignExportForm(forms.Form):
         widget=forms.CheckboxSelectMultiple,
         initial=[
             "employee_id",
-            "rotating_work_type_id",
+            "rotating_work_from_id",
             "start_date",
             "next_change_date",
-            "current_work_type",
-            "next_work_type",
+            "current_work_from",
+            "next_work_from",
             "based_on",
         ],
     )
@@ -2800,9 +2800,9 @@ class ShiftRequestCommentForm(ModelForm):
         fields = ("comment",)
 
 
-class WorkTypeRequestCommentForm(ModelForm):
+class WorkFromRequestCommentForm(ModelForm):
     """
-    WorkType request comment form
+    WorkFrom request comment form
     """
 
     class Meta:
@@ -2810,7 +2810,7 @@ class WorkTypeRequestCommentForm(ModelForm):
         Meta class for additional options
         """
 
-        model = WorkTypeRequestComment
+        model = WorkFromRequestComment
         fields = ("comment",)
 
 
@@ -2911,8 +2911,8 @@ class MailTemplateForm(ModelForm):
             "Sender|Email": "self.get_mail",
             "Receiver|Employee Type": "instance.get_employee_type",
             "Sender|Employee Type": "self.get_employee_type",
-            "Receiver|Work Type": "instance.get_work_type",
-            "Sender|Work Type": "self.get_work_type",
+            "Receiver|Work From": "instance.get_work_from",
+            "Sender|Work From": "self.get_work_from",
             "Candidate|Full name": "instance.get_full_name",
             "Candidate|Recruitment": "instance.recruitment_id",
             "Candidate|Company": "instance.get_company",
@@ -2936,8 +2936,8 @@ class MailTemplateForm(ModelForm):
             "Sender|Email": "self.get_mail",
             "Receiver|Employee Type": "instance.get_employee_type",
             "Sender|Employee Type": "self.get_employee_type",
-            "Receiver|Work Type": "instance.get_work_type",
-            "Sender|Work Type": "self.get_work_type",
+            "Receiver|Work From": "instance.get_work_from",
+            "Sender|Work From": "self.get_work_from",
         }
         return mail_data
 

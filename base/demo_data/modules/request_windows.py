@@ -2,7 +2,7 @@
 
 Historical events (attendance, timesheets, resolved tickets) stay in the past.
 Requests that a person would file ahead of time — leave already handled in
-leave_trend, plus shift/work-type/allocation/asset/interviews/meetings — get
+leave_trend, plus shift/work-from/allocation/asset/interviews/meetings — get
 a realistic mix of recent pending and upcoming dates.
 """
 
@@ -23,7 +23,7 @@ def backfill_request_windows(today: date | None = None) -> dict[str, int]:
     today = today or date.today()
     result = {
         "shift_requests": 0,
-        "work_type_requests": 0,
+        "work_from_requests": 0,
         "leave_allocations": 0,
         "asset_requests": 0,
         "interviews": 0,
@@ -36,7 +36,7 @@ def backfill_request_windows(today: date | None = None) -> dict[str, int]:
     }
 
     result["shift_requests"] = _shift_requests(today)
-    result["work_type_requests"] = _work_type_requests(today)
+    result["work_from_requests"] = _work_from_requests(today)
     result["leave_allocations"] = _leave_allocations(today)
     result["asset_requests"] = _asset_requests(today)
     result["interviews"] = _interviews(today)
@@ -74,13 +74,13 @@ def _shift_requests(today: date) -> int:
     return updated
 
 
-def _work_type_requests(today: date) -> int:
+def _work_from_requests(today: date) -> int:
     if not apps.is_installed("base"):
         return 0
-    from base.models import WorkTypeRequest
+    from base.models import WorkFromRequest
 
     updated = 0
-    for i, req in enumerate(WorkTypeRequest._base_manager.order_by("id")):
+    for i, req in enumerate(WorkFromRequest._base_manager.order_by("id")):
         if req.canceled:
             requested = today - timedelta(days=35 + i)
             till = requested + timedelta(days=10)
@@ -90,7 +90,7 @@ def _work_type_requests(today: date) -> int:
         else:
             requested = today - timedelta(days=1)
             till = today + timedelta(days=10 + (i % 10))
-        WorkTypeRequest._base_manager.filter(pk=req.pk).update(
+        WorkFromRequest._base_manager.filter(pk=req.pk).update(
             requested_date=requested, requested_till=till
         )
         updated += 1

@@ -119,7 +119,7 @@ from base.models import (
     EmployeeShiftSchedule,
     Holidays,
     TrackLateComeEarlyOut,
-    WorkType,
+    WorkFrom,
 )
 from employee.filters import EmployeeFilter
 from employee.models import Employee, EmployeeWorkInformation
@@ -284,7 +284,7 @@ def attendance_import(request):
         required_columns = [
             "Badge ID",
             "Shift",
-            "Work type",
+            "Work from",
             "Attendance date",
             "Check-in date",
             "Check-in",
@@ -1768,7 +1768,7 @@ def update_fields_based_shift(request):
     minimum_hour = attendance_day_checking(str(attendance_date), minimum_hour, employee)
 
     initial_data = {
-        "work_type_id": WorkType.find(request.GET.get("work_type_id")),
+        "work_from_id": WorkFrom.find(request.GET.get("work_from_id")),
         "shift_id": shift_id,
         "employee_id": employee_queryset,
         "minimum_hour": minimum_hour,
@@ -2704,7 +2704,7 @@ _FILTER_LABELS = {
     "employee_work_info__tags": "Employee Tag",
     "employee_work_info__reporting_manager_id": "Reporting Manager",
     "employee_work_info__job_position_id": "Job Position",
-    "employee_work_info__work_type_id": "Work Type",
+    "employee_work_info__work_from_id": "Work From",
     "working_today": "Currently Working",
     "employee_user_id__groups": "Groups",
     "is_active": "Active",

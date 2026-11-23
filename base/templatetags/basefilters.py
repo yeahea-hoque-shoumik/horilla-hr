@@ -433,8 +433,8 @@ def employee_section(context):
 
     return any(
         [
-            user.has_perm("base.view_worktype"),
-            user.has_perm("base.view_rotatingworktype"),
+            user.has_perm("base.view_workfrom"),
+            user.has_perm("base.view_rotatingworkfrom"),
             user.has_perm("base.view_employeeshift"),
             user.has_perm("base.view_rotatingshift"),
             user.has_perm("base.view_employeeshiftschedule"),
@@ -509,8 +509,8 @@ def show_section(context):
             user.has_perm("base.view_department"),
             user.has_perm("base.view_jobposition"),
             user.has_perm("base.view_jobrole"),
-            user.has_perm("base.view_worktype"),
-            user.has_perm("base.view_rotatingworktype"),
+            user.has_perm("base.view_workfrom"),
+            user.has_perm("base.view_rotatingworkfrom"),
             user.has_perm("base.view_employeeshift"),
             user.has_perm("base.view_rotatingshift"),
             user.has_perm("base.view_employeeshiftschedule"),

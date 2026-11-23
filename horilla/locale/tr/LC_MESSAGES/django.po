@@ -43,7 +43,7 @@ msgstr "İş pozisyonu"
 msgid "Department"
 msgstr "Departman"
 
-msgid "Work Type"
+msgid "Work From"
 msgstr "Çalışma Türü"
 
 msgid "Employee Type"
@@ -1472,7 +1472,7 @@ msgstr "İş pozisyonu seçin..."
 msgid "Select shift..."
 msgstr "Vardiya seçin..."
 
-msgid "Select work type..."
+msgid "Select work from..."
 msgstr "Çalışma türü seçin..."
 
 msgid "Clock In"
@@ -1922,7 +1922,7 @@ msgstr "Ara: Gün"
 msgid "Search in : Shift"
 msgstr "Ara: Shift"
 
-msgid "Search in : Work Type"
+msgid "Search in : Work From"
 msgstr "Ara: İş Türü"
 
 msgid "Search in : Department"
@@ -2158,7 +2158,7 @@ msgstr "Ort. Çalışma Saatleri"
 msgid "Per day by department — this month"
 msgstr "Departmana göre gün başına — bu ay"
 
-msgid "Work Type Distribution"
+msgid "Work From Distribution"
 msgstr "Çalışma Türü Dağılımı"
 
 msgid "Remote, on-site, hybrid, etc."
@@ -2302,7 +2302,7 @@ msgstr "Ort. Saat/Gün"
 msgid "8h target"
 msgstr "8 saat hedef"
 
-msgid "No work type data"
+msgid "No work from data"
 msgstr "Çalışma türü verisi yok"
 
 msgid "No absences this month"
@@ -3497,7 +3497,7 @@ msgstr "Haftalık İzin Günü Başarıyla Güncellendi"
 msgid "New Weekly Off Day Created Successfully"
 msgstr "Yeni Haftalık İzin Günü Başarıyla Oluşturuldu"
 
-msgid "Requested Work Type"
+msgid "Requested Work From"
 msgstr "İstenen İş Türü"
 
 msgid "Requested Shift"
@@ -3805,19 +3805,19 @@ msgstr "Döner Vardiyalı Atama Başarıyla Oluşturuldu"
 msgid "You are added to rotating shift"
 msgstr "Döner vardiyaya ekleniyorsunuz"
 
-msgid "Rotating Work Type"
+msgid "Rotating Work From"
 msgstr "Döner İş Türü"
 
 msgid "Based On"
 msgstr "Toplam"
 
-msgid "Current Work Type"
+msgid "Current Work From"
 msgstr "Güncel Çalışma Türü"
 
-msgid "Next Work Type"
+msgid "Next Work From"
 msgstr "Sonraki Çalışma Türü"
 
-msgid "Rotating Work Type Assign"
+msgid "Rotating Work From Assign"
 msgstr "Döner İş Tipi Ataması"
 
 msgid "Rotating Work Assign Updated Successfully"
@@ -3826,34 +3826,34 @@ msgstr "Dönüşümlü İş Ataması Başarıyla Güncellendi"
 msgid "Rotating Work Assigned"
 msgstr "Dönüşümlü İşler Atanmış"
 
-msgid "You are added to rotating work type"
+msgid "You are added to rotating work from"
 msgstr "Döner iş türüne ekleniyorsunuz"
 
 msgid "Rotating Work Assign Created"
 msgstr "Dönüşümlü İş Ataması Oluşturuldu"
 
-msgid "Work Type 1"
+msgid "Work From 1"
 msgstr "İş Tipi 1"
 
-msgid "Work Type 2"
+msgid "Work From 2"
 msgstr "İş Tipi 2"
 
-msgid "Additional Work Types"
+msgid "Additional Work From Options"
 msgstr "Ek İş Türleri"
 
-msgid "Create Rotating Work Type"
+msgid "Create Rotating Work From"
 msgstr "Döner İş Türü Oluşturun"
 
-msgid "Rotating Work Type Created"
+msgid "Rotating Work From Created"
 msgstr "Dönüşümlü Çalışma Türü Oluşturuldu"
 
-msgid "Update Rotating Work Type"
+msgid "Update Rotating Work From"
 msgstr "Dönüşümlü İş Türünü Güncelleme"
 
-msgid "Update Work Type"
+msgid "Update Work From"
 msgstr "İş Türünü Güncelleme"
 
-msgid "Rotating Work Type Updated"
+msgid "Rotating Work From Updated"
 msgstr "Dönüşümlü İş Türü Güncellendi"
 
 msgid "Canceled"
@@ -3924,10 +3924,10 @@ msgid "You have a new shift reallocation request from %(employee)s."
 msgstr ""
 "%(employee)s adlı çalışandan yeni bir vardiya yeniden dağıtım talebiniz var."
 
-msgid "Work type request"
+msgid "Work from request"
 msgstr "İş türü talebi"
 
-msgid "Rotating work type"
+msgid "Rotating work from"
 msgstr "Döner çalışma tipi"
 
 msgid "Shift request"
@@ -3936,44 +3936,44 @@ msgstr "Vardiya talebi"
 msgid "Shift Allocation"
 msgstr "Vardiya Tahsisi"
 
-msgid "Work Type Request"
+msgid "Work From Request"
 msgstr "İş Türü Talebi"
 
 msgid "Shift Request"
 msgstr "Vardiya Talebi"
 
-msgid "Previous/current Work Type"
+msgid "Previous/current Work From"
 msgstr "Önceki/Güncel İş Türü"
 
-msgid "Work Type Requests"
+msgid "Work From Requests"
 msgstr "İş Türü İstekleri"
 
-msgid "current Work Type"
+msgid "current Work From"
 msgstr "Mevcut Çalışma Türü"
 
-msgid "Previous Work Type"
+msgid "Previous Work From"
 msgstr "Önceki Çalışma Türü"
 
-msgid "Is Permanent Work Type"
+msgid "Is Permanent Work From"
 msgstr "Kalıcı İş Türü"
 
-msgid "Create Work Type"
+msgid "Create Work From"
 msgstr "Çalışma Türü Oluşturma"
 
-msgid "New Work Type Created"
+msgid "New Work From Created"
 msgstr "Yeni Çalışma Türü Oluşturuldu"
 
-msgid "Work Type Updated"
+msgid "Work From Updated"
 msgstr "İş Türü Güncellendi"
 
 msgid "Request Updated Successfully"
 msgstr "İstek Başarıyla Güncelleme"
 
-msgid "Work type Request Created"
+msgid "Work from Request Created"
 msgstr "İş Türü Talep Oluşturuldu"
 
 #, python-format
-msgid "You have new work type request to validate for %(employee)s"
+msgid "You have new work from request to validate for %(employee)s"
 msgstr "%(employee)s için onaylanacak yeni bir iş türü talebiniz var"
 
 msgid "You do not have access to that company."
@@ -4121,7 +4121,7 @@ msgstr "İş rolü başarıyla oluşturuldu!"
 msgid "Role already exists under %(position)s"
 msgstr "Rol %(position)s altında zaten mevcut"
 
-msgid "---Choose Work Type---"
+msgid "---Choose Work From---"
 msgstr "---İş Türünü Seç---"
 
 msgid "Rotate after day"
@@ -4344,19 +4344,19 @@ msgstr "Şirket grubu atamaları"
 msgid "This department already exists in this company"
 msgstr "Bu departman bu şirkette zaten mevcut"
 
-msgid "Work Types"
+msgid "Work From Options"
 msgstr "İş Türleri"
 
-msgid "This work type already exists in this company"
+msgid "This work from already exists in this company"
 msgstr "Bu iş türü bu şirkette zaten mevcut"
 
 msgid "All Company"
 msgstr "Tüm Şirket"
 
-msgid "Rotating Work Types"
+msgid "Rotating Work From Options"
 msgstr "Döner İş Türleri"
 
-msgid "Select different work type continuously"
+msgid "Select different work from continuously"
 msgstr "Sürekli olarak farklı iş türlerini seçin"
 
 msgid "Rotate After Day"
@@ -4368,7 +4368,7 @@ msgstr "Her Hafta Sonu Dönüşümlü"
 msgid "Rotate Every Month"
 msgstr "Her Ay Rotasyon Yapın"
 
-msgid "Rotating Work Type Assigns"
+msgid "Rotating Work From Assigns"
 msgstr "Dönüşümlü İş Tipi Atamaları"
 
 msgid "Date must be greater than or equal to today"
@@ -4462,7 +4462,7 @@ msgstr "Çizelge Yayınlama Günlüğü"
 msgid "Roster Publish Logs"
 msgstr "Çizelge Yayınlama Günlükleri"
 
-msgid "Requesting Work Type"
+msgid "Requesting Work From"
 msgstr "İş Talep Etme Türü"
 
 msgid "Permanent Request"
@@ -4474,7 +4474,7 @@ msgstr "İstek girişi silinemez."
 msgid "End date must be greater than or equal to start date"
 msgstr "Bitiş tarihi, başlama tarihinden büyük veya eşit olmalıdır"
 
-msgid "A work type request already exists during this time period."
+msgid "A work from request already exists during this time period."
 msgstr "Bu dönemde zaten bir iş türü isteği vardır."
 
 msgid "Requested till field is required."
@@ -4658,7 +4658,7 @@ msgstr "İzin türü gereklidir"
 msgid "Penalty Accounts"
 msgstr "Ceza Hesapları"
 
-msgid "Your Work Type has been changed."
+msgid "Your Work From has been changed."
 msgstr "Çalışma Türünüz değiştirildi."
 
 msgid "Your shift has been changed."
@@ -4670,10 +4670,10 @@ msgstr "Vardiya değişiklik bildirimi"
 msgid "Shift changes notification, Requested date expired."
 msgstr "Vardiya değişiklik bildirimi, talep edilen tarih sona erdi."
 
-msgid "Work Type Changes notification"
+msgid "Work From Changes notification"
 msgstr "İş türü değişiklik bildirimi"
 
-msgid "Work type changes notification, Requested date expired."
+msgid "Work from changes notification, Requested date expired."
 msgstr "İş türü değişiklik bildirimi, talep edilen tarih sona erdi."
 
 msgid "General"
@@ -5845,43 +5845,43 @@ msgstr "Yanlış"
 msgid "Are you sure you want to delete this rotating shift?"
 msgstr "Bu dönen değişimi silmek istediğinizden emin misiniz?"
 
-msgid "Add more work types.."
+msgid "Add more work from options.."
 msgstr "Daha fazla iş türü ekle.."
 
-msgid "Select All Worktypes"
+msgid "Select All WorkFroms"
 msgstr "Tüm İş Türlerini Seç"
 
-msgid "Unselect All Worktypes"
+msgid "Unselect All WorkFroms"
 msgstr "Tüm Çalışma Türlerini Kaldır"
 
-msgid "Export Worktypes"
+msgid "Export WorkFroms"
 msgstr "İhracat İş Türleri"
 
-msgid "Do you Want to archive this rotating work type assign?"
+msgid "Do you Want to archive this rotating work from assign?"
 msgstr "Bu dönen iş tipi atamasını arşivlemek ister misiniz?"
 
-msgid "Do you Want to un-archive this rotating work type assign?"
+msgid "Do you Want to un-archive this rotating work from assign?"
 msgstr "Bu dönen çalışma tipi atamasını arşivden çıkarmak ister misiniz?"
 
-msgid "Are you sure you want to delete this rotating work type assign?"
+msgid "Are you sure you want to delete this rotating work from assign?"
 msgstr "Bu dönen iş tipi atamasını silmek istediğinizden emin misiniz?"
 
-msgid "Do you want to archive this rotating work type assign?"
+msgid "Do you want to archive this rotating work from assign?"
 msgstr "Bu dönen iş tipi atamasını arşivlemek ister misiniz?"
 
-msgid "There are no rotating work type assigned to this employee."
+msgid "There are no rotating work from assigned to this employee."
 msgstr "Bu çalışana atanmış bir dönüşümlü iş türü yoktur."
 
-msgid "Selected Worktypes"
+msgid "Selected WorkFroms"
 msgstr "Seçilmiş İş Türleri"
 
-msgid "No Employees Assigned to Rotating Work Types."
+msgid "No Employees Assigned to Rotating Work From Options."
 msgstr "Dönen iş türlerine atanmış çalışan yok."
 
-msgid "Do you want to un-archive this rotating work type assign?"
+msgid "Do you want to un-archive this rotating work from assign?"
 msgstr "Bu dönen iş tipi atamasını arşivden çıkarmak ister misiniz?"
 
-msgid "Are you sure you want to delete this rotating work type?"
+msgid "Are you sure you want to delete this rotating work from?"
 msgstr "Bu dönen iş türünü silmek istediğinizden emin misiniz?"
 
 msgid ""
@@ -6157,7 +6157,7 @@ msgstr "Önek"
 msgid "Are you sure you want to delete this ticket type?"
 msgstr "Bu bilet türünü silmek istediğinizden emin misiniz?"
 
-msgid "Are you sure you want to delete this work type?"
+msgid "Are you sure you want to delete this work from?"
 msgstr "Bu çalışma türünü silmek istediğinizden emin misiniz?"
 
 msgid "Company logo"
@@ -6187,10 +6187,10 @@ msgstr "Yönetici Ekle"
 msgid "Export Rotating Shift Assigns"
 msgstr "Dönüş Vardiyası Atamaları İhtracat"
 
-msgid "Do you want to Un-archive this rotating work type assign?"
+msgid "Do you want to Un-archive this rotating work from assign?"
 msgstr "Bu dönen iş tipi atamasını arşivden çıkarmak ister misiniz?"
 
-msgid "Export Rotating Work Type Assigns"
+msgid "Export Rotating Work From Assigns"
 msgstr "İhracat Döner İş Tipi Atamaları"
 
 msgid "Primary mail is not configured!"
@@ -6241,10 +6241,10 @@ msgstr "İşaretlenmedi"
 msgid "Reallocate Shift."
 msgstr "Vardiya Yeniden Dağıt."
 
-msgid "Are you sure you want to delete this work type request?"
+msgid "Are you sure you want to delete this work from request?"
 msgstr "Bu iş türü isteğini silmek istediğinizden emin misiniz?"
 
-msgid "Export Work Type Requests"
+msgid "Export Work From Requests"
 msgstr "İhracat İş Tipi İstekleri"
 
 msgid "There are no company leaves at the moment."
@@ -6310,7 +6310,7 @@ msgstr "Bu talebi iptal etmek ister misiniz?"
 msgid "cancel"
 msgstr "iptal"
 
-msgid "Previous/ Current Work Type"
+msgid "Previous/ Current Work From"
 msgstr "Önceki/Güncel Çalışma Türü"
 
 msgid "Reallocate to"
@@ -6346,25 +6346,25 @@ msgstr " Bu talebi reddetmek mi istiyorsun?"
 msgid "'s shift request"
 msgstr "vardiya talebi"
 
-msgid "There are currently no work type requests to consider."
+msgid "There are currently no work from requests to consider."
 msgstr "Şu anda dikkate alınacak iş türü talepleri yok."
 
-msgid "Previous/Current Work Type"
+msgid "Previous/Current Work From"
 msgstr "Önceki/Güncel İş Türü"
 
-msgid "'s worktype request"
+msgid "'s workfrom request"
 msgstr "iş tipi talebi"
 
-msgid "Requested work type"
+msgid "Requested work from"
 msgstr "İstenen iş türü"
 
-msgid "Previous work type"
+msgid "Previous work from"
 msgstr "Önceki çalışma türü"
 
-msgid "Is permenent work type"
+msgid "Is permenent work from"
 msgstr "Kalıcı iş türü mu"
 
-msgid "There are no work type requests to display."
+msgid "There are no work from requests to display."
 msgstr "Sergilenecek bir iş türü requet yok."
 
 msgid "monday"
@@ -6436,13 +6436,13 @@ msgstr "Varlık talebiniz onaylandı!."
 msgid "Your asset request rejected!."
 msgstr "Varlık talebiniz reddedildi!"
 
-msgid "Your work type request has been canceled."
+msgid "Your work from request has been canceled."
 msgstr "İş türü talebiniz iptal edildi."
 
-msgid "Your work type request has been approved."
+msgid "Your work from request has been approved."
 msgstr "İş türü talebiniz onaylandı."
 
-msgid "Your work type request has been deleted."
+msgid "Your work from request has been deleted."
 msgstr "İş tipi talebiniz silindi."
 
 msgid "Your shift request has been canceled."
@@ -6550,7 +6550,7 @@ msgstr "Bir izin miktarı için indirim"
 msgid "Deduct leave from basic pay"
 msgstr "Temel maaştan izin indirmek"
 
-msgid "Work type"
+msgid "Work from"
 msgstr "Çalışma türü"
 
 msgid "Pay frequency"
@@ -6577,7 +6577,7 @@ msgstr "Pano"
 msgid "SHIFT REQUESTS"
 msgstr "VARDIYA İSTEKLERI"
 
-msgid "WORK TYPE REQUESTS"
+msgid "WORK FROM REQUESTS"
 msgstr "İŞ TÜRÜ TALEPLERI"
 
 msgid "Single"
@@ -6682,10 +6682,10 @@ msgstr "Sonraki değişiklik tarihi"
 msgid "Next shift"
 msgstr "Sonraki vardiya"
 
-msgid "Current work type"
+msgid "Current work from"
 msgstr "Güncel çalışma türü"
 
-msgid "Next work type"
+msgid "Next work from"
 msgstr "Sonraki çalışma türü"
 
 msgid "Start date from"
@@ -6814,7 +6814,7 @@ msgstr "Giriş Portalı S..."
 msgid "Employee work information"
 msgstr "Çalışan çalışma bilgileri"
 
-msgid "Rotating work type assign"
+msgid "Rotating work from assign"
 msgstr "Döner iş tipi ataması"
 
 msgid "Employee shift schedule"
@@ -6874,13 +6874,13 @@ msgstr "çalışan görünümü"
 msgid "shift-request-view"
 msgstr "shift-request-view"
 
-msgid "work-type-request-view"
+msgid "work-from-request-view"
 msgstr "work-type-request-view"
 
 msgid "rotating-shift-assign"
 msgstr "döndürme-kaydırma-atama"
 
-msgid "rotating-work-type-assign"
+msgid "rotating-work-from-assign"
 msgstr "döner-iş-tip-atama"
 
 msgid "view-payroll-dashboard"
@@ -7027,10 +7027,10 @@ msgstr "İş-pozisyon-bakış açısı"
 msgid "job-role-view"
 msgstr "iş-rolü-görünümü"
 
-msgid "work-type-view"
+msgid "work-from-view"
 msgstr "iş-tip-görünüm"
 
-msgid "rotating-work-type-view"
+msgid "rotating-work-from-view"
 msgstr "dönen iş-tip-görünümü"
 
 msgid "employee-type-view"
@@ -7138,7 +7138,7 @@ msgstr "job_position"
 msgid "job_role"
 msgstr "job_role"
 
-msgid "work_type"
+msgid "work_from"
 msgstr "work_type"
 
 msgid "company"
@@ -7456,7 +7456,7 @@ msgstr "Cinsiyet Tablosu"
 msgid "Shift Request to Approve"
 msgstr "Vardiya Talebi Onay"
 
-msgid "Work Type Request to Approve"
+msgid "Work From Request to Approve"
 msgstr "İş Türü Onay Talebi"
 
 msgid "Overtime to Approve"
@@ -7654,25 +7654,25 @@ msgstr "İş Pozisyonu başarıyla oluşturuldu!"
 msgid "Job role updated."
 msgstr "İş rolü güncellendi."
 
-msgid "Work Type has been created successfully!"
+msgid "Work From has been created successfully!"
 msgstr "Work Type başarıyla oluşturuldu!"
 
-msgid "Work type updated."
+msgid "Work from updated."
 msgstr "İş türü güncellendi."
 
-msgid "Rotating work type created."
+msgid "Rotating work from created."
 msgstr "Döner iş türü oluşturuldu."
 
-msgid "Rotating work type updated."
+msgid "Rotating work from updated."
 msgstr "Dönüşümlü çalışma türü güncellendi."
 
-msgid "Rotating work type assigned."
+msgid "Rotating work from assigned."
 msgstr "Dönüşümlü iş türü atandı."
 
-msgid "Rotating work type assign updated."
+msgid "Rotating work from assign updated."
 msgstr "Dönüşümlü iş türü ataması güncellendi."
 
-msgid "Rotating work type assign not found."
+msgid "Rotating work from assign not found."
 msgstr "Dönen iş tipi ataması bulunamadı."
 
 msgid "Already on record is active"
@@ -7685,18 +7685,18 @@ msgid "archived"
 msgstr "Arşivlendi"
 
 #, python-brace-format
-msgid "Rotating work type assign is {}"
+msgid "Rotating work from assign is {}"
 msgstr "Döner iş tipi ataması {}"
 
-msgid "No rotatingworktype found matching the query."
+msgid "No rotatingworkfrom found matching the query."
 msgstr "Sorguyla eşleşen dönüşümlü çalışma türü bulunamadı."
 
 #, python-brace-format
-msgid "Rotating work type for {employee_id} already exists"
+msgid "Rotating work from for {employee_id} already exists"
 msgstr "{employee_id} için döner çalışma tipi zaten var"
 
 #, python-brace-format
-msgid "Rotating work type for {count} employees is {message}"
+msgid "Rotating work from for {count} employees is {message}"
 msgstr "{count} çalışanlar için dönüşümlü çalışma tipi {message}"
 
 #, python-brace-format
@@ -7704,17 +7704,17 @@ msgid "{employee} deleted."
 msgstr "{employee} silindi."
 
 #, python-brace-format
-msgid "{rwork_type_assign} not found."
-msgstr "{rwork_type_assign} bulunamadı."
+msgid "{rwork_from_assign} not found."
+msgstr "{rwork_from_assign} bulunamadı."
 
 #, python-brace-format
-msgid "You cannot delete {rwork_type_assign}"
-msgstr "Silemezsiniz{rwork_type_assign}"
+msgid "You cannot delete {rwork_from_assign}"
+msgstr "Silemezsiniz{rwork_from_assign}"
 
-msgid "Rotating work type assign deleted."
+msgid "Rotating work from assign deleted."
 msgstr "Dönüşümlü iş tipi ataması silindi."
 
-msgid "You cannot delete this rotating work type."
+msgid "You cannot delete this rotating work from."
 msgstr "Bu dönen çalışma türünü silemezsiniz."
 
 msgid "Employee type created."
@@ -7795,45 +7795,45 @@ msgstr "Çalışan bulunamadı"
 msgid "Employee permission assigned."
 msgstr "Çalışan izni atandı."
 
-msgid "Work type request added."
+msgid "Work from request added."
 msgstr "İş türü isteği eklendi."
 
-msgid "Work type request not found."
+msgid "Work from request not found."
 msgstr "İş türü talebi bulunamadı."
 
 msgid "You don't have permission"
 msgstr "Bunun için yetkiniz yok"
 
-msgid "Work type request has been rejected."
+msgid "Work from request has been rejected."
 msgstr "İş türü talebi reddedildi."
 
-msgid "Your work type request has been rejected."
+msgid "Your work from request has been rejected."
 msgstr "İş türü talebiniz reddedildi."
 
-msgid "No worktype request found matching the query."
+msgid "No workfrom request found matching the query."
 msgstr "Sorguyla eşleşen çalışma türü talebi bulunamadı."
 
-msgid "Work type request has been canceled."
+msgid "Work from request has been canceled."
 msgstr "İş türü talebi iptal edildi."
 
-msgid "Work type request has been approved."
+msgid "Work from request has been approved."
 msgstr "İş türü talebi onaylandı."
 
-msgid "An approved work type request already exists during this time period."
+msgid "An approved work from request already exists during this time period."
 msgstr "Bu dönemde onaylanmış bir iş türü talebi zaten mevcuttur."
 
-msgid "Work type request deleted."
+msgid "Work from request deleted."
 msgstr "İş türü isteği silindi."
 
-msgid "You cannot delete this work type request."
+msgid "You cannot delete this work from request."
 msgstr "Bu çalışma türü isteği silmek mümkün değil."
 
 #, python-brace-format
-msgid "You cannot delete {employee} work type request for the date {date}."
+msgid "You cannot delete {employee} work from request for the date {date}."
 msgstr "{date} tarih için {employee} iş türü isteği silemezsiniz."
 
 #, python-brace-format
-msgid "{} work type requests deleted."
+msgid "{} work from requests deleted."
 msgstr "{} iş türü istekleri silindi."
 
 msgid "Shift request added"
@@ -7995,10 +7995,10 @@ msgid "Comment not found."
 msgstr "Yorum bulunamadı."
 
 #, python-format
-msgid "%(employee)s's work type request has received a comment."
+msgid "%(employee)s's work from request has received a comment."
 msgstr "%(employee)s adlı çalışanın iş türü talebine bir yorum yapıldı."
 
-msgid "Your work type request has received a comment."
+msgid "Your work from request has received a comment."
 msgstr "İş türü talebinize bir yorum yapıldı."
 
 msgid "Default pagination updated."
@@ -8796,7 +8796,7 @@ msgstr "Çalışan Kodu"
 msgid "Date of Joining"
 msgstr "Katılım Tarihi"
 
-msgid "Work Type & Shift"
+msgid "Work From & Shift"
 msgstr "İş Türü ve Vardiya"
 
 msgid "Groups & Permissions"
@@ -9950,7 +9950,7 @@ msgstr "Bugün Röportaj"
 msgid "No interviews are scheduled for this candidate"
 msgstr "Bu aday için herhangi bir mülakat planlanmamıştır"
 
-msgid "No work type request has been created."
+msgid "No work from request has been created."
 msgstr "Herhangi bir iş türü talebi oluşturulmadı."
 
 msgid "Rotate every 1st day of month "
@@ -9986,7 +9986,7 @@ msgstr "Ayın her son günü dönüşümlü "
 msgid "th day of month "
 msgstr "ayın en iyi günü "
 
-msgid "No rotating work type has been assigned."
+msgid "No rotating work from has been assigned."
 msgstr "Herhangi bir dönüşümlü iş türü atanmamıştır."
 
 msgid "No Shift request has been created."
@@ -11023,7 +11023,7 @@ msgstr ""
 msgid "If 'based_on' is 'shift_id', 'shift_id' is required."
 msgstr "'based_on' değeri 'shift_id' ise 'shift_id' gereklidir."
 
-msgid "If 'based_on' is 'work_type_id', 'work_type_id' is required."
+msgid "If 'based_on' is 'work_from_id', 'work_from_id' is required."
 msgstr "'based_on' değeri 'work_type_id' ise 'work_type_id' gereklidir."
 
 msgid ""
@@ -11098,16 +11098,16 @@ msgstr "İş rolü bulunamadı "
 msgid "Company not found "
 msgstr "Şirket bulunamadı "
 
-msgid "WorkType not found"
+msgid "WorkFrom not found"
 msgstr "Çalışma Türü bulunamadı"
 
-msgid "WorkTypeRequest not found"
+msgid "WorkFromRequest not found"
 msgstr "Çalışma Türü Talebi bulunamadı"
 
 msgid "you have no permission to view"
 msgstr "görüntüleme izniniz yok"
 
-msgid "RotatingWorkTypeAssign not found"
+msgid "RotatingWorkFromAssign not found"
 msgstr "Dönüşümlü Çalışma Türü Ataması bulunamadı"
 
 msgid "EmployeeShift not found"
@@ -11125,7 +11125,7 @@ msgstr "Dönüşümlü Vardiya Ataması bulunamadı"
 msgid "ShiftRequest not found"
 msgstr "Vardiya Talebi bulunamadı"
 
-msgid "RotatingWorkType not found"
+msgid "RotatingWorkFrom not found"
 msgstr "Dönüşümlü Çalışma Türü bulunamadı"
 
 msgid "Already request exits on same date"
@@ -13204,7 +13204,7 @@ msgstr "Kadrolu veya sözleşmeli gibi çalışan kategorilerini yönetin."
 msgid "Set up rotating shift patterns for employees."
 msgstr "Çalışanlar için dönüşümlü vardiya desenlerini ayarlayın."
 
-msgid "Set up rotating work type patterns for employees."
+msgid "Set up rotating work from patterns for employees."
 msgstr "Çalışanlar için dönüşümlü çalışma türü desenlerini ayarlayın."
 
 msgid "Configure day-wise schedules linked to each shift."
@@ -13349,7 +13349,7 @@ msgstr "Varlık Talebi Oluştur"
 msgid "Create Reimbursement"
 msgstr "Geri Ödeme Oluştur"
 
-msgid "Create Work Type Request"
+msgid "Create Work From Request"
 msgstr "Çalışma Türü Talebi Oluştur"
 
 msgid "Create Leave Request"
@@ -13586,7 +13586,7 @@ msgstr "Duyuru Oluştur"
 msgid "Shift Requests to Approve"
 msgstr "Vardiyanın Onaylanması Talepleri"
 
-msgid "Work Type Requests to Approve"
+msgid "Work From Requests to Approve"
 msgstr "İş Türü Onay Talepleri"
 
 msgid "Employee Work Information"
@@ -15041,7 +15041,7 @@ msgstr ""
 msgid "Submit and manage your shift change requests for approval."
 msgstr "Onay için vardiya değişikliği taleplerinizi gönderin ve yönetin."
 
-msgid "Submit and manage requests to change your work type assignment."
+msgid "Submit and manage requests to change your work from assignment."
 msgstr "Çalışma türü atamanızı değiştirmek için talepler gönderin ve yönetin."
 
 msgid "Company-specific settings"
@@ -15229,7 +15229,7 @@ msgstr "Hafta"
 msgid "Shift Roster"
 msgstr "Vardiya Çizelgesi"
 
-msgid "No Comments have been added for this worktype request"
+msgid "No Comments have been added for this workfrom request"
 msgstr "Bu çalışma tipi talebi için herhangi bir yorum eklenmedi"
 
 msgid "Theme ID is required"
@@ -18359,7 +18359,7 @@ msgstr ""
 msgid "If based on is shift, then shift must be filled."
 msgstr "Eğer vardiyaya göre değişiyorsa, vardiyanın doldurulması gerekir."
 
-msgid "If based on is work type, then work type must be filled."
+msgid "If based on is work from, then work from must be filled."
 msgstr "Eğer iş türüne göre değişiyorsa, o zaman iş türü doldurulmalıdır."
 
 msgid "The amount per children must be filled."
@@ -22316,7 +22316,7 @@ msgstr "Tüm roller"
 msgid "All types"
 msgstr "Tüm türler"
 
-msgid "All work types"
+msgid "All work from options"
 msgstr "Tüm çalışma türleri"
 
 msgid "All shifts"

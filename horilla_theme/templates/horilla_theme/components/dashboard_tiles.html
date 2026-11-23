@@ -89,20 +89,20 @@ do not dual-write modern DashboardEmployeeCharts prefs from these toggles.
             >
             </div>
         </div>
-    {% elif chart == "work_type_request_approve" and "work_type_request_approve" in charts %}
-        <!-- Work Type Approve Table -->
+    {% elif chart == "work_from_request_approve" and "work_from_request_approve" in charts %}
+        <!-- Work From Approve Table -->
         <div
             class="xl:col-span-6 md:col-span-12 col-span-12 bg-white p-6 rounded-md shadow-card group"
-            id="work_type_request_approve"
+            id="work_from_request_approve"
         >
             <div class="flex justify-between items-center mb-2">
                 <h3 class="text-md font-semibold">
-                    {% trans "Work Type Requests to Approve" %}
+                    {% trans "Work From Requests to Approve" %}
                 </h3>
                 <span
                     class="float-end hidden group-hover:block"
                     role="button"
-                    hx-post="{% url 'dashboard-components-toggle' %}?chart_id=work_type_request_approve"
+                    hx-post="{% url 'dashboard-components-toggle' %}?chart_id=work_from_request_approve"
                     hx-target="closest .shadow-card"
                     hx-swap="outerHTML"
                 >
@@ -112,7 +112,7 @@ do not dual-write modern DashboardEmployeeCharts prefs from these toggles.
             <div
                 class="w-full overflow-x-auto overflow-y-auto"
                 id="shiftRequestApprove"
-                hx-get="{% url 'dashboard-work-type-request' %}"
+                hx-get="{% url 'dashboard-work-from-request' %}"
                 hx-trigger="load"
             >
             </div>

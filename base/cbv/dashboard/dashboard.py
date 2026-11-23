@@ -12,7 +12,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 
 from base.cbv.shift_request import ShiftRequestList
-from base.cbv.work_type_request import WorkRequestListView
+from base.cbv.work_from_request import WorkRequestListView
 from base.decorators import manager_can_enter
 from base.filters import AnnouncementFilter, AnnouncementViewFilter
 from base.methods import filtersubordinates
@@ -25,14 +25,14 @@ from horilla_views.generic.cbv.views import HorillaFormView, HorillaListView
 
 
 @method_decorator(login_required, name="dispatch")
-class DashboardWorkTypeRequest(WorkRequestListView):
+class DashboardWorkFromRequest(WorkRequestListView):
     """
-    Work type request view in dashboard.
+    Work from request view in dashboard.
     """
 
     columns = [
         (_("Employee"), "employee_id", "employee_id__get_avatar"),
-        (_("Requested Work Type"), "work_type_id"),
+        (_("Requested Work From"), "work_from_id"),
     ]
 
     row_attrs = """
@@ -45,7 +45,7 @@ class DashboardWorkTypeRequest(WorkRequestListView):
     header_attrs = {
         "action": 'style="width:100px !important"',
         "employee_id": 'style="width:100px !important"',
-        "work_type_id": 'style="width:100px !important"',
+        "work_from_id": 'style="width:100px !important"',
     }
 
     records_per_page = 5
@@ -56,7 +56,7 @@ class DashboardWorkTypeRequest(WorkRequestListView):
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self.search_url = reverse("dashboard-work-type-request")
+        self.search_url = reverse("dashboard-work-from-request")
         self.request.dashboard = "dashboard"
 
     def get_queryset(self):
@@ -69,7 +69,7 @@ class DashboardWorkTypeRequest(WorkRequestListView):
             canceled=False,
         )
         queryset = filtersubordinates(
-            self.request, queryset, "base.add_worktyperequest"
+            self.request, queryset, "base.add_workfromrequest"
         )
         return queryset
 

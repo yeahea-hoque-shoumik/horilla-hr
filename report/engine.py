@@ -42,7 +42,7 @@ class ReportFilters:
     job_position_id: Optional[int] = None
     job_role_id: Optional[int] = None
     employee_type_id: Optional[int] = None
-    work_type_id: Optional[int] = None
+    work_from_id: Optional[int] = None
     shift_id: Optional[int] = None
     company_id: Optional[int] = None
     reporting_manager_id: Optional[int] = None
@@ -106,7 +106,7 @@ class ReportFilters:
             (_("Job position"), self.job_position_id, "base", "JobPosition"),
             (_("Job role"), self.job_role_id, "base", "JobRole"),
             (_("Employee type"), self.employee_type_id, "base", "EmployeeType"),
-            (_("Work type"), self.work_type_id, "base", "WorkType"),
+            (_("Work from"), self.work_from_id, "base", "WorkFrom"),
             (_("Shift"), self.shift_id, "base", "EmployeeShift"),
             (_("Company"), self.company_id, "base", "Company"),
             (
@@ -272,7 +272,7 @@ def filters_from_request(request: HttpRequest) -> ReportFilters:
         job_position_id=_parse_int(request.GET.get("job_position_id")),
         job_role_id=_parse_int(request.GET.get("job_role_id")),
         employee_type_id=_parse_int(request.GET.get("employee_type_id")),
-        work_type_id=_parse_int(request.GET.get("work_type_id")),
+        work_from_id=_parse_int(request.GET.get("work_from_id")),
         shift_id=_parse_int(request.GET.get("shift_id")),
         company_id=_parse_int(request.GET.get("company_id")),
         reporting_manager_id=_parse_int(request.GET.get("reporting_manager_id")),
@@ -360,7 +360,7 @@ def filters_from_dict(
         job_position_id=_parse_int(raw.get("job_position_id")),
         job_role_id=_parse_int(raw.get("job_role_id")),
         employee_type_id=_parse_int(raw.get("employee_type_id")),
-        work_type_id=_parse_int(raw.get("work_type_id")),
+        work_from_id=_parse_int(raw.get("work_from_id")),
         shift_id=_parse_int(raw.get("shift_id")),
         company_id=company_id,
         reporting_manager_id=_parse_int(raw.get("reporting_manager_id")),
@@ -448,8 +448,8 @@ def apply_org_filters(
         qs = qs.filter(**{p("job_role_id"): filters.job_role_id})
     if filters.employee_type_id:
         qs = qs.filter(**{p("employee_type_id"): filters.employee_type_id})
-    if filters.work_type_id:
-        qs = qs.filter(**{p("work_type_id"): filters.work_type_id})
+    if filters.work_from_id:
+        qs = qs.filter(**{p("work_from_id"): filters.work_from_id})
     if filters.shift_id:
         qs = qs.filter(**{p("shift_id"): filters.shift_id})
     if filters.company_id:

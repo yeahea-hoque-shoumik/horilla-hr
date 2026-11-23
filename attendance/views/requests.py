@@ -58,7 +58,7 @@ def _clean_requested_data_none_strings(requested_data):
     """
     AttendanceRequestForm.clean() stringifies every value before storing
     requested_data as JSON (see forms.py), turning an absent/None field such
-    as work_type_id or shift_id into the literal string "None" instead of
+    as work_from_id or shift_id into the literal string "None" instead of
     null. Convert any such literal "None" strings back to real None so they
     don't get passed as-is to a FK field on Attendance.objects.update().
     """
@@ -322,7 +322,7 @@ def attendance_request_changes(request, attendance_id):
         form = AttendanceRequestForm(initial=request.GET.dict())
     else:
         form = AttendanceRequestForm(instance=attendance)
-        # form.fields["work_type_id"].widget.attrs.update(
+        # form.fields["work_from_id"].widget.attrs.update(
         #     {
         #         "class": "w-100",
         #         "style": "height:50px;border-radius:0;border:1px solid hsl(213deg,22%,84%)",
@@ -336,7 +336,7 @@ def attendance_request_changes(request, attendance_id):
         # )
     if request.method == "POST":
         form = AttendanceRequestForm(request.POST, instance=copy.copy(attendance))
-        form.fields["work_type_id"].widget.attrs.update(
+        form.fields["work_from_id"].widget.attrs.update(
             {
                 "class": "w-100",
                 "style": "height:50px;border-radius:0;border:1px solid hsl(213deg,22%,84%)",
@@ -348,10 +348,10 @@ def attendance_request_changes(request, attendance_id):
                 "style": "height:50px;border-radius:0;border:1px solid hsl(213deg,22%,84%)",
             }
         )
-        work_type_id = form.data["work_type_id"]
+        work_from_id = form.data["work_from_id"]
         shift_id = form.data["shift_id"]
-        if work_type_id is None or not len(work_type_id):
-            form.add_error("work_type_id", "This field is required")
+        if work_from_id is None or not len(work_from_id):
+            form.add_error("work_from_id", "This field is required")
         if shift_id is None or not len(shift_id):
             form.add_error("shift_id", "This field is required")
         if form.is_valid():
@@ -420,7 +420,7 @@ def validate_attendance_request(request, attendance_id):
         "attendance_clock_out": None,
         "attendance_clock_out_date": None,
         "shift_id": None,
-        "work_type_id": None,
+        "work_from_id": None,
         "attendance_worked_hour": None,
         "batch_attendance_id": None,
     }

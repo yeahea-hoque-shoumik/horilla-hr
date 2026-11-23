@@ -10,7 +10,7 @@ from horilla.horilla_middlewares import _thread_locals
 from horilla.http.response import HorillaRedirect
 from horilla.methods import handle_no_permission
 
-from .models import MultipleApprovalManagers, ShiftRequest, WorkTypeRequest
+from .models import MultipleApprovalManagers, ShiftRequest, WorkFromRequest
 
 decorator_with_arguments = (
     lambda decorator: lambda *args, **kwargs: lambda func: decorator(
@@ -46,25 +46,25 @@ def shift_request_change_permission(function=None, *args, **kwargs):
 
 
 @decorator_with_arguments
-def work_type_request_change_permission(function=None, *args, **kwargs):
+def work_from_request_change_permission(function=None, *args, **kwargs):
     def check_permission(
         request,
-        work_type_request_id=None,
+        work_from_request_id=None,
         *args,
         **kwargs,
     ):
         """
         This method is used to check the employee can change a shift request or not
         """
-        work_type_request = WorkTypeRequest.objects.get(id=work_type_request_id)
+        work_from_request = WorkFromRequest.objects.get(id=work_from_request_id)
         if (
-            request.user.has_perm("base.change_worktyperequest")
+            request.user.has_perm("base.change_workfromrequest")
             or request.user.employee_get
-            == work_type_request.employee_id.employee_work_info.reporting_manager_id
-            or request.user.employee_get == work_type_request.employee_id
+            == work_from_request.employee_id.employee_work_info.reporting_manager_id
+            or request.user.employee_get == work_from_request.employee_id
         ):
             return function(
-                request, *args, work_type_request_id=work_type_request_id, **kwargs
+                request, *args, work_from_request_id=work_from_request_id, **kwargs
             )
         messages.info(request, _("You don't have permission."))
         return HorillaRedirect(request)

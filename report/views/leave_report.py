@@ -37,7 +37,7 @@ if apps.is_installed("leave"):
             "job_position": "employee_id__employee_work_info__job_position_id__job_position",
             "job_role": "employee_id__employee_work_info__job_role_id__job_role",
             "shift": "employee_id__employee_work_info__shift_id__employee_shift",
-            "work_type": "employee_id__employee_work_info__work_type_id__work_type",
+            "work_from": "employee_id__employee_work_info__work_from_id__work_from",
             "start_date": "start_date",
             "end_date": "end_date",
             "badge_id": "employee_id__badge_id",
@@ -62,7 +62,7 @@ if apps.is_installed("leave"):
             "job_position": "employee_id__employee_work_info__job_position_id__job_position",
             "job_role": "employee_id__employee_work_info__job_role_id__job_role",
             "shift": "employee_id__employee_work_info__shift_id__employee_shift",
-            "work_type": "employee_id__employee_work_info__work_type_id__work_type",
+            "work_from": "employee_id__employee_work_info__work_from_id__work_from",
             "badge_id": "employee_id__badge_id",
             "gender": "employee_id__gender",
             "email": "employee_id__email",
@@ -359,7 +359,7 @@ if apps.is_installed("leave"):
                     "employee_id__employee_work_info__job_position_id__job_position",
                     "employee_id__employee_work_info__employee_type_id__employee_type",
                     "employee_id__employee_work_info__experience",
-                    "employee_id__employee_work_info__work_type_id__work_type",
+                    "employee_id__employee_work_info__work_from_id__work_from",
                     "employee_id__employee_work_info__shift_id__employee_shift",
                     "employee_id__employee_work_info__company_id__company",
                 )
@@ -415,10 +415,10 @@ if apps.is_installed("leave"):
                         ]
                         else "-"
                     ),
-                    "Work Type": (
-                        item["employee_id__employee_work_info__work_type_id__work_type"]
+                    "Work From": (
+                        item["employee_id__employee_work_info__work_from_id__work_from"]
                         if item[
-                            "employee_id__employee_work_info__work_type_id__work_type"
+                            "employee_id__employee_work_info__work_from_id__work_from"
                         ]
                         else "-"
                     ),
@@ -476,7 +476,7 @@ if apps.is_installed("leave"):
                     "employee_id__employee_work_info__job_position_id__job_position",
                     "employee_id__employee_work_info__employee_type_id__employee_type",
                     "employee_id__employee_work_info__experience",
-                    "employee_id__employee_work_info__work_type_id__work_type",
+                    "employee_id__employee_work_info__work_from_id__work_from",
                     "employee_id__employee_work_info__shift_id__employee_shift",
                     "employee_id__employee_work_info__company_id__company",
                 )
@@ -518,10 +518,10 @@ if apps.is_installed("leave"):
                         ]
                         else "-"
                     ),
-                    "Work Type": (
-                        item["employee_id__employee_work_info__work_type_id__work_type"]
+                    "Work From": (
+                        item["employee_id__employee_work_info__work_from_id__work_from"]
                         if item[
-                            "employee_id__employee_work_info__work_type_id__work_type"
+                            "employee_id__employee_work_info__work_from_id__work_from"
                         ]
                         else "-"
                     ),

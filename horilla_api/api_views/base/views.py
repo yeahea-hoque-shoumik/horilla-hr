@@ -14,9 +14,9 @@ from rest_framework.views import APIView
 
 from base.filters import (
     RotatingShiftAssignFilters,
-    RotatingWorkTypeAssignFilter,
+    RotatingWorkFromAssignFilter,
     ShiftRequestFilter,
-    WorkTypeRequestFilter,
+    WorkFromRequestFilter,
 )
 from base.models import (
     Announcement,
@@ -30,19 +30,19 @@ from base.models import (
     JobRole,
     RotatingShift,
     RotatingShiftAssign,
-    RotatingWorkType,
-    RotatingWorkTypeAssign,
+    RotatingWorkFrom,
+    RotatingWorkFromAssign,
     ShiftRequest,
     ShiftRequestComment,
-    WorkType,
-    WorkTypeRequest,
-    WorkTypeRequestComment,
+    WorkFrom,
+    WorkFromRequest,
+    WorkFromRequestComment,
 )
 from base.views import (
     is_reportingmanger,
-    rotating_work_type_assign_export,
+    rotating_work_from_assign_export,
     shift_request_export,
-    work_type_request_export,
+    work_from_request_export,
 )
 from employee.models import Actiontype, Employee
 from horilla_api.api_methods.base.announcements import (
@@ -70,11 +70,11 @@ from ...api_serializers.base.serializers import (
     JobRoleSerializer,
     RotatingShiftAssignSerializer,
     RotatingShiftSerializer,
-    RotatingWorkTypeAssignSerializer,
-    RotatingWorkTypeSerializer,
+    RotatingWorkFromAssignSerializer,
+    RotatingWorkFromSerializer,
     ShiftRequestSerializer,
-    WorkTypeRequestSerializer,
-    WorkTypeSerializer,
+    WorkFromRequestSerializer,
+    WorkFromSerializer,
 )
 
 
@@ -101,7 +101,7 @@ def individual_permssion_check(request):
         return True
     elif employee.employee_work_info.reporting_manager_id == request.user.employee_get:
         return True
-    elif request.user.has_perm("base.view_rotatingworktypeassign"):
+    elif request.user.has_perm("base.view_rotatingworkfromassign"):
         return True
     return False
 
@@ -127,7 +127,7 @@ logger = logging.getLogger(__name__)
 
 def _revert_work_info(employee, was_approved, **fields):
     """
-    Put an employee's shift / work type back when a request is cancelled.
+    Put an employee's shift / work from back when a request is cancelled.
 
     Only a request that had been approved changed anything, so only that
     one is reverted. Rejecting a still-pending request used to overwrite the
@@ -333,23 +333,23 @@ class CompanyView(APIView):
         return Response(response, status=status_code)
 
 
-class WorkTypeView(APIView):
-    serializer_class = WorkTypeSerializer
+class WorkFromView(APIView):
+    serializer_class = WorkFromSerializer
     permission_classes = [IsAuthenticated]
 
     def get(self, request, pk=None):
         if pk:
-            work_type = object_check(WorkType, pk)
-            if work_type is None:
-                return Response({"error": _("WorkType not found")}, status=404)
-            serializer = self.serializer_class(work_type)
+            work_from = object_check(WorkFrom, pk)
+            if work_from is None:
+                return Response({"error": _("WorkFrom not found")}, status=404)
+            serializer = self.serializer_class(work_from)
             return Response(serializer.data, status=200)
 
-        work_types = WorkType.objects.all()
-        serializer = self.serializer_class(work_types, many=True)
+        work_froms = WorkFrom.objects.all()
+        serializer = self.serializer_class(work_froms, many=True)
         return Response(serializer.data)
 
-    @method_decorator(permission_required("base.add_worktype"), name="dispatch")
+    @method_decorator(permission_required("base.add_workfrom"), name="dispatch")
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -357,73 +357,73 @@ class WorkTypeView(APIView):
             return Response(serializer.data, status=200)
         return Response(serializer.errors, status=400)
 
-    @method_decorator(permission_required("base.change_worktype"), name="dispatch")
+    @method_decorator(permission_required("base.change_workfrom"), name="dispatch")
     def put(self, request, pk):
-        work_type = object_check(WorkType, pk)
-        if work_type is None:
-            return Response({"error": _("WorkType not found")}, status=404)
-        serializer = self.serializer_class(work_type, data=request.data)
+        work_from = object_check(WorkFrom, pk)
+        if work_from is None:
+            return Response({"error": _("WorkFrom not found")}, status=404)
+        serializer = self.serializer_class(work_from, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=200)
         return Response(serializer.errors, status=400)
 
-    @method_decorator(permission_required("base.delete_worktype"), name="dispatch")
+    @method_decorator(permission_required("base.delete_workfrom"), name="dispatch")
     def delete(self, request, pk):
-        work_type = object_check(WorkType, pk)
-        if work_type is None:
-            return Response({"error": _("WorkType not found")}, status=404)
-        response, status_code = object_delete(WorkType, pk)
+        work_from = object_check(WorkFrom, pk)
+        if work_from is None:
+            return Response({"error": _("WorkFrom not found")}, status=404)
+        response, status_code = object_delete(WorkFrom, pk)
         return Response(response, status=status_code)
 
 
-class WorkTypeRequestView(APIView):
-    serializer_class = WorkTypeRequestSerializer
-    filterset_class = WorkTypeRequestFilter
+class WorkFromRequestView(APIView):
+    serializer_class = WorkFromRequestSerializer
+    filterset_class = WorkFromRequestFilter
     permission_classes = [IsAuthenticated]
-    queryset = WorkTypeRequest.objects.none()  # For drf-yasg schema generation
+    queryset = WorkFromRequest.objects.none()  # For drf-yasg schema generation
 
     def get_queryset(self, request=None):
         # Handle schema generation for DRF-YASG
         if getattr(self, "swagger_fake_view", False) or request is None:
-            return WorkTypeRequest.objects.none()
-        queryset = WorkTypeRequest.objects.all()
+            return WorkFromRequest.objects.none()
+        queryset = WorkFromRequest.objects.all()
         user = request.user
         # checking user level permissions
-        perm = "base.view_worktyperequest"
+        perm = "base.view_workfromrequest"
         queryset = permission_based_queryset(user, perm, queryset, user_obj=True)
         return queryset
 
     def get(self, request, pk=None):
         # individual object workflow
         if pk:
-            work_type_request = object_check(WorkTypeRequest, pk)
-            if work_type_request is None:
-                return Response({"error": _("WorkTypeRequest not found")}, status=404)
-            serializer = self.serializer_class(work_type_request)
+            work_from_request = object_check(WorkFromRequest, pk)
+            if work_from_request is None:
+                return Response({"error": _("WorkFromRequest not found")}, status=404)
+            serializer = self.serializer_class(work_from_request)
             return Response(serializer.data, status=200)
         # permission based queryset
-        work_type_requests = self.get_queryset(request)
+        work_from_requests = self.get_queryset(request)
         # filtering queryset
-        work_type_request_filter_queryset = self.filterset_class(
-            request.GET, queryset=work_type_requests
+        work_from_request_filter_queryset = self.filterset_class(
+            request.GET, queryset=work_from_requests
         ).qs
         # groupby workflow
         field_name = request.GET.get("groupby_field", None)
         if field_name:
             url = request.build_absolute_uri()
             return groupby_queryset(
-                request, url, field_name, work_type_request_filter_queryset
+                request, url, field_name, work_from_request_filter_queryset
             )
         # pagination workflow
         paginater = HorillaPageNumberPagination()
-        page = paginater.paginate_queryset(work_type_request_filter_queryset, request)
+        page = paginater.paginate_queryset(work_from_request_filter_queryset, request)
         serializer = self.serializer_class(page, many=True)
         return paginater.get_paginated_response(serializer.data)
 
     def post(self, request):
         data = request.data.copy()
-        if not request.user.has_perm("base.add_worktyperequest"):
+        if not request.user.has_perm("base.add_workfromrequest"):
             data["employee_id"] = request.user.employee_get.id
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
@@ -438,16 +438,16 @@ class WorkTypeRequestView(APIView):
                     instance.employee_id,
                     recipient=instance.employee_id.employee_work_info.reporting_manager_id.employee_user_id,
                     verb=gettext_noop(
-                        "You have new work type request to validate for %(employee)s"
+                        "You have new work from request to validate for %(employee)s"
                     ),
                     verb_params={"employee": str(instance.employee_id)},
                     icon="information",
-                    redirect=f"/employee/work-type-request-view?id={instance.id}",
-                    api_redirect=f"/api/base/worktype-requests/{instance.id}",
+                    redirect=f"/employee/work-from-request-view?id={instance.id}",
+                    api_redirect=f"/api/base/workfrom-requests/{instance.id}",
                 )
             except Exception:
                 logger.warning(
-                    "Work type request %s saved, but notifying the reporting "
+                    "Work from request %s saved, but notifying the reporting "
                     "manager failed",
                     instance.id,
                     exc_info=True,
@@ -455,73 +455,73 @@ class WorkTypeRequestView(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
-    @check_approval_status(WorkTypeRequest, "base.change_worktyperequest")
+    @check_approval_status(WorkFromRequest, "base.change_workfromrequest")
     @manager_or_owner_permission_required(
-        WorkTypeRequest, "base.change_worktyperequest"
+        WorkFromRequest, "base.change_workfromrequest"
     )
     def put(self, request, pk):
-        work_type_request = object_check(WorkTypeRequest, pk)
-        if work_type_request is None:
-            return Response({"error": _("WorkTypeRequest not found")}, status=404)
-        serializer = self.serializer_class(work_type_request, data=request.data)
+        work_from_request = object_check(WorkFromRequest, pk)
+        if work_from_request is None:
+            return Response({"error": _("WorkFromRequest not found")}, status=404)
+        serializer = self.serializer_class(work_from_request, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=200)
         return Response(serializer.errors, status=400)
 
-    @check_approval_status(WorkTypeRequest, "base.change_worktyperequest")
+    @check_approval_status(WorkFromRequest, "base.change_workfromrequest")
     @manager_or_owner_permission_required(
-        WorkTypeRequest, "base.delete_worktyperequest"
+        WorkFromRequest, "base.delete_workfromrequest"
     )
     def delete(self, request, pk):
-        work_type_request = object_check(WorkTypeRequest, pk)
-        if work_type_request is None:
-            return Response({"error": _("WorkTypeRequest not found")}, status=404)
-        response, status_code = object_delete(WorkTypeRequest, pk)
+        work_from_request = object_check(WorkFromRequest, pk)
+        if work_from_request is None:
+            return Response({"error": _("WorkFromRequest not found")}, status=404)
+        response, status_code = object_delete(WorkFromRequest, pk)
         return Response(response, status=status_code)
 
 
-class WorkTypeRequestCancelView(APIView):
+class WorkFromRequestCancelView(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request, pk):
-        work_type_request = WorkTypeRequest.find(pk)
+        work_from_request = WorkFromRequest.find(pk)
         if (
-            is_reportingmanger(request, work_type_request)
-            or request.user.has_perm("base.cancel_worktyperequest")
-            or work_type_request.employee_id == request.user.employee_get
-            and work_type_request.approved == False
+            is_reportingmanger(request, work_from_request)
+            or request.user.has_perm("base.cancel_workfromrequest")
+            or work_from_request.employee_id == request.user.employee_get
+            and work_from_request.approved == False
         ):
-            was_approved = work_type_request.approved
-            work_type_request.canceled = True
-            work_type_request.approved = False
+            was_approved = work_from_request.approved
+            work_from_request.canceled = True
+            work_from_request.approved = False
             _revert_work_info(
-                work_type_request.employee_id,
+                work_from_request.employee_id,
                 was_approved,
-                work_type_id=work_type_request.previous_work_type_id,
+                work_from_id=work_from_request.previous_work_from_id,
             )
-            work_type_request.save()
+            work_from_request.save()
             reason = reject_reason_from(request)
             if reason:
-                WorkTypeRequestComment.objects.create(
-                    request_id=work_type_request,
+                WorkFromRequestComment.objects.create(
+                    request_id=work_from_request,
                     employee_id=request.user.employee_get,
                     comment=reason,
                 )
             try:
                 notify.send(
                     request.user.employee_get,
-                    recipient=work_type_request.employee_id.employee_user_id,
-                    verb=gettext_noop("Your work type request has been rejected."),
-                    redirect=f"/employee/work-type-request-view?id={work_type_request.id}",
+                    recipient=work_from_request.employee_id.employee_user_id,
+                    verb=gettext_noop("Your work from request has been rejected."),
+                    redirect=f"/employee/work-from-request-view?id={work_from_request.id}",
                     icon="close",
-                    api_redirect="/api/base/worktype-requests/<int:pk>/",
+                    api_redirect="/api/base/workfrom-requests/<int:pk>/",
                 )
             except Exception:
                 logger.warning(
-                    "Work type request %s rejected, but notifying the "
+                    "Work from request %s rejected, but notifying the "
                     "employee failed",
-                    work_type_request.id,
+                    work_from_request.id,
                     exc_info=True,
                 )
             return Response({"status": "canceled"}, status=200)
@@ -534,46 +534,46 @@ class WorkRequestApproveView(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request, pk):
-        work_type_request = WorkTypeRequest.find(pk)
+        work_from_request = WorkFromRequest.find(pk)
         if (
-            is_reportingmanger(request, work_type_request)
-            or request.user.has_perm("base.approve_worktyperequest")
-            or request.user.has_perm("base.change_worktyperequest")
-        ) and not work_type_request.approved:
+            is_reportingmanger(request, work_from_request)
+            or request.user.has_perm("base.approve_workfromrequest")
+            or request.user.has_perm("base.change_workfromrequest")
+        ) and not work_from_request.approved:
             """
             Here the request will be approved, can send mail right here
             """
             # Previously fell through and returned None -- a 500 -- when an
             # overlapping approved request already existed.
-            if work_type_request.is_any_work_type_request_exists():
+            if work_from_request.is_any_work_from_request_exists():
                 return Response(
                     {
                         "error": _(
-                            "An approved work type request already exists "
+                            "An approved work from request already exists "
                             "during this time period."
                         )
                     },
                     status=400,
                 )
-            work_type_request.approved = True
-            work_type_request.canceled = False
-            work_type_request.save()
+            work_from_request.approved = True
+            work_from_request.canceled = False
+            work_from_request.save()
             # Approved and saved: a notification failure is logged, not
             # reported as a failed approval.
             try:
                 notify.send(
                     request.user.employee_get,
-                    recipient=work_type_request.employee_id.employee_user_id,
-                    verb=gettext_noop("Your work type request has been approved."),
-                    redirect=f"/employee/work-type-request-view?id={work_type_request.id}",
+                    recipient=work_from_request.employee_id.employee_user_id,
+                    verb=gettext_noop("Your work from request has been approved."),
+                    redirect=f"/employee/work-from-request-view?id={work_from_request.id}",
                     icon="checkmark",
-                    api_redirect="/api/base/worktype-requests/<int:pk>/",
+                    api_redirect="/api/base/workfrom-requests/<int:pk>/",
                 )
             except Exception:
                 logger.warning(
-                    "Work type request %s approved, but notifying the "
+                    "Work from request %s approved, but notifying the "
                     "employee failed",
-                    work_type_request.id,
+                    work_from_request.id,
                     exc_info=True,
                 )
             return Response({"status": "approved"})
@@ -581,79 +581,79 @@ class WorkRequestApproveView(APIView):
             return Response({"error": _("You don't have permission")}, status=400)
 
 
-class WorkTypeRequestExport(APIView):
+class WorkFromRequestExport(APIView):
     permission_classes = [IsAuthenticated]
 
-    @manager_permission_required("base.view_worktyperequest")
+    @manager_permission_required("base.view_workfromrequest")
     def get(self, request):
-        return work_type_request_export(request)
+        return work_from_request_export(request)
 
 
-class IndividualRotatingWorktypesView(APIView):
-    serializer_class = RotatingWorkTypeAssignSerializer
+class IndividualRotatingWorkFromsView(APIView):
+    serializer_class = RotatingWorkFromAssignSerializer
     permission_classes = [IsAuthenticated]
 
     def get(self, request, pk=None):
         if individual_permssion_check(request) == False:
             return Response({"error": _("you have no permission to view")}, status=400)
         if pk:
-            rotating_work_type_assign = object_check(RotatingWorkTypeAssign, pk)
-            if rotating_work_type_assign is None:
+            rotating_work_from_assign = object_check(RotatingWorkFromAssign, pk)
+            if rotating_work_from_assign is None:
                 return Response(
-                    {"error": _("RotatingWorkTypeAssign not found")}, status=404
+                    {"error": _("RotatingWorkFromAssign not found")}, status=404
                 )
-            serializer = self.serializer_class(rotating_work_type_assign)
+            serializer = self.serializer_class(rotating_work_from_assign)
             return Response(serializer.data, status=200)
         employee_id = request.GET.get("employee_id", None)
-        rotating_work_type_assigns = RotatingWorkTypeAssign.objects.filter(
+        rotating_work_from_assigns = RotatingWorkFromAssign.objects.filter(
             employee_id=employee_id
         )
         pagenation = HorillaPageNumberPagination()
-        page = pagenation.paginate_queryset(rotating_work_type_assigns, request)
+        page = pagenation.paginate_queryset(rotating_work_from_assigns, request)
         serializer = self.serializer_class(page, many=True)
         return pagenation.get_paginated_response(serializer.data)
 
 
-class RotatingWorkTypeAssignView(APIView):
-    serializer_class = RotatingWorkTypeAssignSerializer
-    filterset_class = RotatingWorkTypeAssignFilter
+class RotatingWorkFromAssignView(APIView):
+    serializer_class = RotatingWorkFromAssignSerializer
+    filterset_class = RotatingWorkFromAssignFilter
     permission_classes = [IsAuthenticated]
-    queryset = RotatingWorkTypeAssign.objects.none()  # For drf-yasg schema generation
+    queryset = RotatingWorkFromAssign.objects.none()  # For drf-yasg schema generation
 
     @manager_or_owner_permission_required(
-        RotatingWorkTypeAssign, "base.view_rotatingworktypeassign"
+        RotatingWorkFromAssign, "base.view_rotatingworkfromassign"
     )
     def get(self, request, pk=None):
 
         if pk:
 
-            rotating_work_type_assign = object_check(RotatingWorkTypeAssign, pk)
-            if rotating_work_type_assign is None:
+            rotating_work_from_assign = object_check(RotatingWorkFromAssign, pk)
+            if rotating_work_from_assign is None:
                 return Response(
-                    {"error": _("RotatingWorkTypeAssign not found")}, status=404
+                    {"error": _("RotatingWorkFromAssign not found")}, status=404
                 )
-            serializer = self.serializer_class(rotating_work_type_assign)
+            serializer = self.serializer_class(rotating_work_from_assign)
             return Response(serializer.data, status=200)
-        rotating_work_type_assigns = RotatingWorkTypeAssign.objects.all()
-        rotating_work_type_assigns_filter_queryset = self.filterset_class(
-            request.GET, queryset=rotating_work_type_assigns
+        rotating_work_from_assigns = RotatingWorkFromAssign.objects.all()
+        rotating_work_from_assigns_filter_queryset = self.filterset_class(
+            request.GET, queryset=rotating_work_from_assigns
         ).qs
         field_name = request.GET.get("groupby_field", None)
         if field_name:
             # groupby workflow
             url = request.build_absolute_uri()
             return groupby_queryset(
-                request, url, field_name, rotating_work_type_assigns_filter_queryset
+                request, url, field_name, rotating_work_from_assigns_filter_queryset
             )
 
         pagenation = HorillaPageNumberPagination()
         page = pagenation.paginate_queryset(
-            rotating_work_type_assigns_filter_queryset, request
+            rotating_work_from_assigns_filter_queryset, request
         )
         serializer = self.serializer_class(page, many=True)
         return pagenation.get_paginated_response(serializer.data)
 
-    @manager_permission_required("base.add_rotatingworktypeassign")
+    @manager_permission_required("base.add_rotatingworkfromassign")
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -663,7 +663,7 @@ class RotatingWorkTypeAssignView(APIView):
                 notify.send(
                     request.user.employee_get,
                     recipient=users,
-                    verb=gettext_noop("You are added to rotating work type"),
+                    verb=gettext_noop("You are added to rotating work from"),
                     icon="infinite",
                     redirect="/employee/employee-profile/",
                     api_redirect="",
@@ -674,35 +674,35 @@ class RotatingWorkTypeAssignView(APIView):
         return Response(serializer.errors, status=400)
 
     @manager_or_owner_permission_required(
-        RotatingWorkTypeAssign, "base.change_rotatingworktypeassign"
+        RotatingWorkFromAssign, "base.change_rotatingworkfromassign"
     )
     def put(self, request, pk):
-        rotating_work_type_assign = object_check(RotatingWorkTypeAssign, pk)
-        if rotating_work_type_assign is None:
+        rotating_work_from_assign = object_check(RotatingWorkFromAssign, pk)
+        if rotating_work_from_assign is None:
             return Response(
-                {"error": _("RotatingWorkTypeAssign not found")}, status=404
+                {"error": _("RotatingWorkFromAssign not found")}, status=404
             )
-        serializer = self.serializer_class(rotating_work_type_assign, data=request.data)
+        serializer = self.serializer_class(rotating_work_from_assign, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=200)
         return Response(serializer.errors, status=400)
 
     @manager_or_owner_permission_required(
-        RotatingWorkTypeAssign, "base.delete_rotatingworktypeassign"
+        RotatingWorkFromAssign, "base.delete_rotatingworkfromassign"
     )
     def delete(self, request, pk):
-        rotating_work_type_assign = object_check(RotatingWorkTypeAssign, pk)
-        if rotating_work_type_assign is None:
+        rotating_work_from_assign = object_check(RotatingWorkFromAssign, pk)
+        if rotating_work_from_assign is None:
             return Response(
-                {"error": _("RotatingWorkTypeAssign not found")}, status=404
+                {"error": _("RotatingWorkFromAssign not found")}, status=404
             )
-        response, status_code = object_delete(RotatingWorkTypeAssign, pk)
+        response, status_code = object_delete(RotatingWorkFromAssign, pk)
         return Response(response, status=status_code)
 
 
-class IndividualWorkTypeRequestView(APIView):
-    serializer_class = WorkTypeRequestSerializer
+class IndividualWorkFromRequestView(APIView):
+    serializer_class = WorkFromRequestSerializer
     permission_classes = [IsAuthenticated]
 
     def get(self, request, pk=None):
@@ -711,15 +711,15 @@ class IndividualWorkTypeRequestView(APIView):
 
         # individual object workflow
         if pk:
-            work_type_request = object_check(WorkTypeRequest, pk)
-            if work_type_request is None:
-                return Response({"error": _("WorkTypeRequest not found")}, status=404)
-            serializer = self.serializer_class(work_type_request)
+            work_from_request = object_check(WorkFromRequest, pk)
+            if work_from_request is None:
+                return Response({"error": _("WorkFromRequest not found")}, status=404)
+            serializer = self.serializer_class(work_from_request)
             return Response(serializer.data, status=200)
         employee_id = request.GET.get("employee_id", None)
-        work_type_request = WorkTypeRequest.objects.filter(employee_id=employee_id)
+        work_from_request = WorkFromRequest.objects.filter(employee_id=employee_id)
         paginater = HorillaPageNumberPagination()
-        page = paginater.paginate_queryset(work_type_request, request)
+        page = paginater.paginate_queryset(work_from_request, request)
         serializer = self.serializer_class(page, many=True)
         return paginater.get_paginated_response(serializer.data)
 
@@ -1072,24 +1072,24 @@ class ShiftRequestView(APIView):
         return Response(response, status=status_code)
 
 
-class RotatingWorkTypeView(APIView):
-    serializer_class = RotatingWorkTypeSerializer
+class RotatingWorkFromView(APIView):
+    serializer_class = RotatingWorkFromSerializer
     permission_classes = [IsAuthenticated]
 
-    @method_decorator(permission_required("base.view_rotatingworktype"))
+    @method_decorator(permission_required("base.view_rotatingworkfrom"))
     def get(self, request, pk=None):
         if pk:
-            rotating_work_type = object_check(RotatingWorkType, pk)
-            if rotating_work_type is None:
-                return Response({"error": _("RotatingWorkType not found")}, status=404)
-            serializer = self.serializer_class(rotating_work_type)
+            rotating_work_from = object_check(RotatingWorkFrom, pk)
+            if rotating_work_from is None:
+                return Response({"error": _("RotatingWorkFrom not found")}, status=404)
+            serializer = self.serializer_class(rotating_work_from)
             return Response(serializer.data, status=200)
 
-        rotating_work_types = RotatingWorkType.objects.all()
-        serializer = self.serializer_class(rotating_work_types, many=True)
+        rotating_work_froms = RotatingWorkFrom.objects.all()
+        serializer = self.serializer_class(rotating_work_froms, many=True)
         return Response(serializer.data, status=200)
 
-    @method_decorator(permission_required("base.add_rotatingworktype"), name="dispatch")
+    @method_decorator(permission_required("base.add_rotatingworkfrom"), name="dispatch")
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
@@ -1098,26 +1098,26 @@ class RotatingWorkTypeView(APIView):
         return Response(serializer.errors, status=400)
 
     @method_decorator(
-        permission_required("base.change_rotatingworktype"), name="dispatch"
+        permission_required("base.change_rotatingworkfrom"), name="dispatch"
     )
     def put(self, request, pk):
-        rotating_work_type = object_check(RotatingWorkType, pk)
-        if rotating_work_type is None:
-            return Response({"error": _("RotatingWorkType not found")}, status=404)
-        serializer = self.serializer_class(rotating_work_type, data=request.data)
+        rotating_work_from = object_check(RotatingWorkFrom, pk)
+        if rotating_work_from is None:
+            return Response({"error": _("RotatingWorkFrom not found")}, status=404)
+        serializer = self.serializer_class(rotating_work_from, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=200)
         return Response(serializer.errors, status=400)
 
     @method_decorator(
-        permission_required("base.delete_rotatingworktype"), name="dispatch"
+        permission_required("base.delete_rotatingworkfrom"), name="dispatch"
     )
     def delete(self, request, pk):
-        rotating_work_type = object_check(RotatingWorkType, pk)
-        if rotating_work_type is None:
-            return Response({"error": _("RotatingWorkType not found")}, status=404)
-        response, status_code = object_delete(RotatingWorkType, pk)
+        rotating_work_from = object_check(RotatingWorkFrom, pk)
+        if rotating_work_from is None:
+            return Response({"error": _("RotatingWorkFrom not found")}, status=404)
+        response, status_code = object_delete(RotatingWorkFrom, pk)
         return Response(response, status=status_code)
 
 
@@ -1293,7 +1293,7 @@ class RotatingShiftAssignExport(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        return rotating_work_type_assign_export(request)
+        return rotating_work_from_assign_export(request)
 
 
 class RotatingShiftAssignBulkArchive(APIView):
@@ -1324,13 +1324,13 @@ class RotatingShiftAssignBulkDelete(APIView):
             return Response({"error": str(E)}, status=400)
 
 
-class RotatingWorKTypePermissionCheck(APIView):
+class RotatingWorkFromPermissionCheck(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
         manager = Employee.objects.filter(id=id).first().get_reporting_manager()
         if (
-            request.user.has_perm("base.add_rotatingworktypeassign")
+            request.user.has_perm("base.add_rotatingworkfromassign")
             or request.user.employee_get == manager
         ):
             return Response(status=200)
@@ -1350,15 +1350,15 @@ class RotatingShiftPermissionCheck(APIView):
         return Response(status=400)
 
 
-class WorktypeRequestApprovePermissionCheck(APIView):
+class WorkFromRequestApprovePermissionCheck(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         instance = Employee.objects.filter(id=request.GET.get("employee_id")).first()
         if (
             _is_reportingmanger(request, instance)
-            or request.user.has_perm("base.approve_worktyperequest")
-            or request.user.has_perm("base.change_worktyperequest")
+            or request.user.has_perm("base.approve_workfromrequest")
+            or request.user.has_perm("base.change_workfromrequest")
         ):
             return Response(status=200)
         return Response(status=400)
@@ -1386,7 +1386,7 @@ class EmployeeTabPermissionCheck(APIView):
         instance = Employee.objects.filter(id=request.GET.get("employee_id")).first()
         if _is_reportingmanger(request, instance) or request.user.has_perms(
             [
-                "base.view_worktyperequest",
+                "base.view_workfromrequest",
                 "attendance.view_shiftrequest",
                 "employee.change_employee",
             ]

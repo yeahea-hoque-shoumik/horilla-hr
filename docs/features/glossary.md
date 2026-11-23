@@ -48,7 +48,7 @@ This page explains, in plain English, every term written in bold anywhere in thi
 - **Switched off**: a flag type. A feature ships with the product but is turned off or not installed.
 - **Time zone**: the local time used for a place, such as Asia/Dhaka. Companies and employees can each have their own.
 - **White-labelling**: showing a company's own name and branding in the system instead of the product's.
-- **Work information**: the part of an employee record that holds their company, department, job position, shift, work type, reporting manager, joining date, salary and time zone.
+- **Work information**: the part of an employee record that holds their company, department, job position, shift, work from, reporting manager, joining date, salary and time zone.
 
 ## Change log
 

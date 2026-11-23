@@ -1,5 +1,5 @@
 """
-This page is handling the cbv methods of work type and shift tab in employee profile page.
+This page is handling the cbv methods of work from and shift tab in employee profile page.
 """
 
 from typing import Any
@@ -14,15 +14,15 @@ from base.cbv.rotating_shift_assign import (
     RotatingShiftDetailview,
     RotatingShiftListParent,
 )
-from base.cbv.rotating_work_type import GeneralParent, RotatingWorkDetailView
+from base.cbv.rotating_work_from import GeneralParent, RotatingWorkDetailView
 from base.cbv.shift_request import AllocatedShift, ShiftRequestList
-from base.cbv.work_type_request import WorkRequestListView
+from base.cbv.work_from_request import WorkRequestListView
 from base.methods import filtersubordinates, is_reportingmanager
 from base.models import (
     RotatingShiftAssign,
-    RotatingWorkTypeAssign,
+    RotatingWorkFromAssign,
     ShiftRequest,
-    WorkTypeRequest,
+    WorkFromRequest,
 )
 from employee.models import Employee
 from horilla_views.cbv_methods import hx_request_required, login_required
@@ -58,7 +58,7 @@ class ProfileTabShellView(TemplateView):
 
 class WorkAndShiftTabView(HorillaTabView):
     """
-    generic tab view for work type and shift
+    generic tab view for work from and shift
     """
 
     template_name = "cbv/work_shift_tab/extended_work-shift.html"
@@ -84,14 +84,14 @@ class WorkAndShiftTabView(HorillaTabView):
         # first paint.
         context["tabs"] = [
             {
-                "title": _("Work Type Request"),
-                "url": f"{reverse('employee-worktype-tab-shell',kwargs={'pk': pk})}",
-                "badge": WorkTypeRequest.objects.filter(employee_id=pk).count(),
+                "title": _("Work From Request"),
+                "url": f"{reverse('employee-workfrom-tab-shell',kwargs={'pk': pk})}",
+                "badge": WorkFromRequest.objects.filter(employee_id=pk).count(),
             },
             {
-                "title": _("Rotating Work Type"),
+                "title": _("Rotating Work From"),
                 "url": f"{reverse('employee-rotating-work-tab-shell',kwargs={'pk': pk})}",
-                "badge": RotatingWorkTypeAssign.objects.filter(employee_id=pk).count(),
+                "badge": RotatingWorkFromAssign.objects.filter(employee_id=pk).count(),
             },
             {
                 "title": _("Shift Request"),
@@ -118,9 +118,9 @@ class WorkAndShiftTabView(HorillaTabView):
         return context
 
 
-class WorkTypeIndividualTabList(WorkRequestListView):
+class WorkFromIndividualTabList(WorkRequestListView):
     """
-    List view for work type tab
+    List view for work from tab
     """
 
     show_saved_filters = False
@@ -129,7 +129,7 @@ class WorkTypeIndividualTabList(WorkRequestListView):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         pk = self.request.resolver_match.kwargs.get("pk")
-        self.search_url = reverse("employee-worktype-tab-list", kwargs={"pk": pk})
+        self.search_url = reverse("employee-workfrom-tab-list", kwargs={"pk": pk})
         self.view_id = "work_target"
 
     def get_queryset(self):
@@ -143,19 +143,19 @@ class WorkTypeIndividualTabList(WorkRequestListView):
 
 @method_decorator(login_required, name="dispatch")
 @method_decorator(hx_request_required, name="dispatch")
-class WorkTypeIndividualTabShell(ProfileTabShellView):
+class WorkFromIndividualTabShell(ProfileTabShellView):
     """
-    Shell for the Work type request profile tab.
+    Shell for the Work from request profile tab.
     """
 
-    shell_target_id = "work-type-shell"
-    nav_url_name = "employee-worktype-tab-nav"
+    shell_target_id = "work-from-shell"
+    nav_url_name = "employee-workfrom-tab-nav"
 
 
 @method_decorator(login_required, name="dispatch")
-class WorkTypeIndividualNav(HorillaNavView):
+class WorkFromIndividualNav(HorillaNavView):
     """
-    Minimal nav (Create button only) for the Work type request profile tab.
+    Minimal nav (Create button only) for the Work from request profile tab.
     """
 
     template_name = "generic/inline_nav.html"
@@ -163,16 +163,16 @@ class WorkTypeIndividualNav(HorillaNavView):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         pk = self.request.resolver_match.kwargs.get("pk")
-        self.search_url = reverse("employee-worktype-tab-list", kwargs={"pk": pk})
-        self.search_swap_target = "#work-type-shell"
+        self.search_url = reverse("employee-workfrom-tab-list", kwargs={"pk": pk})
+        self.search_swap_target = "#work-from-shell"
         self.create_attrs = f"""
-            hx-get="{reverse('work-type-request')}?emp_id={pk}"
+            hx-get="{reverse('work-from-request')}?emp_id={pk}"
             hx-target="#genericModalBody"
             data-toggle="oh-modal-toggle"
             data-target="#genericModal"
         """
 
-    nav_title = _("Work Type Request")
+    nav_title = _("Work From Request")
 
 
 class ShiftRequestIndividualTabView(ShiftRequestList):
@@ -365,7 +365,7 @@ class RotatingShiftIndividualNav(HorillaNavView):
 
 class RotatingWorkIndividualTab(GeneralParent):
     """
-    List view for rotating work type tab
+    List view for rotating work from tab
     """
 
     show_saved_filters = False
@@ -398,7 +398,7 @@ class RotatingWorkIndividualTab(GeneralParent):
 @method_decorator(hx_request_required, name="dispatch")
 class RotatingWorkIndividualTabShell(ProfileTabShellView):
     """
-    Shell for the Rotating work type profile tab.
+    Shell for the Rotating work from profile tab.
     """
 
     shell_target_id = "rotating-work-shell"
@@ -408,7 +408,7 @@ class RotatingWorkIndividualTabShell(ProfileTabShellView):
 @method_decorator(login_required, name="dispatch")
 class RotatingWorkIndividualNav(HorillaNavView):
     """
-    Minimal nav (Create button only) for the Rotating work type profile tab.
+    Minimal nav (Create button only) for the Rotating work from profile tab.
     """
 
     template_name = "generic/inline_nav.html"
@@ -419,13 +419,13 @@ class RotatingWorkIndividualNav(HorillaNavView):
         self.search_url = reverse("employee-rotating-work-tab-list", kwargs={"pk": pk})
         self.search_swap_target = "#rotating-work-shell"
         self.create_attrs = f"""
-            hx-get="{reverse('rotating-work-type-assign-add')}?emp_id={pk}"
+            hx-get="{reverse('rotating-work-from-assign-add')}?emp_id={pk}"
             hx-target="#genericModalBody"
             data-toggle="oh-modal-toggle"
             data-target="#genericModal"
         """
 
-    nav_title = _("Rotating Work Type")
+    nav_title = _("Rotating Work From")
 
 
 # @method_decorator(login_required, name="dispatch")
@@ -488,9 +488,9 @@ class DetailViewChild(RotatingWorkDetailView):
         # queryset = queryset.filter(employee_id=emp_id)
         if is_reportingmanager(self.request):
             queryset = filtersubordinates(
-                self.request, queryset, "base.view_rotatingworktypeassign"
+                self.request, queryset, "base.view_rotatingworkfromassign"
             ) | queryset.filter(employee_id=self.request.user.employee_get)
-        elif self.request.user.has_perm("base.view_rotatingworktypeassign"):
+        elif self.request.user.has_perm("base.view_rotatingworkfromassign"):
             queryset = queryset.filter(employee_id=emp_id)
         else:
             queryset = queryset.filter(employee_id=self.request.user.employee_get)

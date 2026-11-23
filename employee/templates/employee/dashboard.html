@@ -487,7 +487,7 @@
         [data-cust-id][hidden] {
             display: none;
         }
-        #chart-em-work-type .apexcharts-pie-slice-donut,
+        #chart-em-work-from .apexcharts-pie-slice-donut,
         #chart-em-shift .apexcharts-pie-slice-donut,
         #chart-em-dept .apexcharts-pie-slice-donut {
             cursor: pointer;
@@ -817,12 +817,12 @@
                 <div class="em-kpi-card__sub"><span class="em-badge em-badge--amber">{% trans "Not yet received" %}</span></div>
             </a>
             <a
-                href="{% url 'requests-view' %}?tab=work-type&status=requested&filter_applied=on"
+                href="{% url 'requests-view' %}?tab=work-from&status=requested&filter_applied=on"
                 class="em-kpi-card"
-                id="kpi-card-work-type"
-                data-cust-id="kpi-work-type"
+                id="kpi-card-work-from"
+                data-cust-id="kpi-work-from"
                 data-cust-group="kpi"
-                data-cust-label="{% trans 'Work Type Requests' %}"
+                data-cust-label="{% trans 'Work From Requests' %}"
             >
                 <div class="em-kpi-card__icon em-kpi-card__icon--blue">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -830,8 +830,8 @@
                         <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                     </svg>
                 </div>
-                <div class="em-kpi-card__label">{% trans "Work Type Requests" %}</div>
-                <div class="em-kpi-card__value" id="kpi-work-type"><div class="em-skeleton em-skeleton--value"></div></div>
+                <div class="em-kpi-card__label">{% trans "Work From Requests" %}</div>
+                <div class="em-kpi-card__value" id="kpi-work-from"><div class="em-skeleton em-skeleton--value"></div></div>
                 <div class="em-kpi-card__sub"><span class="em-badge em-badge--blue">{% trans "Pending approval" %}</span></div>
             </a>
             <a
@@ -880,17 +880,17 @@
                     <div
                         class="em-chart-card"
                         data-accent="indigo"
-                        data-cust-id="chart-work-type"
+                        data-cust-id="chart-work-from"
                         data-cust-group="chart"
-                        data-cust-label="{% trans 'Work Type Distribution' %}"
+                        data-cust-label="{% trans 'Work From Distribution' %}"
                     >
                         <div class="em-chart-card__header">
                             <div>
-                                <div class="em-chart-card__title">{% trans "Work Type Distribution" %}</div>
-                                <div class="em-chart-card__subtitle">{% trans "Active employees by work type" %}</div>
+                                <div class="em-chart-card__title">{% trans "Work From Distribution" %}</div>
+                                <div class="em-chart-card__subtitle">{% trans "Active employees by work from" %}</div>
                             </div>
                         </div>
-                        <div class="em-chart-card__body"><div id="chart-em-work-type"></div></div>
+                        <div class="em-chart-card__body"><div id="chart-em-work-from"></div></div>
                     </div>
                     <div
                         class="em-chart-card"
@@ -1141,7 +1141,7 @@
                 fetchJson("{% url 'employee-dashboard-kpi' %}").then(data => {
                     const map = {
                         'documents': data.document_requests,
-                        'work-type': data.work_type_requests,
+                        'work-from': data.work_from_requests,
                         'shift': data.shift_requests,
                         'shift-allocation': data.shift_allocation_requests,
                     };
@@ -1494,7 +1494,7 @@
             }
 
             loadKpis();
-            donutChart('work-type', '#chart-em-work-type', "{% url 'employee-dashboard-work-type' %}", 'employee_work_info__work_type_id', "{% trans 'No work type data'|escapejs %}", "{% trans 'work types'|escapejs %}");
+            donutChart('work-from', '#chart-em-work-from', "{% url 'employee-dashboard-work-from' %}", 'employee_work_info__work_from_id', "{% trans 'No work from data'|escapejs %}", "{% trans 'work from options'|escapejs %}");
             donutChart('shift', '#chart-em-shift', "{% url 'employee-dashboard-shift' %}", 'employee_work_info__shift_id', "{% trans 'No shift data'|escapejs %}", "{% trans 'shifts'|escapejs %}");
             donutChart('dept', '#chart-em-dept', "{% url 'employee-dashboard-dept' %}", 'employee_work_info__department_id', "{% trans 'No department data'|escapejs %}", "{% trans 'departments'|escapejs %}");
             loadEmployeeTurnover();

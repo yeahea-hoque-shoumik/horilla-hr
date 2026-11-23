@@ -102,9 +102,9 @@ CHART_CONFIG = {
         "perm": "base.change_shiftrequest",
         "need_reporting_manager": True,
     },
-    "work_type_request_approve": {
+    "work_from_request_approve": {
         "app": "base",
-        "perm": "base.change_worktyperequest",
+        "perm": "base.change_workfromrequest",
         "need_reporting_manager": True,
     },
     "overtime_approve": {

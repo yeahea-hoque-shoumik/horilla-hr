@@ -175,7 +175,7 @@ class AttendanceUpdateForm(BaseModelForm):
                 "onchange": "attendanceDateChange($(this))",
             }
         )
-        self.fields["work_type_id"].widget.attrs.update({"id": str(uuid.uuid4())})
+        self.fields["work_from_id"].widget.attrs.update({"id": str(uuid.uuid4())})
 
         if (
             instance is not None
@@ -336,7 +336,7 @@ class AttendanceForm(BaseModelForm):
                 "onchange": "attendanceDateChange($(this))",
             }
         )
-        self.fields["work_type_id"].widget.attrs.update({"id": str(uuid.uuid4())})
+        self.fields["work_from_id"].widget.attrs.update({"id": str(uuid.uuid4())})
         self.fields["batch_attendance_id"].choices = list(
             self.fields["batch_attendance_id"].choices
         ) + [
@@ -428,7 +428,7 @@ class AttendanceActivityForm(BaseModelForm):
 
         model = AttendanceActivity
         fields = "__all__"
-        exclude = ["work_type_id"]
+        exclude = ["work_from_id"]
         widgets = {
             "clock_in": DateTimeInput(attrs={"type": "time"}),
             "clock_out": DateTimeInput(attrs={"type": "time"}),
@@ -730,7 +730,7 @@ class AttendanceRequestForm(BaseModelForm):
                 "onchange": "attendanceDateChange($(this))",
             }
         )
-        self.fields["work_type_id"].widget.attrs.update({"id": str(uuid.uuid4())})
+        self.fields["work_from_id"].widget.attrs.update({"id": str(uuid.uuid4())})
         self.fields["batch_attendance_id"].choices = list(
             self.fields["batch_attendance_id"].choices
         ) + [
@@ -755,7 +755,7 @@ class AttendanceRequestForm(BaseModelForm):
             "attendance_clock_in",
             "attendance_clock_out_date",
             "attendance_clock_out",
-            "work_type_id",
+            "work_from_id",
             "attendance_worked_hour",
             "minimum_hour",
             "request_description",
@@ -853,7 +853,7 @@ class NewRequestForm(AttendanceRequestForm):
             "attendance_clock_in_date",
             "attendance_clock_in",
             "shift_id",
-            "work_type_id",
+            "work_from_id",
             "attendance_worked_hour",
         )
         for key in required_for_logic:
@@ -886,7 +886,7 @@ class NewRequestForm(AttendanceRequestForm):
             "attendance_clock_out": self.cleaned_data["attendance_clock_out"],
             "attendance_clock_out_date": self.cleaned_data["attendance_clock_out_date"],
             "shift_id": self.cleaned_data["shift_id"],
-            "work_type_id": self.cleaned_data["work_type_id"],
+            "work_from_id": self.cleaned_data["work_from_id"],
             "attendance_worked_hour": self.cleaned_data["attendance_worked_hour"],
             "minimum_hour": self.data.get("minimum_hour", ""),
         }
@@ -907,7 +907,7 @@ class NewRequestForm(AttendanceRequestForm):
                 if data["attendance_clock_out_date"] == "None"
                 else data["attendance_clock_out_date"]
             )
-            data["work_type_id"] = self.data.get("work_type_id")
+            data["work_from_id"] = self.data.get("work_from_id")
             data["shift_id"] = self.data.get("shift_id")
             attendance = attendances.first()
             for key, value in data.items():
@@ -968,7 +968,7 @@ class AttendanceExportForm(forms.Form):
         initial=[
             "employee_id",
             "shift_id",
-            "work_type_id",
+            "work_from_id",
             "attendance_date",
             "attendance_clock_in",
             "attendance_clock_in_date",
@@ -1250,7 +1250,7 @@ class BulkAttendanceRequestForm(BaseModelForm):
             "from_date",
             "to_date",
             "shift_id",
-            "work_type_id",
+            "work_from_id",
             "attendance_clock_in",
             "attendance_clock_out",
             "minimum_hour",
@@ -1358,7 +1358,7 @@ class BulkAttendanceRequestForm(BaseModelForm):
         request_description = cleaned_data.get("request_description")
         attendance_worked_hour = cleaned_data.get("attendance_worked_hour")
         minimum_hour = cleaned_data.get("minimum_hour")
-        work_type_id = employee_id.employee_work_info.work_type_id
+        work_from_id = employee_id.employee_work_info.work_from_id
         date_list = get_date_list(employee_id, from_date, to_date)
         batch = (
             cleaned_data.get("batch_attendance_id")
@@ -1369,7 +1369,7 @@ class BulkAttendanceRequestForm(BaseModelForm):
         initial_data = {
             "employee_id": employee_id.pk if employee_id else None,
             "shift_id": shift_id.pk if shift_id else None,
-            "work_type_id": work_type_id.pk if work_type_id else None,
+            "work_from_id": work_from_id.pk if work_from_id else None,
             "attendance_clock_in": attendance_clock_in,
             "attendance_clock_out": attendance_clock_out,
             "attendance_worked_hour": attendance_worked_hour,

@@ -28,7 +28,7 @@ from whatsapp.flows import (
     get_leave_request_json,
     get_reimbursement_request_json,
     get_shift_request_json,
-    get_work_type_request_json,
+    get_work_from_request_json,
 )
 from whatsapp.models import WhatsappCredientials
 from whatsapp.utils import (
@@ -49,7 +49,7 @@ from whatsapp.utils import (
     send_text_message,
     shift_create,
     update_flow,
-    work_type_create,
+    work_from_create,
 )
 
 DETAILED_FLOW = [
@@ -74,9 +74,9 @@ DETAILED_FLOW = [
         "flow_json": get_reimbursement_request_json(),
     },
     {
-        "template_name": "work_type",
-        "flow_name": "work_type_flow",
-        "flow_json": get_work_type_request_json(),
+        "template_name": "work_from",
+        "flow_name": "work_from_flow",
+        "flow_json": get_work_from_request_json(),
     },
     {
         "template_name": "attendance",
@@ -222,8 +222,8 @@ def whatsapp(request):
                                 send_flow_message(from_number, "asset")
                             elif text in ["shift", "shiftrequest"]:
                                 send_flow_message(from_number, "shift")
-                            elif text in ["worktype", "worktyperequest"]:
-                                send_flow_message(from_number, "work_type")
+                            elif text in ["workfrom", "workfromrequest"]:
+                                send_flow_message(from_number, "work_from")
                             elif text in ["attendance", "attendancerequest"]:
                                 send_flow_message(from_number, "attendance")
                             elif text in ["leave", "leaverequest"]:
@@ -550,8 +550,8 @@ def flow_conversion(number, flow_response_json):
             message = leave_request_create(employee, flow_response)
         else:
             message = "Leave module is not installed."
-    elif type == "work_type":
-        message = work_type_create(employee, flow_response)
+    elif type == "work_from":
+        message = work_from_create(employee, flow_response)
     elif type == "asset_request":
         if apps.is_installed("asset"):
             message = asset_request_create(employee, flow_response)

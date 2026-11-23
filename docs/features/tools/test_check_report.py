@@ -122,7 +122,7 @@ class CheckReportTests(unittest.TestCase):
         self.assert_problem("bold term 'payroll run' has no glossary entry")
 
     def test_missing_flag_fails(self):
-        home = "03-shifts-and-work-types.md"
+        home = "03-shifts-and-work-froms.md"
         text = self.texts[home].replace("monthly rotations crash in December", "something else")
         self.rewrite(home, text)
         self.assert_problem("flag #10 is missing")

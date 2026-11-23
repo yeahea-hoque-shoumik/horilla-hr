@@ -41,7 +41,7 @@ class MyAttendancesListView(HorillaListView):
         (_("Check-Out"), "attendance_clock_out"),
         (_("Out Date"), "attendance_clock_out_date"),
         (_("Shift"), "shift_id"),
-        (_("Work Type"), "work_type_id"),
+        (_("Work From"), "work_from_id"),
         (_("Min Hour"), "minimum_hour"),
         (_("At Work"), "attendance_worked_hour"),
         (_("Pending Hour"), "hours_pending"),
@@ -69,7 +69,7 @@ class MyAttendancesListView(HorillaListView):
         (_("Day"), "attendance_day__day"),
         (_("Check-In"), "attendance_clock_in"),
         (_("Shift"), "shift_id__employee_shift"),
-        (_("Work Type"), "work_type_id__work_type"),
+        (_("Work From"), "work_from_id__work_from"),
         (_("Min Hour"), "minimum_hour"),
         (_("Pending Hour"), "hours_pending"),
         (_("In Date"), "attendance_clock_in_date"),
@@ -97,7 +97,7 @@ class MyAttendanceList(MyAttendancesListView):
         ("attendance_date", _("Attendance Date")),
         ("attendance_day", _("Attendance Day")),
         ("shift_id", _("Shift")),
-        ("work_type_id", _("Work Type")),
+        ("work_from_id", _("Work From")),
         ("minimum_hour", _("Min Hour")),
         ("attendance_validated", _("Validated")),
     ]
@@ -194,7 +194,7 @@ class MyAttendancestNav(HorillaNavView):
         self.search_url = reverse("my-attendance-list")
         self.search_in = [
             ("shift_id__employee_shift", "Shift"),
-            ("work_type_id__work_type", "Work Type"),
+            ("work_from_id__work_from", "Work From"),
         ]
 
     nav_title = _("My Attendances")
@@ -216,7 +216,7 @@ class MyAttendancestNav(HorillaNavView):
         ("attendance_date", _("Attendance Date")),
         ("attendance_day", _("Attendance Day")),
         ("shift_id", _("Shift")),
-        ("work_type_id", _("Work Type")),
+        ("work_from_id", _("Work From")),
         ("minimum_hour", _("Min Hour")),
         ("attendance_validated", _("Validated")),
     ]
@@ -246,7 +246,7 @@ class MyAttendancesDetailView(HorillaDetailedView):
         (_("Check-Out"), "attendance_clock_out"),
         (_("Check-out Date"), "attendance_clock_out_date"),
         (_("Shift"), "shift_id"),
-        (_("Work Type"), "work_type_id"),
+        (_("Work From"), "work_from_id"),
         (_("Min Hour"), "minimum_hour"),
         (_("At Work"), "attendance_worked_hour"),
         (_("Pending Hour"), "hours_pending"),

@@ -3817,9 +3817,9 @@
                         <div class="md-pending-card__count" style="color:#0d9488;">${p.shift_requests}</div>
                         <div class="md-pending-card__label">{% trans "Shift"|escapejs %}</div>
                     </a>
-                    <a href="{% url 'work-type-request-view' %}?status=requested&filter_applied=1" class="md-pending-card" style="background:#eef2ff;">
-                        <div class="md-pending-card__count" style="color:#4f46e5;">${p.work_type_requests}</div>
-                        <div class="md-pending-card__label">{% trans "Work Type"|escapejs %}</div>
+                    <a href="{% url 'work-from-request-view' %}?status=requested&filter_applied=1" class="md-pending-card" style="background:#eef2ff;">
+                        <div class="md-pending-card__count" style="color:#4f46e5;">${p.work_from_requests}</div>
+                        <div class="md-pending-card__label">{% trans "Work From"|escapejs %}</div>
                     </a>
                     <a href="{% url 'view-reimbursement' %}?open_tab=1&status=requested&type=reimbursement&filter_applied=1" class="md-pending-card md-pending-card--purple">
                         <div class="md-pending-card__count">${p.reimbursements}</div>

@@ -32,14 +32,14 @@ from base.models import (
     PenaltyAccounts,
     RotatingShift,
     RotatingShiftAssign,
-    RotatingWorkType,
-    RotatingWorkTypeAssign,
+    RotatingWorkFrom,
+    RotatingWorkFromAssign,
     ShiftRequest,
     ShiftRequestComment,
     Tags,
-    WorkType,
-    WorkTypeRequest,
-    WorkTypeRequestComment,
+    WorkFrom,
+    WorkFromRequest,
+    WorkFromRequestComment,
 )
 
 # Register your models here.
@@ -53,18 +53,18 @@ admin.site.register(EmployeeShift)
 admin.site.register(EmployeeShiftSchedule)
 admin.site.register(EmployeeShiftDay)
 admin.site.register(EmployeeType)
-admin.site.register(WorkType)
-admin.site.register(RotatingWorkType)
-admin.site.register(RotatingWorkTypeAssign)
+admin.site.register(WorkFrom)
+admin.site.register(RotatingWorkFrom)
+admin.site.register(RotatingWorkFromAssign)
 admin.site.register(RotatingShift)
 admin.site.register(RotatingShiftAssign)
 admin.site.register(ShiftRequest)
-admin.site.register(WorkTypeRequest)
+admin.site.register(WorkFromRequest)
 admin.site.register(Tags)
 admin.site.register(DynamicEmailConfiguration)
 admin.site.register(MultipleApprovalManagers)
 admin.site.register(ShiftRequestComment)
-admin.site.register(WorkTypeRequestComment)
+admin.site.register(WorkFromRequestComment)
 admin.site.register(DynamicPagination)
 admin.site.register(Announcement)
 admin.site.register(Attachment)

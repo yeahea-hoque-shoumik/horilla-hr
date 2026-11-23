@@ -1,7 +1,7 @@
 import json
 
 from asset.models import AssetCategory
-from base.models import Department, EmployeeShift, JobPosition, Tags, WorkType
+from base.models import Department, EmployeeShift, JobPosition, Tags, WorkFrom
 from employee.models import Employee
 from helpdesk.models import TicketType
 from leave.models import LeaveType
@@ -101,7 +101,7 @@ def get_attendance_request_json():
                             {"id": "3", "title": "Night Shift"},
                         ],
                     },
-                    "work_type": {
+                    "work_from": {
                         "type": "array",
                         "items": {
                             "type": "object",
@@ -139,10 +139,10 @@ def get_attendance_request_json():
                                 },
                                 {
                                     "type": "Dropdown",
-                                    "label": "Work Type",
+                                    "label": "Work From",
                                     "required": True,
-                                    "name": "work_type",
-                                    "data-source": "${data.work_type}",
+                                    "name": "work_from",
+                                    "data-source": "${data.work_from}",
                                 },
                                 {
                                     "type": "TextArea",
@@ -162,7 +162,7 @@ def get_attendance_request_json():
                                         "payload": {
                                             "attendance_date": "${form.attendance_date}",
                                             "shift": "${form.shift}",
-                                            "work_type": "${form.work_type}",
+                                            "work_from": "${form.work_from}",
                                             "description": "${form.description}",
                                         },
                                     },
@@ -178,7 +178,7 @@ def get_attendance_request_json():
                 "data": {
                     "attendance_date": {"type": "string", "__example__": "Example"},
                     "shift": {"type": "string", "__example__": "Example"},
-                    "work_type": {"type": "string", "__example__": "Example"},
+                    "work_from": {"type": "string", "__example__": "Example"},
                     "description": {"type": "string", "__example__": "Example"},
                 },
                 "terminal": True,
@@ -247,7 +247,7 @@ def get_attendance_request_json():
                                             "minimum_hours": "${form.minimum_hours}",
                                             "attendance_date": "${data.attendance_date}",
                                             "shift": "${data.shift}",
-                                            "work_type": "${data.work_type}",
+                                            "work_from": "${data.work_from}",
                                             "description": "${data.description}",
                                             "type": "attendance_request",
                                         },
@@ -355,17 +355,17 @@ def get_shift_request_json():
     return flow_json
 
 
-def get_work_type_request_json():
+def get_work_from_request_json():
 
     flow_json = {
         "version": "7.3",
         "screens": [
             {
                 "id": "screen_one",
-                "title": "Work Type Request",
+                "title": "Work From Request",
                 "terminal": True,
                 "data": {
-                    "work_type": {
+                    "work_from": {
                         "type": "array",
                         "items": {
                             "type": "object",
@@ -390,10 +390,10 @@ def get_work_type_request_json():
                             "children": [
                                 {
                                     "type": "Dropdown",
-                                    "label": "work type",
+                                    "label": "work from",
                                     "required": True,
-                                    "name": "work_type",
-                                    "data-source": "${data.work_type}",
+                                    "name": "work_from",
+                                    "data-source": "${data.work_from}",
                                 },
                                 {
                                     "type": "DatePicker",
@@ -425,12 +425,12 @@ def get_work_type_request_json():
                                     "on-click-action": {
                                         "name": "complete",
                                         "payload": {
-                                            "work_type": "${form.work_type}",
+                                            "work_from": "${form.work_from}",
                                             "requested_date": "${form.request_date}",
                                             "requested_till": "${form.requested_till}",
                                             "description": "${form.description}",
                                             "permenent_request": "${form.permenent_request}",
-                                            "type": "work_type",
+                                            "type": "work_from",
                                         },
                                     },
                                 },

@@ -18,7 +18,7 @@ Generated from `docs/horilla_db.dbml` (live PostgreSQL, schema `public`). Groups
 | 2 | [Employee information](#2-employee-information) | 8 | 2 | 2 | 12 |
 | 3 | [Employee discipline, bonus & policies](#3-employee-discipline-bonus--policies) | 5 | 7 | 2 | 14 |
 | 4 | [Shifts & rosters](#4-shifts--rosters) | 9 | 4 | 4 | 17 |
-| 5 | [Work types](#5-work-types) | 5 | 2 | 4 | 11 |
+| 5 | [Work from options](#5-work-froms) | 5 | 2 | 4 | 11 |
 | 6 | [Attendance](#6-attendance) | 18 | 4 | 4 | 26 |
 | 7 | [Attendance capture (biometric / face / geofence)](#7-attendance-capture-biometric--face--geofence) | 7 | 0 | 0 | 7 |
 | 8 | [Leave & holidays](#8-leave--holidays) | 17 | 12 | 8 | 37 |
@@ -47,14 +47,14 @@ Which domains each domain's tables point to through FKs (users table excluded).
 | Domain | Depends on |
 |---|---|
 | Organization structure | Users, auth & access control (1) |
-| Employee information | Organization structure (6), Shifts & rosters (1), Work types (1), Audit & history (1) |
+| Employee information | Organization structure (6), Shifts & rosters (1), Work from options (1), Audit & history (1) |
 | Employee discipline, bonus & policies | Employee information (4), Organization structure (3), Audit & history (1) |
 | Shifts & rosters | Employee information (7), Organization structure (5), Audit & history (2), Attendance (1), Shared approvals, files & tags (1) |
-| Work types | Employee information (3), Audit & history (2), Organization structure (1), Shared approvals, files & tags (1) |
-| Attendance | Employee information (12), Shifts & rosters (5), Organization structure (5), Leave & holidays (3), Audit & history (2), Work types (1) |
+| Work from options | Employee information (3), Audit & history (2), Organization structure (1), Shared approvals, files & tags (1) |
+| Attendance | Employee information (12), Shifts & rosters (5), Organization structure (5), Leave & holidays (3), Audit & history (2), Work from options (1) |
 | Attendance capture (biometric / face / geofence) | Organization structure (4), Employee information (2) |
 | Leave & holidays | Organization structure (10), Employee information (10), Audit & history (4), Attendance (1) |
-| Payroll | Organization structure (14), Employee information (14), Shifts & rosters (2), Work types (2), Audit & history (2), Leave & holidays (2), Assets (1) |
+| Payroll | Organization structure (14), Employee information (14), Shifts & rosters (2), Work from options (2), Audit & history (2), Leave & holidays (2), Assets (1) |
 | Recruitment | Organization structure (10), Employee information (7), Audit & history (3), Integrations, backup & system (1) |
 | Onboarding | Recruitment (5), Employee information (2), Audit & history (1) |
 | Offboarding | Employee information (6), Audit & history (2), Organization structure (2) |
@@ -103,7 +103,7 @@ Employee master record, work info, bank details, notes, tags, profile settings.
 | `employee_employeegeneralsetting` | 7 | `base_company` |
 | `employee_employeenote` | 8 | `employee_employee` |
 | `employee_employeetag` | 7 | — |
-| `employee_employeeworkinformation` | 19 | `base_company`, `base_department`, `base_employeeshift`, `base_employeetype`, `base_jobposition`, `base_jobrole`, `base_worktype`, `employee_employee` |
+| `employee_employeeworkinformation` | 19 | `base_company`, `base_department`, `base_employeeshift`, `base_employeetype`, `base_jobposition`, `base_jobrole`, `base_workfrom`, `employee_employee` |
 | `employee_notefiles` | 6 | — |
 | `employee_profileeditfeature` | 6 | — |
 
@@ -169,26 +169,26 @@ Shift definitions, shift days/schedules, rotating shifts, shift requests, roster
 
 `base_historicalrotatingshiftassign`, `base_historicalrotatingshiftassign_history_tags`, `base_historicalshiftrequest`, `base_historicalshiftrequest_history_tags`
 
-## 5. Work types
+## 5. Work from options
 
-Work type (office/remote/etc.) definitions, rotating work types, work type requests.
+Work from (office/remote/etc.) definitions, rotating work from options, work from requests.
 
 | Table | Cols | References |
 |---|---:|---|
-| `base_rotatingworktype` | 9 | `base_worktype` |
-| `base_rotatingworktypeassign` | 16 | `base_rotatingworktype`, `base_worktype`, `employee_employee` |
-| `base_worktype` | 6 | — |
-| `base_worktyperequest` | 15 | `base_worktype`, `employee_employee` |
-| `base_worktyperequestcomment` | 8 | `base_worktyperequest`, `employee_employee` |
+| `base_rotatingworkfrom` | 9 | `base_workfrom` |
+| `base_rotatingworkfromassign` | 16 | `base_rotatingworkfrom`, `base_workfrom`, `employee_employee` |
+| `base_workfrom` | 6 | — |
+| `base_workfromrequest` | 15 | `base_workfrom`, `employee_employee` |
+| `base_workfromrequestcomment` | 8 | `base_workfromrequest`, `employee_employee` |
 
 **Link tables (2)**
 
-- `base_worktype_company_id` — `base_worktype` ↔ `base_company`
-- `base_worktyperequestcomment_files` — `base_baserequestfile` ↔ `base_worktyperequestcomment`
+- `base_workfrom_company_id` — `base_workfrom` ↔ `base_company`
+- `base_workfromrequestcomment_files` — `base_baserequestfile` ↔ `base_workfromrequestcomment`
 
 **History tables (4)**
 
-`base_historicalrotatingworktypeassign`, `base_historicalrotatingworktypeassign_history_tags`, `base_historicalworktyperequest`, `base_historicalworktyperequest_history_tags`
+`base_historicalrotatingworkfromassign`, `base_historicalrotatingworkfromassign_history_tags`, `base_historicalworkfromrequest`, `base_historicalworkfromrequest_history_tags`
 
 ## 6. Attendance
 
@@ -196,7 +196,7 @@ Clock in/out, activities, overtime, late/early, validation, grace time, daily/su
 
 | Table | Cols | References |
 |---|---:|---|
-| `attendance_attendance` | 31 | `attendance_batchattendance`, `base_employeeshift`, `base_employeeshiftday`, `base_worktype`, `employee_employee` |
+| `attendance_attendance` | 31 | `attendance_batchattendance`, `base_employeeshift`, `base_employeeshiftday`, `base_workfrom`, `employee_employee` |
 | `attendance_attendanceactivity` | 14 | `base_employeeshiftday`, `employee_employee` |
 | `attendance_attendanceconflictresolution` | 9 | `employee_employee` |
 | `attendance_attendancedailyhours` | 10 | `employee_employee` |
@@ -289,9 +289,9 @@ Contracts, salary structures, allowances, deductions, payslips, loans, reimburse
 
 | Table | Cols | References |
 |---|---:|---|
-| `payroll_allowance` | 43 | `base_company`, `base_employeeshift`, `base_worktype` |
+| `payroll_allowance` | 43 | `base_company`, `base_employeeshift`, `base_workfrom` |
 | `payroll_applycondition` | 7 | — |
-| `payroll_contract` | 31 | `base_department`, `base_employeeshift`, `base_jobposition`, `base_jobrole`, `base_worktype`, `employee_employee`, `payroll_filingstatus`, `payroll_salarystructure` |
+| `payroll_contract` | 31 | `base_department`, `base_employeeshift`, `base_jobposition`, `base_jobrole`, `base_workfrom`, `employee_employee`, `payroll_filingstatus`, `payroll_salarystructure` |
 | `payroll_deduction` | 40 | `base_company` |
 | `payroll_encashmentgeneralsettings` | 5 | — |
 | `payroll_filingstatus` | 15 | `base_company` |

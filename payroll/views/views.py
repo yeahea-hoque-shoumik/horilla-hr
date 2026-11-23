@@ -722,8 +722,8 @@ def contract_info_initial(request):
             work_info.job_role_id.id if work_info.job_role_id is not None else ""
         ),
         "shift": work_info.shift_id.id if work_info.shift_id is not None else "",
-        "work_type": (
-            work_info.work_type_id.id if work_info.work_type_id is not None else ""
+        "work_from": (
+            work_info.work_from_id.id if work_info.work_from_id is not None else ""
         ),
         "wage": work_info.basic_salary,
         "contract_start_date": work_info.date_joining if work_info.date_joining else "",

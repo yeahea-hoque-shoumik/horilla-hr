@@ -12,115 +12,115 @@ from notifications.signals import notify
 logger = logging.getLogger(__name__)
 
 
-def update_rotating_work_type_assign(rotating_work_type, new_date):
+def update_rotating_work_from_assign(rotating_work_from, new_date):
     """
     Here will update the employee work information details and send notification
     """
     from horilla_auth.models import HorillaUser
 
-    employee = rotating_work_type.employee_id
+    employee = rotating_work_from.employee_id
     employee_work_info = employee.employee_work_info
-    work_type1 = rotating_work_type.rotating_work_type_id.work_type1
-    work_type2 = rotating_work_type.rotating_work_type_id.work_type2
-    additional_work_types = (
-        rotating_work_type.rotating_work_type_id.additional_work_types()
+    work_from1 = rotating_work_from.rotating_work_from_id.work_from1
+    work_from2 = rotating_work_from.rotating_work_from_id.work_from2
+    additional_work_froms = (
+        rotating_work_from.rotating_work_from_id.additional_work_froms()
     )
-    if additional_work_types is None:
-        total_rotate_work_types = [work_type1, work_type2]
+    if additional_work_froms is None:
+        total_rotate_work_froms = [work_from1, work_from2]
     else:
-        total_rotate_work_types = [work_type1, work_type2] + list(additional_work_types)
-    next_work_type_index = rotating_work_type.additional_data.get(
-        "next_work_type_index", 0
+        total_rotate_work_froms = [work_from1, work_from2] + list(additional_work_froms)
+    next_work_from_index = rotating_work_from.additional_data.get(
+        "next_work_from_index", 0
     )
-    next_work_type = total_rotate_work_types[next_work_type_index]
-    if next_work_type_index < len(total_rotate_work_types) - 1:
-        next_work_type_index += 1
+    next_work_from = total_rotate_work_froms[next_work_from_index]
+    if next_work_from_index < len(total_rotate_work_froms) - 1:
+        next_work_from_index += 1
     else:
-        next_work_type_index = 0
+        next_work_from_index = 0
 
-    rotating_work_type.additional_data["next_work_type_index"] = next_work_type_index
-    employee_work_info.work_type_id = rotating_work_type.next_work_type
+    rotating_work_from.additional_data["next_work_from_index"] = next_work_from_index
+    employee_work_info.work_from_id = rotating_work_from.next_work_from
     employee_work_info.save()
-    rotating_work_type.next_change_date = new_date
-    rotating_work_type.current_work_type = rotating_work_type.next_work_type
-    rotating_work_type.next_work_type = next_work_type
-    rotating_work_type.save()
+    rotating_work_from.next_change_date = new_date
+    rotating_work_from.current_work_from = rotating_work_from.next_work_from
+    rotating_work_from.next_work_from = next_work_from
+    rotating_work_from.save()
     bot = HorillaUser.objects.filter(username="Horilla Bot").first()
     if bot is not None:
-        employee = rotating_work_type.employee_id
+        employee = rotating_work_from.employee_id
         notify.send(
             bot,
             recipient=employee.employee_user_id,
-            verb=gettext_noop("Your Work Type has been changed."),
+            verb=gettext_noop("Your Work From has been changed."),
             icon="infinite",
             redirect=reverse("employee-profile"),
         )
     return
 
 
-def work_type_rotate_after(rotating_work_work_type):
+def work_from_rotate_after(rotating_work_work_from):
     """
-    This method for rotate work type based on after day
+    This method for rotate work from based on after day
     """
     date_today = datetime.now()
-    switch_date = rotating_work_work_type.next_change_date
+    switch_date = rotating_work_work_from.next_change_date
     if switch_date.strftime("%Y-%m-%d") == date_today.strftime("%Y-%m-%d"):
-        new_date = date_today + timedelta(days=rotating_work_work_type.rotate_after_day)
-        update_rotating_work_type_assign(rotating_work_work_type, new_date)
+        new_date = date_today + timedelta(days=rotating_work_work_from.rotate_after_day)
+        update_rotating_work_from_assign(rotating_work_work_from, new_date)
     return
 
 
-def work_type_rotate_weekend(rotating_work_type):
+def work_from_rotate_weekend(rotating_work_from):
     """
-    This method for rotate work type based on weekend
+    This method for rotate work from based on weekend
     """
     date_today = datetime.now()
-    switch_date = rotating_work_type.next_change_date
+    switch_date = rotating_work_from.next_change_date
     if switch_date.strftime("%Y-%m-%d") == date_today.strftime("%Y-%m-%d"):
         day = datetime.now().strftime("%A").lower()
-        switch_day = rotating_work_type.rotate_every_weekend
+        switch_day = rotating_work_from.rotate_every_weekend
         if day == switch_day:
             new_date = date_today + timedelta(days=7)
-            update_rotating_work_type_assign(rotating_work_type, new_date)
+            update_rotating_work_from_assign(rotating_work_from, new_date)
     return
 
 
-def work_type_rotate_every(rotating_work_type):
+def work_from_rotate_every(rotating_work_from):
     """
-    This method for rotate work type based on every month
+    This method for rotate work from based on every month
     """
     date_today = datetime.now()
-    switch_date = rotating_work_type.next_change_date
-    day_date = rotating_work_type.rotate_every
+    switch_date = rotating_work_from.next_change_date
+    day_date = rotating_work_from.rotate_every
     if switch_date.strftime("%Y-%m-%d") == date_today.strftime("%Y-%m-%d"):
         if day_date == switch_date.strftime("%d").lstrip("0"):
             new_date = date_today.replace(month=date_today.month + 1)
-            update_rotating_work_type_assign(rotating_work_type, new_date)
+            update_rotating_work_from_assign(rotating_work_from, new_date)
         elif day_date == "last":
             year = date_today.strftime("%Y")
             month = date_today.strftime("%m")
             last_day = calendar.monthrange(int(year), int(month) + 1)[1]
             new_date = datetime(int(year), int(month) + 1, last_day)
-            update_rotating_work_type_assign(rotating_work_type, new_date)
+            update_rotating_work_from_assign(rotating_work_from, new_date)
     return
 
 
-def rotate_work_type():
+def rotate_work_from():
     """
     This method will identify the based on condition to the rotating shift assign
     and redirect to the chunk method to execute.
     """
-    from base.models import RotatingWorkTypeAssign
+    from base.models import RotatingWorkFromAssign
 
-    rotating_work_types = RotatingWorkTypeAssign.objects.filter(is_active=True)
-    for rotating_work_type in rotating_work_types:
-        based_on = rotating_work_type.based_on
+    rotating_work_froms = RotatingWorkFromAssign.objects.filter(is_active=True)
+    for rotating_work_from in rotating_work_froms:
+        based_on = rotating_work_from.based_on
         if based_on == "after":
-            work_type_rotate_after(rotating_work_type)
+            work_from_rotate_after(rotating_work_from)
         elif based_on == "weekly":
-            work_type_rotate_weekend(rotating_work_type)
+            work_from_rotate_weekend(rotating_work_from)
         elif based_on == "monthly":
-            work_type_rotate_every(rotating_work_type)
+            work_from_rotate_every(rotating_work_from)
     return
 
 
@@ -318,27 +318,27 @@ def undo_shift():
     return
 
 
-def switch_work_type():
+def switch_work_from():
     """
-    This method change employees work type information regards to the work type request
+    This method change employees work from information regards to the work from request
     """
-    from base.models import WorkTypeRequest
+    from base.models import WorkFromRequest
     from horilla_auth.models import HorillaUser
 
     today = date.today()
-    work_type_requests = WorkTypeRequest.objects.filter(
+    work_from_requests = WorkFromRequest.objects.filter(
         canceled=False,
         approved=True,
         requested_date__exact=today,
-        work_type_changed=False,
+        work_from_changed=False,
     )
-    for request in work_type_requests:
+    for request in work_from_requests:
         work_info = request.employee_id.employee_work_info
-        # updating requested work type to the employee work information.
-        work_info.work_type_id = request.work_type_id
+        # updating requested work from to the employee work information.
+        work_info.work_from_id = request.work_from_id
         work_info.save()
         request.approved = True
-        request.work_type_changed = True
+        request.work_from_changed = True
         request.save()
         bot = HorillaUser.objects.filter(username="Horilla Bot").first()
         if bot is not None:
@@ -346,33 +346,33 @@ def switch_work_type():
             notify.send(
                 bot,
                 recipient=employee.employee_user_id,
-                verb=gettext_noop("Work Type Changes notification"),
+                verb=gettext_noop("Work From Changes notification"),
                 icon="swap-horizontal",
                 redirect=reverse("employee-profile"),
             )
     return
 
 
-def undo_work_type():
+def undo_work_from():
     """
-    This method undo previous employees work type information regards to the work type request
+    This method undo previous employees work from information regards to the work from request
     """
-    from base.models import WorkTypeRequest
+    from base.models import WorkFromRequest
     from horilla_auth.models import HorillaUser
 
     today = date.today()
-    # here will get all the active work type requests
-    work_type_requests = WorkTypeRequest.objects.filter(
+    # here will get all the active work from requests
+    work_from_requests = WorkFromRequest.objects.filter(
         canceled=False,
         approved=True,
         requested_till__lt=today,
         is_active=True,
-        work_type_changed=True,
+        work_from_changed=True,
     )
-    for request in work_type_requests:
+    for request in work_from_requests:
         work_info = request.employee_id.employee_work_info
-        # updating employee work information's work type to previous work type
-        work_info.work_type_id = request.previous_work_type_id
+        # updating employee work information's work from to previous work from
+        work_info.work_from_id = request.previous_work_from_id
         work_info.save()
         # making the instance is in-active
         request.is_active = False
@@ -384,7 +384,7 @@ def undo_work_type():
                 bot,
                 recipient=employee.employee_user_id,
                 verb=gettext_noop(
-                    "Work type changes notification, Requested date expired."
+                    "Work from changes notification, Requested date expired."
                 ),
                 icon="swap-horizontal",
                 redirect=reverse("employee-profile"),
@@ -455,10 +455,10 @@ def sync_roster_shifts():
 # These registrations were previously wrapped in bare `except: pass`, which made
 # a failed registration indistinguishable from a working one.
 register_job(rotate_shift, "interval", job_id="job1", hours=4)
-register_job(rotate_work_type, "interval", job_id="job2", hours=4)
+register_job(rotate_work_from, "interval", job_id="job2", hours=4)
 register_job(undo_shift, "interval", job_id="job3", hours=4)
 register_job(switch_shift, "interval", job_id="job4", hours=4)
-register_job(undo_work_type, "interval", job_id="job6", hours=4)
-register_job(switch_work_type, "interval", job_id="job5", hours=4)
+register_job(undo_work_from, "interval", job_id="job6", hours=4)
+register_job(switch_work_from, "interval", job_id="job5", hours=4)
 register_job(recurring_holiday, "interval", hours=4)
 register_job(sync_roster_shifts, "interval", hours=4)

@@ -1,0 +1,42 @@
+{% load i18n %} {% load basefilters %} {{ form.non_field_errors }}
+{% for field in form.visible_fields %}
+{% if field.name|startswith:"work_from" and not field.field.required %}
+    <div
+      class="oh-input__group pt-3"
+      style="display: flex"
+      id="moreWorkFromContainer_{{ forloop.counter }}"
+        >
+      {{ field }}
+      <a
+        hx-get="{% url 'add-remove-work-from-fields' %}"
+        class="oh-btn oh-btn--danger"
+        hx-target="#moreWorkFromContainer_{{ forloop.counter }}"
+        hx-swap="outerHTML"
+        id="delete-link"
+      >
+        <ion-icon name="trash-outline"></ion-icon>
+      </a>
+    </div>
+{% else %}
+    <div class="oh-input__group">
+      <label
+        class="oh-label {% if field.field.required %}required-star{% endif %}"
+        for="id_{{ field.name }}"
+        title="{{ field.help_text }}"
+      >
+        {% trans field.label %}
+      </label>
+      {{field}}
+    </div>
+{% endif %} {% endfor %}
+<div id="moreWorkFromContainer_{{form.work_from_counts|add:2}}" class="pt-2" style="text-align: end">
+  <a
+    hx-target="#moreWorkFromContainer_{{form.work_from_counts|add:2}}"
+    hx-swap="outerHTML"
+    hx-post="{% url 'add-remove-work-from-fields' %}"
+    role="button"
+    class="text-primary-600"
+  >
+    {% trans "Add more work from options.." %}
+  </a>
+</div>

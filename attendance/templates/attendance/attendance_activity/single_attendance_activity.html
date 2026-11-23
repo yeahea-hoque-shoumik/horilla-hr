@@ -115,8 +115,8 @@
                     <span class="oh-timeoff-modal__stat-count">{{ attendance.shift_id }}</span>
                 </div>
                 <div class="oh-timeoff-modal__stat" style="margin-left: 20px">
-                    <span class="oh-timeoff-modal__stat-title">{% trans "Work Type" %}</span>
-                    <span class="oh-timeoff-modal__stat-count">{{ attendance.work_type_id }}</span>
+                    <span class="oh-timeoff-modal__stat-title">{% trans "Work From" %}</span>
+                    <span class="oh-timeoff-modal__stat-count">{{ attendance.work_from_id }}</span>
                 </div>
             </div>
             {% if perms.attendance.delete_attendanceactivity %}

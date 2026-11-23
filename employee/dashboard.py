@@ -2,7 +2,7 @@
 Employee dashboard views — KPI summary + ApexCharts.
 
 Request KPIs mirror the querysets of the Requests page tabs (shift, shift
-allocation, work type and document) so each count equals what its click-through
+allocation, work from and document) so each count equals what its click-through
 list shows. Company scoping comes from the models' HorillaCompanyManager, which
 already resolves the session's selected company (including "All Company").
 """
@@ -18,7 +18,7 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from base.methods import filtersubordinates
-from base.models import ShiftRequest, WorkTypeRequest
+from base.models import ShiftRequest, WorkFromRequest
 from employee.models import Employee
 from horilla.decorators import login_required, manager_can_enter
 from horilla_documents.models import Document
@@ -92,11 +92,11 @@ def _shift_allocations(request):
     return (queryset | allocated).filter(employee_id__is_active=True)
 
 
-def _work_type_requests(request):
-    """Queryset behind the Requests > Work Type Requests tab (WorkRequestListView)."""
-    all_requests = WorkTypeRequest.objects.all()
+def _work_from_requests(request):
+    """Queryset behind the Requests > Work From Requests tab (WorkRequestListView)."""
+    all_requests = WorkFromRequest.objects.all()
     employee = request.user.employee_get
-    queryset = filtersubordinates(request, all_requests, "base.view_worktyperequest")
+    queryset = filtersubordinates(request, all_requests, "base.view_workfromrequest")
     queryset = queryset | all_requests.filter(employee_id=employee)
     return queryset.filter(employee_id__is_active=True)
 
@@ -132,7 +132,7 @@ def employee_kpi_data(request):
                 if show_documents
                 else None
             ),
-            "work_type_requests": _work_type_requests(request)
+            "work_from_requests": _work_from_requests(request)
             .filter(**pending)
             .count(),
             "shift_requests": _shift_requests(request).filter(**pending).count(),
@@ -145,7 +145,7 @@ def employee_kpi_data(request):
 
 # Work-information relation -> name field shown as the chart label
 DISTRIBUTION_LABELS = {
-    "work_type": "work_type",
+    "work_from": "work_from",
     "shift": "employee_shift",
     "department": "department",
 }
@@ -177,9 +177,9 @@ def _distribution(field):
 
 @login_required
 @manager_can_enter(EMPLOYEE_PERM)
-def employee_by_work_type(request):
-    """Active employees by work type."""
-    return JsonResponse({"items": _distribution("work_type")})
+def employee_by_work_from(request):
+    """Active employees by work from."""
+    return JsonResponse({"items": _distribution("work_from")})
 
 
 @login_required

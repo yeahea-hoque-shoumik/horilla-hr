@@ -58,7 +58,7 @@ A_CLASS: tuple[tuple[str, str, tuple[str, ...]], ...] = (
     ("payroll", "Contract", ("contract_start_date",)),
     ("payroll", "LoanAccount", ("provided_date", "installment_start_date")),
     ("base", "RotatingShiftAssign", ("start_date",)),
-    ("base", "RotatingWorkTypeAssign", ("start_date",)),
+    ("base", "RotatingWorkFromAssign", ("start_date",)),
 )
 
 A_CLASS_DATETIME: tuple[tuple[str, str, tuple[str, ...]], ...] = (
@@ -268,10 +268,10 @@ def _reanchor_assignments(today: date) -> int:
 def _reanchor_rotating(today: date) -> int:
     if not apps.is_installed("base"):
         return 0
-    from base.models import RotatingShiftAssign, RotatingWorkTypeAssign
+    from base.models import RotatingShiftAssign, RotatingWorkFromAssign
 
     updated = 0
-    for Model in (RotatingShiftAssign, RotatingWorkTypeAssign):
+    for Model in (RotatingShiftAssign, RotatingWorkFromAssign):
         for i, row in enumerate(Model._base_manager.order_by("id")):
             start = today - timedelta(days=30 + i % 60)
             nxt = today + timedelta(days=3 + i % 18)
@@ -375,13 +375,13 @@ def _bump_stale_pending(today: date) -> int:
     """B-class: pending requests whose till/end already lapsed."""
     updated = 0
     if apps.is_installed("base"):
-        from base.models import ShiftRequest, WorkTypeRequest
+        from base.models import ShiftRequest, WorkFromRequest
 
         till = today + timedelta(days=14)
         updated += ShiftRequest._base_manager.filter(
             approved=False, canceled=False, requested_till__lt=today
         ).update(requested_till=till)
-        updated += WorkTypeRequest._base_manager.filter(
+        updated += WorkFromRequest._base_manager.filter(
             approved=False, canceled=False, requested_till__lt=today
         ).update(requested_till=till)
     if apps.is_installed("leave"):

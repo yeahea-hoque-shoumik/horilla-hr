@@ -1,7 +1,7 @@
 """
 employee/requests.py
 
-Requests landing page with tabbed shift, inbox, work type, and document sections.
+Requests landing page with tabbed shift, inbox, work from, and document sections.
 """
 
 from django.contrib.auth.decorators import login_required
@@ -9,13 +9,13 @@ from django.shortcuts import render
 
 from horilla.decorators import hx_request_required
 
-REQUEST_TABS = ("shift-request", "shift-inbox", "work-type", "document")
+REQUEST_TABS = ("shift-request", "shift-inbox", "work-from", "document")
 
 
 @login_required
 def requests_view(request):
     """
-    Requests landing page with tabbed shift, inbox, work type, and document sections.
+    Requests landing page with tabbed shift, inbox, work from, and document sections.
     """
     # Deep links (e.g. dashboard KPI cards) pick a tab with ?tab=<id> and pass
     # the remaining query string on as the filters for that tab's list.
@@ -58,11 +58,11 @@ def requests_shift_inbox_tab(request):
 
 @login_required
 @hx_request_required
-def requests_work_type_tab(request):
+def requests_work_from_tab(request):
     """
-    HTMX tab body for work type requests under requests.
+    HTMX tab body for work from requests under requests.
     """
-    return render(request, "requests/requests_work_type_tab.html")
+    return render(request, "requests/requests_work_from_tab.html")
 
 
 @login_required

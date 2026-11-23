@@ -50,15 +50,15 @@
           }
 
           if (
-            $("#id_based_on").val() == "work_type_id" &&
+            $("#id_based_on").val() == "work_from_id" &&
             !$("#id_is_fixed").is(":checked")
           ) {
             $(
-              "#id_work_type_id, [for='id_work_type_id'],#id_work_type_per_attendance_amount, [for='id_work_type_per_attendance_amount']"
+              "#id_work_from_id, [for='id_work_from_id'],#id_work_from_per_attendance_amount, [for='id_work_from_per_attendance_amount']"
             ).show();
           } else {
             $(
-              "#id_work_type_id, [for='id_work_type_id'],#id_work_type_per_attendance_amount, [for='id_work_type_per_attendance_amount']"
+              "#id_work_from_id, [for='id_work_from_id'],#id_work_from_per_attendance_amount, [for='id_work_from_per_attendance_amount']"
             ).hide();
           }
 
@@ -119,7 +119,7 @@
             $("#id_maximum_amount, [for=id_maximum_amount]").hide();
             $("#id_maximum_unit,[for=id_maximum_unit]").hide();
           }
-          var opt = ["attendance", "shift_id", "overtime", "week_off_overtime", "holiday_overtime", "work_type_id"];
+          var opt = ["attendance", "shift_id", "overtime", "week_off_overtime", "holiday_overtime", "work_from_id"];
           if (!$("#id_is_fixed").is(":checked") && opt.includes($("#id_based_on").val())) {
             $("#id_maximum_unit,[for=id_maximum_unit]").hide();
           }

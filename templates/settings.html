@@ -340,21 +340,21 @@
                                         <div class="row">
                                             <div class="col-sm-12 col-md-12 col-lg-12">
                                                 <div class="oh-input-group">
-                                                    {% if perms.base.view_worktype %}
+                                                    {% if perms.base.view_workfrom %}
                                                         <a
-                                                            id="workType"
-                                                            href="{% url 'work-type-view' %}"
+                                                            id="workFrom"
+                                                            href="{% url 'work-from-view' %}"
                                                             class="oh-inner-sidebar__link oh-dropdown__link"
-                                                        >{% trans "Work Type" %}</a>
+                                                        >{% trans "Work From" %}</a>
                                                     {% endif %}
                                                 </div>
                                                 <div class="oh-input-group">
-                                                    {% if perms.base.view_rotatingworktype %}
+                                                    {% if perms.base.view_rotatingworkfrom %}
                                                         <a
-                                                            id="rotatingWorkType"
-                                                            href="{% url 'rotating-work-type-view' %}"
+                                                            id="rotatingWorkFrom"
+                                                            href="{% url 'rotating-work-from-view' %}"
                                                             class="oh-inner-sidebar__link oh-dropdown__link"
-                                                        >{% trans "Rotating Work Type" %}</a>
+                                                        >{% trans "Rotating Work From" %}</a>
                                                     {% endif %}
                                                 </div>
                                                 <div class="oh-input-group">

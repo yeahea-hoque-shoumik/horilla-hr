@@ -86,7 +86,7 @@ class AttendancesListView(HorillaListView):
         (_("Check-Out"), "attendance_clock_out"),
         (_("Out Date"), "attendance_clock_out_date"),
         (_("Shift"), "shift_id"),
-        (_("Work Type"), "work_type_id"),
+        (_("Work From"), "work_from_id"),
         (_("Min Hour"), "minimum_hour"),
         (_("At Work"), "attendance_worked_hour"),
         (_("Pending Hour"), "hours_pending"),
@@ -109,7 +109,7 @@ class AttendancesListView(HorillaListView):
         (_("Check-Out"), "attendance_clock_out"),
         (_("Out Date"), "attendance_clock_out_date"),
         (_("Shift"), "shift_id__employee_shift"),
-        (_("Work Type"), "work_type_id__work_type"),
+        (_("Work From"), "work_from_id__work_from"),
         (_("Min Hour"), "minimum_hour"),
         (_("At Work"), "attendance_worked_hour"),
         (_("Pending Hour"), "hours_pending"),
@@ -123,7 +123,7 @@ class AttendancesListView(HorillaListView):
         ("employee_id", _("Employee")),
         ("attendance_date", _("Attendance Date")),
         ("shift_id", _("Shift")),
-        ("work_type_id", _("Work Type")),
+        ("work_from_id", _("Work From")),
         ("minimum_hour", _("Min Hour")),
         ("employee_id__country", _("Country")),
         (
@@ -313,7 +313,7 @@ class _AttendanceTabNavBase(HorillaNavView):
         ("employee_id", _("Employee")),
         ("attendance_date", _("Attendance Date")),
         ("shift_id", _("Shift")),
-        ("work_type_id", _("Work Type")),
+        ("work_from_id", _("Work From")),
         ("minimum_hour", _("Min Hour")),
         ("employee_id__country", _("Country")),
         (
@@ -339,7 +339,7 @@ class _AttendanceTabNavBase(HorillaNavView):
         ("employee_id", _("Employee")),
         ("attendance_date", _("Attendance Date")),
         ("shift_id", _("Shift")),
-        ("work_type_id", _("Work Type")),
+        ("work_from_id", _("Work From")),
         ("minimum_hour", _("Min Hour")),
         ("employee_id__country", _("Country")),
         (
@@ -360,7 +360,7 @@ class _AttendanceTabNavBase(HorillaNavView):
         self.search_in = [
             ("attendance_day", _("Day")),
             ("shift_id", _("Shift")),
-            ("work_type_id", _("Work Type")),
+            ("work_from_id", _("Work From")),
             ("employee_id__employee_work_info__department_id", _("Department")),
             (
                 "employee_id__employee_work_info__job_position_id",
@@ -592,7 +592,7 @@ class ValidatedAttendancesList(AttendancesListView):
                 .select_related(
                     "employee_id",
                     "shift_id",
-                    "work_type_id",
+                    "work_from_id",
                     "attendance_day",
                     "approved_by",
                 )
@@ -657,7 +657,7 @@ class GenericAttendancesDetailView(HorillaDetailedView):
         (_("Check-Out"), "attendance_clock_out"),
         (_("Check Out Date"), "attendance_clock_out_date"),
         (_("Shift"), "shift_id"),
-        (_("Work Type"), "work_type_id"),
+        (_("Work From"), "work_from_id"),
         (_("Min Hour"), "minimum_hour"),
         (_("At Work"), "attendance_worked_hour"),
         (_("Overtime"), "attendance_overtime"),

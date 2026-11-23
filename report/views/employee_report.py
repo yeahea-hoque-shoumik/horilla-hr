@@ -28,7 +28,7 @@ DYNAMIC_FILTER_FIELD_PATHS = {
     "department": "employee_work_info__department_id__department",
     "job_position": "employee_work_info__job_position_id__job_position",
     "job_role": "employee_work_info__job_role_id__job_role",
-    "work_type": "employee_work_info__work_type_id__work_type",
+    "work_from": "employee_work_info__work_from_id__work_from",
     "shift": "employee_work_info__shift_id__employee_shift",
     "employee_type": "employee_work_info__employee_type_id__employee_type",
     "date_joining": "employee_work_info__date_joining",
@@ -285,7 +285,7 @@ def employee_pivot(request):
             "employee_work_info__department_id__department",
             "employee_work_info__job_position_id__job_position",
             "employee_work_info__job_role_id__job_role",
-            "employee_work_info__work_type_id__work_type",
+            "employee_work_info__work_from_id__work_from",
             "employee_work_info__shift_id__employee_shift",
             "employee_work_info__employee_type_id__employee_type",
             "employee_work_info__reporting_manager_id__employee_first_name",
@@ -324,9 +324,9 @@ def employee_pivot(request):
                 if item["employee_work_info__job_role_id__job_role"]
                 else "-"
             ),
-            "Work Type": (
-                item["employee_work_info__work_type_id__work_type"]
-                if item["employee_work_info__work_type_id__work_type"]
+            "Work From": (
+                item["employee_work_info__work_from_id__work_from"]
+                if item["employee_work_info__work_from_id__work_from"]
                 else "-"
             ),
             "Shift": (

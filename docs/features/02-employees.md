@@ -19,7 +19,7 @@ This area holds the employee record: personal details, work information, bank de
 
 ### Work information
 
-- Company, department, job position, job role, shift, work type, employee type, **reporting manager**, tags, location, **time zone**, joining date, contract end date, basic salary and hourly salary.
+- Company, department, job position, job role, shift, work from, employee type, **reporting manager**, tags, location, **time zone**, joining date, contract end date, basic salary and hourly salary.
 - A "profile completion" percentage shows how many of 15 work fields are filled in.
 - Experience is recalculated every 4 hours as the days since joining divided by 365. Reason: not stated in the code.
 

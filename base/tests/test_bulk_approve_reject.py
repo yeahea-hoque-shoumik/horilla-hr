@@ -1,4 +1,4 @@
-"""Bulk approve / reject of shift and work type requests.
+"""Bulk approve / reject of shift and work from requests.
 
 A rejected request is a decision: bulk approve must skip it rather than flip it
 back to approved. Both bulk views also report how many they changed
@@ -15,11 +15,11 @@ from base.models import (
     EmployeeShift,
     RotatingShift,
     RotatingShiftAssign,
-    RotatingWorkType,
-    RotatingWorkTypeAssign,
+    RotatingWorkFrom,
+    RotatingWorkFromAssign,
     ShiftRequest,
-    WorkType,
-    WorkTypeRequest,
+    WorkFrom,
+    WorkFromRequest,
 )
 from horilla.testkit import make_company, make_employee, make_user
 
@@ -35,8 +35,8 @@ class BulkApproveRejectTests(TestCase):
         cls.staff = make_employee(company=company, email="bulk-staff@test.horilla")
         cls.day = EmployeeShift.objects.create(employee_shift="Day")
         cls.night = EmployeeShift.objects.create(employee_shift="Night")
-        cls.office = WorkType.objects.create(work_type="Office")
-        cls.remote = WorkType.objects.create(work_type="Remote")
+        cls.office = WorkFrom.objects.create(work_from="Office")
+        cls.remote = WorkFrom.objects.create(work_from="Remote")
         cls.today = datetime.date.today()
 
     def _shift(self, **flags):
@@ -50,11 +50,11 @@ class BulkApproveRejectTests(TestCase):
             **flags,
         )
 
-    def _work_type(self, **flags):
-        return WorkTypeRequest.objects.create(
+    def _work_from(self, **flags):
+        return WorkFromRequest.objects.create(
             employee_id=self.staff,
-            work_type_id=self.remote,
-            previous_work_type_id=self.office,
+            work_from_id=self.remote,
+            previous_work_from_id=self.office,
             requested_date=self.today,
             requested_till=self.today + datetime.timedelta(days=5),
             description="x",
@@ -80,11 +80,11 @@ class BulkApproveRejectTests(TestCase):
         self.assertTrue(rejected.canceled)
         self.assertEqual(result, {"done": 1, "failed": 1})
 
-    def test_bulk_approve_skips_rejected_work_type_requests(self):
-        pending, rejected = self._work_type(), self._work_type(canceled=True)
+    def test_bulk_approve_skips_rejected_work_from_requests(self):
+        pending, rejected = self._work_from(), self._work_from(canceled=True)
 
         _, result = self._post(
-            "work-type-request-bulk-approve", [pending.pk, rejected.pk]
+            "work-from-request-bulk-approve", [pending.pk, rejected.pk]
         )
 
         pending.refresh_from_db()
@@ -169,7 +169,7 @@ class BulkArchiveRotatingShiftAssignTests(TestCase):
         self.assertEqual(result, {"done": 1, "failed": 1})
 
 
-class BulkArchiveRotatingWorkTypeAssignTests(TestCase):
+class BulkArchiveRotatingWorkFromAssignTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         company = make_company("WT Archive Co")
@@ -180,16 +180,16 @@ class BulkArchiveRotatingWorkTypeAssignTests(TestCase):
         cls.staff = make_employee(
             company=company, email="wt-archive-staff@test.horilla"
         )
-        cls.office = WorkType.objects.create(work_type="Office")
-        cls.remote = WorkType.objects.create(work_type="Remote")
-        cls.rotation = RotatingWorkType.objects.create(
-            name="Office or Remote", work_type1=cls.office, work_type2=cls.remote
+        cls.office = WorkFrom.objects.create(work_from="Office")
+        cls.remote = WorkFrom.objects.create(work_from="Remote")
+        cls.rotation = RotatingWorkFrom.objects.create(
+            name="Office or Remote", work_from1=cls.office, work_from2=cls.remote
         )
 
     def _assign(self, is_active=True):
-        return RotatingWorkTypeAssign.objects.create(
+        return RotatingWorkFromAssign.objects.create(
             employee_id=self.staff,
-            rotating_work_type_id=self.rotation,
+            rotating_work_from_id=self.rotation,
             based_on="after",
             start_date=datetime.date.today(),
             next_change_date=datetime.date.today(),
@@ -200,7 +200,7 @@ class BulkArchiveRotatingWorkTypeAssignTests(TestCase):
         client = Client()
         client.force_login(self.user)
         response = client.post(
-            reverse("rotating-shift-work-type-bulk-archive")
+            reverse("rotating-shift-work-from-bulk-archive")
             + f"?is_active={is_active}",
             {"ids": json.dumps(ids)},
         )

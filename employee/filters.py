@@ -24,7 +24,7 @@ from base.models import (
     EmployeeType,
     JobPosition,
     JobRole,
-    WorkType,
+    WorkFrom,
 )
 from employee.models import (
     Actiontype,
@@ -306,7 +306,7 @@ class EmployeeFilter(HorillaFilterSet):
             "employee_work_info__job_position_id",
             "employee_work_info__department_id",
             "department",
-            "employee_work_info__work_type_id",
+            "employee_work_info__work_from_id",
             "employee_work_info__employee_type_id",
             "employee_work_info__job_role_id",
             "employee_work_info__reporting_manager_id",
@@ -317,7 +317,7 @@ class EmployeeFilter(HorillaFilterSet):
             "employee_user_id__user_permissions",
         ]
 
-    # Model-backed "choice" custom-filter fields (Work Type, Employee Type,
+    # Model-backed "choice" custom-filter fields (Work From, Employee Type,
     # Job Role) -- unlike Gender (a genuinely fixed option set), these back
     # onto a real queryset, so they go through the same generic AJAX-search
     # endpoint as the dedicated fields above (horilla_widgets.generic_ajax)
@@ -330,12 +330,12 @@ class EmployeeFilter(HorillaFilterSet):
     # display_fn, how _extract_custom_filter_rows resolves a previously
     # applied value's label for the restored row (see there).
     CUSTOM_FILTER_AJAX_FIELDS = {
-        "work_type": {
-            "key": "employee-custom-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "work_from": {
+            "key": "employee-custom-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
         "employee_type": {
             "key": "employee-custom-employee-type",
@@ -420,12 +420,12 @@ class EmployeeFilter(HorillaFilterSet):
             "search_fields": ["employee_shift"],
             "placeholder": _("Select shift..."),
         },
-        "employee_work_info__work_type_id": {
-            "key": "employee-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "employee_work_info__work_from_id": {
+            "key": "employee-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
         "employee_work_info__tags": {
             "key": "employee-tag",
@@ -485,7 +485,7 @@ class EmployeeFilter(HorillaFilterSet):
         """
         Registry backing the Advanced section's "+ Add filter" builder --
         fields that used to have their own permanent input (Phone,
-        Country, Gender, Work Type) but were moved out of the default
+        Country, Gender, Work From) but were moved out of the default
         layout since they're filtered on far less often than Name/Email/
         Department/Job Position/Reporting Manager/Company/Is Active/
         Groups/Permissions/Shift/Employee Tag. Every one of them stays
@@ -494,7 +494,7 @@ class EmployeeFilter(HorillaFilterSet):
         never had ANY dedicated input anywhere in the form -- added here
         rather than left unreachable.
 
-        Work Type/Employee Type/Job Role are model-backed, so they carry
+        Work From/Employee Type/Job Role are model-backed, so they carry
         an "ajax" sub-dict (see CUSTOM_FILTER_AJAX_FIELDS) instead of a
         "choices" list -- the client builds an AJAX-searched combobox for
         these instead of pre-rendering every row as an <option>. Gender
@@ -526,9 +526,9 @@ class EmployeeFilter(HorillaFilterSet):
                 "choices": [[v, str(l)] for v, l in Employee.choice_gender],
             },
             {
-                "key": "work_type",
-                "field": "employee_work_info__work_type_id",
-                "label": str(_("Work Type")),
+                "key": "work_from",
+                "field": "employee_work_info__work_from_id",
+                "label": str(_("Work From")),
                 "type": "choice",
             },
             {
@@ -720,7 +720,7 @@ class EmployeeReGroup:
         ("employee_work_info__job_position_id", "Job Position"),
         ("employee_work_info__department_id", "Department"),
         ("employee_work_info__shift_id", "Shift"),
-        ("employee_work_info__work_type_id", "Work Type"),
+        ("employee_work_info__work_from_id", "Work From"),
         ("employee_work_info__job_role_id", "Job Role"),
         ("employee_work_info__reporting_manager_id", "Reporting Manager"),
         ("employee_work_info__company_id", "Company"),
@@ -797,12 +797,12 @@ class DocumentRequestFilter(HorillaFilterSet):
             "search_fields": ["department"],
             "placeholder": _("Select department..."),
         },
-        "employee_id__employee_work_info__work_type_id": {
-            "key": "document-request-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "employee_id__employee_work_info__work_from_id": {
+            "key": "document-request-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
         "employee_id__employee_work_info__job_role_id": {
             "key": "document-request-job-role",
@@ -852,7 +852,7 @@ class DocumentRequestFilter(HorillaFilterSet):
             "employee_id__gender",
             "employee_id__employee_work_info__job_position_id",
             "employee_id__employee_work_info__department_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
             "employee_id__employee_work_info__employee_type_id",
             "employee_id__employee_work_info__job_role_id",
             "employee_id__employee_work_info__reporting_manager_id",
@@ -1010,12 +1010,12 @@ class DisciplinaryActionFilter(HorillaFilterSet):
             "search_fields": ["job_role", "job_position_id__job_position"],
             "placeholder": _("Select job role..."),
         },
-        "employee_id__employee_work_info__work_type_id": {
-            "key": "disciplinary-action-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "employee_id__employee_work_info__work_from_id": {
+            "key": "disciplinary-action-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
         "employee_id__employee_work_info__reporting_manager_id": {
             "key": "disciplinary-action-reporting-manager",
@@ -1041,7 +1041,7 @@ class DisciplinaryActionFilter(HorillaFilterSet):
             "action",
             "employee_id__employee_work_info__job_position_id",
             "employee_id__employee_work_info__department_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
             "employee_id__employee_work_info__job_role_id",
             "employee_id__employee_work_info__reporting_manager_id",
             "employee_id__employee_work_info__company_id",

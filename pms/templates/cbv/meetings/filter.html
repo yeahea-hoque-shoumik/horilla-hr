@@ -73,7 +73,7 @@
         </div>
         <div class="oh-accordion-body">
             <!-- Full width -- Department/Company/Shift/Reporting
-                 Manager/Job Position/Work Type are now AJAX-searched
+                 Manager/Job Position/Work From are now AJAX-searched
                  Select2 comboboxes (see pms/filters.py's
                  MeetingsFilter.ajax_fields). -->
             <div class="row">
@@ -126,9 +126,9 @@
                     <div class="oh-input-group">
                         <label
                             class="oh-label"
-                            for="{{filter_form.employee_id__employee_work_info__work_type_id.id_for_label}}"
-                        >{% trans "Work Type" %}</label>
-                        {{ filter_form.employee_id__employee_work_info__work_type_id }}
+                            for="{{filter_form.employee_id__employee_work_info__work_from_id.id_for_label}}"
+                        >{% trans "Work From" %}</label>
+                        {{ filter_form.employee_id__employee_work_info__work_from_id }}
                     </div>
                 </div>
             </div>

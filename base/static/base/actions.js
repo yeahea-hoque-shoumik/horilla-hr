@@ -3,8 +3,8 @@ function makeShiftListUnique(list) {
     return Array.from(new Set(list));
 }
 
-tickWorktypeCheckboxes();
-function makeWorktypeListUnique(list) {
+tickWorkFromCheckboxes();
+function makeWorkFromListUnique(list) {
     return Array.from(new Set(list));
 }
 
@@ -13,8 +13,8 @@ function makeRShiftListUnique(list) {
     return Array.from(new Set(list));
 }
 
-tickRWorktypeCheckboxes();
-function makeRWorktypeListUnique(list) {
+tickRWorkFromCheckboxes();
+function makeRWorkFromListUnique(list) {
     return Array.from(new Set(list));
 }
 
@@ -259,7 +259,7 @@ $("#deleteRotatingShiftAssign").click(function (e) {
     }
 });
 
-$(".all-rwork-type").change(function (e) {
+$(".all-rwork-from").change(function (e) {
     var is_checked = $(this).is(":checked");
     var closest = $(this)
         .closest(".oh-sticky-table__thead")
@@ -267,48 +267,48 @@ $(".all-rwork-type").change(function (e) {
     if (is_checked) {
         $(closest)
             .children()
-            .find(".all-rwork-type-row")
+            .find(".all-rwork-from-row")
             .prop("checked", true)
             .closest(".oh-sticky-table__tr")
             .addClass("highlight-selected");
     } else {
         $(closest)
             .children()
-            .find(".all-rwork-type-row")
+            .find(".all-rwork-from-row")
             .prop("checked", false)
             .closest(".oh-sticky-table__tr")
             .removeClass("highlight-selected");
     }
 });
 
-function tickRWorktypeCheckboxes() {
-    var ids = JSON.parse($("#selectedRWorktypes").attr("data-ids") || "[]");
-    uniqueIds = makeWorktypeListUnique(ids);
+function tickRWorkFromCheckboxes() {
+    var ids = JSON.parse($("#selectedRWorkFroms").attr("data-ids") || "[]");
+    uniqueIds = makeWorkFromListUnique(ids);
     toggleHighlight(uniqueIds);
-    click = $("#selectedRWorktypes").attr("data-clicked");
+    click = $("#selectedRWorkFroms").attr("data-clicked");
     if (click === "1") {
-        $(".all-rwork-type").prop("checked", true);
+        $(".all-rwork-from").prop("checked", true);
     }
     uniqueIds.forEach(function (id) {
         $("#" + id).prop("checked", true);
     });
     var selectedCount = uniqueIds.length;
     if (selectedCount > 0) {
-        $("#exportRWorktypes").css("display", "inline-flex");
-        $("#unselectAllRWorktypes").css("display", "inline-flex");
-        $("#selectedShowRWorktypes").css("display", "inline-flex");
-        $("#selectedShowRWorktypes").text(selectedCount + " -" + i18nMessages.selected);
+        $("#exportRWorkFroms").css("display", "inline-flex");
+        $("#unselectAllRWorkFroms").css("display", "inline-flex");
+        $("#selectedShowRWorkFroms").css("display", "inline-flex");
+        $("#selectedShowRWorkFroms").text(selectedCount + " -" + i18nMessages.selected);
     } else {
-        $("#selectedShowRWorktypes").css("display", "none");
-        $("#exportRWorktypes").css("display", "none");
-        $("#unselectAllRWorktypes").css("display", "none");
+        $("#selectedShowRWorkFroms").css("display", "none");
+        $("#exportRWorkFroms").css("display", "none");
+        $("#unselectAllRWorkFroms").css("display", "none");
     }
 }
 
-$("#exportRWorktypes").click(function (e) {
+$("#exportRWorkFroms").click(function (e) {
     var currentDate = new Date().toISOString().slice(0, 10);
     ids = [];
-    ids = JSON.parse($("#selectedRWorktypes").attr("data-ids"));
+    ids = JSON.parse($("#selectedRWorkFroms").attr("data-ids"));
     Swal.fire({
         text: i18nMessages.downloadExcel,
         icon: "question",
@@ -322,7 +322,7 @@ $("#exportRWorktypes").click(function (e) {
         if (result.isConfirmed) {
             $.ajax({
                 type: "GET",
-                url: "/rotating-work-type-assign-export",
+                url: "/rotating-work-from-assign-export",
                 data: {
                     ids: JSON.stringify(ids),
                 },
@@ -337,7 +337,7 @@ $("#exportRWorktypes").click(function (e) {
                     const url = URL.createObjectURL(file);
                     const link = document.createElement("a");
                     link.href = url;
-                    link.download = "Rotating_work_type_assign" + currentDate + ".xlsx";
+                    link.download = "Rotating_work_from_assign" + currentDate + ".xlsx";
                     document.body.appendChild(link);
                     link.click();
                 },
@@ -349,8 +349,8 @@ $("#exportRWorktypes").click(function (e) {
     });
 });
 
-$("#archiveRotatingWorkTypeAssign").click(function (e) {
-    var ids = JSON.parse($("#selectedRWorktypes").attr("data-ids"));
+$("#archiveRotatingWorkFromAssign").click(function (e) {
+    var ids = JSON.parse($("#selectedRWorkFroms").attr("data-ids"));
     if (ids.length === 0) {
         Swal.fire({
             text: i18nMessages.noRowsSelected,
@@ -369,7 +369,7 @@ $("#archiveRotatingWorkTypeAssign").click(function (e) {
         }).then(function (result) {
             if (result.isConfirmed) {
                 var idsString = JSON.stringify(ids);
-                var hxSpan = $("#archiveRotatingWorkTypeAssignSpan");
+                var hxSpan = $("#archiveRotatingWorkFromAssignSpan");
                 hxSpan.attr("hx-vals", JSON.stringify({ ids: idsString, is_active: false }));
                 hxSpan.click();
             }
@@ -377,9 +377,9 @@ $("#archiveRotatingWorkTypeAssign").click(function (e) {
     }
 });
 
-$("#unArchiveRotatingWorkTypeAssign").click(function (e) {
+$("#unArchiveRotatingWorkFromAssign").click(function (e) {
     e.preventDefault();
-    var ids = JSON.parse($("#selectedRWorktypes").attr("data-ids"));
+    var ids = JSON.parse($("#selectedRWorkFroms").attr("data-ids"));
     if (ids.length === 0) {
         Swal.fire({
             text: i18nMessages.noRowsSelected,
@@ -398,7 +398,7 @@ $("#unArchiveRotatingWorkTypeAssign").click(function (e) {
         }).then(function (result) {
             if (result.isConfirmed) {
                 var idsString = JSON.stringify(ids);
-                var hxSpan = $("#archiveRotatingWorkTypeAssignSpan");
+                var hxSpan = $("#archiveRotatingWorkFromAssignSpan");
                 hxSpan.attr("hx-vals", JSON.stringify({ ids: idsString, is_active: true }));
                 hxSpan.click();
             }
@@ -407,12 +407,12 @@ $("#unArchiveRotatingWorkTypeAssign").click(function (e) {
 });
 
 
-$("#deleteRotatingWorkTypeAssign").click(function (e) {
+$("#deleteRotatingWorkFromAssign").click(function (e) {
     e.preventDefault();
 
     ids = [];
-    ids.push($("#selectedRWorktypes").attr("data-ids"));
-    ids = JSON.parse($("#selectedRWorktypes").attr("data-ids"));
+    ids.push($("#selectedRWorkFroms").attr("data-ids"));
+    ids = JSON.parse($("#selectedRWorkFroms").attr("data-ids"));
     if (ids.length === 0) {
         Swal.fire({
             text: i18nMessages.noRowsSelected,
@@ -431,11 +431,11 @@ $("#deleteRotatingWorkTypeAssign").click(function (e) {
         }).then(function (result) {
             if (result.isConfirmed) {
                 ids = [];
-                ids.push($("#selectedRWorktypes").attr("data-ids"));
-                ids = JSON.parse($("#selectedRWorktypes").attr("data-ids"));
+                ids.push($("#selectedRWorkFroms").attr("data-ids"));
+                ids = JSON.parse($("#selectedRWorkFroms").attr("data-ids"));
                 $.ajax({
                     type: "POST",
-                    url: "/rotating-work-type-assign-bulk-delete/",
+                    url: "/rotating-work-from-assign-bulk-delete/",
                     data: {
                         csrfmiddlewaretoken: getCookie("csrftoken"),
                         ids: JSON.stringify(ids),
@@ -678,7 +678,7 @@ $("#deleteShiftRequest").click(function (e) {
     }
 });
 
-$(".all-work-type-requests").change(function (e) {
+$(".all-work-from-requests").change(function (e) {
     var is_checked = $(this).is(":checked");
     var closest = $(this)
         .closest(".oh-sticky-table__thead")
@@ -686,48 +686,48 @@ $(".all-work-type-requests").change(function (e) {
     if (is_checked) {
         $(closest)
             .children()
-            .find(".all-work-type-requests-row")
+            .find(".all-work-from-requests-row")
             .prop("checked", true)
             .closest(".oh-sticky-table__tr")
             .addClass("highlight-selected");
     } else {
         $(closest)
             .children()
-            .find(".all-work-type-requests-row")
+            .find(".all-work-from-requests-row")
             .prop("checked", false)
             .closest(".oh-sticky-table__tr")
             .removeClass("highlight-selected");
     }
 });
 
-function tickWorktypeCheckboxes() {
-    var ids = JSON.parse($("#selectedWorktypes").attr("data-ids") || "[]");
-    uniqueIds = makeWorktypeListUnique(ids);
+function tickWorkFromCheckboxes() {
+    var ids = JSON.parse($("#selectedWorkFroms").attr("data-ids") || "[]");
+    uniqueIds = makeWorkFromListUnique(ids);
     toggleHighlight(uniqueIds);
-    click = $("#selectedWorktypes").attr("data-clicked");
+    click = $("#selectedWorkFroms").attr("data-clicked");
     if (click === "1") {
-        $(".all-work-type-requests").prop("checked", true);
+        $(".all-work-from-requests").prop("checked", true);
     }
     uniqueIds.forEach(function (id) {
         $("#" + id).prop("checked", true);
     });
     var selectedCount = uniqueIds.length;
     if (selectedCount > 0) {
-        $("#exportWorktypes").css("display", "inline-flex");
-        $("#unselectAllWorktypes").css("display", "inline-flex");
-        $("#selectedShowWorktypes").css("display", "inline-flex");
-        $("#selectedShowWorktypes").text(selectedCount + " -" + i18nMessages.selected);
+        $("#exportWorkFroms").css("display", "inline-flex");
+        $("#unselectAllWorkFroms").css("display", "inline-flex");
+        $("#selectedShowWorkFroms").css("display", "inline-flex");
+        $("#selectedShowWorkFroms").text(selectedCount + " -" + i18nMessages.selected);
     } else {
-        $("#selectedShowWorktypes").css("display", "none");
-        $("#exportWorktypes").css("display", "none");
-        $("#unselectAllWorktypes").css("display", "none");
+        $("#selectedShowWorkFroms").css("display", "none");
+        $("#exportWorkFroms").css("display", "none");
+        $("#unselectAllWorkFroms").css("display", "none");
     }
 }
 
-function exportWorkTypeRequets() {
+function exportWorkFromRequets() {
     var currentDate = new Date().toISOString().slice(0, 10);
     ids = [];
-    ids = JSON.parse($("#selectedWorktypes").attr("data-ids"));
+    ids = JSON.parse($("#selectedWorkFroms").attr("data-ids"));
     Swal.fire({
         text: i18nMessages.downloadExcel,
         icon: "question",
@@ -740,7 +740,7 @@ function exportWorkTypeRequets() {
         if (result.isConfirmed) {
             $.ajax({
                 type: "GET",
-                url: "/work-type-request-info-export",
+                url: "/work-from-request-info-export",
                 data: {
                     ids: JSON.stringify(ids),
                 },
@@ -755,7 +755,7 @@ function exportWorkTypeRequets() {
                     const url = URL.createObjectURL(file);
                     const link = document.createElement("a");
                     link.href = url;
-                    link.download = "Work_type_requests" + currentDate + ".xlsx";
+                    link.download = "Work_from_requests" + currentDate + ".xlsx";
                     document.body.appendChild(link);
                     link.click();
                 },
@@ -767,11 +767,11 @@ function exportWorkTypeRequets() {
     });
 }
 
-$("#approveWorkTypeRequest").click(function (e) {
+$("#approveWorkFromRequest").click(function (e) {
     e.preventDefault();
     ids = [];
-    ids.push($("#selectedWorktypes").attr("data-ids"));
-    ids = JSON.parse($("#selectedWorktypes").attr("data-ids"));
+    ids.push($("#selectedWorkFroms").attr("data-ids"));
+    ids = JSON.parse($("#selectedWorkFroms").attr("data-ids"));
     if (ids.length === 0) {
         Swal.fire({
             text: i18nMessages.noRowsSelected,
@@ -791,11 +791,11 @@ $("#approveWorkTypeRequest").click(function (e) {
             if (result.isConfirmed) {
                 e.preventDefault();
                 ids = [];
-                ids.push($("#selectedWorktypes").attr("data-ids"));
-                ids = JSON.parse($("#selectedWorktypes").attr("data-ids"));
+                ids.push($("#selectedWorkFroms").attr("data-ids"));
+                ids = JSON.parse($("#selectedWorkFroms").attr("data-ids"));
                 $.ajax({
                     type: "POST",
-                    url: "/work-type-request-bulk-approve/",
+                    url: "/work-from-request-bulk-approve/",
                     data: {
                         csrfmiddlewaretoken: getCookie("csrftoken"),
                         ids: JSON.stringify(ids),
@@ -813,11 +813,11 @@ $("#approveWorkTypeRequest").click(function (e) {
     }
 });
 
-$("#cancelWorkTypeRequest").click(function (e) {
+$("#cancelWorkFromRequest").click(function (e) {
     e.preventDefault();
     ids = [];
-    ids.push($("#selectedWorktypes").attr("data-ids"));
-    ids = JSON.parse($("#selectedWorktypes").attr("data-ids"));
+    ids.push($("#selectedWorkFroms").attr("data-ids"));
+    ids = JSON.parse($("#selectedWorkFroms").attr("data-ids"));
     if (ids.length === 0) {
         Swal.fire({
             text: i18nMessages.noRowsSelected,
@@ -836,11 +836,11 @@ $("#cancelWorkTypeRequest").click(function (e) {
         }).then(function (result) {
             if (result.isConfirmed) {
                 ids = [];
-                ids.push($("#selectedWorktypes").attr("data-ids"));
-                ids = JSON.parse($("#selectedWorktypes").attr("data-ids"));
+                ids.push($("#selectedWorkFroms").attr("data-ids"));
+                ids = JSON.parse($("#selectedWorkFroms").attr("data-ids"));
                 $.ajax({
                     type: "POST",
-                    url: "/work-type-request-bulk-cancel/",
+                    url: "/work-from-request-bulk-cancel/",
                     data: {
                         csrfmiddlewaretoken: getCookie("csrftoken"),
                         ids: JSON.stringify(ids),
@@ -858,11 +858,11 @@ $("#cancelWorkTypeRequest").click(function (e) {
     }
 });
 
-$("#deleteWorkTypeRequest").click(function (e) {
+$("#deleteWorkFromRequest").click(function (e) {
     e.preventDefault();
     ids = [];
-    ids.push($("#selectedWorktypes").attr("data-ids"));
-    ids = JSON.parse($("#selectedWorktypes").attr("data-ids"));
+    ids.push($("#selectedWorkFroms").attr("data-ids"));
+    ids = JSON.parse($("#selectedWorkFroms").attr("data-ids"));
     if (ids.length === 0) {
         Swal.fire({
             text: i18nMessages.noRowsSelected,
@@ -882,11 +882,11 @@ $("#deleteWorkTypeRequest").click(function (e) {
             if (result.isConfirmed) {
                 e.preventDefault();
                 ids = [];
-                ids.push($("#selectedWorktypes").attr("data-ids"));
-                ids = JSON.parse($("#selectedWorktypes").attr("data-ids"));
+                ids.push($("#selectedWorkFroms").attr("data-ids"));
+                ids = JSON.parse($("#selectedWorkFroms").attr("data-ids"));
                 $.ajax({
                     type: "POST",
-                    url: "/work-type-request-bulk-delete/",
+                    url: "/work-from-request-bulk-delete/",
                     data: {
                         csrfmiddlewaretoken: getCookie("csrftoken"),
                         ids: JSON.stringify(ids),

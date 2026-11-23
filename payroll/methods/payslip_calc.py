@@ -49,10 +49,10 @@ operator_mapping = {
     "range": return_none,
 }
 filter_mapping = {
-    "work_type_id": {
+    "work_from_id": {
         "filter": lambda employee, allowance, start_date, end_date: {
             "employee_id": employee,
-            "work_type_id__id": allowance.work_type_id.id,
+            "work_from_id__id": allowance.work_from_id.id,
             "attendance_date__range": (start_date, end_date),
             "attendance_validated": True,
         }
@@ -1239,10 +1239,10 @@ def calculate_based_on_holiday_overtime(*_args, **kwargs):
     return _amount_from_seconds(holiday_ot, component, day_dict)
 
 
-def calculate_based_on_work_type(*_args, **kwargs):
+def calculate_based_on_work_from(*_args, **kwargs):
     """
     Calculates the amount of an allowance or deduction based on the employee's
-    attendance with a specific work type.
+    attendance with a specific work from.
 
     Args:
         employee (Employee): The employee for whom the attendance is being considered.
@@ -1253,7 +1253,7 @@ def calculate_based_on_work_type(*_args, **kwargs):
 
     Returns:
         float: The calculated amount of the allowance or deduction based on the
-               attendance with the specified work type.
+               attendance with the specified work from.
     """
     if not apps.is_installed("attendance"):
         return 0
@@ -1265,14 +1265,14 @@ def calculate_based_on_work_type(*_args, **kwargs):
     component = kwargs["component"]
     day_dict = kwargs["day_dict"]
 
-    work_type_id = component.work_type_id.id
+    work_from_id = component.work_from_id.id
     count = Attendance.objects.filter(
         employee_id=employee,
-        work_type_id=work_type_id,
+        work_from_id=work_from_id,
         attendance_date__range=(start_date, end_date),
         attendance_validated=True,
     ).count()
-    amount = count * component.work_type_per_attendance_amount
+    amount = count * component.work_from_per_attendance_amount
 
     amount = compute_limit(component, amount, day_dict)
 
@@ -1394,7 +1394,7 @@ calculation_mapping = {
     "overtime": calculate_based_on_overtime,
     "week_off_overtime": calculate_based_on_week_off_overtime,
     "holiday_overtime": calculate_based_on_holiday_overtime,
-    "work_type_id": calculate_based_on_work_type,
+    "work_from_id": calculate_based_on_work_from,
     "children": calculate_based_on_children,
     "component": calculate_based_on_component,
     "formula": calculate_based_on_formula,

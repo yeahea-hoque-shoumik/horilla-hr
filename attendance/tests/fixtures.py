@@ -8,7 +8,7 @@ from base.models import (
     EmployeeShift,
     EmployeeShiftDay,
     Holidays,
-    WorkType,
+    WorkFrom,
 )
 from employee.models import Employee, EmployeeWorkInformation
 
@@ -40,8 +40,8 @@ class HolidayFixtureMixin:
         cls.shift = EmployeeShift.objects.create(employee_shift="Day Shift")
         cls.shift.company_id.add(cls.company)
 
-        cls.work_type = WorkType.objects.create(work_type="Office")
-        cls.work_type.company_id.add(cls.company)
+        cls.work_from = WorkFrom.objects.create(work_from="Office")
+        cls.work_from.company_id.add(cls.company)
 
         cls.dept = Department.objects.create(department="Engineering")
         cls.dept.company_id.add(cls.company)
@@ -97,6 +97,6 @@ class HolidayFixtureMixin:
         EmployeeWorkInformation.objects.filter(employee_id=emp).update(
             company_id_id=cls.company.pk,
             shift_id_id=cls.shift.pk,
-            work_type_id_id=cls.work_type.pk,
+            work_from_id_id=cls.work_from.pk,
         )
         return emp

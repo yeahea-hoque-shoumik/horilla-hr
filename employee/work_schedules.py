@@ -1,7 +1,7 @@
 """
 employee/work_schedules.py
 
-Work Schedules landing page with tabbed rotating shift, work type, and roster sections.
+Work Schedules landing page with tabbed rotating shift, work from, and roster sections.
 """
 
 from django.contrib.auth.decorators import login_required
@@ -29,11 +29,11 @@ def work_schedules_rotating_shift_tab(request):
 
 @login_required
 @hx_request_required
-def work_schedules_rotating_work_type_tab(request):
+def work_schedules_rotating_work_from_tab(request):
     """
-    HTMX tab body for rotating work type assign under work schedules.
+    HTMX tab body for rotating work from assign under work schedules.
     """
-    return render(request, "work_schedules/work_schedules_rotating_work_type_tab.html")
+    return render(request, "work_schedules/work_schedules_rotating_work_from_tab.html")
 
 
 @login_required

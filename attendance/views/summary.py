@@ -42,7 +42,7 @@ from base.models import (
     Holidays,
     JobPosition,
     Roster,
-    WorkType,
+    WorkFrom,
 )
 from employee.filters import EmployeeFilter
 from employee.models import Employee, EmployeeTag
@@ -931,7 +931,7 @@ def attendance_monthly_summary(request):
     from_date_default = today.replace(day=1)
     to_date_default = today.replace(day=calendar.monthrange(today.year, today.month)[1])
 
-    # Employee/Department/Job Position/Shift/Work Type render as AJAX-
+    # Employee/Department/Job Position/Shift/Work From render as AJAX-
     # searched Select2 comboboxes now (see monthly_summary.html) rather
     # than pre-rendering every instance as an <option> tag -- Employee in
     # particular doesn't scale as a full dump. Only the currently-selected
@@ -960,8 +960,8 @@ def attendance_monthly_summary(request):
         "selected_shifts": EmployeeShift.objects.filter(
             pk__in=request.GET.getlist("shift_id")
         ),
-        "selected_work_types": WorkType.objects.filter(
-            pk__in=request.GET.getlist("work_type_id")
+        "selected_work_froms": WorkFrom.objects.filter(
+            pk__in=request.GET.getlist("work_from_id")
         ),
         # Advanced section -- less commonly filtered on than Work Info's own
         # fields, but already fully supported server-side for free: the
@@ -1000,7 +1000,7 @@ def attendance_monthly_summary(request):
             request.GET.getlist("department_id"),
             request.GET.getlist("job_position_id"),
             request.GET.getlist("shift_id"),
-            request.GET.getlist("work_type_id"),
+            request.GET.getlist("work_from_id"),
             request.GET.getlist("employee_work_info__company_id"),
             request.GET.getlist("employee_work_info__reporting_manager_id"),
             request.GET.getlist("employee_work_info__tags"),
@@ -1059,10 +1059,10 @@ def attendance_monthly_summary_table(request):
     if shift_ids:
         employee_qs = employee_qs.filter(employee_work_info__shift_id__in=shift_ids)
 
-    work_type_ids = request.GET.getlist("work_type_id")
-    if work_type_ids:
+    work_from_ids = request.GET.getlist("work_from_id")
+    if work_from_ids:
         employee_qs = employee_qs.filter(
-            employee_work_info__work_type_id__in=work_type_ids
+            employee_work_info__work_from_id__in=work_from_ids
         )
 
     employee_qs = employee_qs.distinct()

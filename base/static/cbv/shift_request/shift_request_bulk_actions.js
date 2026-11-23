@@ -5,10 +5,10 @@ function makeShiftListUnique(list) {
     return Array.from(new Set(list));
 }
 
-if (typeof tickWorktypeCheckboxes === "function") {
-    tickWorktypeCheckboxes();
+if (typeof tickWorkFromCheckboxes === "function") {
+    tickWorkFromCheckboxes();
 }
-function makeWorktypeListUnique(list) {
+function makeWorkFromListUnique(list) {
     return Array.from(new Set(list));
 }
 
@@ -19,10 +19,10 @@ function makeRShiftListUnique(list) {
     return Array.from(new Set(list));
 }
 
-if (typeof tickRWorktypeCheckboxes === "function") {
-    tickRWorktypeCheckboxes();
+if (typeof tickRWorkFromCheckboxes === "function") {
+    tickRWorkFromCheckboxes();
 }
-function makeRWorktypeListUnique(list) {
+function makeRWorkFromListUnique(list) {
     return Array.from(new Set(list));
 }
 
@@ -73,7 +73,7 @@ function refreshShiftRequestList() {
     // the correct current request.path, so reuse that instead of guessing
     // the endpoint - it reloads just the list, which is all a single
     // approve/reject/delete actually needs to refresh.
-    // Embedded in the employee detail "Work Type & Shift" tab: reload that
+    // Embedded in the employee detail "Work From & Shift" tab: reload that
     // tab's own list, not the employee list that owns #listContainer there.
     var $reloadBtn = $("#shift-reques-individual-divReload");
     if (!$reloadBtn.length) {

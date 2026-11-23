@@ -422,12 +422,12 @@ class JobRole(HorillaModel):
         return f"{self.job_role} - {self.job_position_id.job_position}"
 
 
-class WorkType(HorillaModel):
+class WorkFrom(HorillaModel):
     """
-    WorkType model
+    WorkFrom model
     """
 
-    work_type = models.CharField(max_length=50, verbose_name=_("Work Type"))
+    work_from = models.CharField(max_length=50, verbose_name=_("Work From"))
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
 
     objects = HorillaCompanyManager()
@@ -437,25 +437,25 @@ class WorkType(HorillaModel):
         Meta class to add additional options
         """
 
-        verbose_name = _("Work Type")
-        verbose_name_plural = _("Work Types")
+        verbose_name = _("Work From")
+        verbose_name_plural = _("Work From Options")
 
     def __str__(self) -> str:
-        return str(self.work_type)
+        return str(self.work_from)
 
     def clean(self, *args, **kwargs):
         super().clean(*args, **kwargs)
         request = getattr(_thread_locals, "request", None)
         if request and request.POST:
             company = request.POST.getlist("company_id", None)
-            work_type = request.POST.get("work_type", None)
+            work_from = request.POST.get("work_from", None)
             if (
-                WorkType.objects.filter(company_id__id__in=company, work_type=work_type)
+                WorkFrom.objects.filter(company_id__id__in=company, work_from=work_from)
                 .exclude(id=self.id)
                 .exists()
             ):
                 raise ValidationError(
-                    _("This work type already exists in this company")
+                    _("This work from already exists in this company")
                 )
         return
 
@@ -473,7 +473,7 @@ class WorkType(HorillaModel):
         """
         This method to get update url
         """
-        url = reverse_lazy("work-type-update-form", kwargs={"pk": self.pk})
+        url = reverse_lazy("work-from-update-form", kwargs={"pk": self.pk})
         return url
 
     def get_delete_url(self):
@@ -496,27 +496,27 @@ class WorkType(HorillaModel):
         return self
 
 
-class RotatingWorkType(HorillaModel):
+class RotatingWorkFrom(HorillaModel):
     """
-    RotatingWorkType model
+    RotatingWorkFrom model
     """
 
     name = models.CharField(max_length=50, unique=True, verbose_name=_("Name"))
-    work_type1 = models.ForeignKey(
-        WorkType,
+    work_from1 = models.ForeignKey(
+        WorkFrom,
         on_delete=models.PROTECT,
-        related_name="work_type1",
-        verbose_name=_("Work Type 1"),
+        related_name="work_from1",
+        verbose_name=_("Work From 1"),
     )
-    work_type2 = models.ForeignKey(
-        WorkType,
+    work_from2 = models.ForeignKey(
+        WorkFrom,
         on_delete=models.PROTECT,
-        related_name="work_type2",
-        verbose_name=_("Work Type 2"),
+        related_name="work_from2",
+        verbose_name=_("Work From 2"),
     )
     employee_id = models.ManyToManyField(
         "employee.Employee",
-        through="RotatingWorkTypeAssign",
+        through="RotatingWorkFromAssign",
         verbose_name=_("Employee"),
     )
     additional_data = models.JSONField(
@@ -531,8 +531,8 @@ class RotatingWorkType(HorillaModel):
         Meta class to add additional options
         """
 
-        verbose_name = _("Rotating Work Type")
-        verbose_name_plural = _("Rotating Work Types")
+        verbose_name = _("Rotating Work From")
+        verbose_name_plural = _("Rotating Work From Options")
 
     def __str__(self) -> str:
         return str(self.name)
@@ -541,7 +541,7 @@ class RotatingWorkType(HorillaModel):
         """
         This method to get update url
         """
-        url = reverse_lazy("rotating-work-type-update-form", kwargs={"pk": self.pk})
+        url = reverse_lazy("rotating-work-from-update-form", kwargs={"pk": self.pk})
         return url
 
     def get_delete_url(self):
@@ -560,10 +560,10 @@ class RotatingWorkType(HorillaModel):
 
     def get_additional_worktytpes(self):
         """
-        this method is to get additional work types if exists
+        this method is to get additional work from options if exists
         """
 
-        additional_work = self.additional_work_types()
+        additional_work = self.additional_work_froms()
         if additional_work:
             additional = "<br>".join([str(work) for work in additional_work])
             return additional
@@ -571,56 +571,56 @@ class RotatingWorkType(HorillaModel):
 
     def clean(self):
         if (
-            self.work_type1_id
-            and self.work_type2_id
-            and self.work_type1_id == self.work_type2_id
+            self.work_from1_id
+            and self.work_from2_id
+            and self.work_from1_id == self.work_from2_id
         ):
-            raise ValidationError(_("Select different work type continuously"))
+            raise ValidationError(_("Select different work from continuously"))
 
-        additional_work_types = (
-            self.additional_data.get("additional_work_types", [])
+        additional_work_froms = (
+            self.additional_data.get("additional_work_froms", [])
             if self.additional_data
             else []
         )
 
         if (
-            additional_work_types
-            and self.work_type2_id is not None
-            and str(self.work_type2_id) == additional_work_types[0]
+            additional_work_froms
+            and self.work_from2_id is not None
+            and str(self.work_from2_id) == additional_work_froms[0]
         ):
-            raise ValidationError(_("Select different work type continuously"))
+            raise ValidationError(_("Select different work from continuously"))
 
         if (
-            additional_work_types
-            and self.work_type1_id is not None
-            and str(self.work_type1_id) == additional_work_types[-1]
+            additional_work_froms
+            and self.work_from1_id is not None
+            and str(self.work_from1_id) == additional_work_froms[-1]
         ):
-            raise ValidationError(_("Select different work type continuously"))
+            raise ValidationError(_("Select different work from continuously"))
 
-        for i in range(len(additional_work_types) - 1):
-            if additional_work_types[i] and additional_work_types[i + 1]:
-                if additional_work_types[i] == additional_work_types[i + 1]:
-                    raise ValidationError(_("Select different work type continuously"))
+        for i in range(len(additional_work_froms) - 1):
+            if additional_work_froms[i] and additional_work_froms[i + 1]:
+                if additional_work_froms[i] == additional_work_froms[i + 1]:
+                    raise ValidationError(_("Select different work from continuously"))
 
-    def additional_work_types(self):
-        rotating_work_type = RotatingWorkType.objects.get(id=self.pk)
-        additional_data = rotating_work_type.additional_data
+    def additional_work_froms(self):
+        rotating_work_from = RotatingWorkFrom.objects.get(id=self.pk)
+        additional_data = rotating_work_from.additional_data
         if additional_data:
-            additional_work_type_ids = additional_data.get("additional_work_types")
-            if additional_work_type_ids:
-                additional_work_types = WorkType.objects.filter(
-                    id__in=additional_work_type_ids
+            additional_work_from_ids = additional_data.get("additional_work_froms")
+            if additional_work_from_ids:
+                additional_work_froms = WorkFrom.objects.filter(
+                    id__in=additional_work_from_ids
                 )
             else:
-                additional_work_types = None
+                additional_work_froms = None
         else:
-            additional_work_types = None
-        return additional_work_types
+            additional_work_froms = None
+        return additional_work_froms
 
 
-class RotatingWorkTypeAssign(HorillaModel):
+class RotatingWorkFromAssign(HorillaModel):
     """
-    RotatingWorkTypeAssign model
+    RotatingWorkFromAssign model
     """
 
     employee_id = models.ForeignKey(
@@ -629,24 +629,24 @@ class RotatingWorkTypeAssign(HorillaModel):
         null=True,
         verbose_name=_("Employee"),
     )
-    rotating_work_type_id = models.ForeignKey(
-        RotatingWorkType, on_delete=models.PROTECT, verbose_name=_("Rotating Work Type")
+    rotating_work_from_id = models.ForeignKey(
+        RotatingWorkFrom, on_delete=models.PROTECT, verbose_name=_("Rotating Work From")
     )
     start_date = models.DateField(default=timezone.now, verbose_name=_("Start Date"))
     next_change_date = models.DateField(null=True, verbose_name=_("Next Switch"))
-    current_work_type = models.ForeignKey(
-        WorkType,
+    current_work_from = models.ForeignKey(
+        WorkFrom,
         null=True,
         on_delete=models.PROTECT,
-        related_name="current_work_type",
-        verbose_name=_("Current Work Type"),
+        related_name="current_work_from",
+        verbose_name=_("Current Work From"),
     )
-    next_work_type = models.ForeignKey(
-        WorkType,
+    next_work_from = models.ForeignKey(
+        WorkFrom,
         null=True,
         on_delete=models.PROTECT,
-        related_name="next_work_type",
-        verbose_name=_("Next Work Type"),
+        related_name="next_work_from",
+        verbose_name=_("Next Work From"),
     )
     based_on = models.CharField(
         max_length=10,
@@ -690,8 +690,8 @@ class RotatingWorkTypeAssign(HorillaModel):
         Meta class to add additional options
         """
 
-        verbose_name = _("Rotating Work Type Assign")
-        verbose_name_plural = _("Rotating Work Type Assigns")
+        verbose_name = _("Rotating Work From Assign")
+        verbose_name_plural = _("Rotating Work From Assigns")
         ordering = ["-next_change_date", "-employee_id__employee_first_name"]
 
     def clean(self):
@@ -700,7 +700,7 @@ class RotatingWorkTypeAssign(HorillaModel):
 
         if self.is_active and self.employee_id is not None:
             # Check if any other active record with the same parent already exists
-            siblings = RotatingWorkTypeAssign.objects.filter(
+            siblings = RotatingWorkFromAssign.objects.filter(
                 is_active=True, employee_id=self.employee_id
             )
             if siblings.exists() and siblings.first().id != self.id:
@@ -712,13 +712,13 @@ class RotatingWorkTypeAssign(HorillaModel):
         """
 
         return render_template(
-            path="cbv/rotating_work_type/rotation_col.html",
+            path="cbv/rotating_work_from/rotation_col.html",
             context={"instance": self},
         )
 
     def get_based_on_display(self):
         """
-        Display work type
+        Display work from
         """
         return dict(BASED_ON).get(self.based_on)
 
@@ -728,7 +728,7 @@ class RotatingWorkTypeAssign(HorillaModel):
         """
 
         return render_template(
-            path="cbv/rotating_work_type/work_rotate_actions.html",
+            path="cbv/rotating_work_from/work_rotate_actions.html",
             context={"instance": self},
         )
 
@@ -769,7 +769,7 @@ class RotatingWorkTypeAssign(HorillaModel):
         """
 
         return render_template(
-            path="cbv/rotating_work_type/rotate_detail_view_actions.html",
+            path="cbv/rotating_work_from/rotate_detail_view_actions.html",
             context={"instance": self},
         )
 
@@ -1298,7 +1298,7 @@ class RotatingShiftAssign(HorillaModel):
 
     def get_based_on_display(self):
         """
-        Display work type
+        Display work from
         """
         return dict(BASED_ON).get(self.based_on)
 
@@ -1490,31 +1490,31 @@ class BaserequestFile(models.Model):
     objects = models.Manager()
 
 
-class WorkTypeRequest(HorillaModel):
+class WorkFromRequest(HorillaModel):
     """
-    WorkTypeRequest model
+    WorkFromRequest model
     """
 
     employee_id = models.ForeignKey(
         "employee.Employee",
         on_delete=models.PROTECT,
         null=True,
-        related_name="work_type_request",
+        related_name="work_from_request",
         verbose_name=_("Employee"),
     )
-    work_type_id = models.ForeignKey(
-        WorkType,
+    work_from_id = models.ForeignKey(
+        WorkFrom,
         on_delete=models.PROTECT,
-        related_name="requested_work_type",
-        verbose_name=_("Requesting Work Type"),
+        related_name="requested_work_from",
+        verbose_name=_("Requesting Work From"),
     )
-    previous_work_type_id = models.ForeignKey(
-        WorkType,
+    previous_work_from_id = models.ForeignKey(
+        WorkFrom,
         on_delete=models.PROTECT,
         null=True,
         blank=True,
-        related_name="previous_work_type",
-        verbose_name=_("Previous Work Type"),
+        related_name="previous_work_from",
+        verbose_name=_("Previous Work From"),
     )
     requested_date = models.DateField(
         null=True, default=timezone.now, verbose_name=_("Requested Date")
@@ -1523,12 +1523,12 @@ class WorkTypeRequest(HorillaModel):
         null=True, blank=True, verbose_name=_("Requested Till")
     )
     description = models.TextField(null=True, verbose_name=_("Description"))
-    is_permanent_work_type = models.BooleanField(
+    is_permanent_work_from = models.BooleanField(
         default=False, verbose_name=_("Permanent Request")
     )
     approved = models.BooleanField(default=False, verbose_name=_("Approved"))
     canceled = models.BooleanField(default=False, verbose_name=_("Canceled"))
-    work_type_changed = models.BooleanField(default=False)
+    work_from_changed = models.BooleanField(default=False)
     history = HorillaAuditLog(
         related_name="history_set",
         bases=[
@@ -1542,11 +1542,11 @@ class WorkTypeRequest(HorillaModel):
         Meta class to add additional options
         """
 
-        verbose_name = _("Work Type Request")
-        verbose_name_plural = _("Work Type Requests")
+        verbose_name = _("Work From Request")
+        verbose_name_plural = _("Work From Requests")
         permissions = (
-            ("approve_worktyperequest", "Approve Work Type Request"),
-            ("cancel_worktyperequest", "Cancel Work Type Request"),
+            ("approve_workfromrequest", "Approve Work From Request"),
+            ("cancel_workfromrequest", "Cancel Work From Request"),
         )
         ordering = [
             "-id",
@@ -1558,7 +1558,7 @@ class WorkTypeRequest(HorillaModel):
         """
 
         return render_template(
-            path="cbv/work_type_request/note.html",
+            path="cbv/work_from_request/note.html",
             context={"instance": self},
         )
 
@@ -1568,7 +1568,7 @@ class WorkTypeRequest(HorillaModel):
         """
 
         return render_template(
-            path="cbv/work_type_request/actions.html",
+            path="cbv/work_from_request/actions.html",
             context={"instance": self},
         )
 
@@ -1578,7 +1578,7 @@ class WorkTypeRequest(HorillaModel):
         """
 
         return render_template(
-            path="cbv/work_type_request/confirmation.html",
+            path="cbv/work_from_request/confirmation.html",
             context={"instance": self},
         )
 
@@ -1588,7 +1588,7 @@ class WorkTypeRequest(HorillaModel):
         """
 
         return render_template(
-            path="cbv/work_type_request/detail_confirmation.html",
+            path="cbv/work_from_request/detail_confirmation.html",
             context={"instance": self},
         )
 
@@ -1599,11 +1599,11 @@ class WorkTypeRequest(HorillaModel):
         url = reverse("work-detail-view", kwargs={"pk": self.pk})
         return url
 
-    def is_permanent_work_type_display(self):
+    def is_permanent_work_from_display(self):
         """
-        Method to display "Yes" or "No" based on is_permanent_work_type value
+        Method to display "Yes" or "No" based on is_permanent_work_from value
         """
-        return _("Yes") if self.is_permanent_work_type else _("No")
+        return _("Yes") if self.is_permanent_work_from else _("No")
 
     def detail_view_actions(self):
         """
@@ -1612,7 +1612,7 @@ class WorkTypeRequest(HorillaModel):
         """
 
         return render_template(
-            path="cbv/work_type_request/detail_view_actions.html",
+            path="cbv/work_from_request/detail_view_actions.html",
             context={"instance": self},
         )
 
@@ -1631,36 +1631,36 @@ class WorkTypeRequest(HorillaModel):
                 clear_messages(request)
                 messages.warning(request, _("The request entry cannot be deleted."))
 
-    def is_any_work_type_request_exists(self):
-        approved_work_type_requests_range = WorkTypeRequest.objects.filter(
+    def is_any_work_from_request_exists(self):
+        approved_work_from_requests_range = WorkFromRequest.objects.filter(
             employee_id=self.employee_id,
             approved=True,
             canceled=False,
             requested_date__range=[self.requested_date, self.requested_till],
             requested_till__range=[self.requested_date, self.requested_till],
         ).exclude(id=self.id)
-        if approved_work_type_requests_range:
+        if approved_work_from_requests_range:
             return True
-        approved_work_type_requests = WorkTypeRequest.objects.filter(
+        approved_work_from_requests = WorkFromRequest.objects.filter(
             employee_id=self.employee_id,
             approved=True,
             canceled=False,
             requested_date__lte=self.requested_date,
             requested_till__gte=self.requested_date,
         ).exclude(id=self.id)
-        if approved_work_type_requests:
+        if approved_work_from_requests:
             return True
         if self.requested_till:
-            approved_work_type_requests_2 = WorkTypeRequest.objects.filter(
+            approved_work_from_requests_2 = WorkFromRequest.objects.filter(
                 employee_id=self.employee_id,
                 approved=True,
                 canceled=False,
                 requested_date__lte=self.requested_till,
                 requested_till__gte=self.requested_till,
             ).exclude(id=self.id)
-            if approved_work_type_requests_2:
+            if approved_work_from_requests_2:
                 return True
-        approved_permanent_req = WorkTypeRequest.objects.filter(
+        approved_permanent_req = WorkFromRequest.objects.filter(
             employee_id=self.employee_id,
             approved=True,
             canceled=False,
@@ -1679,11 +1679,11 @@ class WorkTypeRequest(HorillaModel):
             raise ValidationError(
                 _("End date must be greater than or equal to start date")
             )
-        if self.is_any_work_type_request_exists():
+        if self.is_any_work_from_request_exists():
             raise ValidationError(
-                _("A work type request already exists during this time period.")
+                _("A work from request already exists during this time period.")
             )
-        if not self.is_permanent_work_type:
+        if not self.is_permanent_work_from:
             if not self.requested_till:
                 raise ValidationError(_("Requested till field is required."))
 
@@ -1699,14 +1699,14 @@ class WorkTypeRequest(HorillaModel):
             {self.employee_id.employee_last_name} - {self.requested_date}"
 
 
-class WorkTypeRequestComment(HorillaModel):
+class WorkFromRequestComment(HorillaModel):
     """
-    WorkTypeRequestComment Model
+    WorkFromRequestComment Model
     """
 
     from employee.models import Employee
 
-    request_id = models.ForeignKey(WorkTypeRequest, on_delete=models.CASCADE)
+    request_id = models.ForeignKey(WorkFromRequest, on_delete=models.CASCADE)
     employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
     comment = models.TextField(null=True, verbose_name=_("Comment"))
     files = models.ManyToManyField(BaserequestFile, blank=True)

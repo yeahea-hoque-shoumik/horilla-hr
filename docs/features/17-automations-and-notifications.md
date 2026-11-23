@@ -21,14 +21,14 @@ This area tells people about events. It offers no-code mail automations that sen
 
 ### Notices sent by the system
 
-- Many automatic notices, for example about shift and work-type changes made by background jobs, are sent in the name of a user called "Horilla Bot".
+- Many automatic notices, for example about shift and work-from changes made by background jobs, are sent in the name of a user called "Horilla Bot".
 
-> Flag (risk): if no user named exactly "Horilla Bot" exists, those notices are skipped without any warning (`base/scheduler.py`). Business effect: employees are not told that their shift or work type changed, and nobody knows the notices are missing.
+> Flag (risk): if no user named exactly "Horilla Bot" exists, those notices are skipped without any warning (`base/scheduler.py`). Business effect: employees are not told that their shift or work from changed, and nobody knows the notices are missing.
 
 ### WhatsApp Business
 
 - The system connects to WhatsApp Business (Meta) with message templates and interactive flows.
-- Through WhatsApp, employees can ask for a shift change, a work-type change, leave, an asset, an attendance correction, a bonus point cash-in or a reimbursement.
+- Through WhatsApp, employees can ask for a shift change, a work-from change, leave, an asset, an attendance correction, a bonus point cash-in or a reimbursement.
 - Notifications and announcements can go out on WhatsApp.
 - Incoming WhatsApp messages are checked for a valid signature from Meta before they are accepted.
 - Rule: WhatsApp requests are passed through the same web forms and screens as requests made on the web, so the web's checks apply. Reason: not stated in the code.

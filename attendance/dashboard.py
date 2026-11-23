@@ -14,7 +14,7 @@ from django.shortcuts import render
 from django.utils.translation import gettext as _
 
 from base.decorators import manager_can_enter
-from base.models import Department, EmployeeShift, WorkType
+from base.models import Department, EmployeeShift, WorkFrom
 
 
 def _parse_period(request):
@@ -505,7 +505,7 @@ def _expected_work_days(employees, start, end):
 def _group_attendance_stats(request, group_field):
     """Expected vs. attended employee-days per group, current month so far.
 
-    `group_field` is an Employee lookup (department / shift / work type name).
+    `group_field` is an Employee lookup (department / shift / work from name).
     "Expected" days are as in _expected_work_days. Absence is clamped at zero
     per employee (attendance recorded on a non-working day can't offset
     someone else's absence). Returns {group: {"expected": int, "absent": int}}
@@ -575,14 +575,14 @@ def _group_rate_payload(request, stats, label_key, rate_of):
 ATTENDANCE_DIMENSIONS = {
     "shift": "employee_work_info__shift_id__employee_shift",
     "department": "employee_work_info__department_id__department",
-    "work_type": "employee_work_info__work_type_id__work_type",
+    "work_from": "employee_work_info__work_from_id__work_from",
 }
 
 
 ATTENDANCE_DIMENSION_MODELS = {
     "shift": (EmployeeShift, "employee_shift"),
     "department": (Department, "department"),
-    "work_type": (WorkType, "work_type"),
+    "work_from": (WorkFrom, "work_from"),
 }
 
 
@@ -621,14 +621,14 @@ def _rate_by_dimension(request, rate_of):
 @login_required
 def attendance_percentage_by_dimension(request):
     """Attendance rate (%) for the current month, grouped by ?dimension=
-    (shift | department | work_type; default shift)."""
+    (shift | department | work_from; default shift)."""
     return _rate_by_dimension(request, lambda pct: round(100 - pct, 1))
 
 
 @login_required
 def absence_percentage_by_dimension(request):
     """Absence rate (%) for the current month, grouped by ?dimension=
-    (shift | department | work_type; default shift)."""
+    (shift | department | work_from; default shift)."""
     return _rate_by_dimension(request, lambda pct: pct)
 
 

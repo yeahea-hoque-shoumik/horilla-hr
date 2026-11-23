@@ -176,7 +176,7 @@ class HistoryTrackingFields(HorillaModel):
         "job_position_id",
         "department_id",
         "job_role_id",
-        "work_type_id",
+        "work_from_id",
         "employee_type_id",
         "shift_id",
         "reporting_manager_id",

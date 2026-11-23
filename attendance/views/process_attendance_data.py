@@ -10,7 +10,7 @@ from datetime import datetime
 import pandas as pd
 
 from attendance.models import Attendance
-from base.models import EmployeeShift, WorkType
+from base.models import EmployeeShift, WorkFrom
 from employee.models import Employee
 
 
@@ -42,7 +42,7 @@ def process_attendance_data(attendance_dicts):
         )
     }
     shifts = {shift.employee_shift: shift for shift in EmployeeShift.objects.all()}
-    work_types = {wt.work_type: wt for wt in WorkType.objects.all()}
+    work_froms = {wt.work_from: wt for wt in WorkFrom.objects.all()}
     existing_attendance_records = {
         (att.employee_id.badge_id, att.attendance_date): att
         for att in Attendance.objects.filter(
@@ -55,12 +55,12 @@ def process_attendance_data(attendance_dicts):
         try:
             badge_id = attendance_data["Badge ID"]
             shift_id = attendance_data["Shift"]
-            work_type_id = attendance_data["Work type"]
+            work_from_id = attendance_data["Work from"]
 
             # Retrieve objects from cached dictionaries
             employee = employees.get(badge_id)
             shift = shifts.get(shift_id)
-            work_type = work_types.get(work_type_id)
+            work_from = work_froms.get(work_from_id)
 
             attendance_date = None
             check_in_date = None
@@ -139,9 +139,9 @@ def process_attendance_data(attendance_dicts):
                 attendance_data["Shift Error"] = f"Invalid shift '{shift_id}'"
                 save = False
 
-            if work_type is None:
-                attendance_data["Work Type Error"] = (
-                    f"Invalid work type '{work_type_id}'"
+            if work_from is None:
+                attendance_data["Work From Error"] = (
+                    f"Invalid work from '{work_from_id}'"
                 )
                 save = False
 
@@ -184,7 +184,7 @@ def process_attendance_data(attendance_dicts):
                     Attendance(
                         employee_id=employee,
                         shift_id=shift,
-                        work_type_id=work_type,
+                        work_from_id=work_from,
                         attendance_date=attendance_date,
                         attendance_clock_in_date=check_in_date,
                         attendance_clock_in=format_time(check_in),

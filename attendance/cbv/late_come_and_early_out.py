@@ -126,7 +126,7 @@ class LateComeAndEarlyOutList(HorillaListView):
         ("type", _("Type")),
         ("attendance_id__attendance_date", _("Attendance Date")),
         ("attendance_id__shift_id", _("Shift")),
-        ("attendance_id__work_type_id", _("Work Type")),
+        ("attendance_id__work_from_id", _("Work From")),
         ("attendance_id__minimum_hour", _("Minimum Hour")),
         ("attendance_id__employee_id__country", _("Country")),
         (
@@ -213,7 +213,7 @@ class LateComeAndEarlyOutListNav(HorillaNavView):
         ("type", _("Type")),
         ("attendance_id__attendance_date", _("Attendance Date")),
         ("attendance_id__shift_id", _("Shift")),
-        ("attendance_id__work_type_id", _("Work Type")),
+        ("attendance_id__work_from_id", _("Work From")),
         ("attendance_id__minimum_hour", _("Minimum Hour")),
         ("attendance_id__employee_id__country", _("Country")),
         (
@@ -246,7 +246,7 @@ class LateComeAndEarlyOutListNav(HorillaNavView):
         ("type", _("Type")),
         ("attendance_id__attendance_date", _("Attendance Date")),
         ("attendance_id__shift_id", _("Shift")),
-        ("attendance_id__work_type_id", _("Work Type")),
+        ("attendance_id__work_from_id", _("Work From")),
         ("attendance_id__minimum_hour", _("Minimum Hour")),
         ("attendance_id__employee_id__country", _("Country")),
         (
@@ -313,7 +313,7 @@ class LateComeEarlyOutDetailView(HorillaDetailedView):
         (_("Min Hour"), "attendance_id__minimum_hour"),
         (_("At Work"), "attendance_id__attendance_worked_hour"),
         (_("Shift"), "attendance_id__shift_id"),
-        (_("Work Type"), "attendance_id__work_type_id"),
+        (_("Work From"), "attendance_id__work_from_id"),
         (_("Attendance Validated"), "attendance_validated_check"),
         (_("Penalities"), "penalities_column"),
     ]

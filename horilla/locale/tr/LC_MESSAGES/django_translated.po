@@ -99,28 +99,28 @@ msgstr "Bu özelliğe erişim yetkiniz yok"
 #: base/cbv/dashboard/dashboard.py:34 base/cbv/dashboard/dashboard.py:81
 #: base/cbv/dashboard/dashboard.py:128 base/cbv/rotating_shift_assign.py:68
 #: base/cbv/rotating_shift_assign.py:85 base/cbv/rotating_shift_assign.py:224
-#: base/cbv/rotating_work_type.py:71 base/cbv/rotating_work_type.py:82
-#: base/cbv/rotating_work_type.py:216 base/cbv/shift_request.py:139
+#: base/cbv/rotating_work_from.py:71 base/cbv/rotating_work_from.py:82
+#: base/cbv/rotating_work_from.py:216 base/cbv/shift_request.py:139
 #: base/cbv/shift_request.py:157 base/cbv/shift_request.py:185
 #: base/cbv/shift_request.py:224 base/cbv/shift_request.py:315
-#: base/cbv/work_type_request.py:78 base/cbv/work_type_request.py:97
-#: base/cbv/work_type_request.py:233 base/models.py:406 base/models.py:510
+#: base/cbv/work_from_request.py:78 base/cbv/work_from_request.py:97
+#: base/cbv/work_from_request.py:233 base/models.py:406 base/models.py:510
 #: base/models.py:963 base/models.py:1087 base/models.py:1273
 #: base/models.py:1489 base/templates/base/auth/permission_view.html:11
 #: base/templates/base/rotating_shift/filters.html:10
 #: base/templates/base/rotating_shift/htmx/group_by.html:72
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:34
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:58
-#: base/templates/base/rotating_work_type/filters.html:10
-#: base/templates/base/rotating_work_type/htmx/group_by.html:60
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:34
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:62
+#: base/templates/base/rotating_work_from/filters.html:10
+#: base/templates/base/rotating_work_from/htmx/group_by.html:60
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:34
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:62
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:9
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:8
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:8
 #: base/templates/cbv/shift_request/filter.html:13
-#: base/templates/cbv/work_type_request/filter.html:10
+#: base/templates/cbv/work_from_request/filter.html:10
 #: base/templates/request_and_approve/shift_request.html:8
-#: base/templates/request_and_approve/work_type_request.html:8
+#: base/templates/request_and_approve/work_from_request.html:8
 #: base/templates/shift_request/htmx/allocation_requests.html:43
 #: base/templates/shift_request/htmx/group_by.html:40
 #: base/templates/shift_request/htmx/group_by.html:336
@@ -128,10 +128,10 @@ msgstr "Bu özelliğe erişim yetkiniz yok"
 #: base/templates/shift_request/htmx/requests.html:289
 #: base/templates/shift_request/shift_request_export.html:34
 #: base/templates/shift_request/shift_request_nav.html:84
-#: base/templates/work_type_request/htmx/group_by.html:81
-#: base/templates/work_type_request/htmx/requests.html:58
-#: base/templates/work_type_request/work_type_request_export.html:34
-#: base/templates/work_type_request/work_type_request_nav.html:64
+#: base/templates/work_from_request/htmx/group_by.html:81
+#: base/templates/work_from_request/htmx/requests.html:58
+#: base/templates/work_from_request/work_from_request_export.html:34
+#: base/templates/work_from_request/work_from_request_nav.html:64
 #: biometric/forms.py:247 biometric/models.py:401
 #: biometric/templates/biometric/card_biometric_devices.html:122
 #: biometric/templates/biometric/list_employees_biometric.html:28
@@ -328,23 +328,23 @@ msgstr "Çalışanları Hariç Tut"
 #: attendance/templates/cbv/late_come_and_early_out/late_early_filter.html:34
 #: attendance/templates/requests/attendance/filter.html:35
 #: base/cbv/job_position.py:34 base/cbv/job_position.py:65
-#: base/cbv/job_role.py:33 base/cbv/work_type_request.py:238 base/models.py:250
+#: base/cbv/job_role.py:33 base/cbv/work_from_request.py:238 base/models.py:250
 #: base/models.py:267 base/models.py:301 base/models.py:2261
 #: base/templates/announcement/announcement_one.html:139
 #: base/templates/base/job_position/job_position_view.html:12
 #: base/templates/base/job_role/job_role_view.html:11
 #: base/templates/base/rotating_shift/filters.html:63
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:89
-#: base/templates/base/rotating_work_type/filters.html:63
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:89
+#: base/templates/base/rotating_work_from/filters.html:63
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:89
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:63
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:64
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:64
 #: base/templates/cbv/shift_request/filter.html:19
-#: base/templates/cbv/work_type_request/filter.html:14
+#: base/templates/cbv/work_from_request/filter.html:14
 #: base/templates/shift_request/shift_request_export.html:38
 #: base/templates/shift_request/shift_request_nav.html:90
-#: base/templates/work_type_request/work_type_request_export.html:38
-#: base/templates/work_type_request/work_type_request_nav.html:68
+#: base/templates/work_from_request/work_from_request_export.html:38
+#: base/templates/work_from_request/work_from_request_nav.html:68
 #: biometric/templates/biometric/list_employees_biometric.html:34
 #: biometric/templates/biometric/list_employees_cosec_biometric.html:37
 #: biometric/templates/biometric_users/dahua/list_dahua_employees.html:17
@@ -462,26 +462,26 @@ msgstr "Pozisyon"
 #: base/cbv/department.py:101 base/cbv/job_position.py:33
 #: base/cbv/multiple_approval_condition.py:61
 #: base/cbv/multiple_approval_condition.py:75
-#: base/cbv/rotating_shift_assign.py:227 base/cbv/rotating_work_type.py:220
-#: base/cbv/work_type_request.py:237 base/models.py:161 base/models.py:172
+#: base/cbv/rotating_shift_assign.py:227 base/cbv/rotating_work_from.py:220
+#: base/cbv/work_from_request.py:237 base/models.py:161 base/models.py:172
 #: base/models.py:256 base/templates/announcement/announcement_one.html:129
 #: base/templates/base/department/department_view.html:6
 #: base/templates/base/job_position/job_position_view.html:10
 #: base/templates/base/rotating_shift/filters.html:49
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:75
-#: base/templates/base/rotating_work_type/filters.html:49
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:75
+#: base/templates/base/rotating_work_from/filters.html:49
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:75
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:49
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:48
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:48
 #: base/templates/cbv/shift_request/filter.html:43
-#: base/templates/cbv/work_type_request/filter.html:32
+#: base/templates/cbv/work_from_request/filter.html:32
 #: base/templates/multi_approval_condition/condition_create_form.html:36
 #: base/templates/multi_approval_condition/condition_edit_form.html:42
 #: base/templates/multi_approval_condition/condition_table.html:18
 #: base/templates/shift_request/shift_request_export.html:56
 #: base/templates/shift_request/shift_request_nav.html:114
-#: base/templates/work_type_request/work_type_request_export.html:56
-#: base/templates/work_type_request/work_type_request_nav.html:86
+#: base/templates/work_from_request/work_from_request_export.html:56
+#: base/templates/work_from_request/work_from_request_nav.html:86
 #: employee/cbv/employees.py:288 employee/cbv/employees.py:320
 #: employee/cbv/employees.py:356 employee/cbv/employees.py:402
 #: employee/models.py:757
@@ -611,21 +611,21 @@ msgstr "Departman"
 #: attendance/templates/requests/attendance/request_lines.html:68
 #: attendance/templates/requests/attendance/request_lines.html:297
 #: attendance/templates/requests/attendance/request_lines.html:298
-#: base/cbv/settings_work_type.py:63 base/cbv/settings_work_type.py:93
+#: base/cbv/settings_work_from.py:63 base/cbv/settings_work_from.py:93
 #: base/models.py:328 base/models.py:338
 #: base/templates/base/rotating_shift/filters.html:67
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:93
-#: base/templates/base/rotating_work_type/filters.html:67
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:93
-#: base/templates/base/work_type/work_type_view.html:6
+#: base/templates/base/rotating_work_from/filters.html:67
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:93
+#: base/templates/base/work_from/work_from_view.html:6
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:67
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:68
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:68
 #: base/templates/cbv/shift_request/filter.html:55
-#: base/templates/cbv/work_type_request/filter.html:40
+#: base/templates/cbv/work_from_request/filter.html:40
 #: base/templates/shift_request/shift_request_export.html:64
 #: base/templates/shift_request/shift_request_nav.html:126
-#: base/templates/work_type_request/work_type_request_export.html:64
-#: base/templates/work_type_request/work_type_request_nav.html:94
+#: base/templates/work_from_request/work_from_request_export.html:64
+#: base/templates/work_from_request/work_from_request_nav.html:94
 #: employee/cbv/employees.py:290 employee/cbv/employees.py:358
 #: employee/cbv/employees.py:404 employee/cbv/employees.py:468
 #: employee/cbv/employees.py:576 employee/models.py:793
@@ -669,7 +669,7 @@ msgstr "Departman"
 #: report/templates/report/attendance_report.html:69
 #: report/templates/report/employee_report.html:99
 #: report/templates/report/leave_report.html:121 templates/settings.html:342
-msgid "Work Type"
+msgid "Work From"
 msgstr "Çalışma Tipi"
 
 #: accessibility/filters.py:54 base/cbv/employee_type.py:70
@@ -690,14 +690,14 @@ msgid "Employee Type"
 msgstr "Çalışan Tipi"
 
 #: accessibility/filters.py:55 base/cbv/job_role.py:34 base/cbv/job_role.py:64
-#: base/cbv/rotating_work_type.py:221 base/models.py:304 base/models.py:315
+#: base/cbv/rotating_work_from.py:221 base/models.py:304 base/models.py:315
 #: base/templates/base/job_role/job_role_view.html:13
 #: base/templates/cbv/shift_request/filter.html:49
-#: base/templates/cbv/work_type_request/filter.html:36
+#: base/templates/cbv/work_from_request/filter.html:36
 #: base/templates/shift_request/shift_request_export.html:60
 #: base/templates/shift_request/shift_request_nav.html:120
-#: base/templates/work_type_request/work_type_request_export.html:60
-#: base/templates/work_type_request/work_type_request_nav.html:90
+#: base/templates/work_from_request/work_from_request_export.html:60
+#: base/templates/work_from_request/work_from_request_nav.html:90
 #: employee/cbv/employees.py:292 employee/cbv/employees.py:360
 #: employee/cbv/employees.py:406 employee/cbv/employees.py:466
 #: employee/cbv/employees.py:577 employee/models.py:771
@@ -758,20 +758,20 @@ msgstr "İş Rolü"
 #: base/templates/base/mail_server/mail_server_view.html:45
 #: base/templates/base/rotating_shift/filters.html:45
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:71
-#: base/templates/base/rotating_work_type/filters.html:45
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:71
+#: base/templates/base/rotating_work_from/filters.html:45
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:71
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:45
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:44
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:44
 #: base/templates/cbv/shift_request/filter.html:29
-#: base/templates/cbv/work_type_request/filter.html:22
+#: base/templates/cbv/work_from_request/filter.html:22
 #: base/templates/mail/htmx/form.html:39
 #: base/templates/multi_approval_condition/condition_create_form.html:72
 #: base/templates/multi_approval_condition/condition_edit_form.html:122
 #: base/templates/multi_approval_condition/condition_table.html:23
 #: base/templates/shift_request/shift_request_export.html:46
 #: base/templates/shift_request/shift_request_nav.html:100
-#: base/templates/work_type_request/work_type_request_export.html:46
-#: base/templates/work_type_request/work_type_request_nav.html:76
+#: base/templates/work_from_request/work_from_request_export.html:46
+#: base/templates/work_from_request/work_from_request_nav.html:76
 #: biometric/models.py:118 employee/cbv/employees.py:294
 #: employee/cbv/employees.py:362 employee/cbv/employees.py:408
 #: employee/cbv/employees.py:469 employee/cbv/employees.py:579
@@ -903,18 +903,18 @@ msgstr "Şirket"
 #: base/cbv/employee_shift.py:69 base/cbv/employee_shift.py:73
 #: base/models.py:842 base/templates/base/rotating_shift/filters.html:53
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:79
-#: base/templates/base/rotating_work_type/filters.html:53
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:79
+#: base/templates/base/rotating_work_from/filters.html:53
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:79
 #: base/templates/base/shift/schedule_view.html:10
 #: base/templates/base/shift/shift_view.html:8
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:53
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:52
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:52
 #: base/templates/cbv/shift_request/filter.html:24
-#: base/templates/cbv/work_type_request/filter.html:18
+#: base/templates/cbv/work_from_request/filter.html:18
 #: base/templates/shift_request/shift_request_export.html:42
 #: base/templates/shift_request/shift_request_nav.html:95
-#: base/templates/work_type_request/work_type_request_export.html:42
-#: base/templates/work_type_request/work_type_request_nav.html:72
+#: base/templates/work_from_request/work_from_request_export.html:42
+#: base/templates/work_from_request/work_from_request_nav.html:72
 #: employee/cbv/employees.py:289 employee/cbv/employees.py:357
 #: employee/cbv/employees.py:403 employee/cbv/employees.py:467
 #: employee/cbv/employees.py:575 employee/models.py:786
@@ -1055,29 +1055,29 @@ msgstr ""
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:121
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:83
 #: base/templates/base/rotating_shift/rotating_shift_view.html:11
-#: base/templates/base/rotating_work_type/htmx/group_by.html:72
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:105
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:80
-#: base/templates/base/rotating_work_type/rotating_work_type_view.html:10
+#: base/templates/base/rotating_work_from/htmx/group_by.html:72
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:105
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:80
+#: base/templates/base/rotating_work_from/rotating_work_from_view.html:10
 #: base/templates/base/shift/shift_view.html:13
 #: base/templates/base/tags/tags_view.html:9
 #: base/templates/base/ticket_type/ticket_type_view.html:10
-#: base/templates/base/work_type/work_type_view.html:8
+#: base/templates/base/work_from/work_from_view.html:8
 #: base/templates/company_leave/company_leave.html:22
 #: base/templates/holiday/holiday.html:49
 #: base/templates/holiday/holiday_view.html:45
 #: base/templates/multi_approval_condition/condition_table.html:25
 #: base/templates/request_and_approve/shift_request.html:11
-#: base/templates/request_and_approve/work_type_request.html:11
+#: base/templates/request_and_approve/work_from_request.html:11
 #: base/templates/shift_request/htmx/allocation_requests.html:54
 #: base/templates/shift_request/htmx/group_by.html:48
 #: base/templates/shift_request/htmx/group_by.html:351
 #: base/templates/shift_request/htmx/requests.html:56
 #: base/templates/shift_request/htmx/requests.html:313
 #: base/templates/shift_request/shift_request_nav.html:275
-#: base/templates/work_type_request/htmx/group_by.html:104
-#: base/templates/work_type_request/htmx/requests.html:75
-#: base/templates/work_type_request/work_type_request_nav.html:214
+#: base/templates/work_from_request/htmx/group_by.html:104
+#: base/templates/work_from_request/htmx/requests.html:75
+#: base/templates/work_from_request/work_from_request_nav.html:214
 #: biometric/templates/biometric/list_biometric_devices.html:15
 #: biometric/templates/biometric/list_employees_biometric.html:35
 #: biometric/templates/biometric/list_employees_cosec_biometric.html:39
@@ -1384,13 +1384,13 @@ msgstr ""
 #: attendance/templates/requests/attendance/request_lines.html:453
 #: base/cbv/company_leaves.py:109 base/cbv/employee_shift_shedule.py:141
 #: base/cbv/holidays.py:140 base/cbv/multiple_approval_condition.py:135
-#: base/cbv/rotating_shift_assign.py:245 base/cbv/rotating_work_type.py:240
-#: base/cbv/shift_request.py:369 base/cbv/work_type_request.py:253
+#: base/cbv/rotating_shift_assign.py:245 base/cbv/rotating_work_from.py:240
+#: base/cbv/shift_request.py:369 base/cbv/work_from_request.py:253
 #: base/templates/base/rotating_shift/individual_view.html:17
-#: base/templates/base/rotating_work_type/individual_view.html:21
+#: base/templates/base/rotating_work_from/individual_view.html:21
 #: base/templates/shift_request/htmx/allocation_details.html:8
 #: base/templates/shift_request/htmx/shift_request_detail.html:8
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:18
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:18
 #: employee/cbv/disciplinary_actions.py:274
 #: horilla_theme/templates/payroll/loan/installments.html:7
 #: leave/cbv/assigned_leave.py:189 leave/cbv/compensatory_leave_request.py:238
@@ -1522,18 +1522,18 @@ msgstr ""
 #: base/cbv/shift_request.py:581
 #: base/templates/base/rotating_shift/htmx/group_by.html:153
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:144
-#: base/templates/base/rotating_work_type/htmx/group_by.html:137
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:145
+#: base/templates/base/rotating_work_from/htmx/group_by.html:137
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:145
 #: base/templates/cbv/holidays/holidays_actions.html:16
 #: base/templates/cbv/shift_request/actions_shift_requst.html:20
-#: base/templates/cbv/work_type_request/actions.html:23
+#: base/templates/cbv/work_from_request/actions.html:23
 #: base/templates/holiday/holiday.html:86
 #: base/templates/holiday/holiday_form.html:9
 #: base/templates/mail/view_templates.html:45
 #: base/templates/shift_request/htmx/group_by.html:112
 #: base/templates/shift_request/htmx/requests.html:131
-#: base/templates/work_type_request/htmx/group_by.html:219
-#: base/templates/work_type_request/htmx/requests.html:144
+#: base/templates/work_from_request/htmx/group_by.html:219
+#: base/templates/work_from_request/htmx/requests.html:144
 #: employee/cbv/disciplinary_actions.py:230
 #: employee/templates/cbv/disciplinary_actions/actions.html:13
 #: employee/templates/disciplinary_actions/disciplinary_records.html:148
@@ -1627,19 +1627,19 @@ msgstr "İçe Aktar"
 #: attendance/templates/cbv/late_come_and_early_out/late_come_and_early_out.html:137
 #: attendance/templates/cbv/late_come_and_early_out/late_early_export.html:166
 #: base/cbv/holidays.py:107 base/cbv/rotating_shift_assign.py:171
-#: base/cbv/rotating_work_type.py:189 base/cbv/shift_request.py:297
-#: base/cbv/work_type_request.py:208
+#: base/cbv/rotating_work_from.py:189 base/cbv/shift_request.py:297
+#: base/cbv/work_from_request.py:208
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:149
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:122
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:122
 #: base/templates/cbv/holidays/holidays_export.html:80
 #: base/templates/cbv/rotating_shift/rshift_export.html:24
-#: base/templates/cbv/rotating_work_type/rotating_action_export.html:25
+#: base/templates/cbv/rotating_work_from/rotating_action_export.html:25
 #: base/templates/cbv/shift_request/export_shift.html:24
-#: base/templates/cbv/work_type_request/work_export.html:24
+#: base/templates/cbv/work_from_request/work_export.html:24
 #: base/templates/holiday/holiday_export_filter_form.html:87
 #: base/templates/holiday/holiday_view.html:60
 #: base/templates/shift_request/shift_request_nav.html:292
-#: base/templates/work_type_request/work_type_request_nav.html:227
+#: base/templates/work_from_request/work_from_request_nav.html:227
 #: employee/cbv/employees.py:492
 #: employee/templates/cbv/employees_view/employee_export.html:115
 #: employee/templates/employee/export_data_employee.html:65
@@ -1831,16 +1831,16 @@ msgstr ""
 #: asset/templates/request_allocation/group_by.html:330
 #: asset/templates/request_allocation/individual_own.html:60
 #: base/cbv/mail_log_tab.py:71 base/cbv/rotating_shift_assign.py:261
-#: base/cbv/rotating_work_type.py:254 base/cbv/shift_request.py:144
+#: base/cbv/rotating_work_from.py:254 base/cbv/shift_request.py:144
 #: base/cbv/work_shift_tab.py:126 base/cbv/work_shift_tab.py:145
 #: base/cbv/work_shift_tab.py:168 base/cbv/work_shift_tab.py:197
-#: base/cbv/work_type_request.py:83
+#: base/cbv/work_from_request.py:83
 #: base/templates/base/rotating_shift/individual_view.html:118
-#: base/templates/base/rotating_work_type/individual_view.html:135
+#: base/templates/base/rotating_work_from/individual_view.html:135
 #: base/templates/shift_request/htmx/requests.html:51
 #: base/templates/shift_request/htmx/requests.html:52
-#: base/templates/work_type_request/htmx/group_by.html:99
-#: base/templates/work_type_request/htmx/requests.html:72
+#: base/templates/work_from_request/htmx/group_by.html:99
+#: base/templates/work_from_request/htmx/requests.html:72
 #: employee/cbv/allocations.py:654 employee/cbv/allocations.py:657
 #: employee/templates/asset-tab.html:8
 #: employee/templates/cbv/documents/document_filter.html:74
@@ -2099,12 +2099,12 @@ msgstr ""
 #: base/cbv/shift_request.py:142 base/cbv/shift_request.py:160
 #: base/cbv/shift_request.py:190 base/cbv/shift_request.py:228
 #: base/cbv/shift_request.py:318 base/cbv/shift_request.py:380
-#: base/cbv/shift_request.py:416 base/cbv/work_type_request.py:81
-#: base/cbv/work_type_request.py:100 base/cbv/work_type_request.py:236
-#: base/cbv/work_type_request.py:262 base/forms.py:2004 base/forms.py:2059
+#: base/cbv/shift_request.py:416 base/cbv/work_from_request.py:81
+#: base/cbv/work_from_request.py:100 base/cbv/work_from_request.py:236
+#: base/cbv/work_from_request.py:262 base/forms.py:2004 base/forms.py:2059
 #: base/forms.py:2120 base/models.py:1290 base/models.py:1506
 #: base/templates/cbv/shift_request/filter.html:98
-#: base/templates/cbv/work_type_request/filter.html:66
+#: base/templates/cbv/work_from_request/filter.html:66
 #: base/templates/shift_request/htmx/allocation_requests.html:50
 #: base/templates/shift_request/htmx/group_by.html:44
 #: base/templates/shift_request/htmx/group_by.html:346
@@ -2114,11 +2114,11 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:305
 #: base/templates/shift_request/shift_request_export.html:87
 #: base/templates/shift_request/shift_request_nav.html:153
-#: base/templates/work_type_request/htmx/group_by.html:90
-#: base/templates/work_type_request/htmx/requests.html:64
-#: base/templates/work_type_request/htmx/requests.html:67
-#: base/templates/work_type_request/work_type_request_export.html:87
-#: base/templates/work_type_request/work_type_request_nav.html:115
+#: base/templates/work_from_request/htmx/group_by.html:90
+#: base/templates/work_from_request/htmx/requests.html:64
+#: base/templates/work_from_request/htmx/requests.html:67
+#: base/templates/work_from_request/work_from_request_export.html:87
+#: base/templates/work_from_request/work_from_request_nav.html:115
 #: employee/templates/tabs/shift-tab.html:194
 #: employee/templates/tabs/shift-tab.html:878
 msgid "Requested Date"
@@ -2204,7 +2204,7 @@ msgstr ""
 #: attendance/templates/requests/attendance/individual_view.html:84
 #: base/cbv/shift_request.py:145 base/cbv/shift_request.py:192
 #: base/cbv/shift_request.py:383 base/cbv/shift_request.py:418
-#: base/cbv/work_type_request.py:84 base/cbv/work_type_request.py:265
+#: base/cbv/work_from_request.py:84 base/cbv/work_from_request.py:265
 #: base/forms.py:2003 base/forms.py:2058 base/forms.py:2122 base/models.py:1295
 #: base/models.py:1521
 #: base/templates/shift_request/htmx/allocation_details.html:114
@@ -2216,9 +2216,9 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:310
 #: base/templates/shift_request/htmx/requests.html:311
 #: base/templates/shift_request/htmx/shift_request_detail.html:84
-#: base/templates/work_type_request/htmx/group_by.html:96
-#: base/templates/work_type_request/htmx/requests.html:73
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:84
+#: base/templates/work_from_request/htmx/group_by.html:96
+#: base/templates/work_from_request/htmx/requests.html:73
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:84
 #: base/translator.py:96 employee/cbv/disciplinary_actions.py:52
 #: employee/cbv/disciplinary_actions.py:264 employee/models.py:1004
 #: employee/templates/disciplinary_actions/disciplinary_records.html:46
@@ -2531,11 +2531,11 @@ msgstr ""
 
 #: asset/models.py:565 attendance/cbv/my_attendances.py:102
 #: attendance/templates/attendance/own_attendance/attendances.html:48
-#: base/cbv/shift_request.py:89 base/cbv/work_type_request.py:138
+#: base/cbv/shift_request.py:89 base/cbv/work_from_request.py:138
 #: base/methods.py:767 base/models.py:1454 base/models.py:1659
-#: base/templates/cbv/work_type_request/filter.html:88
+#: base/templates/cbv/work_from_request/filter.html:88
 #: base/templates/shift_request/htmx/requests.html:95
-#: base/templates/work_type_request/work_type_request_nav.html:124
+#: base/templates/work_from_request/work_from_request_nav.html:124
 #: employee/templates/leave-tab.html:52
 #: employee/templates/tabs/leave-tab.html:61
 #: employee/templates/tabs/shift-tab.html:946
@@ -2560,18 +2560,18 @@ msgstr ""
 #: attendance/templates/attendance/attendance/tab_content.html:656
 #: attendance/templates/cbv/attendances/ot_confirmation.html:6
 #: attendance/templates/cbv/attendances/ot_tab_action.html:16
-#: base/cbv/shift_request.py:77 base/cbv/work_type_request.py:127
+#: base/cbv/shift_request.py:77 base/cbv/work_from_request.py:127
 #: base/methods.py:768 base/models.py:1299 base/models.py:1454
 #: base/models.py:1516 base/models.py:1525 base/models.py:1659
 #: base/templates/cbv/shift_request/filter.html:104
-#: base/templates/cbv/work_type_request/filter.html:71
+#: base/templates/cbv/work_from_request/filter.html:71
 #: base/templates/shift_request/htmx/requests.html:91
 #: base/templates/shift_request/shift_request_export.html:91
 #: base/templates/shift_request/shift_request_nav.html:159
 #: base/templates/shift_request/shift_request_view.html:38
-#: base/templates/work_type_request/work_type_request_export.html:91
-#: base/templates/work_type_request/work_type_request_nav.html:119
-#: base/templates/work_type_request/work_type_request_view.html:35
+#: base/templates/work_from_request/work_from_request_export.html:91
+#: base/templates/work_from_request/work_from_request_nav.html:119
+#: base/templates/work_from_request/work_from_request_view.html:35
 #: employee/templates/documents/requests.html:104
 #: employee/templates/leave-tab.html:59
 #: employee/templates/tabs/htmx/view_file.html:18
@@ -2610,11 +2610,11 @@ msgstr ""
 msgid "Approved"
 msgstr "Onaylandı"
 
-#: asset/models.py:567 base/cbv/work_type_request.py:116 base/methods.py:770
+#: asset/models.py:567 base/cbv/work_from_request.py:116 base/methods.py:770
 #: base/models.py:1452 base/models.py:1657
 #: base/templates/shift_request/htmx/requests.html:93
 #: base/templates/shift_request/shift_request_view.html:27
-#: base/templates/work_type_request/work_type_request_view.html:24
+#: base/templates/work_from_request/work_from_request_view.html:24
 #: employee/templates/documents/requests.html:110
 #: employee/templates/tabs/htmx/view_file.html:33
 #: employee/templates/tabs/leave-tab.html:47
@@ -2686,12 +2686,12 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:144
 #: base/templates/base/rotating_shift/htmx/rotating_shift_form.html:4
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:138
-#: base/templates/base/rotating_work_type/htmx/group_by.html:132
-#: base/templates/base/rotating_work_type/htmx/rotating_work_type_form.html:4
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:139
+#: base/templates/base/rotating_work_from/htmx/group_by.html:132
+#: base/templates/base/rotating_work_from/htmx/rotating_work_from_form.html:4
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:139
 #: base/templates/base/shift/schedule_form.html:4
 #: base/templates/base/shift/shift_form.html:4
-#: base/templates/base/work_type/work_type_form.html:4
+#: base/templates/base/work_from/work_from_form.html:4
 #: base/templates/company_leave/company_leave_update_form.html:18
 #: base/templates/holiday/holiday_update_form.html:9
 #: employee/templates/cbv/employees_view/view_employees.html:210
@@ -2786,15 +2786,15 @@ msgstr ""
 #: base/cbv/company.py:55 base/cbv/department.py:58
 #: base/cbv/employee_shift.py:47 base/cbv/holidays.py:117
 #: base/cbv/rotating_shift.py:56 base/cbv/rotating_shift_assign.py:207
-#: base/cbv/rotating_work_type.py:172 base/cbv/settings_rotatingwork.py:55
-#: base/cbv/settings_work_type.py:46 base/cbv/shift_request.py:280
-#: base/cbv/work_type_request.py:191
+#: base/cbv/rotating_work_from.py:172 base/cbv/settings_rotatingwork.py:55
+#: base/cbv/settings_work_from.py:46 base/cbv/shift_request.py:280
+#: base/cbv/work_from_request.py:191
 #: base/templates/announcement/announcement_one.html:60
 #: base/templates/base/employee_tag/employee_tag_view.html:40
 #: base/templates/base/rotating_shift/individual_view.html:169
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:180
-#: base/templates/base/rotating_work_type/individual_view.html:176
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:153
+#: base/templates/base/rotating_work_from/individual_view.html:176
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:153
 #: base/templates/base/tags/tags_view.html:40
 #: base/templates/cbv/company_leaves/company_leave_actions.html:14
 #: base/templates/cbv/company_leaves/detail_view_actions.html:31
@@ -2804,20 +2804,20 @@ msgstr ""
 #: base/templates/cbv/multiple_approval_condition/detail_action.html:17
 #: base/templates/cbv/multiple_approval_condition/detail_action.html:19
 #: base/templates/cbv/rotating_shift/rotating_shift_detail_actions.html:36
-#: base/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:31
+#: base/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:31
 #: base/templates/cbv/settings/employee_shift_schedule_detail_action.html:35
 #: base/templates/cbv/shift_request/shift_detail_actions.html:24
 #: base/templates/cbv/shift_request/shift_detail_actions.html:32
 #: base/templates/cbv/shift_request/shift_detail_actions.html:35
-#: base/templates/cbv/work_type_request/detail_view_actions.html:24
-#: base/templates/cbv/work_type_request/detail_view_actions.html:34
+#: base/templates/cbv/work_from_request/detail_view_actions.html:24
+#: base/templates/cbv/work_from_request/detail_view_actions.html:34
 #: base/templates/company_leave/company_leave.html:64
 #: base/templates/holiday/holiday_view.html:66
 #: base/templates/mail/view_templates.html:55
 #: base/templates/multi_approval_condition/condition_table.html:72
 #: base/templates/shift_request/shift_request_nav.html:320
-#: base/templates/work_type_request/htmx/group_by.html:236
-#: base/templates/work_type_request/work_type_request_nav.html:251
+#: base/templates/work_from_request/htmx/group_by.html:236
+#: base/templates/work_from_request/work_from_request_nav.html:251
 #: biometric/cbv/biometric.py:110
 #: biometric/templates/biometric/card_biometric_devices.html:94
 #: biometric/templates/biometric/list_employees_biometric.html:120
@@ -2890,7 +2890,7 @@ msgstr ""
 #: horilla_theme/templates/cbv/reimbursements/detail_actions.html:29
 #: horilla_theme/templates/cbv/reimbursements/detail_actions.html:31
 #: horilla_theme/templates/cbv/rotating_shift/rotating_shift_detail_actions.html:39
-#: horilla_theme/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:42
+#: horilla_theme/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:42
 #: horilla_theme/templates/cbv/timesheet/detail_actions.html:23
 #: horilla_theme/templates/documents/requests.html:57
 #: horilla_theme/templates/feedback/feedback_detailed_view.html:130
@@ -2915,7 +2915,7 @@ msgstr ""
 #: horilla_theme/templates/task/new/task_kanban_view.html:120
 #: horilla_theme/templates/task/new/task_kanban_view.html:196
 #: horilla_theme/templates/task/new/task_list_view.html:67
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:129
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:129
 #: horilla_views/templates/generic/delete_confirmation.html:150
 #: leave/cbv/assigned_leave.py:118 leave/cbv/leave_requests.py:235
 #: leave/cbv/leave_types.py:293 leave/cbv/my_leave_request.py:190
@@ -3142,10 +3142,10 @@ msgstr "Sil"
 #: base/templates/base/job_position/job_position_form.html:4
 #: base/templates/base/job_role/job_role_form.html:4
 #: base/templates/base/rotating_shift/htmx/rotating_shift_form.html:4
-#: base/templates/base/rotating_work_type/htmx/rotating_work_type_form.html:4
+#: base/templates/base/rotating_work_from/htmx/rotating_work_from_form.html:4
 #: base/templates/base/shift/schedule_form.html:4
 #: base/templates/base/shift/shift_form.html:4
-#: base/templates/base/work_type/work_type_form.html:4
+#: base/templates/base/work_from/work_from_form.html:4
 #: base/templates/company_leave/company_leave_creation_form.html:20
 #: base/templates/company_leave/company_leave_view.html:71
 #: base/templates/holiday/holiday_form.html:9
@@ -3155,7 +3155,7 @@ msgstr "Sil"
 #: base/templates/multi_approval_condition/condition.html:31
 #: base/templates/shift_request/htmx/shift_request_create_form.html:4
 #: base/templates/shift_request/shift_request_nav.html:342
-#: base/templates/work_type_request/work_type_request_nav.html:272
+#: base/templates/work_from_request/work_from_request_nav.html:272
 #: employee/templates/documents/document_nav.html:236
 #: employee/templates/employee_nav.html:294
 #: employee/templates/policies/nav.html:19
@@ -3290,11 +3290,11 @@ msgstr "Oluştur"
 #: base/templates/base/rotating_shift/htmx/rotating_shift_assign_form.html:19
 #: base/templates/base/rotating_shift/htmx/rotating_shift_assign_update_form.html:25
 #: base/templates/base/rotating_shift/htmx/rotating_shift_form.html:18
-#: base/templates/base/rotating_work_type/htmx/rotating_work_type_assign_form.html:19
-#: base/templates/base/rotating_work_type/htmx/rotating_work_type_assign_update_form.html:26
-#: base/templates/base/rotating_work_type/htmx/rotating_work_type_form.html:17
+#: base/templates/base/rotating_work_from/htmx/rotating_work_from_assign_form.html:19
+#: base/templates/base/rotating_work_from/htmx/rotating_work_from_assign_update_form.html:26
+#: base/templates/base/rotating_work_from/htmx/rotating_work_from_form.html:17
 #: base/templates/base/shift/shift_form.html:18
-#: base/templates/base/work_type/work_type_form.html:17
+#: base/templates/base/work_from/work_from_form.html:17
 #: base/templates/cbv/auth/user_assign_to_group.html:8
 #: base/templates/common_form.html:48
 #: base/templates/company_leave/company_leave_creation_form.html:42
@@ -3303,7 +3303,7 @@ msgstr "Oluştur"
 #: base/templates/holiday/holiday_update_form.html:57
 #: base/templates/horilla_form.html:48 base/templates/mail/htmx/form.html:62
 #: base/templates/shift_request/htmx/shift_request_comment_form.html:25
-#: base/templates/work_type_request/htmx/worktype_request_comment_form.html:25
+#: base/templates/work_from_request/htmx/workfrom_request_comment_form.html:25
 #: biometric/templates/biometric/biometric_device_form.html:151
 #: biometric/templates/biometric/edit_cosec_user.html:58
 #: dynamic_fields/templates/dynamic_fields/common/form.html:80
@@ -3548,7 +3548,7 @@ msgstr ""
 #: attendance/templates/requests/attendance/individual_view.html:122
 #: base/cbv/company.py:41 base/cbv/department.py:43
 #: base/cbv/employee_shift.py:33 base/cbv/rotating_shift.py:42
-#: base/cbv/settings_rotatingwork.py:41 base/cbv/settings_work_type.py:32
+#: base/cbv/settings_rotatingwork.py:41 base/cbv/settings_work_from.py:32
 #: base/templates/announcement/announcement_one.html:50
 #: base/templates/base/action_type/action_type_view.html:28
 #: base/templates/base/audit_tag/audit_tag_view.html:24
@@ -3562,13 +3562,13 @@ msgstr ""
 #: base/templates/base/mail_server/mail_server_view.html:61
 #: base/templates/base/rotating_shift/individual_view.html:135
 #: base/templates/base/rotating_shift/rotating_shift_view.html:36
-#: base/templates/base/rotating_work_type/individual_view.html:145
-#: base/templates/base/rotating_work_type/rotating_work_type_view.html:26
+#: base/templates/base/rotating_work_from/individual_view.html:145
+#: base/templates/base/rotating_work_from/rotating_work_from_view.html:26
 #: base/templates/base/shift/schedule_view.html:53
 #: base/templates/base/shift/shift_view.html:47
 #: base/templates/base/tags/tags_view.html:30
 #: base/templates/base/ticket_type/ticket_type_view.html:26
-#: base/templates/base/work_type/work_type_view.html:22
+#: base/templates/base/work_from/work_from_view.html:22
 #: base/templates/cbv/company_leaves/company_leave_actions.html:5
 #: base/templates/cbv/company_leaves/detail_view_actions.html:14
 #: base/templates/cbv/holidays/detail_view_actions.html:13
@@ -3578,8 +3578,8 @@ msgstr ""
 #: base/templates/cbv/multiple_approval_condition/detail_action.html:10
 #: base/templates/cbv/rotating_shift/actions_rotaing_shift.html:10
 #: base/templates/cbv/rotating_shift/rotating_shift_detail_actions.html:10
-#: base/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:7
-#: base/templates/cbv/rotating_work_type/work_rotate_actions.html:10
+#: base/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:7
+#: base/templates/cbv/rotating_work_from/work_rotate_actions.html:10
 #: base/templates/cbv/settings/employee_shift_schedule_action.html:6
 #: base/templates/cbv/settings/employee_shift_schedule_detail_action.html:17
 #: base/templates/cbv/settings/job_role.html:23
@@ -3590,9 +3590,9 @@ msgstr ""
 #: base/templates/cbv/shift_request/dummy.html:10
 #: base/templates/cbv/shift_request/shift_detail_actions.html:6
 #: base/templates/cbv/shift_request/shift_detail_actions.html:17
-#: base/templates/cbv/work_type_request/actions.html:12
-#: base/templates/cbv/work_type_request/detail_view_actions.html:6
-#: base/templates/cbv/work_type_request/detail_view_actions.html:17
+#: base/templates/cbv/work_from_request/actions.html:12
+#: base/templates/cbv/work_from_request/detail_view_actions.html:6
+#: base/templates/cbv/work_from_request/detail_view_actions.html:17
 #: base/templates/company_leave/company_leave.html:52
 #: base/templates/holiday/holiday.html:76
 #: base/templates/multi_approval_condition/condition_table.html:59
@@ -3605,9 +3605,9 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:394
 #: base/templates/shift_request/htmx/requests.html:479
 #: base/templates/shift_request/htmx/shift_request_detail.html:113
-#: base/templates/work_type_request/htmx/group_by.html:206
-#: base/templates/work_type_request/htmx/requests.html:131
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:118
+#: base/templates/work_from_request/htmx/group_by.html:206
+#: base/templates/work_from_request/htmx/requests.html:131
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:118
 #: biometric/cbv/biometric.py:79
 #: biometric/templates/biometric/biometric_device_form.html:15
 #: biometric/templates/biometric/card_biometric_devices.html:60
@@ -3673,7 +3673,7 @@ msgstr ""
 #: horilla_theme/templates/cbv/reimbursements/detail_actions.html:16
 #: horilla_theme/templates/cbv/reimbursements/detail_actions.html:18
 #: horilla_theme/templates/cbv/rotating_shift/rotating_shift_detail_actions.html:10
-#: horilla_theme/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:11
+#: horilla_theme/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:11
 #: horilla_theme/templates/cbv/timesheet/detail_actions.html:8
 #: horilla_theme/templates/documents/requests.html:51
 #: horilla_theme/templates/employee/update_form/form_view.html:7
@@ -3970,18 +3970,18 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:286
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:198
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:202
-#: base/templates/base/rotating_work_type/htmx/group_by.html:188
-#: base/templates/base/rotating_work_type/htmx/group_by.html:193
-#: base/templates/base/rotating_work_type/htmx/group_by.html:235
-#: base/templates/base/rotating_work_type/htmx/group_by.html:240
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:195
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:200
+#: base/templates/base/rotating_work_from/htmx/group_by.html:188
+#: base/templates/base/rotating_work_from/htmx/group_by.html:193
+#: base/templates/base/rotating_work_from/htmx/group_by.html:235
+#: base/templates/base/rotating_work_from/htmx/group_by.html:240
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:195
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:200
 #: base/templates/company_leave/company_leave.html:80
 #: base/templates/company_leave/company_leave.html:84
 #: base/templates/holiday/holiday.html:109
 #: base/templates/holiday/holiday.html:114
 #: base/templates/request_and_approve/shift_request.html:95
-#: base/templates/request_and_approve/work_type_request.html:94
+#: base/templates/request_and_approve/work_from_request.html:94
 #: base/templates/shift_request/htmx/allocation_requests.html:166
 #: base/templates/shift_request/htmx/allocation_requests.html:170
 #: base/templates/shift_request/htmx/group_by.html:172
@@ -3996,12 +3996,12 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:210
 #: base/templates/shift_request/htmx/requests.html:527
 #: base/templates/shift_request/htmx/requests.html:531
-#: base/templates/work_type_request/htmx/group_by.html:317
-#: base/templates/work_type_request/htmx/group_by.html:322
-#: base/templates/work_type_request/htmx/group_by.html:382
-#: base/templates/work_type_request/htmx/group_by.html:387
-#: base/templates/work_type_request/htmx/requests.html:206
-#: base/templates/work_type_request/htmx/requests.html:210
+#: base/templates/work_from_request/htmx/group_by.html:317
+#: base/templates/work_from_request/htmx/group_by.html:322
+#: base/templates/work_from_request/htmx/group_by.html:382
+#: base/templates/work_from_request/htmx/group_by.html:387
+#: base/templates/work_from_request/htmx/requests.html:206
+#: base/templates/work_from_request/htmx/requests.html:210
 #: biometric/templates/biometric/card_biometric_devices.html:134
 #: biometric/templates/biometric/card_biometric_devices.html:138
 #: biometric/templates/biometric/list_biometric_devices.html:123
@@ -4374,18 +4374,18 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:297
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:198
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:206
-#: base/templates/base/rotating_work_type/htmx/group_by.html:189
-#: base/templates/base/rotating_work_type/htmx/group_by.html:198
-#: base/templates/base/rotating_work_type/htmx/group_by.html:235
-#: base/templates/base/rotating_work_type/htmx/group_by.html:243
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:195
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:203
+#: base/templates/base/rotating_work_from/htmx/group_by.html:189
+#: base/templates/base/rotating_work_from/htmx/group_by.html:198
+#: base/templates/base/rotating_work_from/htmx/group_by.html:235
+#: base/templates/base/rotating_work_from/htmx/group_by.html:243
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:195
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:203
 #: base/templates/company_leave/company_leave.html:80
 #: base/templates/company_leave/company_leave.html:87
 #: base/templates/holiday/holiday.html:110
 #: base/templates/holiday/holiday.html:117
 #: base/templates/request_and_approve/shift_request.html:95
-#: base/templates/request_and_approve/work_type_request.html:94
+#: base/templates/request_and_approve/work_from_request.html:94
 #: base/templates/shift_request/htmx/allocation_requests.html:166
 #: base/templates/shift_request/htmx/allocation_requests.html:173
 #: base/templates/shift_request/htmx/group_by.html:173
@@ -4400,12 +4400,12 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:213
 #: base/templates/shift_request/htmx/requests.html:527
 #: base/templates/shift_request/htmx/requests.html:534
-#: base/templates/work_type_request/htmx/group_by.html:318
-#: base/templates/work_type_request/htmx/group_by.html:333
-#: base/templates/work_type_request/htmx/group_by.html:382
-#: base/templates/work_type_request/htmx/group_by.html:398
-#: base/templates/work_type_request/htmx/requests.html:206
-#: base/templates/work_type_request/htmx/requests.html:213
+#: base/templates/work_from_request/htmx/group_by.html:318
+#: base/templates/work_from_request/htmx/group_by.html:333
+#: base/templates/work_from_request/htmx/group_by.html:382
+#: base/templates/work_from_request/htmx/group_by.html:398
+#: base/templates/work_from_request/htmx/requests.html:206
+#: base/templates/work_from_request/htmx/requests.html:213
 #: biometric/templates/biometric/card_biometric_devices.html:134
 #: biometric/templates/biometric/card_biometric_devices.html:143
 #: biometric/templates/biometric/list_biometric_devices.html:123
@@ -4746,9 +4746,9 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:237
 #: base/templates/base/rotating_shift/htmx/group_by.html:307
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:212
-#: base/templates/base/rotating_work_type/htmx/group_by.html:206
-#: base/templates/base/rotating_work_type/htmx/group_by.html:249
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:209
+#: base/templates/base/rotating_work_from/htmx/group_by.html:206
+#: base/templates/base/rotating_work_from/htmx/group_by.html:249
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:209
 #: base/templates/company_leave/company_leave.html:93
 #: base/templates/holiday/holiday.html:123
 #: base/templates/shift_request/htmx/allocation_requests.html:179
@@ -4758,9 +4758,9 @@ msgstr ""
 #: base/templates/shift_request/htmx/group_by.html:628
 #: base/templates/shift_request/htmx/requests.html:219
 #: base/templates/shift_request/htmx/requests.html:540
-#: base/templates/work_type_request/htmx/group_by.html:344
-#: base/templates/work_type_request/htmx/group_by.html:408
-#: base/templates/work_type_request/htmx/requests.html:219
+#: base/templates/work_from_request/htmx/group_by.html:344
+#: base/templates/work_from_request/htmx/group_by.html:408
+#: base/templates/work_from_request/htmx/requests.html:219
 #: biometric/templates/biometric/card_biometric_devices.html:151
 #: biometric/templates/biometric/list_biometric_devices.html:138
 #: biometric/templates/biometric/list_employees_biometric.html:161
@@ -4941,9 +4941,9 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:247
 #: base/templates/base/rotating_shift/htmx/group_by.html:315
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:217
-#: base/templates/base/rotating_work_type/htmx/group_by.html:211
-#: base/templates/base/rotating_work_type/htmx/group_by.html:254
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:214
+#: base/templates/base/rotating_work_from/htmx/group_by.html:211
+#: base/templates/base/rotating_work_from/htmx/group_by.html:254
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:214
 #: base/templates/company_leave/company_leave.html:98
 #: base/templates/holiday/holiday.html:128
 #: base/templates/shift_request/htmx/allocation_requests.html:184
@@ -4953,9 +4953,9 @@ msgstr ""
 #: base/templates/shift_request/htmx/group_by.html:633
 #: base/templates/shift_request/htmx/requests.html:224
 #: base/templates/shift_request/htmx/requests.html:545
-#: base/templates/work_type_request/htmx/group_by.html:352
-#: base/templates/work_type_request/htmx/group_by.html:416
-#: base/templates/work_type_request/htmx/requests.html:224
+#: base/templates/work_from_request/htmx/group_by.html:352
+#: base/templates/work_from_request/htmx/group_by.html:416
+#: base/templates/work_from_request/htmx/requests.html:224
 #: biometric/templates/biometric/card_biometric_devices.html:156
 #: biometric/templates/biometric/list_biometric_devices.html:143
 #: biometric/templates/biometric/list_employees_biometric.html:164
@@ -5141,9 +5141,9 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:258
 #: base/templates/base/rotating_shift/htmx/group_by.html:323
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:224
-#: base/templates/base/rotating_work_type/htmx/group_by.html:217
-#: base/templates/base/rotating_work_type/htmx/group_by.html:260
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:220
+#: base/templates/base/rotating_work_from/htmx/group_by.html:217
+#: base/templates/base/rotating_work_from/htmx/group_by.html:260
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:220
 #: base/templates/company_leave/company_leave.html:105
 #: base/templates/holiday/holiday.html:133
 #: base/templates/shift_request/htmx/allocation_requests.html:191
@@ -5153,9 +5153,9 @@ msgstr ""
 #: base/templates/shift_request/htmx/group_by.html:640
 #: base/templates/shift_request/htmx/requests.html:231
 #: base/templates/shift_request/htmx/requests.html:552
-#: base/templates/work_type_request/htmx/group_by.html:361
-#: base/templates/work_type_request/htmx/group_by.html:425
-#: base/templates/work_type_request/htmx/requests.html:231
+#: base/templates/work_from_request/htmx/group_by.html:361
+#: base/templates/work_from_request/htmx/group_by.html:425
+#: base/templates/work_from_request/htmx/requests.html:231
 #: biometric/templates/biometric/card_biometric_devices.html:163
 #: biometric/templates/biometric/list_biometric_devices.html:149
 #: biometric/templates/biometric/list_employees_biometric.html:169
@@ -5341,9 +5341,9 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:268
 #: base/templates/base/rotating_shift/htmx/group_by.html:331
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:229
-#: base/templates/base/rotating_work_type/htmx/group_by.html:222
-#: base/templates/base/rotating_work_type/htmx/group_by.html:265
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:225
+#: base/templates/base/rotating_work_from/htmx/group_by.html:222
+#: base/templates/base/rotating_work_from/htmx/group_by.html:265
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:225
 #: base/templates/company_leave/company_leave.html:110
 #: base/templates/holiday/holiday.html:138
 #: base/templates/shift_request/htmx/allocation_requests.html:196
@@ -5353,9 +5353,9 @@ msgstr ""
 #: base/templates/shift_request/htmx/group_by.html:645
 #: base/templates/shift_request/htmx/requests.html:236
 #: base/templates/shift_request/htmx/requests.html:557
-#: base/templates/work_type_request/htmx/group_by.html:369
-#: base/templates/work_type_request/htmx/group_by.html:433
-#: base/templates/work_type_request/htmx/requests.html:236
+#: base/templates/work_from_request/htmx/group_by.html:369
+#: base/templates/work_from_request/htmx/group_by.html:433
+#: base/templates/work_from_request/htmx/requests.html:236
 #: biometric/templates/biometric/card_biometric_devices.html:169
 #: biometric/templates/biometric/list_biometric_devices.html:154
 #: biometric/templates/biometric/list_employees_biometric.html:172
@@ -5490,7 +5490,7 @@ msgstr ""
 #: asset/templates/asset/asset_report_form.html:27 attendance/models.py:187
 #: base/cbv/dashboard/dashboard.py:199 base/cbv/rotating_shift.py:72
 #: base/cbv/rotating_shift.py:79 base/cbv/rotating_shift_assign.py:254
-#: base/cbv/rotating_work_type.py:247 base/cbv/settings_rotatingwork.py:75
+#: base/cbv/rotating_work_from.py:247 base/cbv/settings_rotatingwork.py:75
 #: base/cbv/settings_rotatingwork.py:82
 #: base/templates/base/action_type/action_type_view.html:6
 #: base/templates/base/audit_tag/audit_tag_form.html:40
@@ -5501,10 +5501,10 @@ msgstr ""
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:60
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:61
 #: base/templates/base/rotating_shift/rotating_shift_view.html:6
-#: base/templates/base/rotating_work_type/htmx/group_by.html:62
-#: base/templates/base/rotating_work_type/individual_view.html:76
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:64
-#: base/templates/base/rotating_work_type/rotating_work_type_view.html:6
+#: base/templates/base/rotating_work_from/htmx/group_by.html:62
+#: base/templates/base/rotating_work_from/individual_view.html:76
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:64
+#: base/templates/base/rotating_work_from/rotating_work_from_view.html:6
 #: base/templates/base/tags/tags_view.html:6
 #: base/templates/mail/htmx/form.html:21 employee/cbv/action_type.py:68
 #: employee/cbv/action_type.py:74 employee/cbv/employee_tags.py:74
@@ -5663,12 +5663,12 @@ msgstr ""
 #: base/templates/announcement/announcement_one.html:152
 #: base/templates/announcement/announcements_list.html:8
 #: base/templates/base/rotating_shift/rotating_shift_assign_empty.html:5
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_empty.html:5
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_empty.html:5
 #: base/templates/mail/empty_mail_template.html:25
 #: base/templates/request_and_approve/shift_request.html:69
-#: base/templates/request_and_approve/work_type_request.html:68
+#: base/templates/request_and_approve/work_from_request.html:68
 #: base/templates/shift_request/htmx/empty_request.html:5
-#: base/templates/work_type_request/htmx/empty_request.html:5
+#: base/templates/work_from_request/htmx/empty_request.html:5
 #: biometric/templates/biometric/card_biometric_devices.html:200
 #: biometric/templates/biometric/empty_view_biometric.html:5
 #: employee/templates/dashboard/not_in_yet.html:34
@@ -5740,11 +5740,11 @@ msgstr ""
 #: asset/templates/request_allocation/individual_request.html:119
 #: base/templates/cbv/shift_request/allocated_confirm_action.html:106
 #: base/templates/cbv/shift_request/confirmations.html:41
-#: base/templates/cbv/work_type_request/confirmation.html:31
+#: base/templates/cbv/work_from_request/confirmation.html:31
 #: base/templates/shift_request/htmx/group_by.html:149
 #: base/templates/shift_request/htmx/requests.html:183
-#: base/templates/work_type_request/htmx/group_by.html:282
-#: base/templates/work_type_request/htmx/requests.html:183
+#: base/templates/work_from_request/htmx/group_by.html:282
+#: base/templates/work_from_request/htmx/requests.html:183
 #: employee/templates/tabs/asset_request_tab.html:59
 #: employee/templates/tabs/shift-tab.html:372
 #: employee/templates/tabs/shift-tab.html:1039
@@ -5754,7 +5754,7 @@ msgstr ""
 #: asset/templates/asset/dashboard_asset_requests.html:102
 #: attendance/views/dashboard.py:357
 #: base/templates/request_and_approve/shift_request.html:70
-#: base/templates/request_and_approve/work_type_request.html:69
+#: base/templates/request_and_approve/work_from_request.html:69
 #: employee/templates/dashboard/not_in_yet.html:35
 #: employee/templates/dashboard/not_out_yet.html:39
 #: leave/templates/leave/dashboard/leave_allocation_approve.html:68
@@ -5802,18 +5802,18 @@ msgstr ""
 #: attendance/templates/requests/attendance/filter.html:90
 #: base/templates/base/rotating_shift/filters.html:75
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:102
-#: base/templates/base/rotating_work_type/filters.html:75
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:102
+#: base/templates/base/rotating_work_from/filters.html:75
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:102
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:76
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:77
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:77
 #: base/templates/cbv/shift_request/filter.html:132
-#: base/templates/cbv/work_type_request/filter.html:97
+#: base/templates/cbv/work_from_request/filter.html:97
 #: base/templates/holiday/holiday_export_filter_form.html:62
 #: base/templates/holiday/holiday_filter.html:38
 #: base/templates/shift_request/shift_request_export.html:114
 #: base/templates/shift_request/shift_request_nav.html:189
-#: base/templates/work_type_request/work_type_request_export.html:114
-#: base/templates/work_type_request/work_type_request_nav.html:143
+#: base/templates/work_from_request/work_from_request_export.html:114
+#: base/templates/work_from_request/work_from_request_nav.html:143
 #: employee/templates/cbv/employees_view/filter_employee.html:92
 #: employee/templates/employee_filters.html:87
 #: horilla_meet/templates/gmeet/filter.html:33
@@ -5896,16 +5896,16 @@ msgstr ""
 #: attendance/templates/requests/attendance/nav.html:69
 #: base/templates/base/rotating_shift/filters.html:95
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:55
-#: base/templates/base/rotating_work_type/filters.html:95
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:49
+#: base/templates/base/rotating_work_from/filters.html:95
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:49
 #: base/templates/company_leave/company_leave_view.html:26
 #: base/templates/company_leave/company_leave_view.html:58
 #: base/templates/holiday/holiday_filter.html:63
 #: base/templates/holiday/holiday_view.html:33
 #: base/templates/shift_request/shift_request_nav.html:65
 #: base/templates/shift_request/shift_request_nav.html:217
-#: base/templates/work_type_request/work_type_request_nav.html:48
-#: base/templates/work_type_request/work_type_request_nav.html:164
+#: base/templates/work_from_request/work_from_request_nav.html:48
+#: base/templates/work_from_request/work_from_request_nav.html:164
 #: biometric/templates/biometric/biometric_device_filter.html:33
 #: biometric/templates/biometric/nav_biometric_devices.html:32
 #: employee/templates/disciplinary_actions/disciplinary_nav.html:25
@@ -6086,11 +6086,11 @@ msgstr ""
 #: attendance/templates/attendance/late_come_early_out/nav.html:21
 #: attendance/templates/requests/attendance/nav.html:64
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:41
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:40
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:40
 #: base/templates/company_leave/company_leave_view.html:21
 #: base/templates/holiday/holiday_view.html:20
 #: base/templates/shift_request/shift_request_nav.html:44
-#: base/templates/work_type_request/work_type_request_nav.html:38
+#: base/templates/work_from_request/work_from_request_nav.html:38
 #: biometric/templates/biometric/nav_biometric_devices.html:24
 #: biometric/templates/biometric/nav_employees_biometric.html:34
 #: biometric/templates/biometric/nav_employees_cosec_biometric.html:32
@@ -6164,12 +6164,12 @@ msgstr "Ara"
 #: attendance/templates/requests/attendance/nav.html:84
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:74
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:84
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:63
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:73
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:63
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:73
 #: base/templates/shift_request/shift_request_nav.html:228
 #: base/templates/shift_request/shift_request_nav.html:238
-#: base/templates/work_type_request/work_type_request_nav.html:170
-#: base/templates/work_type_request/work_type_request_nav.html:180
+#: base/templates/work_from_request/work_from_request_nav.html:170
+#: base/templates/work_from_request/work_from_request_nav.html:180
 #: employee/templates/employee_nav.html:195
 #: employee/templates/employee_nav.html:201
 #: helpdesk/templates/helpdesk/ticket/ticket_filter.html:145
@@ -6210,9 +6210,9 @@ msgstr ""
 #: attendance/templates/requests/attendance/individual_view.html:34
 #: attendance/templates/requests/attendance/nav.html:88
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:89
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:77
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:77
 #: base/templates/shift_request/shift_request_nav.html:242
-#: base/templates/work_type_request/work_type_request_nav.html:184
+#: base/templates/work_from_request/work_from_request_nav.html:184
 #: employee/templates/employee_nav.html:205
 #: helpdesk/templates/helpdesk/ticket/ticket_filter.html:158
 #: horilla_theme/templates/generic/horilla_nav.html:83
@@ -6359,10 +6359,10 @@ msgstr ""
 #: base/templates/cbv/shift_request/allocated_confirm_action.html:33
 #: base/templates/cbv/shift_request/confirmations.html:16
 #: base/templates/cbv/shift_request/confirmations.html:25
-#: base/templates/cbv/work_type_request/confirmation.html:11
-#: base/templates/cbv/work_type_request/confirmation.html:13
-#: base/templates/cbv/work_type_request/confirmation.html:16
-#: base/templates/cbv/work_type_request/confirmation.html:20
+#: base/templates/cbv/work_from_request/confirmation.html:11
+#: base/templates/cbv/work_from_request/confirmation.html:13
+#: base/templates/cbv/work_from_request/confirmation.html:16
+#: base/templates/cbv/work_from_request/confirmation.html:20
 #: base/templates/shift_request/htmx/allocation_details.html:125
 #: base/templates/shift_request/htmx/allocation_details.html:126
 #: base/templates/shift_request/htmx/allocation_requests.html:144
@@ -6375,11 +6375,11 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:448
 #: base/templates/shift_request/htmx/shift_request_detail.html:101
 #: base/templates/shift_request/htmx/shift_request_detail.html:102
-#: base/templates/work_type_request/htmx/group_by.html:256
-#: base/templates/work_type_request/htmx/group_by.html:271
-#: base/templates/work_type_request/htmx/requests.html:170
-#: base/templates/work_type_request/htmx/requests.html:177
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:103
+#: base/templates/work_from_request/htmx/group_by.html:256
+#: base/templates/work_from_request/htmx/group_by.html:271
+#: base/templates/work_from_request/htmx/requests.html:170
+#: base/templates/work_from_request/htmx/requests.html:177
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:103
 #: employee/templates/cbv/documents/document_list.html:121
 #: employee/templates/cbv/documents/document_list.html:141
 #: employee/templates/documents/requests.html:167
@@ -6488,22 +6488,22 @@ msgstr "Onayla"
 #: base/templates/cbv/shift_request/allocated_confirm_action.html:108
 #: base/templates/cbv/shift_request/confirmations.html:36
 #: base/templates/cbv/shift_request/confirmations.html:45
-#: base/templates/cbv/work_type_request/confirmation.html:25
-#: base/templates/cbv/work_type_request/confirmation.html:27
-#: base/templates/cbv/work_type_request/confirmation.html:30
-#: base/templates/cbv/work_type_request/confirmation.html:34
+#: base/templates/cbv/work_from_request/confirmation.html:25
+#: base/templates/cbv/work_from_request/confirmation.html:27
+#: base/templates/cbv/work_from_request/confirmation.html:30
+#: base/templates/cbv/work_from_request/confirmation.html:34
 #: base/templates/shift_request/htmx/group_by.html:148
 #: base/templates/shift_request/htmx/group_by.html:154
 #: base/templates/shift_request/htmx/group_by.html:521
 #: base/templates/shift_request/htmx/requests.html:182
 #: base/templates/shift_request/htmx/requests.html:188
 #: base/templates/shift_request/htmx/requests.html:509
-#: base/templates/work_type_request/htmx/group_by.html:285
-#: base/templates/work_type_request/htmx/group_by.html:297
-#: base/templates/work_type_request/htmx/requests.html:185
-#: base/templates/work_type_request/htmx/requests.html:190
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:107
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:108
+#: base/templates/work_from_request/htmx/group_by.html:285
+#: base/templates/work_from_request/htmx/group_by.html:297
+#: base/templates/work_from_request/htmx/requests.html:185
+#: base/templates/work_from_request/htmx/requests.html:190
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:107
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:108
 #: employee/cbv/document_request.py:130
 #: employee/templates/cbv/documents/document_list.html:132
 #: employee/templates/cbv/documents/document_list.html:148
@@ -6620,8 +6620,8 @@ msgstr ""
 #: base/templates/shift_request/htmx/group_by.html:353
 #: base/templates/shift_request/htmx/requests.html:58
 #: base/templates/shift_request/htmx/requests.html:315
-#: base/templates/work_type_request/htmx/group_by.html:107
-#: base/templates/work_type_request/htmx/requests.html:77
+#: base/templates/work_from_request/htmx/group_by.html:107
+#: base/templates/work_from_request/htmx/requests.html:77
 #: leave/templates/leave/compensatory_leave/compensatory_leave_req_list.html:199
 #: leave/templates/leave/leave_allocation_request/leave_allocation_request_group_by.html:221
 #: leave/templates/leave/leave_allocation_request/leave_allocation_request_list.html:181
@@ -7047,20 +7047,20 @@ msgstr ""
 #: attendance/templates/cbv/late_come_and_early_out/late_early_export.html:44
 #: attendance/templates/cbv/late_come_and_early_out/late_early_filter.html:22
 #: attendance/templates/requests/attendance/filter.html:23
-#: base/cbv/rotating_shift_assign.py:231 base/cbv/rotating_work_type.py:224
-#: base/cbv/work_type_request.py:241 base/forms.py:2634
+#: base/cbv/rotating_shift_assign.py:231 base/cbv/rotating_work_from.py:224
+#: base/cbv/work_from_request.py:241 base/forms.py:2634
 #: base/templates/base/rotating_shift/filters.html:59
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:85
-#: base/templates/base/rotating_work_type/filters.html:59
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:85
+#: base/templates/base/rotating_work_from/filters.html:59
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:85
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:59
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:59
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:59
 #: base/templates/cbv/shift_request/filter.html:61
-#: base/templates/cbv/work_type_request/filter.html:44
+#: base/templates/cbv/work_from_request/filter.html:44
 #: base/templates/shift_request/shift_request_export.html:68
 #: base/templates/shift_request/shift_request_nav.html:132
-#: base/templates/work_type_request/work_type_request_export.html:68
-#: base/templates/work_type_request/work_type_request_nav.html:98
+#: base/templates/work_from_request/work_from_request_export.html:68
+#: base/templates/work_from_request/work_from_request_nav.html:98
 #: base/translator.py:103 base/views.py:6149 base/views.py:6250
 #: employee/cbv/employees.py:293 employee/cbv/employees.py:316
 #: employee/cbv/employees.py:361 employee/cbv/employees.py:407
@@ -7602,7 +7602,7 @@ msgid " Validated Attendances"
 msgstr ""
 
 #: attendance/cbv/attendances.py:257
-msgid "work_type_id"
+msgid "work_from_id"
 msgstr ""
 
 #: attendance/cbv/attendances.py:483
@@ -8351,7 +8351,7 @@ msgstr ""
 #: attendance/templates/cbv/attendance_request/status.html:7
 #: base/cbv/shift_request.py:491 base/cbv/shift_request.py:503
 #: base/cbv/shift_request.py:620 base/cbv/shift_request.py:634
-#: base/cbv/work_type_request.py:393 base/cbv/work_type_request.py:408
+#: base/cbv/work_from_request.py:393 base/cbv/work_from_request.py:408
 #: base/templates/shift_request/shift_request_view.html:100
 #: leave/templates/leave/leave_allocation_request/leave_allocation_request_view.html:303
 #: leave/templates/leave/user_leave/user_request_view.html:304
@@ -8422,7 +8422,7 @@ msgstr ""
 #: attendance/templates/requests/attendance/group_by.html:60
 #: attendance/templates/requests/attendance/request_lines.html:79
 #: base/cbv/shift_request.py:146 base/cbv/shift_request.py:193
-#: base/cbv/work_type_request.py:85 base/models.py:1471 base/models.py:1753
+#: base/cbv/work_from_request.py:85 base/models.py:1471 base/models.py:1753
 #: base/models.py:2336 base/templates/announcement/comment_view.html:31
 #: base/templates/shift_request/htmx/allocation_requests.html:53
 #: base/templates/shift_request/htmx/comment_view.html:21
@@ -8431,9 +8431,9 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:55
 #: base/templates/shift_request/htmx/requests.html:312
 #: base/templates/shift_request/htmx/shift_comment.html:35
-#: base/templates/work_type_request/htmx/group_by.html:102
-#: base/templates/work_type_request/htmx/requests.html:74
-#: base/templates/work_type_request/htmx/work_type_comment.html:36
+#: base/templates/work_from_request/htmx/group_by.html:102
+#: base/templates/work_from_request/htmx/requests.html:74
+#: base/templates/work_from_request/htmx/work_from_comment.html:36
 #: horilla_theme/templates/announcement/comment_view.html:31
 #: horilla_theme/templates/okr/objective_detailed_view_activity.html:166
 #: leave/cbv/compensatory_leave_request.py:65
@@ -8741,16 +8741,16 @@ msgstr ""
 #: attendance/templates/requests/attendance/filter.html:6
 #: base/templates/base/rotating_shift/filters.html:40
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:65
-#: base/templates/base/rotating_work_type/filters.html:40
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:65
+#: base/templates/base/rotating_work_from/filters.html:40
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:65
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:40
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:39
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:39
 #: base/templates/cbv/shift_request/filter.html:6
-#: base/templates/cbv/work_type_request/filter.html:5
+#: base/templates/cbv/work_from_request/filter.html:5
 #: base/templates/shift_request/shift_request_export.html:28
 #: base/templates/shift_request/shift_request_nav.html:77
-#: base/templates/work_type_request/work_type_request_export.html:28
-#: base/templates/work_type_request/work_type_request_nav.html:59
+#: base/templates/work_from_request/work_from_request_export.html:28
+#: base/templates/work_from_request/work_from_request_nav.html:59
 #: employee/templates/cbv/documents/document_filter.html:4
 #: employee/templates/cbv/employees_view/employee_export.html:54
 #: employee/templates/cbv/employees_view/filter_employee.html:45
@@ -9052,7 +9052,7 @@ msgid "Search in : Shift"
 msgstr ""
 
 #: attendance/templates/attendance/attendance/attendance_nav.html:143
-msgid "Search in : Work Type"
+msgid "Search in : Work From"
 msgstr ""
 
 #: attendance/templates/attendance/attendance/attendance_nav.html:145
@@ -9098,9 +9098,9 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:68
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:11
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:52
-#: base/templates/base/rotating_work_type/htmx/group_by.html:55
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:11
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:56
+#: base/templates/base/rotating_work_from/htmx/group_by.html:55
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:11
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:56
 #: base/templates/holiday/holiday.html:31
 #: base/templates/shift_request/htmx/allocation_requests.html:38
 #: base/templates/shift_request/htmx/group_by.html:35
@@ -9108,9 +9108,9 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:31
 #: base/templates/shift_request/htmx/requests.html:283
 #: base/templates/shift_request/shift_request_export.html:11
-#: base/templates/work_type_request/htmx/group_by.html:72
-#: base/templates/work_type_request/htmx/requests.html:52
-#: base/templates/work_type_request/work_type_request_export.html:11
+#: base/templates/work_from_request/htmx/group_by.html:72
+#: base/templates/work_from_request/htmx/requests.html:52
+#: base/templates/work_from_request/work_from_request_export.html:11
 #: biometric/templates/biometric/list_biometric_devices.html:8
 #: employee/templates/cbv/employees_view/employee_export.html:10
 #: employee/templates/employee_export_filter.html:22
@@ -9219,15 +9219,15 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:190
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:180
 #: base/templates/base/rotating_shift/rotating_shift_view.html:43
-#: base/templates/base/rotating_work_type/htmx/group_by.html:173
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:177
-#: base/templates/base/rotating_work_type/rotating_work_type_view.html:35
+#: base/templates/base/rotating_work_from/htmx/group_by.html:173
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:177
+#: base/templates/base/rotating_work_from/rotating_work_from_view.html:35
 #: base/templates/base/shift/schedule_view.html:73
 #: base/templates/base/shift/shift_view.html:56
 #: base/templates/base/ticket_type/ticket_type_view.html:34
-#: base/templates/base/work_type/work_type_view.html:31
+#: base/templates/base/work_from/work_from_view.html:31
 #: base/templates/cbv/rotating_shift/actions_rotaing_shift.html:32
-#: base/templates/cbv/rotating_work_type/work_rotate_actions.html:30
+#: base/templates/cbv/rotating_work_from/work_rotate_actions.html:30
 #: base/templates/cbv/settings/job_role.html:32
 #: base/templates/cbv/settings/position_in_job_position.html:37
 #: base/templates/cbv/shift_request/actions_shift_requst.html:31
@@ -9235,7 +9235,7 @@ msgstr ""
 #: base/templates/cbv/shift_request/confirm_allocated.html:26
 #: base/templates/cbv/shift_request/dummy.html:18
 #: base/templates/cbv/shift_request/dummy.html:24
-#: base/templates/cbv/work_type_request/actions.html:32
+#: base/templates/cbv/work_from_request/actions.html:32
 #: base/templates/shift_request/htmx/allocation_details.html:149
 #: base/templates/shift_request/htmx/allocation_details.html:154
 #: base/templates/shift_request/htmx/allocation_requests.html:129
@@ -9252,8 +9252,8 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:492
 #: base/templates/shift_request/htmx/shift_request_detail.html:122
 #: base/templates/shift_request/htmx/shift_request_detail.html:127
-#: base/templates/work_type_request/htmx/requests.html:156
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:131
+#: base/templates/work_from_request/htmx/requests.html:156
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:131
 #: employee/templates/cbv/disciplinary_actions/actions.html:23
 #: employee/templates/cbv/disciplinary_actions/employee_col.html:51
 #: employee/templates/cbv/employees_view/employee_actions.html:74
@@ -9429,11 +9429,11 @@ msgstr ""
 #: attendance/templates/cbv/hour_account/hour_export.html:4
 #: attendance/templates/cbv/late_come_and_early_out/late_early_export.html:4
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:5
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:5
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:5
 #: base/templates/cbv/holidays/holidays_export.html:23
 #: base/templates/holiday/holiday_export_filter_form.html:17
 #: base/templates/shift_request/shift_request_export.html:5
-#: base/templates/work_type_request/work_type_request_export.html:5
+#: base/templates/work_from_request/work_from_request_export.html:5
 #: employee/templates/cbv/employees_view/employee_export.html:4
 #: employee/templates/employee_export_filter.html:16
 #: leave/templates/cbv/assigned_leave/assigned_leave_export.html:21
@@ -9456,10 +9456,10 @@ msgstr ""
 #: attendance/templates/requests/attendance/group_by.html:316
 #: attendance/templates/requests/attendance/group_by.html:596
 #: base/templates/base/rotating_shift/htmx/group_by.html:347
-#: base/templates/base/rotating_work_type/htmx/group_by.html:277
+#: base/templates/base/rotating_work_from/htmx/group_by.html:277
 #: base/templates/shift_request/htmx/group_by.html:294
 #: base/templates/shift_request/htmx/group_by.html:661
-#: base/templates/work_type_request/htmx/group_by.html:448
+#: base/templates/work_from_request/htmx/group_by.html:448
 #: employee/templates/employee_personal_info/group_by.html:382
 #: recruitment/templates/candidate/group_by.html:374
 msgid "No group result found!"
@@ -9478,10 +9478,10 @@ msgstr ""
 #: attendance/templates/requests/attendance/request_lines.html:237
 #: attendance/templates/requests/attendance/request_lines.html:432
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:243
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:238
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:238
 #: base/templates/shift_request/htmx/requests.html:249
 #: base/templates/shift_request/htmx/requests.html:570
-#: base/templates/work_type_request/htmx/requests.html:249
+#: base/templates/work_from_request/htmx/requests.html:249
 #: employee/templates/disciplinary_actions/disciplinary_records.html:216
 #: employee/templates/employee_personal_info/employee_card.html:185
 #: employee/templates/employee_personal_info/employee_list.html:379
@@ -10221,7 +10221,7 @@ msgstr ""
 
 #: attendance/templates/requests/attendance/attendance_comment.html:16
 #: base/templates/shift_request/htmx/shift_comment.html:25
-#: base/templates/work_type_request/htmx/work_type_comment.html:25
+#: base/templates/work_from_request/htmx/work_from_comment.html:25
 #: horilla_theme/templates/announcement/announcement_one.html:159
 #: horilla_theme/templates/announcement/announcement_one.html:167
 #: horilla_theme/templates/announcement/announcement_one.html:170
@@ -10229,7 +10229,7 @@ msgstr ""
 #: horilla_theme/templates/leave/leave_request/leave_comment.html:65
 #: horilla_theme/templates/payroll/reimbursement/reimbursement_comment.html:74
 #: horilla_theme/templates/shift_request/htmx/shift_comment.html:77
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:76
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:76
 #: leave/templates/leave/compensatory_leave/compensatory_leave_comment.html:35
 #: leave/templates/leave/leave_allocation_request/leave_allocation_comment.html:21
 #: leave/templates/leave/leave_request/leave_comment.html:19
@@ -10242,7 +10242,7 @@ msgstr ""
 
 #: attendance/templates/requests/attendance/attendance_comment.html:75
 #: base/templates/shift_request/htmx/shift_comment.html:84
-#: base/templates/work_type_request/htmx/work_type_comment.html:90
+#: base/templates/work_from_request/htmx/work_from_comment.html:90
 #: employee/templates/tabs/note_tab.html:118
 #: leave/templates/leave/compensatory_leave/compensatory_leave_comment.html:117
 #: leave/templates/leave/leave_allocation_request/leave_allocation_comment.html:85
@@ -10262,7 +10262,7 @@ msgstr ""
 
 #: attendance/templates/requests/attendance/attendance_comment.html:89
 #: base/templates/shift_request/htmx/shift_comment.html:99
-#: base/templates/work_type_request/htmx/work_type_comment.html:105
+#: base/templates/work_from_request/htmx/work_from_comment.html:105
 #: horilla_theme/templates/announcement/comment_view.html:43
 #: leave/templates/leave/compensatory_leave/compensatory_leave_comment.html:137
 #: leave/templates/leave/leave_allocation_request/leave_allocation_comment.html:101
@@ -10274,8 +10274,8 @@ msgstr ""
 #: base/templates/shift_request/htmx/allocation_requests.html:215
 #: base/templates/shift_request/htmx/group_by.html:680
 #: base/templates/shift_request/htmx/requests.html:584
-#: base/templates/work_type_request/htmx/group_by.html:465
-#: base/templates/work_type_request/htmx/requests.html:260
+#: base/templates/work_from_request/htmx/group_by.html:465
+#: base/templates/work_from_request/htmx/requests.html:260
 #: leave/templates/leave/leave_allocation_request/allocation_request_comment_form.html:30
 #: leave/templates/leave/leave_request/leave_request_comment_form.html:29
 msgid "Add Comment"
@@ -10307,7 +10307,7 @@ msgstr ""
 #: horilla_theme/templates/pipeline/pipeline_components/view_note.html:234
 #: horilla_theme/templates/shift_request/htmx/shift_comment.html:213
 #: horilla_theme/templates/tabs/note_tab.html:129
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:212
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:212
 #: leave/templates/leave/leave_allocation_request/comment_view.html:46
 #: leave/templates/leave/leave_request/comment_view.html:45
 #: payroll/templates/payroll/reimbursement/comment_view.html:34
@@ -10337,8 +10337,8 @@ msgstr ""
 #: horilla_theme/templates/payroll/reimbursement/reimbursement_comment.html:208
 #: horilla_theme/templates/shift_request/htmx/shift_comment.html:214
 #: horilla_theme/templates/shift_request/htmx/shift_comment.html:216
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:213
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:215
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:213
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:215
 #: leave/templates/leave/leave_allocation_request/comment_view.html:54
 #: leave/templates/leave/leave_request/comment_view.html:53
 #: payroll/templates/payroll/reimbursement/comment_view.html:42
@@ -10357,7 +10357,7 @@ msgstr ""
 #: horilla_theme/templates/offboarding/note/view_notes.html:214
 #: horilla_theme/templates/payroll/reimbursement/reimbursement_comment.html:208
 #: horilla_theme/templates/shift_request/htmx/shift_comment.html:216
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:215
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:215
 #: leave/templates/leave/leave_allocation_request/comment_view.html:55
 #: leave/templates/leave/leave_request/comment_view.html:54
 #: payroll/templates/payroll/reimbursement/comment_view.html:43
@@ -10937,18 +10937,18 @@ msgstr ""
 msgid "New Company Leave Created Successfully"
 msgstr ""
 
-#: base/cbv/dashboard/dashboard.py:35 base/cbv/work_type_request.py:79
-#: base/cbv/work_type_request.py:98 base/cbv/work_type_request.py:234
-#: base/cbv/work_type_request.py:260
-#: base/templates/cbv/work_type_request/filter.html:61
-#: base/templates/request_and_approve/work_type_request.html:9
-#: base/templates/work_type_request/htmx/group_by.html:84
-#: base/templates/work_type_request/htmx/requests.html:60
-#: base/templates/work_type_request/htmx/requests.html:61
-#: base/templates/work_type_request/work_type_request_export.html:101
-#: base/templates/work_type_request/work_type_request_nav.html:130
+#: base/cbv/dashboard/dashboard.py:35 base/cbv/work_from_request.py:79
+#: base/cbv/work_from_request.py:98 base/cbv/work_from_request.py:234
+#: base/cbv/work_from_request.py:260
+#: base/templates/cbv/work_from_request/filter.html:61
+#: base/templates/request_and_approve/work_from_request.html:9
+#: base/templates/work_from_request/htmx/group_by.html:84
+#: base/templates/work_from_request/htmx/requests.html:60
+#: base/templates/work_from_request/htmx/requests.html:61
+#: base/templates/work_from_request/work_from_request_export.html:101
+#: base/templates/work_from_request/work_from_request_nav.html:130
 #: employee/templates/tabs/shift-tab.html:188
-msgid "Requested Work Type"
+msgid "Requested Work From"
 msgstr ""
 
 #: base/cbv/dashboard/dashboard.py:82 base/cbv/shift_request.py:140
@@ -11080,17 +11080,17 @@ msgstr ""
 
 #: base/cbv/holidays.py:57 base/cbv/holidays.py:68 base/cbv/holidays.py:145
 #: base/cbv/rotating_shift_assign.py:72 base/cbv/rotating_shift_assign.py:90
-#: base/cbv/rotating_shift_assign.py:257 base/cbv/rotating_work_type.py:75
-#: base/cbv/rotating_work_type.py:86 base/cbv/rotating_work_type.py:250
+#: base/cbv/rotating_shift_assign.py:257 base/cbv/rotating_work_from.py:75
+#: base/cbv/rotating_work_from.py:86 base/cbv/rotating_work_from.py:250
 #: base/models.py:515 base/models.py:1092 base/models.py:2528
 #: base/templates/base/rotating_shift/htmx/group_by.html:76
 #: base/templates/base/rotating_shift/individual_view.html:93
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:66
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:70
-#: base/templates/base/rotating_work_type/htmx/group_by.html:66
-#: base/templates/base/rotating_work_type/individual_view.html:110
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:67
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:71
+#: base/templates/base/rotating_work_from/htmx/group_by.html:66
+#: base/templates/base/rotating_work_from/individual_view.html:110
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:67
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:71
 #: base/templates/holiday/holiday.html:41 employee/templates/leave-tab.html:179
 #: employee/templates/personal-tab.html:247
 #: employee/templates/tabs/contract-tab.html:15
@@ -11534,11 +11534,11 @@ msgstr ""
 #: base/templates/base/rotating_shift/filters.html:24
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:28
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:48
-#: base/templates/base/rotating_work_type/filters.html:24
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:48
+#: base/templates/base/rotating_work_from/filters.html:24
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:48
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:4
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:23
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:22
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:22
 #: employee/templates/tabs/shift-tab.html:152
 #: horilla_theme/templates/settings.html:289 templates/settings.html:372
 msgid "Rotating Shift"
@@ -11574,15 +11574,15 @@ msgid "Based on"
 msgstr ""
 
 #: base/cbv/rotating_shift_assign.py:71 base/cbv/rotating_shift_assign.py:88
-#: base/cbv/rotating_shift_assign.py:256 base/cbv/rotating_work_type.py:74
-#: base/cbv/rotating_work_type.py:85 base/cbv/rotating_work_type.py:249
+#: base/cbv/rotating_shift_assign.py:256 base/cbv/rotating_work_from.py:74
+#: base/cbv/rotating_work_from.py:85 base/cbv/rotating_work_from.py:249
 #: base/templates/base/rotating_shift/htmx/group_by.html:75
 #: base/templates/base/rotating_shift/individual_view.html:71
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:64
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:65
-#: base/templates/base/rotating_work_type/htmx/group_by.html:64
-#: base/templates/base/rotating_work_type/individual_view.html:88
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:66
+#: base/templates/base/rotating_work_from/htmx/group_by.html:64
+#: base/templates/base/rotating_work_from/individual_view.html:88
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:66
 #: employee/templates/tabs/shift-tab.html:430
 #: employee/templates/tabs/shift-tab.html:660
 msgid "Rotate"
@@ -11596,10 +11596,10 @@ msgstr ""
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:42
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:72
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:73
-#: base/templates/base/rotating_work_type/filters.html:18
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:42
+#: base/templates/base/rotating_work_from/filters.html:18
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:42
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:17
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:16
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:16
 #: base/templates/cbv/work_shift_tab/extended_work-shift.html:5
 #: employee/templates/tabs/shift-tab.html:17
 #: employee/templates/tabs/shift-tab.html:436
@@ -11607,20 +11607,20 @@ msgid "Current Shift"
 msgstr ""
 
 #: base/cbv/rotating_shift_assign.py:74 base/cbv/rotating_shift_assign.py:92
-#: base/cbv/rotating_work_type.py:77 base/cbv/rotating_work_type.py:88
-#: base/cbv/rotating_work_type.py:252 base/models.py:516 base/models.py:1093
+#: base/cbv/rotating_work_from.py:77 base/cbv/rotating_work_from.py:88
+#: base/cbv/rotating_work_from.py:252 base/models.py:516 base/models.py:1093
 #: base/templates/base/rotating_shift/filters.html:28
 #: base/templates/base/rotating_shift/htmx/group_by.html:78
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:52
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:74
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:78
-#: base/templates/base/rotating_work_type/filters.html:28
-#: base/templates/base/rotating_work_type/htmx/group_by.html:70
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:52
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:74
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:77
+#: base/templates/base/rotating_work_from/filters.html:28
+#: base/templates/base/rotating_work_from/htmx/group_by.html:70
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:52
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:74
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:77
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:27
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:26
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:26
 #: employee/templates/tabs/shift-tab.html:439
 #: employee/templates/tabs/shift-tab.html:669
 msgid "Next Switch"
@@ -11634,27 +11634,27 @@ msgstr ""
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:56
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:81
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:82
-#: base/templates/base/rotating_work_type/filters.html:32
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:56
+#: base/templates/base/rotating_work_from/filters.html:32
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:56
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:31
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:30
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:30
 #: employee/templates/tabs/shift-tab.html:442
 msgid "Next Shift"
 msgstr ""
 
-#: base/cbv/rotating_shift_assign.py:186 base/cbv/rotating_work_type.py:149
+#: base/cbv/rotating_shift_assign.py:186 base/cbv/rotating_work_from.py:149
 #: base/templates/base/rotating_shift/htmx/group_by.html:165
 #: base/templates/base/rotating_shift/individual_view.html:155
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:159
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:156
-#: base/templates/base/rotating_work_type/htmx/group_by.html:148
-#: base/templates/base/rotating_work_type/individual_view.html:158
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:132
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:155
+#: base/templates/base/rotating_work_from/htmx/group_by.html:148
+#: base/templates/base/rotating_work_from/individual_view.html:158
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:132
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:155
 #: base/templates/cbv/rotating_shift/actions_rotaing_shift.html:18
 #: base/templates/cbv/rotating_shift/rotating_shift_detail_actions.html:21
-#: base/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:16
-#: base/templates/cbv/rotating_work_type/work_rotate_actions.html:16
+#: base/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:16
+#: base/templates/cbv/rotating_work_from/work_rotate_actions.html:16
 #: biometric/templates/biometric/card_biometric_devices.html:75
 #: biometric/templates/biometric/list_biometric_devices.html:85
 #: employee/cbv/employees.py:502
@@ -11675,7 +11675,7 @@ msgstr ""
 #: helpdesk/templates/helpdesk/ticket/ticket_list.html:924
 #: helpdesk/templates/helpdesk/ticket/ticket_nav.html:55
 #: horilla_theme/templates/cbv/rotating_shift/rotating_shift_detail_actions.html:26
-#: horilla_theme/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:28
+#: horilla_theme/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:28
 #: horilla_theme/templates/feedback/feedback_detailed_view.html:121
 #: horilla_theme/templates/okr/emp_objective/emp_objective_list.html:146
 #: horilla_theme/templates/okr/emp_objective/emp_objective_nav.html:99
@@ -11733,15 +11733,15 @@ msgstr ""
 msgid "Archive"
 msgstr ""
 
-#: base/cbv/rotating_shift_assign.py:195 base/cbv/rotating_work_type.py:158
+#: base/cbv/rotating_shift_assign.py:195 base/cbv/rotating_work_from.py:158
 #: base/templates/base/rotating_shift/htmx/group_by.html:173
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:169
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:166
-#: base/templates/base/rotating_work_type/htmx/group_by.html:159
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:142
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:164
+#: base/templates/base/rotating_work_from/htmx/group_by.html:159
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:142
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:164
 #: base/templates/cbv/rotating_shift/actions_rotaing_shift.html:25
-#: base/templates/cbv/rotating_work_type/work_rotate_actions.html:22
+#: base/templates/cbv/rotating_work_from/work_rotate_actions.html:22
 #: biometric/templates/biometric/card_biometric_devices.html:83
 #: biometric/templates/biometric/list_biometric_devices.html:91
 #: employee/templates/cbv/employees_view/employee_actions.html:59
@@ -11773,7 +11773,7 @@ msgstr ""
 
 #: base/cbv/rotating_shift_assign.py:260
 #: base/templates/base/rotating_shift/individual_view.html:112
-#: base/templates/base/rotating_work_type/individual_view.html:129
+#: base/templates/base/rotating_work_from/individual_view.html:129
 msgid "Next Change Date"
 msgstr ""
 
@@ -11796,18 +11796,18 @@ msgstr ""
 msgid "Rotating Shift Assign Created Successfully"
 msgstr ""
 
-#: base/cbv/rotating_work_type.py:72 base/cbv/rotating_work_type.py:83
-#: base/cbv/rotating_work_type.py:217 base/cbv/settings_rotatingwork.py:112
+#: base/cbv/rotating_work_from.py:72 base/cbv/rotating_work_from.py:83
+#: base/cbv/rotating_work_from.py:217 base/cbv/settings_rotatingwork.py:112
 #: base/models.py:420 base/models.py:513
-#: base/templates/base/rotating_work_type/filters.html:5
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:28
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:3
+#: base/templates/base/rotating_work_from/filters.html:5
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:28
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:3
 #: horilla_theme/templates/settings.html:269 templates/settings.html:352
-msgid "Rotating Work Type"
+msgid "Rotating Work From"
 msgstr ""
 
-#: base/cbv/rotating_work_type.py:73 base/cbv/rotating_work_type.py:84
-#: base/cbv/rotating_work_type.py:219 base/cbv/rotating_work_type.py:248
+#: base/cbv/rotating_work_from.py:73 base/cbv/rotating_work_from.py:84
+#: base/cbv/rotating_work_from.py:219 base/cbv/rotating_work_from.py:248
 #: base/models.py:536 base/models.py:1113
 #: base/templates/base/rotating_shift/filters.html:14
 #: base/templates/base/rotating_shift/htmx/group_by.html:74
@@ -11815,13 +11815,13 @@ msgstr ""
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:38
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:62
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:63
-#: base/templates/base/rotating_work_type/filters.html:14
-#: base/templates/base/rotating_work_type/htmx/group_by.html:63
-#: base/templates/base/rotating_work_type/individual_view.html:80
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:38
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:65
+#: base/templates/base/rotating_work_from/filters.html:14
+#: base/templates/base/rotating_work_from/htmx/group_by.html:63
+#: base/templates/base/rotating_work_from/individual_view.html:80
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:38
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:65
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:13
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:12
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:12
 #: employee/templates/tabs/allowance_deduction-tab.html:65
 #: employee/templates/tabs/allowance_deduction-tab.html:166
 #: employee/templates/tabs/shift-tab.html:427
@@ -11836,91 +11836,91 @@ msgstr ""
 msgid "Based On"
 msgstr ""
 
-#: base/cbv/rotating_work_type.py:76 base/cbv/rotating_work_type.py:87
-#: base/cbv/rotating_work_type.py:218 base/cbv/rotating_work_type.py:251
+#: base/cbv/rotating_work_from.py:76 base/cbv/rotating_work_from.py:87
+#: base/cbv/rotating_work_from.py:218 base/cbv/rotating_work_from.py:251
 #: base/models.py:522
-#: base/templates/base/rotating_work_type/htmx/group_by.html:67
-#: base/templates/base/rotating_work_type/individual_view.html:116
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:73
+#: base/templates/base/rotating_work_from/htmx/group_by.html:67
+#: base/templates/base/rotating_work_from/individual_view.html:116
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:73
 #: employee/templates/tabs/shift-tab.html:666
-msgid "Current Work Type"
+msgid "Current Work From"
 msgstr ""
 
-#: base/cbv/rotating_work_type.py:78 base/cbv/rotating_work_type.py:89
-#: base/cbv/rotating_work_type.py:253 base/models.py:529
-#: base/templates/base/rotating_work_type/htmx/group_by.html:71
-#: base/templates/base/rotating_work_type/individual_view.html:120
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:78
+#: base/cbv/rotating_work_from.py:78 base/cbv/rotating_work_from.py:89
+#: base/cbv/rotating_work_from.py:253 base/models.py:529
+#: base/templates/base/rotating_work_from/htmx/group_by.html:71
+#: base/templates/base/rotating_work_from/individual_view.html:120
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:78
 #: employee/templates/tabs/shift-tab.html:672
-msgid "Next Work Type"
+msgid "Next Work From"
 msgstr ""
 
-#: base/cbv/rotating_work_type.py:209 base/cbv/rotating_work_type.py:299
-#: base/cbv/rotating_work_type.py:316 base/cbv/rotating_work_type.py:323
-#: base/cbv/rotating_work_type.py:375 base/cbv/rotating_work_type.py:382
-#: base/cbv/rotating_work_type.py:392 base/models.py:573
-#: base/templates/base/rotating_work_type/htmx/rotating_work_type_assign_form.html:4
-#: base/templates/base/rotating_work_type/htmx/rotating_work_type_assign_update_form.html:4
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:5
-msgid "Rotating Work Type Assign"
+#: base/cbv/rotating_work_from.py:209 base/cbv/rotating_work_from.py:299
+#: base/cbv/rotating_work_from.py:316 base/cbv/rotating_work_from.py:323
+#: base/cbv/rotating_work_from.py:375 base/cbv/rotating_work_from.py:382
+#: base/cbv/rotating_work_from.py:392 base/models.py:573
+#: base/templates/base/rotating_work_from/htmx/rotating_work_from_assign_form.html:4
+#: base/templates/base/rotating_work_from/htmx/rotating_work_from_assign_update_form.html:4
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:5
+msgid "Rotating Work From Assign"
 msgstr ""
 
-#: base/cbv/rotating_work_type.py:334
+#: base/cbv/rotating_work_from.py:334
 msgid "Rotating Work Assign Updated Successfully"
 msgstr ""
 
-#: base/cbv/rotating_work_type.py:336
+#: base/cbv/rotating_work_from.py:336
 msgid "Rotating Work Assigned"
 msgstr ""
 
-#: base/cbv/rotating_work_type.py:394
+#: base/cbv/rotating_work_from.py:394
 msgid "Rotating Work Assign Created"
 msgstr ""
 
 #: base/cbv/settings_rotatingwork.py:76 base/cbv/settings_rotatingwork.py:83
 #: base/models.py:395
-#: base/templates/base/rotating_work_type/rotating_work_type_view.html:7
-msgid "Work Type 1"
+#: base/templates/base/rotating_work_from/rotating_work_from_view.html:7
+msgid "Work From 1"
 msgstr ""
 
 #: base/cbv/settings_rotatingwork.py:77 base/cbv/settings_rotatingwork.py:84
 #: base/models.py:401
-#: base/templates/base/rotating_work_type/rotating_work_type_view.html:8
-msgid "Work Type 2"
+#: base/templates/base/rotating_work_from/rotating_work_from_view.html:8
+msgid "Work From 2"
 msgstr ""
 
 #: base/cbv/settings_rotatingwork.py:78 base/cbv/settings_rotatingwork.py:85
-msgid "Additional Work Types"
+msgid "Additional Work From Options"
 msgstr ""
 
 #: base/cbv/settings_rotatingwork.py:127
-msgid "Create Rotating Work Type"
+msgid "Create Rotating Work From"
 msgstr ""
 
 #: base/cbv/settings_rotatingwork.py:133 base/cbv/settings_rotatingwork.py:172
-msgid "Rotating Work Type Created"
+msgid "Rotating Work From Created"
 msgstr ""
 
 #: base/cbv/settings_rotatingwork.py:153
-msgid "Update Rotating Work Type"
+msgid "Update Rotating Work From"
 msgstr ""
 
-#: base/cbv/settings_rotatingwork.py:159 base/cbv/work_type_request.py:343
-#: base/cbv/work_type_request.py:349
-msgid "Update Work Type"
+#: base/cbv/settings_rotatingwork.py:159 base/cbv/work_from_request.py:343
+#: base/cbv/work_from_request.py:349
+msgid "Update Work From"
 msgstr ""
 
 #: base/cbv/settings_rotatingwork.py:170
-msgid "Rotating Work Type Updated"
+msgid "Rotating Work From Updated"
 msgstr ""
 
 #: base/cbv/shift_request.py:65 base/models.py:1300 base/models.py:1517
 #: base/models.py:1526 base/templates/cbv/shift_request/filter.html:114
-#: base/templates/cbv/work_type_request/filter.html:83
+#: base/templates/cbv/work_from_request/filter.html:83
 #: base/templates/shift_request/htmx/allocation_requests.html:153
 #: base/templates/shift_request/shift_request_export.html:95
 #: base/templates/shift_request/shift_request_nav.html:165
-#: base/templates/work_type_request/work_type_request_export.html:95
+#: base/templates/work_from_request/work_from_request_export.html:95
 #: helpdesk/cbv/pipeline.py:234
 #: helpdesk/templates/helpdesk/ticket/ticket_view.html:52
 #: recruitment/cbv/candidates.py:239 recruitment/cbv/candidates.py:641
@@ -11945,8 +11945,8 @@ msgstr ""
 #: base/cbv/shift_request.py:143 base/cbv/shift_request.py:161
 #: base/cbv/shift_request.py:191 base/cbv/shift_request.py:229
 #: base/cbv/shift_request.py:381 base/cbv/shift_request.py:417
-#: base/cbv/work_type_request.py:82 base/cbv/work_type_request.py:101
-#: base/cbv/work_type_request.py:263 base/forms.py:2005 base/forms.py:2060
+#: base/cbv/work_from_request.py:82 base/cbv/work_from_request.py:101
+#: base/cbv/work_from_request.py:263 base/forms.py:2005 base/forms.py:2060
 #: base/forms.py:2121 base/models.py:1293 base/models.py:1519
 #: base/templates/shift_request/htmx/allocation_requests.html:51
 #: base/templates/shift_request/htmx/group_by.html:45
@@ -11955,9 +11955,9 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:50
 #: base/templates/shift_request/htmx/requests.html:306
 #: base/templates/shift_request/htmx/requests.html:309
-#: base/templates/work_type_request/htmx/group_by.html:93
-#: base/templates/work_type_request/htmx/requests.html:68
-#: base/templates/work_type_request/htmx/requests.html:71
+#: base/templates/work_from_request/htmx/group_by.html:93
+#: base/templates/work_from_request/htmx/requests.html:68
+#: base/templates/work_from_request/htmx/requests.html:71
 #: employee/templates/tabs/shift-tab.html:197
 #: employee/templates/tabs/shift-tab.html:881
 msgid "Requested Till"
@@ -11977,15 +11977,15 @@ msgstr ""
 msgid "User Availability"
 msgstr ""
 
-#: base/cbv/shift_request.py:255 base/cbv/work_type_request.py:166
+#: base/cbv/shift_request.py:255 base/cbv/work_from_request.py:166
 #: base/templates/shift_request/shift_request_nav.html:301
-#: base/templates/work_type_request/work_type_request_nav.html:234
+#: base/templates/work_from_request/work_from_request_nav.html:234
 msgid "Approve Requests"
 msgstr ""
 
-#: base/cbv/shift_request.py:266 base/cbv/work_type_request.py:177
+#: base/cbv/shift_request.py:266 base/cbv/work_from_request.py:177
 #: base/templates/shift_request/shift_request_nav.html:310
-#: base/templates/work_type_request/work_type_request_nav.html:241
+#: base/templates/work_from_request/work_from_request_nav.html:241
 msgid "Reject Requests"
 msgstr ""
 
@@ -12049,68 +12049,68 @@ msgstr ""
 
 #: base/cbv/work_shift_tab.py:44 employee/templates/tabs/shift-tab.html:38
 #: employee/templates/tabs/shift-tab.html:70
-msgid "Work type request"
+msgid "Work from request"
 msgstr ""
 
 #: base/cbv/work_shift_tab.py:59 employee/templates/tabs/shift-tab.html:95
-msgid "Rotating work type"
+msgid "Rotating work from"
 msgstr ""
 
 #: base/cbv/work_shift_tab.py:74 employee/templates/tabs/shift-tab.html:127
 msgid "Shift request"
 msgstr ""
 
-#: base/cbv/work_type_request.py:80 base/cbv/work_type_request.py:99
-msgid "Previous/current Work Type"
+#: base/cbv/work_from_request.py:80 base/cbv/work_from_request.py:99
+msgid "Previous/current Work From"
 msgstr ""
 
-#: base/cbv/work_type_request.py:226 base/models.py:1316
-#: base/templates/work_type_request/work_type_request_nav.html:10
-msgid "Work Type Requests"
+#: base/cbv/work_from_request.py:226 base/models.py:1316
+#: base/templates/work_from_request/work_from_request_nav.html:10
+msgid "Work From Requests"
 msgstr ""
 
-#: base/cbv/work_type_request.py:235
-msgid "current Work Type"
+#: base/cbv/work_from_request.py:235
+msgid "current Work From"
 msgstr ""
 
-#: base/cbv/work_type_request.py:261 base/models.py:1287
-#: base/templates/cbv/work_type_request/filter.html:78
-#: base/templates/work_type_request/work_type_request_export.html:105
-#: base/templates/work_type_request/work_type_request_nav.html:134
-msgid "Previous Work Type"
+#: base/cbv/work_from_request.py:261 base/models.py:1287
+#: base/templates/cbv/work_from_request/filter.html:78
+#: base/templates/work_from_request/work_from_request_export.html:105
+#: base/templates/work_from_request/work_from_request_nav.html:134
+msgid "Previous Work From"
 msgstr ""
 
-#: base/cbv/work_type_request.py:264
-msgid "Is Permanent Work Type"
+#: base/cbv/work_from_request.py:264
+msgid "Is Permanent Work From"
 msgstr ""
 
-#: base/cbv/work_type_request.py:318
-msgid "Create Work Type"
+#: base/cbv/work_from_request.py:318
+msgid "Create Work From"
 msgstr ""
 
-#: base/cbv/work_type_request.py:324 base/cbv/work_type_request.py:362
-msgid "New Work Type Created"
+#: base/cbv/work_from_request.py:324 base/cbv/work_from_request.py:362
+msgid "New Work From Created"
 msgstr ""
 
-#: base/cbv/work_type_request.py:360
-msgid "Work Type Updated"
+#: base/cbv/work_from_request.py:360
+msgid "Work From Updated"
 msgstr ""
 
-#: base/cbv/work_type_request.py:378 base/cbv/work_type_request.py:491
-#: base/cbv/work_type_request.py:496 base/models.py:1315
-#: base/templates/cbv/work_type_request/filter.html:56
-#: base/templates/work_type_request/work_type_request_export.html:81
-#: base/templates/work_type_request/work_type_request_nav.html:110
-msgid "Work Type Request"
+#: base/cbv/work_from_request.py:378 base/cbv/work_from_request.py:491
+#: base/cbv/work_from_request.py:496 base/models.py:1315
+#: base/templates/cbv/work_from_request/filter.html:56
+#: base/templates/work_from_request/work_from_request_export.html:81
+#: base/templates/work_from_request/work_from_request_nav.html:110
+msgid "Work From Request"
 msgstr ""
 
-#: base/cbv/work_type_request.py:420 base/views.py:4143 base/views.py:4736
+#: base/cbv/work_from_request.py:420 base/views.py:4143 base/views.py:4736
 #: base/views.py:4805
 msgid "Request Updated Successfully"
 msgstr ""
 
-#: base/cbv/work_type_request.py:424 base/cbv/work_type_request.py:508
-msgid "Work type Request Created"
+#: base/cbv/work_from_request.py:424 base/cbv/work_from_request.py:508
+msgid "Work from Request Created"
 msgstr ""
 
 #: base/context_processors.py:124 employee/views.py:1535
@@ -12150,7 +12150,7 @@ msgid "Job role has been created successfully!"
 msgstr ""
 
 #: base/forms.py:920 base/urls.py:526
-msgid "---Choose Work Type---"
+msgid "---Choose Work From---"
 msgstr ""
 
 #: base/forms.py:1020 base/forms.py:1219 base/forms.py:1702 base/forms.py:1884
@@ -12167,17 +12167,17 @@ msgstr ""
 #: base/templates/base/rotating_shift/filters.html:81
 #: base/templates/base/rotating_shift/individual_view.html:121
 #: base/templates/base/rotating_shift/rotating_shift_assign_export.html:109
-#: base/templates/base/rotating_work_type/filters.html:81
-#: base/templates/base/rotating_work_type/individual_view.html:136
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_export.html:109
+#: base/templates/base/rotating_work_from/filters.html:81
+#: base/templates/base/rotating_work_from/individual_view.html:136
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_export.html:109
 #: base/templates/cbv/rotating_shift/rotating_shift_filter.html:82
-#: base/templates/cbv/rotating_work_type/filter_work_rotate.html:83
+#: base/templates/cbv/rotating_work_from/filter_work_rotate.html:83
 #: base/templates/cbv/shift_request/filter.html:35
-#: base/templates/cbv/work_type_request/filter.html:26
+#: base/templates/cbv/work_from_request/filter.html:26
 #: base/templates/shift_request/shift_request_export.html:50
 #: base/templates/shift_request/shift_request_nav.html:106
-#: base/templates/work_type_request/work_type_request_export.html:50
-#: base/templates/work_type_request/work_type_request_nav.html:80
+#: base/templates/work_from_request/work_from_request_export.html:50
+#: base/templates/work_from_request/work_from_request_nav.html:80
 #: biometric/templates/cbv/biometric_filter.html:19
 #: employee/templates/cbv/documents/document_filter.html:28
 #: employee/templates/cbv/employees_view/filter_employee.html:102
@@ -12213,26 +12213,26 @@ msgstr ""
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:115
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:117
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:121
-#: base/templates/base/rotating_work_type/htmx/group_by.html:109
-#: base/templates/base/rotating_work_type/htmx/group_by.html:111
-#: base/templates/base/rotating_work_type/htmx/group_by.html:113
-#: base/templates/base/rotating_work_type/htmx/group_by.html:117
-#: base/templates/base/rotating_work_type/individual_view.html:96
-#: base/templates/base/rotating_work_type/individual_view.html:98
-#: base/templates/base/rotating_work_type/individual_view.html:100
-#: base/templates/base/rotating_work_type/individual_view.html:104
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:114
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:116
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:118
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:122
+#: base/templates/base/rotating_work_from/htmx/group_by.html:109
+#: base/templates/base/rotating_work_from/htmx/group_by.html:111
+#: base/templates/base/rotating_work_from/htmx/group_by.html:113
+#: base/templates/base/rotating_work_from/htmx/group_by.html:117
+#: base/templates/base/rotating_work_from/individual_view.html:96
+#: base/templates/base/rotating_work_from/individual_view.html:98
+#: base/templates/base/rotating_work_from/individual_view.html:100
+#: base/templates/base/rotating_work_from/individual_view.html:104
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:114
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:116
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:118
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:122
 #: base/templates/cbv/rotating_shift/rotating_column.html:9
 #: base/templates/cbv/rotating_shift/rotating_column.html:11
 #: base/templates/cbv/rotating_shift/rotating_column.html:13
 #: base/templates/cbv/rotating_shift/rotating_column.html:17
-#: base/templates/cbv/rotating_work_type/rotation_col.html:10
-#: base/templates/cbv/rotating_work_type/rotation_col.html:12
-#: base/templates/cbv/rotating_work_type/rotation_col.html:14
-#: base/templates/cbv/rotating_work_type/rotation_col.html:18
+#: base/templates/cbv/rotating_work_from/rotation_col.html:10
+#: base/templates/cbv/rotating_work_from/rotation_col.html:12
+#: base/templates/cbv/rotating_work_from/rotation_col.html:14
+#: base/templates/cbv/rotating_work_from/rotation_col.html:18
 #: base/translator.py:98
 msgid "Rotate every"
 msgstr ""
@@ -12577,15 +12577,15 @@ msgid "Job Roles"
 msgstr ""
 
 #: base/models.py:339
-msgid "Work Types"
+msgid "Work From Options"
 msgstr ""
 
 #: base/models.py:421
-msgid "Rotating Work Types"
+msgid "Rotating Work From Options"
 msgstr ""
 
 #: base/models.py:460 base/models.py:472 base/models.py:478 base/models.py:483
-msgid "Select different work type continuously"
+msgid "Select different work from continuously"
 msgstr ""
 
 #: base/models.py:539 base/models.py:1116
@@ -12601,7 +12601,7 @@ msgid "Rotate Every Month"
 msgstr ""
 
 #: base/models.py:574
-msgid "Rotating Work Type Assigns"
+msgid "Rotating Work From Assigns"
 msgstr ""
 
 #: base/models.py:579 base/models.py:1255 base/models.py:1437
@@ -12669,7 +12669,7 @@ msgid "Rotating Shift Assigns"
 msgstr ""
 
 #: base/models.py:1279
-msgid "Requesting Work Type"
+msgid "Requesting Work From"
 msgstr ""
 
 #: base/models.py:1297 base/models.py:1523
@@ -12681,7 +12681,7 @@ msgid "End date must be greater than or equal to start date"
 msgstr ""
 
 #: base/models.py:1444
-msgid "A work type request already exists during this time period."
+msgid "A work from request already exists during this time period."
 msgstr ""
 
 #: base/models.py:1448 base/models.py:1685
@@ -13311,7 +13311,7 @@ msgstr ""
 
 #: base/templates/base/auth/permission_accordion.html:24
 #: base/templates/base/rotating_shift/rotating_shift_assign_nav.html:198
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_nav.html:172
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_nav.html:172
 #: employee/templates/cbv/allocations/auth/perm.html:23
 #: horilla_theme/templates/base/auth/permission_accordion.html:28
 #: horilla_theme/templates/cbv/pipeline/onboarding/tasks.html:20
@@ -13684,7 +13684,7 @@ msgstr ""
 
 #: base/templates/base/mail_server/replace_mail.html:114
 #: base/templates/shift_request/shift_request.html:26
-#: base/templates/work_type_request/work_type_request.html:15
+#: base/templates/work_from_request/work_from_request.html:15
 #: employee/templates/employee_personal_info/employee_create_form.html:101
 #: employee/templates/employee_personal_info/employee_personal_info.html:70
 #: employee/templates/employee_personal_info/employee_work_info.html:86
@@ -13730,11 +13730,11 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:112
 #: base/templates/base/rotating_shift/individual_view.html:74
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:108
-#: base/templates/base/rotating_work_type/htmx/group_by.html:104
-#: base/templates/base/rotating_work_type/individual_view.html:91
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:109
+#: base/templates/base/rotating_work_from/htmx/group_by.html:104
+#: base/templates/base/rotating_work_from/individual_view.html:91
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:109
 #: base/templates/cbv/rotating_shift/rotating_column.html:4
-#: base/templates/cbv/rotating_work_type/rotation_col.html:5
+#: base/templates/cbv/rotating_work_from/rotation_col.html:5
 #: employee/templates/tabs/shift-tab.html:490
 msgid "Rotate after"
 msgstr ""
@@ -13742,11 +13742,11 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:112
 #: base/templates/base/rotating_shift/individual_view.html:74
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:108
-#: base/templates/base/rotating_work_type/htmx/group_by.html:104
-#: base/templates/base/rotating_work_type/individual_view.html:91
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:109
+#: base/templates/base/rotating_work_from/htmx/group_by.html:104
+#: base/templates/base/rotating_work_from/individual_view.html:91
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:109
 #: base/templates/cbv/rotating_shift/rotating_column.html:4
-#: base/templates/cbv/rotating_work_type/rotation_col.html:5
+#: base/templates/cbv/rotating_work_from/rotation_col.html:5
 #: employee/templates/cbv/disciplinary_actions/action_taken.html:6
 #: employee/templates/disciplinary_actions/disciplinary_records.html:97
 #: employee/templates/employee/dashboard/dashboard_employee.html:108
@@ -13760,11 +13760,11 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:114
 #: base/templates/base/rotating_shift/individual_view.html:76
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:110
-#: base/templates/base/rotating_work_type/htmx/group_by.html:106
-#: base/templates/base/rotating_work_type/individual_view.html:93
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:111
+#: base/templates/base/rotating_work_from/htmx/group_by.html:106
+#: base/templates/base/rotating_work_from/individual_view.html:93
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:111
 #: base/templates/cbv/rotating_shift/rotating_column.html:6
-#: base/templates/cbv/rotating_work_type/rotation_col.html:7
+#: base/templates/cbv/rotating_work_from/rotation_col.html:7
 #: employee/templates/tabs/shift-tab.html:492
 msgid "Weekly every"
 msgstr ""
@@ -13779,11 +13779,11 @@ msgstr ""
 #: base/templates/base/rotating_shift/htmx/group_by.html:123
 #: base/templates/base/rotating_shift/individual_view.html:85
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:119
-#: base/templates/base/rotating_work_type/htmx/group_by.html:115
-#: base/templates/base/rotating_work_type/individual_view.html:102
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:120
+#: base/templates/base/rotating_work_from/htmx/group_by.html:115
+#: base/templates/base/rotating_work_from/individual_view.html:102
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:120
 #: base/templates/cbv/rotating_shift/rotating_column.html:15
-#: base/templates/cbv/rotating_work_type/rotation_col.html:16
+#: base/templates/cbv/rotating_work_from/rotation_col.html:16
 #: employee/templates/tabs/shift-tab.html:501
 msgid "Rotate every last day of month"
 msgstr ""
@@ -13821,46 +13821,46 @@ msgstr ""
 
 #: base/templates/base/rotating_shift/individual_view.html:79
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:113
-#: base/templates/base/rotating_work_type/htmx/group_by.html:109
-#: base/templates/base/rotating_work_type/individual_view.html:96
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:114
+#: base/templates/base/rotating_work_from/htmx/group_by.html:109
+#: base/templates/base/rotating_work_from/individual_view.html:96
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:114
 #: base/templates/cbv/rotating_shift/rotating_column.html:9
-#: base/templates/cbv/rotating_work_type/rotation_col.html:10
+#: base/templates/cbv/rotating_work_from/rotation_col.html:10
 msgid "st day of month"
 msgstr ""
 
 #: base/templates/base/rotating_shift/individual_view.html:81
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:115
-#: base/templates/base/rotating_work_type/htmx/group_by.html:111
-#: base/templates/base/rotating_work_type/individual_view.html:98
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:116
+#: base/templates/base/rotating_work_from/htmx/group_by.html:111
+#: base/templates/base/rotating_work_from/individual_view.html:98
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:116
 #: base/templates/cbv/rotating_shift/rotating_column.html:11
-#: base/templates/cbv/rotating_work_type/rotation_col.html:12
+#: base/templates/cbv/rotating_work_from/rotation_col.html:12
 msgid "nd day of month"
 msgstr ""
 
 #: base/templates/base/rotating_shift/individual_view.html:83
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:117
-#: base/templates/base/rotating_work_type/htmx/group_by.html:113
-#: base/templates/base/rotating_work_type/individual_view.html:100
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:118
+#: base/templates/base/rotating_work_from/htmx/group_by.html:113
+#: base/templates/base/rotating_work_from/individual_view.html:100
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:118
 #: base/templates/cbv/rotating_shift/rotating_column.html:13
-#: base/templates/cbv/rotating_work_type/rotation_col.html:14
+#: base/templates/cbv/rotating_work_from/rotation_col.html:14
 msgid "rd day of month"
 msgstr ""
 
 #: base/templates/base/rotating_shift/individual_view.html:87
 #: base/templates/base/rotating_shift/rotating_shift_assign_view.html:121
-#: base/templates/base/rotating_work_type/htmx/group_by.html:117
-#: base/templates/base/rotating_work_type/individual_view.html:104
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:122
+#: base/templates/base/rotating_work_from/htmx/group_by.html:117
+#: base/templates/base/rotating_work_from/individual_view.html:104
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:122
 #: base/templates/cbv/rotating_shift/rotating_column.html:17
-#: base/templates/cbv/rotating_work_type/rotation_col.html:18
+#: base/templates/cbv/rotating_work_from/rotation_col.html:18
 msgid "th day of month"
 msgstr ""
 
 #: base/templates/base/rotating_shift/individual_view.html:123
-#: base/templates/base/rotating_work_type/individual_view.html:136
+#: base/templates/base/rotating_work_from/individual_view.html:136
 #: employee/templates/tabs/shift-tab.html:527
 #: employee/templates/tabs/shift-tab.html:753 offboarding/models.py:81
 msgid "Archived"
@@ -13873,9 +13873,9 @@ msgid "Do you want to un-archive this rotating shift assign?"
 msgstr ""
 
 #: base/templates/base/rotating_shift/individual_view.html:157
-#: base/templates/base/rotating_work_type/individual_view.html:160
+#: base/templates/base/rotating_work_from/individual_view.html:160
 #: base/templates/cbv/rotating_shift/rotating_shift_detail_actions.html:23
-#: base/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:18
+#: base/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:18
 #: employee/cbv/employees.py:509
 #: helpdesk/templates/cbv/pipeline/kanban_action_method.html:71
 #: helpdesk/templates/cbv/pipeline/pipeline_action_col.html:75
@@ -13886,7 +13886,7 @@ msgstr ""
 #: helpdesk/templates/helpdesk/ticket/ticket_list.html:583
 #: helpdesk/templates/helpdesk/ticket/ticket_list.html:945
 #: horilla_theme/templates/cbv/rotating_shift/rotating_shift_detail_actions.html:28
-#: horilla_theme/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:30
+#: horilla_theme/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:30
 #: pms/templates/cbv/360_feedback/anonymous_action.html:13
 #: pms/templates/cbv/360_feedback/custom_actions.html:21
 #: pms/templates/cbv/360_feedback/custom_actions.html:53
@@ -13931,82 +13931,82 @@ msgstr ""
 msgid "Are you sure you want to delete this rotating shift?"
 msgstr ""
 
-#: base/templates/base/rotating_work_type/htmx/add_more_work_type_fields.html:25
-#: base/templates/base/rotating_work_type/htmx/rotating_work_type_as_p.html:40
-#: base/templates/cbv/rotating_work_type/forms/inherit.html:15
-#: base/templates/cbv/rotating_work_type/forms/update_inherit.html:15
-msgid "Add more work types.."
+#: base/templates/base/rotating_work_from/htmx/add_more_work_from_fields.html:25
+#: base/templates/base/rotating_work_from/htmx/rotating_work_from_as_p.html:40
+#: base/templates/cbv/rotating_work_from/forms/inherit.html:15
+#: base/templates/cbv/rotating_work_from/forms/update_inherit.html:15
+msgid "Add more work from options.."
 msgstr ""
 
-#: base/templates/base/rotating_work_type/htmx/group_by.html:21
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:23
-#: base/templates/work_type_request/htmx/group_by.html:18
-#: base/templates/work_type_request/htmx/requests.html:20
-msgid "Select All Worktypes"
+#: base/templates/base/rotating_work_from/htmx/group_by.html:21
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:23
+#: base/templates/work_from_request/htmx/group_by.html:18
+#: base/templates/work_from_request/htmx/requests.html:20
+msgid "Select All WorkFroms"
 msgstr ""
 
-#: base/templates/base/rotating_work_type/htmx/group_by.html:24
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:26
-#: base/templates/work_type_request/htmx/group_by.html:25
-#: base/templates/work_type_request/htmx/requests.html:23
-msgid "Unselect All Worktypes"
+#: base/templates/base/rotating_work_from/htmx/group_by.html:24
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:26
+#: base/templates/work_from_request/htmx/group_by.html:25
+#: base/templates/work_from_request/htmx/requests.html:23
+msgid "Unselect All WorkFroms"
 msgstr ""
 
-#: base/templates/base/rotating_work_type/htmx/group_by.html:27
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:29
-#: base/templates/work_type_request/htmx/group_by.html:33
-#: base/templates/work_type_request/htmx/requests.html:26
-msgid "Export Worktypes"
+#: base/templates/base/rotating_work_from/htmx/group_by.html:27
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:29
+#: base/templates/work_from_request/htmx/group_by.html:33
+#: base/templates/work_from_request/htmx/requests.html:26
+msgid "Export WorkFroms"
 msgstr ""
 
-#: base/templates/base/rotating_work_type/htmx/group_by.html:144
-msgid "Do you Want to archive this rotating work type assign?"
+#: base/templates/base/rotating_work_from/htmx/group_by.html:144
+msgid "Do you Want to archive this rotating work from assign?"
 msgstr ""
 
-#: base/templates/base/rotating_work_type/htmx/group_by.html:155
-msgid "Do you Want to un-archive this rotating work type assign?"
+#: base/templates/base/rotating_work_from/htmx/group_by.html:155
+msgid "Do you Want to un-archive this rotating work from assign?"
 msgstr ""
 
-#: base/templates/base/rotating_work_type/htmx/group_by.html:167
-#: base/templates/base/rotating_work_type/individual_view.html:166
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:172
-#: base/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:25
-#: base/templates/cbv/rotating_work_type/work_rotate_actions.html:31
+#: base/templates/base/rotating_work_from/htmx/group_by.html:167
+#: base/templates/base/rotating_work_from/individual_view.html:166
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:172
+#: base/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:25
+#: base/templates/cbv/rotating_work_from/work_rotate_actions.html:31
 #: employee/templates/tabs/shift-tab.html:823
-#: horilla_theme/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:38
-msgid "Are you sure you want to delete this rotating work type assign?"
+#: horilla_theme/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:38
+msgid "Are you sure you want to delete this rotating work from assign?"
 msgstr ""
 
-#: base/templates/base/rotating_work_type/individual_view.html:147
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:151
-#: base/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:10
-#: base/templates/cbv/rotating_work_type/work_rotate_actions.html:17
+#: base/templates/base/rotating_work_from/individual_view.html:147
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:151
+#: base/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:10
+#: base/templates/cbv/rotating_work_from/work_rotate_actions.html:17
 #: employee/templates/tabs/shift-tab.html:793
-#: horilla_theme/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:18
-msgid "Do you want to archive this rotating work type assign?"
+#: horilla_theme/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:18
+msgid "Do you want to archive this rotating work from assign?"
 msgstr ""
 
-#: base/templates/base/rotating_work_type/individual_view.html:194
-msgid "There are no rotating work type assigned to this employee."
+#: base/templates/base/rotating_work_from/individual_view.html:194
+msgid "There are no rotating work from assigned to this employee."
 msgstr ""
 
-#: base/templates/base/rotating_work_type/rotating_work_type_assign.html:15
-#: base/templates/work_type_request/work_type_request_view.html:9
-msgid "Selected Worktypes"
+#: base/templates/base/rotating_work_from/rotating_work_from_assign.html:15
+#: base/templates/work_from_request/work_from_request_view.html:9
+msgid "Selected WorkFroms"
 msgstr ""
 
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_empty.html:6
-msgid "No Employees Assigned to Rotating Work Types."
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_empty.html:6
+msgid "No Employees Assigned to Rotating Work From Options."
 msgstr ""
 
-#: base/templates/base/rotating_work_type/rotating_work_type_assign_view.html:160
-#: base/templates/cbv/rotating_work_type/work_rotate_actions.html:23
+#: base/templates/base/rotating_work_from/rotating_work_from_assign_view.html:160
+#: base/templates/cbv/rotating_work_from/work_rotate_actions.html:23
 #: employee/templates/tabs/shift-tab.html:807
-msgid "Do you want to un-archive this rotating work type assign?"
+msgid "Do you want to un-archive this rotating work from assign?"
 msgstr ""
 
-#: base/templates/base/rotating_work_type/rotating_work_type_view.html:30
-msgid "Are you sure you want to delete this rotating work type?"
+#: base/templates/base/rotating_work_from/rotating_work_from_view.html:30
+msgid "Are you sure you want to delete this rotating work from?"
 msgstr ""
 
 #: base/templates/base/shift/schedule_view.html:34
@@ -14080,8 +14080,8 @@ msgstr ""
 msgid "Are you sure you want to delete this ticket type?"
 msgstr ""
 
-#: base/templates/base/work_type/work_type_view.html:26
-msgid "Are you sure you want to delete this work type?"
+#: base/templates/base/work_from/work_from_view.html:26
+msgid "Are you sure you want to delete this work from?"
 msgstr ""
 
 #: base/templates/cbv/company_leaves/company_leave_filter.html:9
@@ -14152,13 +14152,13 @@ msgstr ""
 msgid "Export Rotating Shift Assigns"
 msgstr ""
 
-#: base/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:10
-#: horilla_theme/templates/cbv/rotating_work_type/rotate_detail_view_actions.html:20
-msgid "Do you want to Un-archive this rotating work type assign?"
+#: base/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:10
+#: horilla_theme/templates/cbv/rotating_work_from/rotate_detail_view_actions.html:20
+msgid "Do you want to Un-archive this rotating work from assign?"
 msgstr ""
 
-#: base/templates/cbv/rotating_work_type/rotating_action_export.html:7
-msgid "Export Rotating Work Type Assigns"
+#: base/templates/cbv/rotating_work_from/rotating_action_export.html:7
+msgid "Export Rotating Work From Assigns"
 msgstr ""
 
 #: base/templates/cbv/shift_request/actions_shift_requst.html:29
@@ -14194,8 +14194,8 @@ msgstr ""
 
 #: base/templates/cbv/shift_request/allocated_confirm_action.html:31
 #: base/templates/cbv/shift_request/confirmations.html:21
-#: base/templates/cbv/work_type_request/confirmation.html:17
-#: base/templates/request_and_approve/work_type_request.html:44
+#: base/templates/cbv/work_from_request/confirmation.html:17
+#: base/templates/request_and_approve/work_from_request.html:44
 #: base/templates/shift_request/htmx/allocation_details.html:123
 #: base/templates/shift_request/htmx/allocation_requests.html:144
 #: base/templates/shift_request/htmx/group_by.html:134
@@ -14203,9 +14203,9 @@ msgstr ""
 #: base/templates/shift_request/htmx/requests.html:169
 #: base/templates/shift_request/htmx/requests.html:447
 #: base/templates/shift_request/htmx/shift_request_detail.html:99
-#: base/templates/work_type_request/htmx/group_by.html:257
-#: base/templates/work_type_request/htmx/requests.html:171
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:99
+#: base/templates/work_from_request/htmx/group_by.html:257
+#: base/templates/work_from_request/htmx/requests.html:171
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:99
 #: employee/templates/tabs/shift-tab.html:349
 #: employee/templates/tabs/shift-tab.html:1019
 #: leave/templates/cbv/leave_allocation_request/confirmations.html:8
@@ -14230,11 +14230,11 @@ msgid "Export Shift Requests"
 msgstr ""
 
 #: base/templates/cbv/shift_request/filter.html:66
-#: base/templates/cbv/work_type_request/filter.html:48
+#: base/templates/cbv/work_from_request/filter.html:48
 #: base/templates/shift_request/shift_request_export.html:72
 #: base/templates/shift_request/shift_request_nav.html:137
-#: base/templates/work_type_request/work_type_request_export.html:72
-#: base/templates/work_type_request/work_type_request_nav.html:102
+#: base/templates/work_from_request/work_from_request_export.html:72
+#: base/templates/work_from_request/work_from_request_nav.html:102
 #: employee/templates/cbv/documents/document_filter.html:52
 #: employee/templates/cbv/employees_view/employee_export.html:45
 #: employee/templates/cbv/employees_view/filter_employee.html:36
@@ -14265,20 +14265,20 @@ msgid "Gender"
 msgstr ""
 
 #: base/templates/cbv/shift_request/filter.html:139
-#: base/templates/cbv/work_type_request/filter.html:102
+#: base/templates/cbv/work_from_request/filter.html:102
 #: base/templates/shift_request/shift_request_export.html:120
 #: base/templates/shift_request/shift_request_nav.html:196
-#: base/templates/work_type_request/work_type_request_export.html:120
-#: base/templates/work_type_request/work_type_request_nav.html:148
+#: base/templates/work_from_request/work_from_request_export.html:120
+#: base/templates/work_from_request/work_from_request_nav.html:148
 msgid "Requested Date From"
 msgstr ""
 
 #: base/templates/cbv/shift_request/filter.html:147
-#: base/templates/cbv/work_type_request/filter.html:109
+#: base/templates/cbv/work_from_request/filter.html:109
 #: base/templates/shift_request/shift_request_export.html:126
 #: base/templates/shift_request/shift_request_nav.html:204
-#: base/templates/work_type_request/work_type_request_export.html:126
-#: base/templates/work_type_request/work_type_request_nav.html:155
+#: base/templates/work_from_request/work_from_request_export.html:126
+#: base/templates/work_from_request/work_from_request_nav.html:155
 msgid "Requested Date Till"
 msgstr ""
 
@@ -14304,17 +14304,17 @@ msgstr ""
 msgid "Reallocate Shift."
 msgstr ""
 
-#: base/templates/cbv/work_type_request/actions.html:30
-#: base/templates/cbv/work_type_request/detail_view_actions.html:28
-#: base/templates/work_type_request/htmx/group_by.html:227
-#: base/templates/work_type_request/htmx/requests.html:151
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:127
+#: base/templates/cbv/work_from_request/actions.html:30
+#: base/templates/cbv/work_from_request/detail_view_actions.html:28
+#: base/templates/work_from_request/htmx/group_by.html:227
+#: base/templates/work_from_request/htmx/requests.html:151
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:127
 #: employee/templates/tabs/shift-tab.html:311
-msgid "Are you sure you want to delete this work type request?"
+msgid "Are you sure you want to delete this work from request?"
 msgstr ""
 
-#: base/templates/cbv/work_type_request/work_export.html:6
-msgid "Export Work Type Requests"
+#: base/templates/cbv/work_from_request/work_export.html:6
+msgid "Export Work From Requests"
 msgstr ""
 
 #: base/templates/company_leave/company_leave.html:122
@@ -14436,17 +14436,17 @@ msgid "Do you want to approve this shift request?"
 msgstr ""
 
 #: base/templates/request_and_approve/shift_request.html:54
-#: base/templates/request_and_approve/work_type_request.html:54
+#: base/templates/request_and_approve/work_from_request.html:54
 #: base/templates/shift_request/htmx/allocation_details.html:130
 #: base/templates/shift_request/htmx/allocation_requests.html:151
 #: base/templates/shift_request/htmx/group_by.html:521
 #: base/templates/shift_request/htmx/shift_request_detail.html:106
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:106
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:106
 msgid "Do you want to cancel this request?"
 msgstr ""
 
-#: base/templates/request_and_approve/work_type_request.html:10
-msgid "Previous/ Current Work Type"
+#: base/templates/request_and_approve/work_from_request.html:10
+msgid "Previous/ Current Work From"
 msgstr ""
 
 #: base/templates/shift_request/htmx/allocation_details.html:69
@@ -14470,14 +14470,14 @@ msgstr ""
 
 #: base/templates/shift_request/htmx/allocation_details.html:104
 #: base/templates/shift_request/htmx/shift_request_detail.html:74
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:72
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:72
 #: base/translator.py:131
 msgid "Requested date"
 msgstr ""
 
 #: base/templates/shift_request/htmx/allocation_details.html:108
 #: base/templates/shift_request/htmx/shift_request_detail.html:78
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:77
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:77
 msgid "Requested till"
 msgstr ""
 
@@ -14498,37 +14498,37 @@ msgstr ""
 msgid "'s shift request"
 msgstr ""
 
-#: base/templates/work_type_request/htmx/empty_request.html:6
-msgid "There are currently no work type requests to consider."
+#: base/templates/work_from_request/htmx/empty_request.html:6
+msgid "There are currently no work from requests to consider."
 msgstr ""
 
-#: base/templates/work_type_request/htmx/group_by.html:87
-#: base/templates/work_type_request/htmx/requests.html:62
-#: base/templates/work_type_request/htmx/requests.html:63
+#: base/templates/work_from_request/htmx/group_by.html:87
+#: base/templates/work_from_request/htmx/requests.html:62
+#: base/templates/work_from_request/htmx/requests.html:63
 #: employee/templates/tabs/shift-tab.html:191
-msgid "Previous/Current Work Type"
+msgid "Previous/Current Work From"
 msgstr ""
 
-#: base/templates/work_type_request/htmx/work_type_comment.html:93
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:213
-msgid "'s worktype request"
+#: base/templates/work_from_request/htmx/work_from_comment.html:93
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:213
+msgid "'s workfrom request"
 msgstr ""
 
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:62
-msgid "Requested work type"
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:62
+msgid "Requested work from"
 msgstr ""
 
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:66
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:66
 #: base/translator.py:135
-msgid "Previous work type"
+msgid "Previous work from"
 msgstr ""
 
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:88
-msgid "Is permenent work type"
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:88
+msgid "Is permenent work from"
 msgstr ""
 
-#: base/templates/work_type_request/htmx/work_type_request_single_view.html:161
-msgid "There are no work type requets to display."
+#: base/templates/work_from_request/htmx/work_from_request_single_view.html:161
+msgid "There are no work from requets to display."
 msgstr ""
 
 #: base/translator.py:3
@@ -14624,7 +14624,7 @@ msgid "Your asset request rejected!."
 msgstr ""
 
 #: base/translator.py:26
-msgid "You are added to rotating work type"
+msgid "You are added to rotating work from"
 msgstr ""
 
 #: base/translator.py:27
@@ -14632,15 +14632,15 @@ msgid "You are added to rotating shift"
 msgstr ""
 
 #: base/translator.py:28
-msgid "Your work type request has been canceled."
+msgid "Your work from request has been canceled."
 msgstr ""
 
 #: base/translator.py:29
-msgid "Your work type request has been approved."
+msgid "Your work from request has been approved."
 msgstr ""
 
 #: base/translator.py:30
-msgid "Your work type request has been deleted."
+msgid "Your work from request has been deleted."
 msgstr ""
 
 #: base/translator.py:31
@@ -14794,7 +14794,7 @@ msgid "Deduct leave from basic pay"
 msgstr ""
 
 #: base/translator.py:80
-msgid "Work type"
+msgid "Work from"
 msgstr ""
 
 #: base/translator.py:81
@@ -14831,7 +14831,7 @@ msgid "SHIFT REQUESTS"
 msgstr ""
 
 #: base/translator.py:90
-msgid "WORK TYPE REQUESTS"
+msgid "WORK FROM REQUESTS"
 msgstr ""
 
 #: base/translator.py:93
@@ -14984,11 +14984,11 @@ msgid "Next shift"
 msgstr ""
 
 #: base/translator.py:140
-msgid "Current work type"
+msgid "Current work from"
 msgstr ""
 
 #: base/translator.py:141
-msgid "Next work type"
+msgid "Next work from"
 msgstr ""
 
 #: base/translator.py:142
@@ -15171,7 +15171,7 @@ msgid "Employee work information"
 msgstr ""
 
 #: base/translator.py:187
-msgid "Rotating work type assign"
+msgid "Rotating work from assign"
 msgstr ""
 
 #: base/translator.py:188
@@ -15255,7 +15255,7 @@ msgid "shift-request-view"
 msgstr ""
 
 #: base/translator.py:207
-msgid "work-type-request-view"
+msgid "work-from-request-view"
 msgstr ""
 
 #: base/translator.py:208
@@ -15263,7 +15263,7 @@ msgid "rotating-shift-assign"
 msgstr ""
 
 #: base/translator.py:209
-msgid "rotating-work-type-assign"
+msgid "rotating-work-from-assign"
 msgstr ""
 
 #: base/translator.py:210
@@ -15455,11 +15455,11 @@ msgid "job-role-view"
 msgstr ""
 
 #: base/translator.py:261
-msgid "work-type-view"
+msgid "work-from-view"
 msgstr ""
 
 #: base/translator.py:262
-msgid "rotating-work-type-view"
+msgid "rotating-work-from-view"
 msgstr ""
 
 #: base/translator.py:263
@@ -15607,7 +15607,7 @@ msgid "shift"
 msgstr ""
 
 #: base/translator.py:299
-msgid "work_type"
+msgid "work_from"
 msgstr ""
 
 #: base/translator.py:300
@@ -15949,7 +15949,7 @@ msgid "Shift Request to Approve"
 msgstr ""
 
 #: base/views.py:210
-msgid "Work Type Request to Approve"
+msgid "Work From Request to Approve"
 msgstr ""
 
 #: base/views.py:211
@@ -16105,27 +16105,27 @@ msgid "Job role updated."
 msgstr ""
 
 #: base/views.py:2105
-msgid "Work Type has been created successfully!"
+msgid "Work From has been created successfully!"
 msgstr ""
 
 #: base/views.py:2147
-msgid "Work type updated."
+msgid "Work from updated."
 msgstr ""
 
 #: base/views.py:2170
-msgid "Rotating work type created."
+msgid "Rotating work from created."
 msgstr ""
 
 #: base/views.py:2210
-msgid "Rotating work type updated."
+msgid "Rotating work from updated."
 msgstr ""
 
 #: base/views.py:2293
-msgid "Rotating work type assigned."
+msgid "Rotating work from assigned."
 msgstr ""
 
 #: base/views.py:2421
-msgid "Rotating work type assign updated."
+msgid "Rotating work from assign updated."
 msgstr ""
 
 #: base/views.py:2535 base/views.py:2554 base/views.py:3410 base/views.py:3427
@@ -16144,21 +16144,21 @@ msgstr ""
 
 #: base/views.py:2537
 #, python-brace-format
-msgid "Rotating work type assign is {}"
+msgid "Rotating work from assign is {}"
 msgstr ""
 
 #: base/views.py:2541 base/views.py:2633
-msgid "Rotating work type assign not found."
+msgid "Rotating work from assign not found."
 msgstr ""
 
 #: base/views.py:2569
 #, python-brace-format
-msgid "Rotating work type for {employee_id} already exists"
+msgid "Rotating work from for {employee_id} already exists"
 msgstr ""
 
 #: base/views.py:2581
 #, python-brace-format
-msgid "Rotating work type for {count} employees is {message}"
+msgid "Rotating work from for {count} employees is {message}"
 msgstr ""
 
 #: base/views.py:2605
@@ -16168,20 +16168,20 @@ msgstr ""
 
 #: base/views.py:2608
 #, python-brace-format
-msgid "{rwork_type_assign} not found."
+msgid "{rwork_from_assign} not found."
 msgstr ""
 
 #: base/views.py:2612
 #, python-brace-format
-msgid "You cannot delete {rwork_type_assign}"
+msgid "You cannot delete {rwork_from_assign}"
 msgstr ""
 
 #: base/views.py:2631
-msgid "Rotating work type assign deleted."
+msgid "Rotating work from assign deleted."
 msgstr ""
 
 #: base/views.py:2635
-msgid "You cannot delete this rotating work type."
+msgid "You cannot delete this rotating work from."
 msgstr ""
 
 #: base/views.py:2672
@@ -16267,11 +16267,11 @@ msgid "Employee permission assigned."
 msgstr ""
 
 #: base/views.py:3898
-msgid "Work type request added."
+msgid "Work from request added."
 msgstr ""
 
 #: base/views.py:3951 base/views.py:4037 base/views.py:4180 base/views.py:4284
-msgid "Work type request not found."
+msgid "Work from request not found."
 msgstr ""
 
 #: base/views.py:3960 base/views.py:4045 base/views.py:4834 base/views.py:5007
@@ -16283,37 +16283,37 @@ msgid "You don't have permission"
 msgstr ""
 
 #: base/views.py:3973
-msgid "Work type request has been rejected."
+msgid "Work from request has been rejected."
 msgstr ""
 
 #: base/views.py:4012
-msgid "Work type request has been canceled."
+msgid "Work from request has been canceled."
 msgstr ""
 
 #: base/views.py:4054 base/views.py:4099
-msgid "Work type request has been approved."
+msgid "Work from request has been approved."
 msgstr ""
 
 #: base/views.py:4069
-msgid "An approved work type request already exists during this time period."
+msgid "An approved work from request already exists during this time period."
 msgstr ""
 
 #: base/views.py:4165
-msgid "Work type request deleted."
+msgid "Work from request deleted."
 msgstr ""
 
 #: base/views.py:4182
-msgid "You cannot delete this work type request."
+msgid "You cannot delete this work from request."
 msgstr ""
 
 #: base/views.py:4289
 #, python-brace-format
-msgid "You cannot delete {employee} work type request for the date {date}."
+msgid "You cannot delete {employee} work from request for the date {date}."
 msgstr ""
 
 #: base/views.py:4296
 #, python-brace-format
-msgid "{} work type requests deleted."
+msgid "{} work from requests deleted."
 msgstr ""
 
 #: base/views.py:4350
@@ -16860,7 +16860,7 @@ msgstr ""
 #: horilla_theme/templates/tabs/note_tab.html:68
 #: horilla_theme/templates/tabs/note_tab.html:153
 #: horilla_theme/templates/task/new/forms/quick_create_task_form.html:44
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:101
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:101
 #: horilla_widgets/templates/horilla_widgets/horilla_multiselect_widget.html:210
 #: offboarding/templates/offboarding/note/view_notes.html:32
 #: payroll/templates/payroll/bonus/form.html:60
@@ -17630,7 +17630,7 @@ msgid "About"
 msgstr ""
 
 #: employee/cbv/employee_profile.py:110
-msgid "Work Type & Shift"
+msgid "Work From & Shift"
 msgstr ""
 
 #: employee/cbv/employee_profile.py:116
@@ -19623,7 +19623,7 @@ msgid "No interviews are scheduled for this candidate"
 msgstr ""
 
 #: employee/templates/tabs/shift-tab.html:409
-msgid "No work type request has been created."
+msgid "No work from request has been created."
 msgstr ""
 
 #: employee/templates/tabs/shift-tab.html:495
@@ -19675,7 +19675,7 @@ msgid "th day of month "
 msgstr ""
 
 #: employee/templates/tabs/shift-tab.html:854
-msgid "No rotating work type has been assigned."
+msgid "No rotating work from has been assigned."
 msgstr ""
 
 #: employee/templates/tabs/shift-tab.html:1071
@@ -21285,7 +21285,7 @@ msgstr ""
 #: horilla_theme/templates/leave/leave_request/leave_comment.html:109
 #: horilla_theme/templates/payroll/reimbursement/reimbursement_comment.html:116
 #: horilla_theme/templates/shift_request/htmx/shift_comment.html:120
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:119
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:119
 msgid "Are you sure you want to delete this comment?"
 msgstr ""
 
@@ -22450,7 +22450,7 @@ msgid "Shift Requests to Approve"
 msgstr ""
 
 #: horilla_theme/templates/horilla_theme/components/dashboard_tiles.html:86
-msgid "Work Type Requests to Approve"
+msgid "Work From Requests to Approve"
 msgstr ""
 
 #: horilla_theme/templates/horilla_theme/components/dashboard_tiles.html:111
@@ -22647,7 +22647,7 @@ msgstr ""
 #: horilla_theme/templates/offboarding/note/view_notes.html:92
 #: horilla_theme/templates/payroll/reimbursement/reimbursement_comment.html:88
 #: horilla_theme/templates/shift_request/htmx/shift_comment.html:92
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:91
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:91
 msgid "Add Comments"
 msgstr ""
 
@@ -22658,7 +22658,7 @@ msgstr ""
 #: horilla_theme/templates/pipeline/pipeline_components/view_note.html:205
 #: horilla_theme/templates/shift_request/htmx/shift_comment.html:181
 #: horilla_theme/templates/tabs/note_tab.html:116
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:180
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:180
 msgid "Add Files"
 msgstr ""
 
@@ -24528,8 +24528,8 @@ msgstr ""
 msgid "Week"
 msgstr ""
 
-#: horilla_theme/templates/work_type_request/htmx/work_type_comment.html:235
-msgid "No Comments have been added for this worktype request"
+#: horilla_theme/templates/work_from_request/htmx/work_from_comment.html:235
+msgid "No Comments have been added for this workfrom request"
 msgstr ""
 
 #: horilla_theme/views.py:65 horilla_theme/views.py:162
@@ -27443,7 +27443,7 @@ msgid ""
 msgstr ""
 
 #: payroll/models/models.py:984
-msgid "The fixed amount for one validated attendance with that work type"
+msgid "The fixed amount for one validated attendance with that work from"
 msgstr ""
 
 #: payroll/models/models.py:990
@@ -27510,7 +27510,7 @@ msgid "If based on is shift, then shift must be filled."
 msgstr ""
 
 #: payroll/models/models.py:1346
-msgid "If based on is work type, then work type must be filled."
+msgid "If based on is work from, then work from must be filled."
 msgstr ""
 
 #: payroll/models/models.py:1349
@@ -31482,7 +31482,7 @@ msgid "Shift Requests To Approve"
 msgstr ""
 
 #: templates/dashboard.html:574 templates/dashboard_tile_container.html:325
-msgid "Work Type Requests To Approve"
+msgid "Work From Requests To Approve"
 msgstr ""
 
 #: templates/dashboard_chart_form.html:15

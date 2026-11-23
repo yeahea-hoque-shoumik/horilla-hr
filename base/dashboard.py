@@ -74,7 +74,7 @@ def _exists_for_company(ModelClass, company_id):
     company.  Mirrors HorillaCompanyManager: a record is visible when it is
     explicitly assigned to this company OR has no company assignment at all
     (meaning it is shared across all companies — common for lookup tables like
-    WorkType, EmployeeType, EmployeeShift whose M2M company_id may be empty).
+    WorkFrom, EmployeeType, EmployeeShift whose M2M company_id may be empty).
     """
     try:
         filter_path = ModelClass.objects.get_company_filter_path()
@@ -113,7 +113,7 @@ def _get_setup_checklist_context(request):
         EmployeeShiftSchedule,
         JobPosition,
         SetupChecklistDismissal,
-        WorkType,
+        WorkFrom,
     )
 
     # 1. Permission gate — only show to admins / managers
@@ -213,11 +213,11 @@ def _get_setup_checklist_context(request):
             ),
         },
         {
-            "key": "work_type",
-            "title": _("Work Type"),
+            "key": "work_from",
+            "title": _("Work From"),
             "description": _("Set engagement types — Full Time, Part Time, Contract."),
-            "url": _safe_url("employee-settings-view", "?tab=work-type"),
-            "done": _exists_for_company(WorkType, company_pk) if company_pk else False,
+            "url": _safe_url("employee-settings-view", "?tab=work-from"),
+            "done": _exists_for_company(WorkFrom, company_pk) if company_pk else False,
         },
         {
             "key": "mail_server",
@@ -1342,7 +1342,7 @@ def dashboard_pending_approvals(request):
     has_attendance_perm = user.has_perm("attendance.change_validateattendance")
     has_asset_perm = user.has_perm("asset.change_assetrequest")
     has_shift_perm = user.has_perm("base.change_shiftrequest")
-    has_wt_perm = user.has_perm("base.change_worktyperequest")
+    has_wt_perm = user.has_perm("base.change_workfromrequest")
     has_reimb_perm = user.has_perm("payroll.change_reimbursement")
     is_mgr = _is_manager(user)
 
@@ -1478,17 +1478,17 @@ def dashboard_pending_approvals(request):
     except Exception:
         pending["shift_requests"] = 0
 
-    # Work type requests
+    # Work from requests
     try:
         from base.methods import filtersubordinates
-        from base.models import WorkTypeRequest
+        from base.models import WorkFromRequest
 
         if can_approve:
             # WorkRequestListView does not drop inactive employees.
-            data = WorkTypeRequest.objects.all()
+            data = WorkFromRequest.objects.all()
             wt_count = (
                 (
-                    filtersubordinates(request, data, "base.view_worktyperequest")
+                    filtersubordinates(request, data, "base.view_workfromrequest")
                     | (data.filter(employee_id=employee) if employee else data.none())
                 )
                 .filter(approved=False, canceled=False)
@@ -1497,7 +1497,7 @@ def dashboard_pending_approvals(request):
             )
         else:
             wt_count = (
-                WorkTypeRequest.objects.filter(
+                WorkFromRequest.objects.filter(
                     employee_id=employee,
                     approved=False,
                     canceled=False,
@@ -1505,9 +1505,9 @@ def dashboard_pending_approvals(request):
                 if employee
                 else 0
             )
-        pending["work_type_requests"] = wt_count
+        pending["work_from_requests"] = wt_count
     except Exception:
-        pending["work_type_requests"] = 0
+        pending["work_from_requests"] = 0
 
     # Reimbursement requests
     try:

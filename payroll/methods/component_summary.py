@@ -89,7 +89,7 @@ def calculation_summary(component):
         "children": ("per_children_fixed_amount", _("per child")),
         "attendance": ("per_attendance_fixed_amount", _("per day present")),
         "shift_id": ("shift_per_attendance_amount", _("per shift day")),
-        "work_type_id": ("work_type_per_attendance_amount", _("per work-type day")),
+        "work_from_id": ("work_from_per_attendance_amount", _("per work-from day")),
         "overtime": ("amount_per_one_hr", _("per overtime hour")),
         "week_off_overtime": ("amount_per_one_hr", _("per week-off hour")),
         "holiday_overtime": ("amount_per_one_hr", _("per holiday hour")),

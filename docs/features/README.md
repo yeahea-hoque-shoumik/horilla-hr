@@ -43,7 +43,7 @@ A flag that affects several areas is written in full once, in the file it affect
 | [00 How the system works overall](00-how-the-system-works.md) | Ideas shared by every area, the code version, the changes made in this fork, and what is planned but not built |
 | [01 Organisation and company setup](01-organisation-and-company-setup.md) | Companies, departments, job positions, system preferences, mail servers and the first-run setup |
 | [02 Employees](02-employees.md) | The employee profile, work information, policies, disciplinary actions, bonus points and archiving |
-| [03 Shifts and work types](03-shifts-and-work-types.md) | Shifts, work types, rotating schedules, rosters and change requests |
+| [03 Shifts and work from options](03-shifts-and-work-froms.md) | Shifts, work from options, rotating schedules, rosters and change requests |
 | [04 Holidays and announcements](04-holidays-and-announcements.md) | Public holidays, weekly days off and company announcements |
 | [05 Attendance](05-attendance.md) | Check-in and check-out, overtime, late arrival, biometric devices, location and face checks, and the monthly summary used by payroll |
 | [06 Leave](06-leave.md) | Leave types, balances, requests, approvals, carry-forward and resets |

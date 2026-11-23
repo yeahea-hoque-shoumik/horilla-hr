@@ -42,7 +42,7 @@ msgstr "Job Position"
 msgid "Department"
 msgstr "Abteilung"
 
-msgid "Work Type"
+msgid "Work From"
 msgstr "Werkstyp"
 
 msgid "Employee Type"
@@ -1470,7 +1470,7 @@ msgstr "Position auswählen..."
 msgid "Select shift..."
 msgstr "Schicht auswählen..."
 
-msgid "Select work type..."
+msgid "Select work from..."
 msgstr "Arbeitsart auswählen..."
 
 msgid "Clock In"
@@ -1926,7 +1926,7 @@ msgstr "Suche in: Tag"
 msgid "Search in : Shift"
 msgstr "Suche in: Schicht"
 
-msgid "Search in : Work Type"
+msgid "Search in : Work From"
 msgstr "Suche in: Arbeitstyp"
 
 msgid "Search in : Department"
@@ -2164,7 +2164,7 @@ msgstr "Ø Arbeitsstunden"
 msgid "Per day by department — this month"
 msgstr "Pro Tag nach Abteilung – dieser Monat"
 
-msgid "Work Type Distribution"
+msgid "Work From Distribution"
 msgstr "Verteilung der Arbeitsarten"
 
 msgid "Remote, on-site, hybrid, etc."
@@ -2308,7 +2308,7 @@ msgstr "Ø Std./Tag"
 msgid "8h target"
 msgstr "8-Std-Ziel"
 
-msgid "No work type data"
+msgid "No work from data"
 msgstr "Keine Daten zu Arbeitsarten"
 
 msgid "No absences this month"
@@ -3515,7 +3515,7 @@ msgstr "Wöchentlicher freier Tag erfolgreich aktualisiert"
 msgid "New Weekly Off Day Created Successfully"
 msgstr "Neuer wöchentlicher freier Tag erfolgreich erstellt"
 
-msgid "Requested Work Type"
+msgid "Requested Work From"
 msgstr "Angeforderter Arbeitstyp"
 
 msgid "Requested Shift"
@@ -3827,19 +3827,19 @@ msgstr "Drehen von Umschaltzuordnung erfolgreich erstellt"
 msgid "You are added to rotating shift"
 msgstr "Sie sind zur Drehung hinzugefügt"
 
-msgid "Rotating Work Type"
+msgid "Rotating Work From"
 msgstr "Rotierende Arbeitsart"
 
 msgid "Based On"
 msgstr "Basierend auf"
 
-msgid "Current Work Type"
+msgid "Current Work From"
 msgstr "Aktueller Arbeitstyp"
 
-msgid "Next Work Type"
+msgid "Next Work From"
 msgstr "Nächster Arbeitstyp"
 
-msgid "Rotating Work Type Assign"
+msgid "Rotating Work From Assign"
 msgstr "Drehende Arbeitsart zuweisen"
 
 msgid "Rotating Work Assign Updated Successfully"
@@ -3848,34 +3848,34 @@ msgstr "Drehen der Arbeit erfolgreich aktualisiert"
 msgid "Rotating Work Assigned"
 msgstr "Zugewiesene Arbeit drehen"
 
-msgid "You are added to rotating work type"
+msgid "You are added to rotating work from"
 msgstr "Sie werden dem Rotationstyp hinzugefügt"
 
 msgid "Rotating Work Assign Created"
 msgstr "Drehende Arbeit zuordnen erstellt"
 
-msgid "Work Type 1"
+msgid "Work From 1"
 msgstr "Arbeitstyp 1"
 
-msgid "Work Type 2"
+msgid "Work From 2"
 msgstr "Werkstyp 2"
 
-msgid "Additional Work Types"
+msgid "Additional Work From Options"
 msgstr "Zusätzliche Arbeitstypen"
 
-msgid "Create Rotating Work Type"
+msgid "Create Rotating Work From"
 msgstr "Erstelle Drehwerkstyp"
 
-msgid "Rotating Work Type Created"
+msgid "Rotating Work From Created"
 msgstr "Drehende Arbeitstyp erstellt"
 
-msgid "Update Rotating Work Type"
+msgid "Update Rotating Work From"
 msgstr "Rotationstyp aktualisieren"
 
-msgid "Update Work Type"
+msgid "Update Work From"
 msgstr "Work-Typ aktualisieren"
 
-msgid "Rotating Work Type Updated"
+msgid "Rotating Work From Updated"
 msgstr "Rotierender Werkstyp aktualisiert"
 
 msgid "Canceled"
@@ -3946,10 +3946,10 @@ msgstr ""
 msgid "You have a new shift reallocation request from %(employee)s."
 msgstr "Sie haben eine neue Schichtumverteilungsanfrage von %(employee)s."
 
-msgid "Work type request"
+msgid "Work from request"
 msgstr "Work-Typ-Anfrage"
 
-msgid "Rotating work type"
+msgid "Rotating work from"
 msgstr "Arbeitsart drehen"
 
 msgid "Shift request"
@@ -3958,44 +3958,44 @@ msgstr "Schichtanfrage"
 msgid "Shift Allocation"
 msgstr "Schichtzuweisung"
 
-msgid "Work Type Request"
+msgid "Work From Request"
 msgstr "Werkstyp Anfrage"
 
 msgid "Shift Request"
 msgstr "Schichtanfrage"
 
-msgid "Previous/current Work Type"
+msgid "Previous/current Work From"
 msgstr "Vorherige/aktueller Arbeitstyp"
 
-msgid "Work Type Requests"
+msgid "Work From Requests"
 msgstr "Werkstyp Anfragen"
 
-msgid "current Work Type"
+msgid "current Work From"
 msgstr "aktueller Arbeitstyp"
 
-msgid "Previous Work Type"
+msgid "Previous Work From"
 msgstr "Vorheriger Arbeitstyp"
 
-msgid "Is Permanent Work Type"
+msgid "Is Permanent Work From"
 msgstr "Ist Permanenter Arbeitstyp"
 
-msgid "Create Work Type"
+msgid "Create Work From"
 msgstr "Werkstyp erstellen"
 
-msgid "New Work Type Created"
+msgid "New Work From Created"
 msgstr "Neuer Arbeitstyp erstellt"
 
-msgid "Work Type Updated"
+msgid "Work From Updated"
 msgstr "Werkstyp aktualisiert"
 
 msgid "Request Updated Successfully"
 msgstr "Anfrage erfolgreich aktualisiert"
 
-msgid "Work type Request Created"
+msgid "Work from Request Created"
 msgstr "Werkstyp Anfrage erstellt"
 
 #, python-format
-msgid "You have new work type request to validate for %(employee)s"
+msgid "You have new work from request to validate for %(employee)s"
 msgstr "Sie haben eine neue Arbeitstypanfrage zur Validierung für %(employee)s"
 
 msgid "You do not have access to that company."
@@ -4148,7 +4148,7 @@ msgstr "Job Rolle wurde erfolgreich erstellt!"
 msgid "Role already exists under %(position)s"
 msgstr "Rolle existiert bereits unter %(position)s"
 
-msgid "---Choose Work Type---"
+msgid "---Choose Work From---"
 msgstr "---Werkstyp auswählen---"
 
 msgid "Rotate after day"
@@ -4375,19 +4375,19 @@ msgstr "Unternehmensgruppenzuweisungen"
 msgid "This department already exists in this company"
 msgstr "Diese Abteilung existiert bereits in diesem Unternehmen"
 
-msgid "Work Types"
+msgid "Work From Options"
 msgstr "Arbeitstypen"
 
-msgid "This work type already exists in this company"
+msgid "This work from already exists in this company"
 msgstr "Dieser Arbeitstyp ist in diesem Unternehmen bereits vorhanden"
 
 msgid "All Company"
 msgstr "Alle Unternehmen"
 
-msgid "Rotating Work Types"
+msgid "Rotating Work From Options"
 msgstr "Rotierende Arbeitstypen"
 
-msgid "Select different work type continuously"
+msgid "Select different work from continuously"
 msgstr "Wählen Sie kontinuierlich einen anderen Typ aus"
 
 msgid "Rotate After Day"
@@ -4399,7 +4399,7 @@ msgstr "Jedes Wochenende drehen"
 msgid "Rotate Every Month"
 msgstr "Jeden Monat drehen"
 
-msgid "Rotating Work Type Assigns"
+msgid "Rotating Work From Assigns"
 msgstr "Projekttyp drehen"
 
 msgid "Date must be greater than or equal to today"
@@ -4493,7 +4493,7 @@ msgstr "Protokoll der Dienstplanveröffentlichung"
 msgid "Roster Publish Logs"
 msgstr "Protokolle der Dienstplanveröffentlichung"
 
-msgid "Requesting Work Type"
+msgid "Requesting Work From"
 msgstr "Work-Typ anfordern"
 
 msgid "Permanent Request"
@@ -4505,7 +4505,7 @@ msgstr "Der Anforderungseintrag kann nicht gelöscht werden."
 msgid "End date must be greater than or equal to start date"
 msgstr "Enddatum muss größer als oder gleich dem Startdatum sein"
 
-msgid "A work type request already exists during this time period."
+msgid "A work from request already exists during this time period."
 msgstr ""
 "Während dieser Zeitspanne existiert bereits eine Anfrage vom Typ des Werks."
 
@@ -4694,7 +4694,7 @@ msgstr "Typ verlassen ist erforderlich"
 msgid "Penalty Accounts"
 msgstr "Strafkonten"
 
-msgid "Your Work Type has been changed."
+msgid "Your Work From has been changed."
 msgstr "Ihr Arbeitstyp wurde geändert."
 
 msgid "Your shift has been changed."
@@ -4707,10 +4707,10 @@ msgid "Shift changes notification, Requested date expired."
 msgstr ""
 "Benachrichtigung über Schichtänderungen, angefordertes Datum abgelaufen."
 
-msgid "Work Type Changes notification"
+msgid "Work From Changes notification"
 msgstr "Benachrichtigung über Änderungen des Arbeitstyps"
 
-msgid "Work type changes notification, Requested date expired."
+msgid "Work from changes notification, Requested date expired."
 msgstr ""
 "Benachrichtigung über Änderungen des Arbeitstyps, angefordertes Datum "
 "abgelaufen."
@@ -5902,43 +5902,43 @@ msgstr "Falsch"
 msgid "Are you sure you want to delete this rotating shift?"
 msgstr "Sind Sie sicher, dass Sie diese rotierende Schicht löschen möchten?"
 
-msgid "Add more work types.."
+msgid "Add more work from options.."
 msgstr "Weitere Arbeitstypen hinzufügen.."
 
-msgid "Select All Worktypes"
+msgid "Select All WorkFroms"
 msgstr "Alle Work-Typen auswählen"
 
-msgid "Unselect All Worktypes"
+msgid "Unselect All WorkFroms"
 msgstr "Alle Werktypen abwählen"
 
-msgid "Export Worktypes"
+msgid "Export WorkFroms"
 msgstr "Worktypes exportieren"
 
-msgid "Do you Want to archive this rotating work type assign?"
+msgid "Do you Want to archive this rotating work from assign?"
 msgstr "Möchten Sie diese Rotationstyp Aufgabe archivieren?"
 
-msgid "Do you Want to un-archive this rotating work type assign?"
+msgid "Do you Want to un-archive this rotating work from assign?"
 msgstr "Möchten Sie diese rotierende Arbeits-Typ-Zuweisung entarchivieren?"
 
-msgid "Are you sure you want to delete this rotating work type assign?"
+msgid "Are you sure you want to delete this rotating work from assign?"
 msgstr "Sind Sie sicher, dass Sie diese Rotationstyp Aufgabe löschen möchten?"
 
-msgid "Do you want to archive this rotating work type assign?"
+msgid "Do you want to archive this rotating work from assign?"
 msgstr "Möchten Sie diese rotierende Arbeitsaufgabe archivieren?"
 
-msgid "There are no rotating work type assigned to this employee."
+msgid "There are no rotating work from assigned to this employee."
 msgstr "Diesem Mitarbeiter ist kein rotierender Arbeitstyp zugeordnet."
 
-msgid "Selected Worktypes"
+msgid "Selected WorkFroms"
 msgstr "Ausgewählte Arbeitsarten"
 
-msgid "No Employees Assigned to Rotating Work Types."
+msgid "No Employees Assigned to Rotating Work From Options."
 msgstr "Keine Mitarbeiter für Rotierende Arbeitstypen zugewiesen."
 
-msgid "Do you want to un-archive this rotating work type assign?"
+msgid "Do you want to un-archive this rotating work from assign?"
 msgstr "Möchten Sie diese rotierende Arbeits-Typ-Zuweisung entarchivieren?"
 
-msgid "Are you sure you want to delete this rotating work type?"
+msgid "Are you sure you want to delete this rotating work from?"
 msgstr "Sind Sie sicher, dass Sie diesen Rotationstyp löschen möchten?"
 
 msgid ""
@@ -6218,7 +6218,7 @@ msgstr "Präfix"
 msgid "Are you sure you want to delete this ticket type?"
 msgstr "Sind Sie sicher, dass Sie diesen Ticket-Typ löschen möchten?"
 
-msgid "Are you sure you want to delete this work type?"
+msgid "Are you sure you want to delete this work from?"
 msgstr "Sind Sie sicher, dass Sie diesen Arbeitstyp löschen möchten?"
 
 msgid "Company logo"
@@ -6248,10 +6248,10 @@ msgstr "Manager hinzufügen"
 msgid "Export Rotating Shift Assigns"
 msgstr "Rotative Umschalt-Zuordnungen exportieren"
 
-msgid "Do you want to Un-archive this rotating work type assign?"
+msgid "Do you want to Un-archive this rotating work from assign?"
 msgstr "Möchten Sie diese rotierende Arbeits-Typ-Zuweisung dearchivieren?"
 
-msgid "Export Rotating Work Type Assigns"
+msgid "Export Rotating Work From Assigns"
 msgstr "Export rotierender Werkstyp Zuweisungen"
 
 msgid "Primary mail is not configured!"
@@ -6302,10 +6302,10 @@ msgstr "Nicht markiert"
 msgid "Reallocate Shift."
 msgstr "Umzuordnen."
 
-msgid "Are you sure you want to delete this work type request?"
+msgid "Are you sure you want to delete this work from request?"
 msgstr "Sind Sie sicher, dass Sie diese Work-Typ-Anfrage löschen möchten?"
 
-msgid "Export Work Type Requests"
+msgid "Export Work From Requests"
 msgstr "Work-Typ-Anfragen exportieren"
 
 msgid "There are no company leaves at the moment."
@@ -6371,7 +6371,7 @@ msgstr "Möchten Sie diese Anfrage abbrechen?"
 msgid "cancel"
 msgstr "Abbrechen"
 
-msgid "Previous/ Current Work Type"
+msgid "Previous/ Current Work From"
 msgstr "Vorheriger / aktueller Arbeitstyp"
 
 msgid "Reallocate to"
@@ -6408,26 +6408,26 @@ msgstr " Möchten Sie diese Anfrage ablehnen?"
 msgid "'s shift request"
 msgstr "'s Shift-Anfrage"
 
-msgid "There are currently no work type requests to consider."
+msgid "There are currently no work from requests to consider."
 msgstr ""
 "Zur Zeit gibt es keine zu berücksichtigenden Anfragen vom Typ des Werks."
 
-msgid "Previous/Current Work Type"
+msgid "Previous/Current Work From"
 msgstr "Vorherige/Aktueller Arbeitstyp"
 
-msgid "'s worktype request"
+msgid "'s workfrom request"
 msgstr "'s Worktyp-Anfrage"
 
-msgid "Requested work type"
+msgid "Requested work from"
 msgstr "Angeforderter Arbeitstyp"
 
-msgid "Previous work type"
+msgid "Previous work from"
 msgstr "Vorheriger Arbeitstyp"
 
-msgid "Is permenent work type"
+msgid "Is permenent work from"
 msgstr "Ist zutreffender Arbeitstyp"
 
-msgid "There are no work type requests to display."
+msgid "There are no work from requests to display."
 msgstr "Es gibt keine anzuzeigenden Work-Typ-Requets."
 
 msgid "monday"
@@ -6499,13 +6499,13 @@ msgstr "Ihre Anfrage wurde genehmigt!."
 msgid "Your asset request rejected!."
 msgstr "Ihre Asset-Anfrage wurde abgelehnt!"
 
-msgid "Your work type request has been canceled."
+msgid "Your work from request has been canceled."
 msgstr "Ihre Anfrage zum Arbeitstyp wurde abgebrochen."
 
-msgid "Your work type request has been approved."
+msgid "Your work from request has been approved."
 msgstr "Ihre Anfrage zum Werkstyp wurde genehmigt."
 
-msgid "Your work type request has been deleted."
+msgid "Your work from request has been deleted."
 msgstr "Ihre Anfrage zum Werkstyp wurde gelöscht."
 
 msgid "Your shift request has been canceled."
@@ -6613,7 +6613,7 @@ msgstr "Abzug für einen Aufenthaltsbetrag"
 msgid "Deduct leave from basic pay"
 msgstr "Abzug vom Grundgeld"
 
-msgid "Work type"
+msgid "Work from"
 msgstr "Werkstyp"
 
 msgid "Pay frequency"
@@ -6640,7 +6640,7 @@ msgstr "DASHBOARD"
 msgid "SHIFT REQUESTS"
 msgstr "SHIFT-ANFRAGEN"
 
-msgid "WORK TYPE REQUESTS"
+msgid "WORK FROM REQUESTS"
 msgstr "ARBEITSANFORDERUNGEN"
 
 msgid "Single"
@@ -6745,10 +6745,10 @@ msgstr "Nächstes Änderungsdatum"
 msgid "Next shift"
 msgstr "Nächste Schicht"
 
-msgid "Current work type"
+msgid "Current work from"
 msgstr "Aktueller Arbeitstyp"
 
-msgid "Next work type"
+msgid "Next work from"
 msgstr "Nächster Arbeitstyp"
 
 msgid "Start date from"
@@ -6877,7 +6877,7 @@ msgstr "Onboarding-Portal S…"
 msgid "Employee work information"
 msgstr "Beschäftigtenarbeitsinformationen"
 
-msgid "Rotating work type assign"
+msgid "Rotating work from assign"
 msgstr "Zuweisung des Rotationstyps"
 
 msgid "Employee shift schedule"
@@ -6937,13 +6937,13 @@ msgstr "Mitarbeiteransicht"
 msgid "shift-request-view"
 msgstr "Schichtanfragen"
 
-msgid "work-type-request-view"
+msgid "work-from-request-view"
 msgstr "work-Typ-Anfrage-Ansicht"
 
 msgid "rotating-shift-assign"
 msgstr "drehende Shift-Zuordnung"
 
-msgid "rotating-work-type-assign"
+msgid "rotating-work-from-assign"
 msgstr "rotierende Arbeitsart zuweisen"
 
 msgid "view-payroll-dashboard"
@@ -7090,10 +7090,10 @@ msgstr "job-position-Ansicht"
 msgid "job-role-view"
 msgstr "job-role-Ansicht"
 
-msgid "work-type-view"
+msgid "work-from-view"
 msgstr "work-Typ-Ansicht"
 
-msgid "rotating-work-type-view"
+msgid "rotating-work-from-view"
 msgstr "rotierende Arbeits-Typ-Ansicht"
 
 msgid "employee-type-view"
@@ -7201,7 +7201,7 @@ msgstr "Job-Position"
 msgid "job_role"
 msgstr "job_rolle"
 
-msgid "work_type"
+msgid "work_from"
 msgstr "Werkstyp"
 
 msgid "company"
@@ -7519,7 +7519,7 @@ msgstr "Geschlechtsdiagramm"
 msgid "Shift Request to Approve"
 msgstr "Schichtanfrage zum Bestätigen"
 
-msgid "Work Type Request to Approve"
+msgid "Work From Request to Approve"
 msgstr "Werkstyp Anfrage zum genehmigen"
 
 msgid "Overtime to Approve"
@@ -7721,25 +7721,25 @@ msgstr "Job Position wurde erfolgreich erstellt!"
 msgid "Job role updated."
 msgstr "Job Rolle aktualisiert."
 
-msgid "Work Type has been created successfully!"
+msgid "Work From has been created successfully!"
 msgstr "Werkstyp wurde erfolgreich erstellt!"
 
-msgid "Work type updated."
+msgid "Work from updated."
 msgstr "Arbeitstyp aktualisiert."
 
-msgid "Rotating work type created."
+msgid "Rotating work from created."
 msgstr "Drehen des Arbeitstyps erstellt."
 
-msgid "Rotating work type updated."
+msgid "Rotating work from updated."
 msgstr "Arbeitsart wird aktualisiert."
 
-msgid "Rotating work type assigned."
+msgid "Rotating work from assigned."
 msgstr "Drehe Arbeitsart zugewiesen."
 
-msgid "Rotating work type assign updated."
+msgid "Rotating work from assign updated."
 msgstr "Zuweisung des Rotationstyps aktualisiert."
 
-msgid "Rotating work type assign not found."
+msgid "Rotating work from assign not found."
 msgstr "Zuweisung des Rotationstyps nicht gefunden."
 
 msgid "Already on record is active"
@@ -7752,18 +7752,18 @@ msgid "archived"
 msgstr "archiviert"
 
 #, python-brace-format
-msgid "Rotating work type assign is {}"
+msgid "Rotating work from assign is {}"
 msgstr "Zuweisung des Rotationstyps ist {}"
 
-msgid "No rotatingworktype found matching the query."
+msgid "No rotatingworkfrom found matching the query."
 msgstr "Keine rotierende Arbeitsart gefunden, die der Abfrage entspricht."
 
 #, python-brace-format
-msgid "Rotating work type for {employee_id} already exists"
+msgid "Rotating work from for {employee_id} already exists"
 msgstr "Drehe Arbeitstyp für {employee_id} existiert bereits"
 
 #, python-brace-format
-msgid "Rotating work type for {count} employees is {message}"
+msgid "Rotating work from for {count} employees is {message}"
 msgstr "Der Rotationstyp für {count} Mitarbeiter ist {message}"
 
 #, python-brace-format
@@ -7771,17 +7771,17 @@ msgid "{employee} deleted."
 msgstr "{employee} gelöscht."
 
 #, python-brace-format
-msgid "{rwork_type_assign} not found."
-msgstr "{rwork_type_assign} nicht gefunden."
+msgid "{rwork_from_assign} not found."
+msgstr "{rwork_from_assign} nicht gefunden."
 
 #, python-brace-format
-msgid "You cannot delete {rwork_type_assign}"
-msgstr "Sie können {rwork_type_assign} nicht löschen"
+msgid "You cannot delete {rwork_from_assign}"
+msgstr "Sie können {rwork_from_assign} nicht löschen"
 
-msgid "Rotating work type assign deleted."
+msgid "Rotating work from assign deleted."
 msgstr "Zuweisung des Rotationstyps gelöscht."
 
-msgid "You cannot delete this rotating work type."
+msgid "You cannot delete this rotating work from."
 msgstr "Sie können diesen Rotationstyp nicht löschen."
 
 msgid "Employee type created."
@@ -7862,48 +7862,48 @@ msgstr "Mitarbeiter nicht gefunden"
 msgid "Employee permission assigned."
 msgstr "Arbeitnehmer-Berechtigung zugewiesen."
 
-msgid "Work type request added."
+msgid "Work from request added."
 msgstr "Werkstyp Anfrage hinzugefügt."
 
-msgid "Work type request not found."
+msgid "Work from request not found."
 msgstr "Work-Typ-Anfrage nicht gefunden."
 
 msgid "You don't have permission"
 msgstr "Sie haben keine Berechtigung"
 
-msgid "Work type request has been rejected."
+msgid "Work from request has been rejected."
 msgstr "Antrag auf Werkstyp wurde abgelehnt."
 
-msgid "Your work type request has been rejected."
+msgid "Your work from request has been rejected."
 msgstr "Ihr Arbeitstypantrag wurde abgelehnt."
 
-msgid "No worktype request found matching the query."
+msgid "No workfrom request found matching the query."
 msgstr "Kein Arbeitsartantrag gefunden, der der Abfrage entspricht."
 
-msgid "Work type request has been canceled."
+msgid "Work from request has been canceled."
 msgstr "Anforderung des Arbeitstyps wurde abgebrochen."
 
-msgid "Work type request has been approved."
+msgid "Work from request has been approved."
 msgstr "Antrag auf Werkstyp wurde genehmigt."
 
-msgid "An approved work type request already exists during this time period."
+msgid "An approved work from request already exists during this time period."
 msgstr ""
 "Während dieser Zeit existiert bereits eine genehmigte Anfrage zum Typ des "
 "Werks."
 
-msgid "Work type request deleted."
+msgid "Work from request deleted."
 msgstr "Arbeitsart Anfrage gelöscht."
 
-msgid "You cannot delete this work type request."
+msgid "You cannot delete this work from request."
 msgstr "Sie können diese Work-Typ-Anfrage nicht löschen."
 
 #, python-brace-format
-msgid "You cannot delete {employee} work type request for the date {date}."
+msgid "You cannot delete {employee} work from request for the date {date}."
 msgstr ""
 "Sie können keine {employee} Werkstyp Anfrage für das Datum {date} löschen."
 
 #, python-brace-format
-msgid "{} work type requests deleted."
+msgid "{} work from requests deleted."
 msgstr "{} Arbeitsart Anfragen gelöscht."
 
 msgid "Shift request added"
@@ -8069,10 +8069,10 @@ msgid "Comment not found."
 msgstr "Kommentar nicht gefunden."
 
 #, python-format
-msgid "%(employee)s's work type request has received a comment."
+msgid "%(employee)s's work from request has received a comment."
 msgstr "Der Arbeitstypantrag von %(employee)s hat einen Kommentar erhalten."
 
-msgid "Your work type request has received a comment."
+msgid "Your work from request has received a comment."
 msgstr "Ihr Arbeitstypantrag hat einen Kommentar erhalten."
 
 msgid "Default pagination updated."
@@ -8881,7 +8881,7 @@ msgstr "Mitarbeiter-ID"
 msgid "Date of Joining"
 msgstr "Beitrittsdatum"
 
-msgid "Work Type & Shift"
+msgid "Work From & Shift"
 msgstr "Arbeitsart und Schicht"
 
 msgid "Groups & Permissions"
@@ -10037,7 +10037,7 @@ msgstr "Heute Interview"
 msgid "No interviews are scheduled for this candidate"
 msgstr "Für diesen Kandidaten sind keine Interviews geplant"
 
-msgid "No work type request has been created."
+msgid "No work from request has been created."
 msgstr "Es wurde keine Anforderung des Arbeitstyps erstellt."
 
 msgid "Rotate every 1st day of month "
@@ -10073,7 +10073,7 @@ msgstr "Jeden letzten Tag des Monats drehen "
 msgid "th day of month "
 msgstr "der zweite Tag des Monats "
 
-msgid "No rotating work type has been assigned."
+msgid "No rotating work from has been assigned."
 msgstr "Es wurde kein rotierender Arbeitstyp zugewiesen."
 
 msgid "No Shift request has been created."
@@ -11124,7 +11124,7 @@ msgstr ""
 msgid "If 'based_on' is 'shift_id', 'shift_id' is required."
 msgstr "Wenn „based_on“ den Wert „shift_id“ hat, ist „shift_id“ erforderlich."
 
-msgid "If 'based_on' is 'work_type_id', 'work_type_id' is required."
+msgid "If 'based_on' is 'work_from_id', 'work_from_id' is required."
 msgstr ""
 "Wenn „based_on“ den Wert „work_type_id“ hat, ist „work_type_id“ erforderlich."
 
@@ -11203,16 +11203,16 @@ msgstr "Stellenrolle nicht gefunden "
 msgid "Company not found "
 msgstr "Unternehmen nicht gefunden "
 
-msgid "WorkType not found"
+msgid "WorkFrom not found"
 msgstr "Arbeitsart nicht gefunden"
 
-msgid "WorkTypeRequest not found"
+msgid "WorkFromRequest not found"
 msgstr "Arbeitsartantrag nicht gefunden"
 
 msgid "you have no permission to view"
 msgstr "Sie haben keine Berechtigung zum Anzeigen"
 
-msgid "RotatingWorkTypeAssign not found"
+msgid "RotatingWorkFromAssign not found"
 msgstr "Zuweisung der rotierenden Arbeitsart nicht gefunden"
 
 msgid "EmployeeShift not found"
@@ -11230,7 +11230,7 @@ msgstr "Rotationsschichtzuweisung nicht gefunden"
 msgid "ShiftRequest not found"
 msgstr "Schichtantrag nicht gefunden"
 
-msgid "RotatingWorkType not found"
+msgid "RotatingWorkFrom not found"
 msgstr "Rotierende Arbeitsart nicht gefunden"
 
 msgid "Already request exits on same date"
@@ -13335,7 +13335,7 @@ msgstr "Verwalten Sie Mitarbeiterkategorien wie unbefristet oder befristet."
 msgid "Set up rotating shift patterns for employees."
 msgstr "Richten Sie Rotationsschichtmuster für Mitarbeiter ein."
 
-msgid "Set up rotating work type patterns for employees."
+msgid "Set up rotating work from patterns for employees."
 msgstr "Richten Sie rotierende Arbeitsartmuster für Mitarbeiter ein."
 
 msgid "Configure day-wise schedules linked to each shift."
@@ -13483,7 +13483,7 @@ msgstr "Asset-Anforderung erstellen"
 msgid "Create Reimbursement"
 msgstr "Erstattung erstellen"
 
-msgid "Create Work Type Request"
+msgid "Create Work From Request"
 msgstr "Arbeitsartantrag erstellen"
 
 msgid "Create Leave Request"
@@ -13720,7 +13720,7 @@ msgstr "Ankündigung erstellen"
 msgid "Shift Requests to Approve"
 msgstr "Bestätigungs-Schicht-Anfragen"
 
-msgid "Work Type Requests to Approve"
+msgid "Work From Requests to Approve"
 msgstr "Zu genehmige Werkstyp Anfragen"
 
 msgid "Employee Work Information"
@@ -15196,7 +15196,7 @@ msgstr ""
 "Reichen Sie Ihre Schichtwechselanträge zur Genehmigung ein und verwalten Sie "
 "sie."
 
-msgid "Submit and manage requests to change your work type assignment."
+msgid "Submit and manage requests to change your work from assignment."
 msgstr ""
 "Reichen Sie Anträge zur Änderung Ihrer Arbeitsartzuweisung ein und verwalten "
 "Sie sie."
@@ -15388,7 +15388,7 @@ msgstr "Woche"
 msgid "Shift Roster"
 msgstr "Schichtplan"
 
-msgid "No Comments have been added for this worktype request"
+msgid "No Comments have been added for this workfrom request"
 msgstr "Es wurden keine Kommentare für diese Worktyp-Anfrage hinzugefügt"
 
 msgid "Theme ID is required"
@@ -18567,7 +18567,7 @@ msgstr ""
 msgid "If based on is shift, then shift must be filled."
 msgstr "Wenn auf Verschiebung basiert, muss Shift gefüllt werden."
 
-msgid "If based on is work type, then work type must be filled."
+msgid "If based on is work from, then work from must be filled."
 msgstr "Wenn auf Werkstyp basiert, dann muss der Werkstyp gefüllt werden."
 
 msgid "The amount per children must be filled."
@@ -22573,7 +22573,7 @@ msgstr "Alle Rollen"
 msgid "All types"
 msgstr "Alle Typen"
 
-msgid "All work types"
+msgid "All work from options"
 msgstr "Alle Arbeitsarten"
 
 msgid "All shifts"

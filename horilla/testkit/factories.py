@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from base.models import Company, Department, EmployeeShift, WorkType
+from base.models import Company, Department, EmployeeShift, WorkFrom
 from employee.models import Employee, EmployeeWorkInformation
 from horilla_auth.models import HorillaUser
 
@@ -47,7 +47,7 @@ def make_employee(
     phone: str = "9999999999",
     user: HorillaUser | None = None,
     shift: EmployeeShift | None = None,
-    work_type: WorkType | None = None,
+    work_from: WorkFrom | None = None,
     department: Department | None = None,
     date_joining=None,
 ) -> Employee:
@@ -75,8 +75,8 @@ def make_employee(
         updates["date_joining"] = date_joining
     if shift is not None:
         updates["shift_id"] = shift
-    if work_type is not None:
-        updates["work_type_id"] = work_type
+    if work_from is not None:
+        updates["work_from_id"] = work_from
     if department is not None:
         updates["department_id"] = department
     updated = EmployeeWorkInformation.objects.filter(employee_id=emp).update(**updates)

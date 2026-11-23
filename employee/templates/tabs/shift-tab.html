@@ -35,7 +35,7 @@
             alt=""
             style="width: 25px; height: 25px; margin-right: 3px"
           />
-          {% trans "Work type request" %}
+          {% trans "Work from request" %}
         </div>
         <button
             style="display: inline-block"
@@ -67,12 +67,12 @@
                         alt=""
                         style="width: 25px; height: 25px; margin-right: 3px"
                     />
-                    {% trans "Work type request" %}
+                    {% trans "Work from request" %}
                 </div>
                 <button
                     class="oh-btn oh-btn--secondary-outline oh-stop-prop oh-accordion-meta__btn p-2"
                     title="{% trans 'Add' %}"
-                    hx-get="{% url 'work-type-request' %}?emp_id={{emp_id}}"
+                    hx-get="{% url 'work-from-request' %}?emp_id={{emp_id}}"
                     hx-target="#objectCreateModalTarget"
                     data-target="#objectCreateModal"
                     data-toggle="oh-modal-toggle"
@@ -92,13 +92,13 @@
                         alt=""
                         style="width: 25px; height: 25px; margin-right: 3px"
                     />
-                    {% trans "Rotating work type" %}
+                    {% trans "Rotating work from" %}
                 </div>
-                {% if not request.GET.profile and perms.base.add_rotatingworktypeassign or request.user|is_reportingmanager %}
+                {% if not request.GET.profile and perms.base.add_rotatingworkfromassign or request.user|is_reportingmanager %}
                     <button
                         class="oh-btn oh-btn--secondary-outline oh-stop-prop oh-accordion-meta__btn p-2"
                         title="{% trans 'Add' %}"
-                        hx-get="{% url 'rotating-work-type-assign-add' %}?emp_id={{emp_id}}"
+                        hx-get="{% url 'rotating-work-from-assign-add' %}?emp_id={{emp_id}}"
                         hx-target="#objectCreateModalTarget"
                         data-target="#objectCreateModal"
                         data-toggle="oh-modal-toggle"
@@ -151,7 +151,7 @@
                     />
                     {% trans "Rotating Shift" %}
                 </div>
-                {% if not request.GET.profile and perms.add_rotatingworktypeassign or request.user|is_reportingmanager %}
+                {% if not request.GET.profile and perms.add_rotatingworkfromassign or request.user|is_reportingmanager %}
                     <button
                         class="oh-btn oh-btn--secondary-outline oh-stop-prop oh-accordion-meta__btn p-2"
                         title="{% trans 'Add' %}"
@@ -185,10 +185,10 @@
                                         {% trans "Employee" %}
                                     </div>
                                     <div class="oh-sticky-table__th">
-                                        {% trans "Requested Work Type" %}
+                                        {% trans "Requested Work From" %}
                                     </div>
                                     <div class="oh-sticky-table__th">
-                                        {% trans "Previous/Current Work Type" %}
+                                        {% trans "Previous/Current Work From" %}
                                     </div>
                                     <div class="oh-sticky-table__th">
                                         {% trans "Requested Date" %}
@@ -209,17 +209,17 @@
                                         {% trans "Actions" %}
                                     </div>
                                     {% if not request.GET.profile %}
-                                        {% if perms.base.change_worktyperequest or request.user|is_reportingmanager %}
+                                        {% if perms.base.change_workfromrequest or request.user|is_reportingmanager %}
                                             <div class="oh-sticky-table__th"></div>
                                         {% endif %}
                                     {% endif %}
                                 </div>
                             </div>
-                            {% for work_type_request in work_data %}
+                            {% for work_from_request in work_data %}
                                 <div class="oh-sticky-table__tbody">
                                     <div
                                         class="oh-sticky-table__tr"
-                                        hx-get="{% url 'work-type-request-single-view' work_type_request.id %}?instances_ids={{work_type_requests_ids}}"
+                                        hx-get="{% url 'work-from-request-single-view' work_from_request.id %}?instances_ids={{work_from_requests_ids}}"
                                         hx-target="#objectDetailsModalTarget"
                                         data-target="#objectDetailsModal"
                                         data-toggle="oh-modal-toggle"
@@ -232,48 +232,48 @@
                                                         class="oh-profile__avatar mr-1"
                                                     >
                                                         <img
-                                                            src="https://ui-avatars.com/api/?name={{work_type_request.employee_id}}&amp;background=random"
+                                                            src="https://ui-avatars.com/api/?name={{work_from_request.employee_id}}&amp;background=random"
                                                             class="oh-profile__image"
                                                             alt="{% trans 'Employee' %}"
                                                         />
                                                     </div>
                                                     <span
                                                         class="oh-profile__name oh-text--dark"
-                                                        >{{work_type_request.employee_id}}</span
+                                                        >{{work_from_request.employee_id}}</span
                                                     >
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="oh-sticky-table__td">
-                                            {{work_type_request.work_type_id}}
+                                            {{work_from_request.work_from_id}}
                                         </div>
                                         <div class="oh-sticky-table__td">
-                                            {{work_type_request.previous_work_type_id}}
+                                            {{work_from_request.previous_work_from_id}}
                                         </div>
                                         <div
                                             class="oh-sticky-table__td dateformat_changer"
                                         >
-                                            {{work_type_request.requested_date}}
+                                            {{work_from_request.requested_date}}
                                         </div>
                                         <div
                                             class="oh-sticky-table__td dateformat_changer"
                                         >
-                                            {{work_type_request.requested_till}}
+                                            {{work_from_request.requested_till}}
                                         </div>
                                         <div class="oh-sticky-table__td">
-                                            {{work_type_request.description}}
+                                            {{work_from_request.description}}
                                         </div>
                                         <div class="oh-sticky-table__td">
-                                            {{work_type_request.request_status}}
+                                            {{work_from_request.request_status}}
                                         </div>
                                         <div class="oh-sticky-table__td">
                                             <div
                                                 class="oh-btn-group"
                                                 onclick="event.stopPropagation();"
                                             >
-                                                {% if work_type_request.approved == False and not work_type_request.canceled %}
+                                                {% if work_from_request.approved == False and not work_from_request.canceled %}
                                                     <a
-                                                        hx-get="{% url 'work-type-request-update' work_type_request.id %}"
+                                                        hx-get="{% url 'work-from-request-update' work_from_request.id %}"
                                                         hx-target="#objectUpdateModalTarget"
                                                         data-toggle="oh-modal-toggle"
                                                         data-target="#objectUpdateModal"
@@ -300,16 +300,16 @@
                                                     data-toggle="oh-modal-toggle"
                                                     data-target="#objectCreateModal"
                                                     hx-target="#objectCreateModalTarget"
-                                                    hx-get="{% url 'work-type-request-duplicate' work_type_request.id %}?{{pg}}"
+                                                    hx-get="{% url 'work-from-request-duplicate' work_from_request.id %}?{{pg}}"
                                                 >
                                                     <ion-icon
                                                         name="copy-outline"
                                                     ></ion-icon>
                                                 </a>
-                                                {% if work_type_request.approved == False %}
+                                                {% if work_from_request.approved == False %}
                                                     <form
-                                                        hx-confirm="{% trans 'Are you sure you want to delete this work type request?' %}"
-                                                        hx-post="{% url 'work-type-request-delete' work_type_request.id  %}"
+                                                        hx-confirm="{% trans 'Are you sure you want to delete this work from request?' %}"
+                                                        hx-post="{% url 'work-from-request-delete' work_from_request.id  %}"
                                                         hx-target="#shift_target"
                                                         class="w-50"
                                                     >
@@ -337,17 +337,17 @@
                                             </div>
                                         </div>
                                         {% if not request.GET.profile %}
-                                            {% if perms.base.change_worktyperequest or request.user|is_reportingmanager %}
+                                            {% if perms.base.change_workfromrequest or request.user|is_reportingmanager %}
                                                 <div
                                                     class="oh-sticky-table__td oh-sticky-table__right"
                                                     onclick="event.stopPropagation();"
                                                 >
                                                     <div class="oh-btn-group">
-                                                        {% if work_type_request.approved == False and work_type_request.canceled == False %}
+                                                        {% if work_from_request.approved == False and work_from_request.canceled == False %}
                                                             <a
                                                                 title="{% trans 'Approve' %}"
                                                                 hx-confirm="{% trans 'Do you want to approve this request?' %}"
-                                                                hx-post="/work-type-request-approve/{{work_type_request.id}}/?{{pd}}"
+                                                                hx-post="/work-from-request-approve/{{work_from_request.id}}/?{{pd}}"
                                                                 hx-target="#shift_target"
                                                                 class="oh-btn oh-btn--success w-100"
                                                             >
@@ -367,10 +367,10 @@
                                                                 ></ion-icon>
                                                             </button>
                                                         {% endif %}
-                                                        {% if work_type_request.canceled == False %}
+                                                        {% if work_from_request.canceled == False %}
                                                             <a
                                                                 hx-confirm="{% trans 'Do you want to reject this request?' %}"
-                                                                hx-post="/work-type-request-cancel/{{work_type_request.id}}/?{{pd}}"
+                                                                hx-post="/work-from-request-cancel/{{work_from_request.id}}/?{{pd}}"
                                                                 hx-target="#shift_target"
                                                                 title="{% trans 'Reject' %}"
                                                                 class="oh-btn oh-btn--danger w-100"
@@ -406,7 +406,7 @@
                         style="height: 40vh"
                     >
                         <h5 class="oh-404__subtitle">
-                            {% trans "No work type request has been created." %}
+                            {% trans "No work from request has been created." %}
                         </h5>
                     </div>
                 {% endif %}
@@ -444,7 +444,7 @@
                                     <div class="oh-sticky-table__th">
                                         {% trans "Status" %}
                                     </div>
-                                    {% if not request.GET.profile and perms.base.change_rotatingworktypeassign or perms.base.delete_rotatingshiftassign or request.user|check_manager:rshift_assign.0 or request.user|is_reportingmanager %}
+                                    {% if not request.GET.profile and perms.base.change_rotatingworkfromassign or perms.base.delete_rotatingshiftassign or request.user|check_manager:rshift_assign.0 or request.user|is_reportingmanager %}
                                         <div
                                             class="oh-sticky-table__th"
                                             style="width: 250px"
@@ -527,7 +527,7 @@
                                                 {% trans "Archived" %}
                                             {% endif %}
                                         </div>
-                                        {% if not request.GET.profile and perms.base.change_rotatingworktypeassign or perms.base.delete_rotatingshiftassign or request.user|check_manager:rshift or request.user|is_reportingmanager %}
+                                        {% if not request.GET.profile and perms.base.change_rotatingworkfromassign or perms.base.delete_rotatingshiftassign or request.user|check_manager:rshift or request.user|is_reportingmanager %}
                                             <div
                                                 class="oh-sticky-table__td"
                                                 onclick="event.stopPropagation();"
@@ -642,7 +642,7 @@
                 {% endif %}
             </div>
             <div class="oh-tabs__content" id="shift_tab_3">
-                {% if rwork_type_assign %}
+                {% if rwork_from_assign %}
                     <div class="oh-sticky-table">
                         <div class="oh-sticky-table__table oh-table--sortable">
                             <div class="oh-sticky-table__thead">
@@ -663,18 +663,18 @@
                                         {% trans "Start Date" %}
                                     </div>
                                     <div class="oh-sticky-table__th">
-                                        {% trans "Current Work Type" %}
+                                        {% trans "Current Work From" %}
                                     </div>
                                     <div class="oh-sticky-table__th">
                                         {% trans "Next Switch" %}
                                     </div>
                                     <div class="oh-sticky-table__th">
-                                        {% trans "Next Work Type" %}
+                                        {% trans "Next Work From" %}
                                     </div>
                                     <div class="oh-sticky-table__th">
                                         {% trans "Status" %}
                                     </div>
-                                    {% if not request.GET.profile and perms.base.change_rotatingworktypeassign or perms.base.delete_rotatingworktypeassign or request.user|check_manager:rwork_type_assign.0 or request.user|is_reportingmanager %}
+                                    {% if not request.GET.profile and perms.base.change_rotatingworkfromassign or perms.base.delete_rotatingworkfromassign or request.user|check_manager:rwork_from_assign.0 or request.user|is_reportingmanager %}
                                         <div
                                             class="oh-sticky-table__sd oh-sticky-table__right"
                                             style="width: 250px"
@@ -687,9 +687,9 @@
                                 </div>
                             </div>
                             <div class="oh-sticky-table__tbody">
-                                {% for rwork_type in rwork_type_assign %}
+                                {% for rwork_from in rwork_from_assign %}
                                     <div
-                                        class="oh-sticky-table__tr" hx-get="{% url "rwork-individual-view" rwork_type.id %}?instances_ids={{rwork_type_assign_ids}}"
+                                        class="oh-sticky-table__tr" hx-get="{% url "rwork-individual-view" rwork_from.id %}?instances_ids={{rwork_from_assign_ids}}"
                                         data-toggle="oh-modal-toggle"
                                         data-target="#objectDetailsModal"
                                         hx-target="#objectDetailsModalTarget"
@@ -699,69 +699,69 @@
                                             <div class="oh-profile oh-profile--md">
                                                 <div class="oh-profile__avatar mr-1">
                                                     <img
-                                                        src="https://ui-avatars.com/api/?name={{rwork_type.employee_id.employee_first_name}}+{{rwork_type.employee_id.employee_last_name}}&background=random"
+                                                        src="https://ui-avatars.com/api/?name={{rwork_from.employee_id.employee_first_name}}+{{rwork_from.employee_id.employee_last_name}}&background=random"
                                                         class="oh-profile__image"
                                                         alt="{% trans 'Employee' %}"
                                                     />
                                                 </div>
                                                 <span class="oh-profile__name oh-text--dark"
-                                                    >{{rwork_type.employee_id}}</span
+                                                    >{{rwork_from.employee_id}}</span
                                                 >
                                             </div>
                                         </div>
                                         <div class="oh-sticky-table__td">
-                                            {{rwork_type.rotating_work_type_id}}
+                                            {{rwork_from.rotating_work_from_id}}
                                         </div>
                                         <div class="oh-sticky-table__td">
-                                            {{rwork_type.get_based_on_display}}
+                                            {{rwork_from.get_based_on_display}}
                                         </div>
                                         <div class="oh-sticky-table__td">
-                                            {% if rwork_type.based_on == 'after' %}
-                                                {% trans "Rotate after " %}{{rwork_type.rotate_after_day}}{% trans " days" %}
-                                            {% elif rwork_type.based_on == "weekly" %}
-                                                {% trans "Weekly every " %}{{rwork_type.rotate_every_weekend}}
-                                            {% elif rwork_type.based_on == "monthly" %}
-                                                {% if rwork_type.rotate_every == "1" %}
+                                            {% if rwork_from.based_on == 'after' %}
+                                                {% trans "Rotate after " %}{{rwork_from.rotate_after_day}}{% trans " days" %}
+                                            {% elif rwork_from.based_on == "weekly" %}
+                                                {% trans "Weekly every " %}{{rwork_from.rotate_every_weekend}}
+                                            {% elif rwork_from.based_on == "monthly" %}
+                                                {% if rwork_from.rotate_every == "1" %}
                                                     {% trans "Rotate every 1st day of month " %}
-                                                {% elif rwork_type.rotate_every == "2" %}
+                                                {% elif rwork_from.rotate_every == "2" %}
                                                     {% trans "Rotate every 2nd day of month " %}
-                                                {% elif rwork_type.rotate_every == "3" %}
+                                                {% elif rwork_from.rotate_every == "3" %}
                                                     {% trans "Rotate every 3rd day of month" %}
-                                                {% elif rwork_type.rotate_every == "last" %}
+                                                {% elif rwork_from.rotate_every == "last" %}
                                                     {% trans "Rotate every last day of month " %}
                                                 {% else %}
-                                                    {% trans "Rotate every " %}{{rwork_type.rotate_every}}{% trans "th day of month " %}
+                                                    {% trans "Rotate every " %}{{rwork_from.rotate_every}}{% trans "th day of month " %}
                                                 {% endif %}
                                             {% endif %}
                                         </div>
                                         <div class="oh-sticky-table__td dateformat_changer">
-                                            {{rwork_type.start_date}}
+                                            {{rwork_from.start_date}}
                                         </div>
                                         <div class="oh-sticky-table__td">
-                                            {{rwork_type.current_work_type}}
+                                            {{rwork_from.current_work_from}}
                                         </div>
                                         <div class="oh-sticky-table__td dateformat_changer">
-                                            {{rwork_type.next_change_date}}
+                                            {{rwork_from.next_change_date}}
                                         </div>
                                         <div class="oh-sticky-table__td">
-                                            {{rwork_type.next_work_type}}
+                                            {{rwork_from.next_work_from}}
                                         </div>
                                         <div class="oh-sticky-table__td">
-                                            {% if rwork_type.is_active %}
+                                            {% if rwork_from.is_active %}
                                                 {% trans "Active" %}
                                             {% else %}
                                                 {% trans "Archived" %}
                                             {% endif %}
                                         </div>
-                                        {% if not request.GET.profile and perms.base.change_rotatingworktypeassign or perms.base.delete_rotatingworktypeassign or request.user|check_manager:rwork_type %}
+                                        {% if not request.GET.profile and perms.base.change_rotatingworkfromassign or perms.base.delete_rotatingworkfromassign or request.user|check_manager:rwork_from %}
                                                 <div
                                                     class="oh-sticky-table__td oh-sticky-table__right"
                                                     onclick="event.stopPropagation();"
                                                 >
                                                     <div class="oh-btn-group">
-                                                        {% if perms.base.change_rotatingworktypeassign or request.user|is_reportingmanager %}
+                                                        {% if perms.base.change_rotatingworkfromassign or request.user|is_reportingmanager %}
                                                             <a
-                                                                hx-get="{% url 'rotating-work-type-assign-update' rwork_type.id %}"
+                                                                hx-get="{% url 'rotating-work-from-assign-update' rwork_from.id %}"
                                                                 hx-target="#objectUpdateModalTarget"
                                                                 data-target="#objectUpdateModal"
                                                                 data-toggle="oh-modal-toggle"
@@ -774,7 +774,7 @@
                                                                 ></ion-icon>
                                                             </a>
                                                             <a
-                                                                hx-get="{% url 'rotating-work-type-assign-duplicate' rwork_type.id %}"
+                                                                hx-get="{% url 'rotating-work-from-assign-duplicate' rwork_from.id %}"
                                                                 hx-target="#objectCreateModalTarget"
                                                                 data-target="#objectCreateModal"
                                                                 data-toggle="oh-modal-toggle"
@@ -787,11 +787,11 @@
                                                                 ></ion-icon>
                                                             </a>
                                                         {% endif %}
-                                                        {% if perms.base.change_rotatingworktypeassign or request.user|is_reportingmanager %}
-                                                            {% if rwork_type.is_active %}
+                                                        {% if perms.base.change_rotatingworkfromassign or request.user|is_reportingmanager %}
+                                                            {% if rwork_from.is_active %}
                                                                 <form
-                                                                    hx-confirm="{% trans 'Do you want to archive this rotating work type assign?' %}"
-                                                                    hx-get="{% url 'rotating-work-type-assign-archive' rwork_type.id %}?{{pd}}"
+                                                                    hx-confirm="{% trans 'Do you want to archive this rotating work from assign?' %}"
+                                                                    hx-get="{% url 'rotating-work-from-assign-archive' rwork_from.id %}?{{pd}}"
                                                                     hx-target="#shift_target"
                                                                     style="width: 100%"
                                                                 >
@@ -804,8 +804,8 @@
                                                                 </form>
                                                             {% else %}
                                                                 <form
-                                                                    hx-confirm="{% trans 'Do you want to un-archive this rotating work type assign?' %}"
-                                                                    hx-get="{% url 'rotating-work-type-assign-archive' rwork_type.id %}?{{pd}}"
+                                                                    hx-confirm="{% trans 'Do you want to un-archive this rotating work from assign?' %}"
+                                                                    hx-get="{% url 'rotating-work-from-assign-archive' rwork_from.id %}?{{pd}}"
                                                                     hx-target="#shift_target"
                                                                     style="width: 100%"
                                                                 >
@@ -818,10 +818,10 @@
                                                                 </form>
                                                             {% endif %}
                                                         {% endif %}
-                                                        {% if perms.base.delete_rotatingworktypeassign or request.user|is_reportingmanager %}
+                                                        {% if perms.base.delete_rotatingworkfromassign or request.user|is_reportingmanager %}
                                                             <form
-                                                                hx-confirm="{% trans 'Are you sure you want to delete this rotating work type assign?' %}"
-                                                                hx-post="{% url 'rotating-work-type-assign-delete' rwork_type.id %}?{{pd}}"
+                                                                hx-confirm="{% trans 'Are you sure you want to delete this rotating work from assign?' %}"
+                                                                hx-post="{% url 'rotating-work-from-assign-delete' rwork_from.id %}?{{pd}}"
                                                                 hx-target="#shift_target"
                                                                 style="width: 100%"
                                                             >
@@ -851,7 +851,7 @@
                         style="height: 40vh"
                     >
                         <h5 class="oh-404__subtitle">
-                            {% trans "No rotating work type has been assigned." %}
+                            {% trans "No rotating work from has been assigned." %}
                         </h5>
                     </div>
                 {% endif %}
@@ -1079,12 +1079,12 @@
 
 <div
     class="oh-modal"
-    id="rotatingWorkTypeAssignDetailModal"
+    id="rotatingWorkFromAssignDetailModal"
     role="dialog"
-    aria-labelledby="rotatingWorkTypeAssignDetailModalLabel"
+    aria-labelledby="rotatingWorkFromAssignDetailModalLabel"
     aria-hidden="true"
 >
-    <div class="oh-modal__dialog" id="rotatingWorkTypeAssignDetail"></div>
+    <div class="oh-modal__dialog" id="rotatingWorkFromAssignDetail"></div>
 </div>
 
 <div

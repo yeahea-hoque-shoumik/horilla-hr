@@ -293,9 +293,9 @@ urlpatterns = [
         name="employee-dashboard-kpi",
     ),
     path(
-        "dashboard/api/work-type/",
-        emp_dashboard.employee_by_work_type,
-        name="employee-dashboard-work-type",
+        "dashboard/api/work-from/",
+        emp_dashboard.employee_by_work_from,
+        name="employee-dashboard-work-from",
     ),
     path(
         "dashboard/api/shift/",
@@ -516,14 +516,14 @@ urlpatterns = [
         name="employee-settings-rotating-shift-tab",
     ),
     path(
-        "employee-settings-work-type-tab/",
-        employee_settings.employee_settings_work_type_tab,
-        name="employee-settings-work-type-tab",
+        "employee-settings-work-from-tab/",
+        employee_settings.employee_settings_work_from_tab,
+        name="employee-settings-work-from-tab",
     ),
     path(
-        "employee-settings-rotating-work-type-tab/",
-        employee_settings.employee_settings_rotating_work_type_tab,
-        name="employee-settings-rotating-work-type-tab",
+        "employee-settings-rotating-work-from-tab/",
+        employee_settings.employee_settings_rotating_work_from_tab,
+        name="employee-settings-rotating-work-from-tab",
     ),
     path(
         "employee-settings-employee-type-tab/",
@@ -546,9 +546,9 @@ urlpatterns = [
         name="work-schedules-rotating-shift-tab",
     ),
     path(
-        "work-schedules/rotating-work-type-tab/",
-        work_schedules.work_schedules_rotating_work_type_tab,
-        name="work-schedules-rotating-work-type-tab",
+        "work-schedules/rotating-work-from-tab/",
+        work_schedules.work_schedules_rotating_work_from_tab,
+        name="work-schedules-rotating-work-from-tab",
     ),
     path(
         "work-schedules/shift-roster-tab/",
@@ -567,9 +567,9 @@ urlpatterns = [
         name="requests-shift-inbox-tab",
     ),
     path(
-        "requests/work-type-tab/",
-        requests.requests_work_type_tab,
-        name="requests-work-type-tab",
+        "requests/work-from-tab/",
+        requests.requests_work_from_tab,
+        name="requests-work-from-tab",
     ),
     path(
         "requests/document-tab/",

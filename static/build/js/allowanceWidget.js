@@ -72,14 +72,14 @@ function conditionalVisibility($context) {
   }
 
   if (
-    $context.find("#id_based_on").val() == "work_type_id" &&
+    $context.find("#id_based_on").val() == "work_from_id" &&
     !$context.find("#id_is_fixed").is(":checked")
   ) {
-    $context.find("#id_work_type_id, [for='id_work_type_id'],#id_work_type_per_attendance_amount, [for='id_work_type_per_attendance_amount']").show();
-    $context.find("#id_work_type_id, [for='id_work_type_id'],#id_work_type_per_attendance_amount, [for='id_work_type_per_attendance_amount']").parent().show();
+    $context.find("#id_work_from_id, [for='id_work_from_id'],#id_work_from_per_attendance_amount, [for='id_work_from_per_attendance_amount']").show();
+    $context.find("#id_work_from_id, [for='id_work_from_id'],#id_work_from_per_attendance_amount, [for='id_work_from_per_attendance_amount']").parent().show();
   } else {
-    $context.find("#id_work_type_id, [for='id_work_type_id'],#id_work_type_per_attendance_amount, [for='id_work_type_per_attendance_amount']").hide();
-    $context.find("#id_work_type_id, [for='id_work_type_id'],#id_work_type_per_attendance_amount, [for='id_work_type_per_attendance_amount']").parent().hide();
+    $context.find("#id_work_from_id, [for='id_work_from_id'],#id_work_from_per_attendance_amount, [for='id_work_from_per_attendance_amount']").hide();
+    $context.find("#id_work_from_id, [for='id_work_from_id'],#id_work_from_per_attendance_amount, [for='id_work_from_per_attendance_amount']").parent().hide();
   }
 
   if (
@@ -148,7 +148,7 @@ function conditionalVisibility($context) {
     $context.find("#id_maximum_unit,[for=id_maximum_unit]").parent().hide();
   }
 
-  var opt = ["attendance", "shift_id", "overtime", "work_type_id"];
+  var opt = ["attendance", "shift_id", "overtime", "work_from_id"];
   if (!$context.find("#id_is_fixed").is(":checked") && opt.includes($context.find("#id_based_on").val())) {
     $context.find("#id_maximum_unit,[for=id_maximum_unit]").hide();
     $context.find("#id_maximum_unit,[for=id_maximum_unit]").parent().hide();

@@ -172,7 +172,7 @@ Dashboard onboarding banner that walks admins through foundational HR configurat
 | 1 | `company` | Company | Any `Company` exists | `company-view` |
 | 2 | `department` | Departments | Department for active company | `department-view` |
 | 3 | `job_position` | Job Positions | JobPosition for company | `job-position-view` |
-| 4 | `work_type` | Work Types | WorkType for company | `work-type-view` |
+| 4 | `work_from` | Work From Options | WorkFrom for company | `work-from-view` |
 | 5 | `employee_type` | Employee Types | EmployeeType for company | `employee-type-view` |
 | 6 | `shift` | Shifts | EmployeeShift for company | `employee-shift-view` |
 | 7 | `mail_server` | Mail Server | Primary `DynamicEmailConfiguration` with host | `mail-server-conf` |

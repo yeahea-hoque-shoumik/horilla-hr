@@ -9,7 +9,7 @@ How to create an employee in Horilla so they can log in, check in/out, and apply
 ## Part A: One-time setup (admin, do this once)
 
 1. **Log in as admin/superuser.**
-2. **Company structure.** Go to **Settings** and add your **Company**, **Department**, **Job Position**, **Work Type** and **Employee Shift**. Give the shift its working hours for each day.
+2. **Company structure.** Go to **Settings** and add your **Company**, **Department**, **Job Position**, **Work From** and **Employee Shift**. Give the shift its working hours for each day.
 3. **Turn on Check-In.** Go to **Settings → Attendance → Check In / Check Out** and switch it **on** for your company. If it's off, employees won't see a working Check-In button.
    - Optional, also in Attendance settings: **IP Login Restriction** and **Geofencing**. If either is enabled, check-in only works from the allowed network or location.
 4. **Leave types.** Go to **Leave → Configuration** and create leave types such as Casual or Sick, with the number of days and the reset period.
@@ -18,7 +18,7 @@ How to create an employee in Horilla so they can log in, check in/out, and apply
 
 5. Go to **Employee → Employees** and click **Create**.
 6. **Personal info:** First Name, **Email** (required and unique, and it becomes the **username**), Phone. Save.
-7. **Work info:** on the employee's profile, open the **Work Information** tab and set Company, Department, Job Position, **Shift**, Work Type and **Reporting Manager**.
+7. **Work info:** on the employee's profile, open the **Work Information** tab and set Company, Department, Job Position, **Shift**, Work From and **Reporting Manager**.
    - Check-in uses the shift.
    - Leave approval goes to the reporting manager.
 

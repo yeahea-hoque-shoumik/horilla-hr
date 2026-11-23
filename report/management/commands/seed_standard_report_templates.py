@@ -39,7 +39,7 @@ SYSTEM_TEMPLATES = [
         "name": "Company Overview",
         "config": {
             "rows": ["Company"],
-            "cols": ["Work Type"],
+            "cols": ["Work From"],
             "rendererName": "Table",
             "aggregatorName": "Count",
         },
@@ -67,9 +67,9 @@ SYSTEM_TEMPLATES = [
     },
     {
         "report_slug": "attendance_report",
-        "name": "Attendance by Work Type",
+        "name": "Attendance by Work From",
         "config": {
-            "rows": ["Work Type"],
+            "rows": ["Work From"],
             "cols": ["Attendance Day"],
             "rendererName": "Table",
             "aggregatorName": "Count",

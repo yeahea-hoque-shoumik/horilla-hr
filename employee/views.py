@@ -67,9 +67,9 @@ from base.models import (
     JobPosition,
     JobRole,
     RotatingShiftAssign,
-    RotatingWorkTypeAssign,
+    RotatingWorkFromAssign,
     ShiftRequest,
-    WorkTypeRequest,
+    WorkFromRequest,
 )
 from base.views import generate_error_report
 from employee.cbv.document_request import htmx_refresh_document_request_container
@@ -98,7 +98,7 @@ from employee.methods.methods import (
     bulk_create_shifts,
     bulk_create_user_import,
     bulk_create_work_info_import,
-    bulk_create_work_types,
+    bulk_create_work_froms,
     error_data_template,
     get_ordered_badge_ids,
     process_employee_records,
@@ -157,10 +157,10 @@ operator_mapping = {
     "range": return_none,
 }
 filter_mapping = {
-    "work_type_id": {
+    "work_from_id": {
         "filter": lambda employee, allowance: {
             "employee_id": employee,
-            "work_type_id__id": allowance.work_type_id.id,
+            "work_from_id__id": allowance.work_from_id.id,
             "attendance_validated": True,
         }
     },
@@ -554,24 +554,24 @@ def shift_tab(request, pk):
     if not employee:
         messages.error(request, _("Employee not found."))
         return HorillaRedirect(request)
-    work_type_requests = WorkTypeRequest.objects.filter(employee_id=pk)
-    work_type_requests_ids = json.dumps(
-        [instance.id for instance in work_type_requests]
+    work_from_requests = WorkFromRequest.objects.filter(employee_id=pk)
+    work_from_requests_ids = json.dumps(
+        [instance.id for instance in work_from_requests]
     )
     rshift_assign = RotatingShiftAssign.objects.filter(employee_id=pk)
     rshift_assign_ids = json.dumps([instance.id for instance in rshift_assign])
-    rwork_type_assign = RotatingWorkTypeAssign.objects.filter(employee_id=pk)
-    rwork_type_assign_ids = json.dumps([instance.id for instance in rwork_type_assign])
+    rwork_from_assign = RotatingWorkFromAssign.objects.filter(employee_id=pk)
+    rwork_from_assign_ids = json.dumps([instance.id for instance in rwork_from_assign])
     shift_requests = ShiftRequest.objects.filter(employee_id=pk)
     shift_requests_ids = json.dumps([instance.id for instance in shift_requests])
 
     context = {
-        "work_data": work_type_requests,
-        "work_type_requests_ids": work_type_requests_ids,
+        "work_data": work_from_requests,
+        "work_from_requests_ids": work_from_requests_ids,
         "rshift_assign": rshift_assign,
         "rshift_assign_ids": rshift_assign_ids,
-        "rwork_type_assign": rwork_type_assign,
-        "rwork_type_assign_ids": rwork_type_assign_ids,
+        "rwork_from_assign": rwork_from_assign,
+        "rwork_from_assign_ids": rwork_from_assign_ids,
         "shift_data": shift_requests,
         "shift_requests_ids": shift_requests_ids,
         "emp_id": pk,
@@ -3078,7 +3078,7 @@ def work_info_import_file(request):
             "Job Position",
             "Job Role",
             "Shift",
-            "Work Type",
+            "Work From",
             "Reporting Manager",
             "Employee Type",
             "Location",
@@ -3150,7 +3150,7 @@ def work_info_import(request):
                     bulk_create_department_import(success_list)
                     bulk_create_job_position_import(success_list)
                     bulk_create_job_role_import(success_list)
-                    bulk_create_work_types(success_list)
+                    bulk_create_work_froms(success_list)
                     bulk_create_shifts(success_list)
                     bulk_create_employee_types(success_list)
                     bulk_create_work_info_import(success_list)
@@ -3244,7 +3244,7 @@ def work_info_export(request):
         "employee_work_info__job_position_id": "employee_work_info__job_position_id__job_position",
         "employee_work_info__job_role_id": "employee_work_info__job_role_id__job_role",
         "employee_work_info__shift_id": "employee_work_info__shift_id__employee_shift",
-        "employee_work_info__work_type_id": "employee_work_info__work_type_id__work_type",
+        "employee_work_info__work_from_id": "employee_work_info__work_from_id__work_from",
         "employee_work_info__reporting_manager_id": "employee_work_info__reporting_manager_id__get_full_name",
         "employee_work_info__employee_type_id": "employee_work_info__employee_type_id__employee_type",
     }

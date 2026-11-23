@@ -20,7 +20,7 @@
                             {% trans "Out Date" %}
                         </div>
                         <div class="oh-sticky-table__th">{% trans "Shift" %}</div>
-                        <div class="oh-sticky-table__th">{% trans "Work Type" %}</div>
+                        <div class="oh-sticky-table__th">{% trans "Work From" %}</div>
                         <div class="oh-sticky-table__th">{% trans "Min Hour" %}</div>
                         <div class="oh-sticky-table__th">
                             {% trans "Pending Hour" %}
@@ -69,7 +69,7 @@
                                 {{ attendance.attendance_clock_out_date }}
                             </div>
                             <div class="oh-sticky-table__td">{{ attendance.shift_id }}</div>
-                            <div class="oh-sticky-table__td">{{ attendance.work_type_id }}</div>
+                            <div class="oh-sticky-table__td">{{ attendance.work_from_id }}</div>
                             <div class="oh-sticky-table__td">{{ attendance.minimum_hour }}</div>
                             <div class="oh-sticky-table__td">{{ attendance.hours_pending }}</div>
                         {% endif %}

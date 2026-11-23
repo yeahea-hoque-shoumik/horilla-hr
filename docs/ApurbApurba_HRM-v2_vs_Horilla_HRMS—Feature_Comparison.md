@@ -34,7 +34,7 @@ Legend: ✅ present · ⚠️ partial / different approach · ❌ not described
 | Self-service profile edit (allow-listed fields) | ✅ | ✅ | Horilla gates it via an accessibility feature rule |
 | Probation auto-promotion to full-time | ✅ | ❌ | Horilla tracks probation end date in onboarding only |
 | Shift swap between two employees | ✅ | ⚠️ | Horilla has shift *requests*  • rotating shifts + rosters |
-| Rotating shifts / rotating work types | ❌ | ✅ |  |
+| Rotating shifts / rotating work from options | ❌ | ✅ |  |
 | Roster planning & publishing | ❌ | ✅ |  |
 | Multi-company tenancy | ❌ | ✅ | Company-scoped managers + company-scoped permissions |
 | Disciplinary actions (warning/suspension/dismissal, auto login block) | ❌ | ✅ |  |
@@ -84,7 +84,7 @@ Legend: ✅ present · ⚠️ partial / different approach · ❌ not described
 | Compensatory leave | ✅ via extra work approval | ✅ dedicated requests |  |
 | Restricted leave periods | ❌ | ✅ |  |
 | Leave encashment | ❌ | ✅ |  |
-| Dedicated WFH request module (unlocks Home clock-in) | ✅ | ⚠️ | Horilla: work-type requests can model it |
+| Dedicated WFH request module (unlocks Home clock-in) | ✅ | ⚠️ | Horilla: work-from requests can model it |
 | Overtime / extra work | ✅ holiday/weekend + auto 1.5× shift | ✅ monthly overtime accounts + approval |  |
 
 ### 2.4 Approvals & workflow

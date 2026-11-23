@@ -46,7 +46,7 @@ msgstr ""
 msgid "Department"
 msgstr ""
 
-msgid "Work Type"
+msgid "Work From"
 msgstr ""
 
 msgid "Employee Type"
@@ -1775,7 +1775,7 @@ msgstr "Job Position"
 msgid "Select shift..."
 msgstr "Recruitment"
 
-msgid "Select work type..."
+msgid "Select work from..."
 msgstr ""
 
 msgid "Clock In"
@@ -2284,7 +2284,7 @@ msgstr ""
 msgid "Search in : Shift"
 msgstr ""
 
-msgid "Search in : Work Type"
+msgid "Search in : Work From"
 msgstr ""
 
 msgid "Search in : Department"
@@ -2563,7 +2563,7 @@ msgstr ""
 
 #, fuzzy
 #| msgid "type-update"
-msgid "Work Type Distribution"
+msgid "Work From Distribution"
 msgstr "Update"
 
 msgid "Remote, on-site, hybrid, etc."
@@ -2758,7 +2758,7 @@ msgstr ""
 
 #, fuzzy
 #| msgid "work-type-update"
-msgid "No work type data"
+msgid "No work from data"
 msgstr "Update"
 
 #, fuzzy
@@ -4181,7 +4181,7 @@ msgstr "Shift Requests"
 msgid "New Weekly Off Day Created Successfully"
 msgstr "Shift Requests"
 
-msgid "Requested Work Type"
+msgid "Requested Work From"
 msgstr ""
 
 msgid "Requested Shift"
@@ -4573,19 +4573,19 @@ msgstr "Shift Requests"
 msgid "You are added to rotating shift"
 msgstr ""
 
-msgid "Rotating Work Type"
+msgid "Rotating Work From"
 msgstr ""
 
 msgid "Based On"
 msgstr ""
 
-msgid "Current Work Type"
+msgid "Current Work From"
 msgstr ""
 
-msgid "Next Work Type"
+msgid "Next Work From"
 msgstr ""
 
-msgid "Rotating Work Type Assign"
+msgid "Rotating Work From Assign"
 msgstr ""
 
 #, fuzzy
@@ -4598,7 +4598,7 @@ msgstr "Shift Requests"
 msgid "Rotating Work Assigned"
 msgstr "Rotating Work Type Assigns"
 
-msgid "You are added to rotating work type"
+msgid "You are added to rotating work from"
 msgstr ""
 
 #, fuzzy
@@ -4606,40 +4606,40 @@ msgstr ""
 msgid "Rotating Work Assign Created"
 msgstr "Rotating Work Type Assigns"
 
-msgid "Work Type 1"
+msgid "Work From 1"
 msgstr ""
 
-msgid "Work Type 2"
+msgid "Work From 2"
 msgstr ""
 
 #, fuzzy
 #| msgid "create-allowance"
-msgid "Additional Work Types"
+msgid "Additional Work From Options"
 msgstr "Creation"
 
 #, fuzzy
 #| msgid "rotating-work-type-assign"
-msgid "Create Rotating Work Type"
+msgid "Create Rotating Work From"
 msgstr "Rotating Work Type Assigns"
 
 #, fuzzy
 #| msgid "rotating-work-type-assign"
-msgid "Rotating Work Type Created"
+msgid "Rotating Work From Created"
 msgstr "Rotating Work Type Assigns"
 
 #, fuzzy
 #| msgid "rotating-work-type-assign"
-msgid "Update Rotating Work Type"
+msgid "Update Rotating Work From"
 msgstr "Rotating Work Type Assigns"
 
 #, fuzzy
 #| msgid "create-allowance"
-msgid "Update Work Type"
+msgid "Update Work From"
 msgstr "Creation"
 
 #, fuzzy
 #| msgid "rotating-work-type-assign"
-msgid "Rotating Work Type Updated"
+msgid "Rotating Work From Updated"
 msgstr "Rotating Work Type Assigns"
 
 msgid "Canceled"
@@ -4731,10 +4731,10 @@ msgstr "Leave Allocation Requests"
 msgid "You have a new shift reallocation request from %(employee)s."
 msgstr "Leave Allocation Requests"
 
-msgid "Work type request"
+msgid "Work from request"
 msgstr ""
 
-msgid "Rotating work type"
+msgid "Rotating work from"
 msgstr ""
 
 msgid "Shift request"
@@ -4745,7 +4745,7 @@ msgstr ""
 msgid "Shift Allocation"
 msgstr "Update"
 
-msgid "Work Type Request"
+msgid "Work From Request"
 msgstr ""
 
 msgid "Shift Request"
@@ -4753,38 +4753,38 @@ msgstr ""
 
 #, fuzzy
 #| msgid "create-allowance"
-msgid "Previous/current Work Type"
+msgid "Previous/current Work From"
 msgstr "Creation"
 
-msgid "Work Type Requests"
+msgid "Work From Requests"
 msgstr ""
 
 #, fuzzy
 #| msgid "create-allowance"
-msgid "current Work Type"
+msgid "current Work From"
 msgstr "Creation"
 
-msgid "Previous Work Type"
+msgid "Previous Work From"
 msgstr ""
 
 #, fuzzy
 #| msgid "create-allowance"
-msgid "Is Permanent Work Type"
+msgid "Is Permanent Work From"
 msgstr "Creation"
 
 #, fuzzy
 #| msgid "create-allowance"
-msgid "Create Work Type"
+msgid "Create Work From"
 msgstr "Creation"
 
 #, fuzzy
 #| msgid "company-create"
-msgid "New Work Type Created"
+msgid "New Work From Created"
 msgstr "Companies"
 
 #, fuzzy
 #| msgid "type-update"
-msgid "Work Type Updated"
+msgid "Work From Updated"
 msgstr "Update"
 
 msgid "Request Updated Successfully"
@@ -4792,12 +4792,12 @@ msgstr ""
 
 #, fuzzy
 #| msgid "work-type-request-view"
-msgid "Work type Request Created"
+msgid "Work from Request Created"
 msgstr "Work Type Requests"
 
 #, fuzzy, python-format
 #| msgid "shift-request-view"
-msgid "You have new work type request to validate for %(employee)s"
+msgid "You have new work from request to validate for %(employee)s"
 msgstr "Shift Requests"
 
 msgid "You do not have access to that company."
@@ -4955,7 +4955,7 @@ msgstr ""
 
 #, fuzzy
 #| msgid "employee"
-msgid "---Choose Work Type---"
+msgid "---Choose Work From---"
 msgstr "Employee"
 
 msgid "Rotate after day"
@@ -5193,12 +5193,12 @@ msgstr "Employee Permissions"
 msgid "This department already exists in this company"
 msgstr "Employee"
 
-msgid "Work Types"
+msgid "Work From Options"
 msgstr ""
 
 #, fuzzy
 #| msgid "employee"
-msgid "This work type already exists in this company"
+msgid "This work from already exists in this company"
 msgstr "Employee"
 
 #, fuzzy
@@ -5206,10 +5206,10 @@ msgstr "Employee"
 msgid "All Company"
 msgstr "Company"
 
-msgid "Rotating Work Types"
+msgid "Rotating Work From Options"
 msgstr ""
 
-msgid "Select different work type continuously"
+msgid "Select different work from continuously"
 msgstr ""
 
 msgid "Rotate After Day"
@@ -5221,7 +5221,7 @@ msgstr ""
 msgid "Rotate Every Month"
 msgstr ""
 
-msgid "Rotating Work Type Assigns"
+msgid "Rotating Work From Assigns"
 msgstr ""
 
 msgid "Date must be greater than or equal to today"
@@ -5317,7 +5317,7 @@ msgstr ""
 msgid "Roster Publish Logs"
 msgstr ""
 
-msgid "Requesting Work Type"
+msgid "Requesting Work From"
 msgstr ""
 
 msgid "Permanent Request"
@@ -5331,7 +5331,7 @@ msgstr "My Leave Requests"
 msgid "End date must be greater than or equal to start date"
 msgstr ""
 
-msgid "A work type request already exists during this time period."
+msgid "A work from request already exists during this time period."
 msgstr ""
 
 #, fuzzy
@@ -5530,7 +5530,7 @@ msgstr "Allowances"
 
 #, fuzzy
 #| msgid "attendance"
-msgid "Your Work Type has been changed."
+msgid "Your Work From has been changed."
 msgstr "Attendance"
 
 #, fuzzy
@@ -5548,10 +5548,10 @@ msgstr ""
 
 #, fuzzy
 #| msgid "type-update"
-msgid "Work Type Changes notification"
+msgid "Work From Changes notification"
 msgstr "Update"
 
-msgid "Work type changes notification, Requested date expired."
+msgid "Work from changes notification, Requested date expired."
 msgstr ""
 
 msgid "General"
@@ -6897,45 +6897,45 @@ msgstr ""
 msgid "Are you sure you want to delete this rotating shift?"
 msgstr ""
 
-msgid "Add more work types.."
+msgid "Add more work from options.."
 msgstr ""
 
-msgid "Select All Worktypes"
+msgid "Select All WorkFroms"
 msgstr ""
 
-msgid "Unselect All Worktypes"
+msgid "Unselect All WorkFroms"
 msgstr ""
 
-msgid "Export Worktypes"
+msgid "Export WorkFroms"
 msgstr ""
 
-msgid "Do you Want to archive this rotating work type assign?"
+msgid "Do you Want to archive this rotating work from assign?"
 msgstr ""
 
-msgid "Do you Want to un-archive this rotating work type assign?"
+msgid "Do you Want to un-archive this rotating work from assign?"
 msgstr ""
 
-msgid "Are you sure you want to delete this rotating work type assign?"
+msgid "Are you sure you want to delete this rotating work from assign?"
 msgstr ""
 
-msgid "Do you want to archive this rotating work type assign?"
+msgid "Do you want to archive this rotating work from assign?"
 msgstr ""
 
-msgid "There are no rotating work type assigned to this employee."
+msgid "There are no rotating work from assigned to this employee."
 msgstr ""
 
-msgid "Selected Worktypes"
+msgid "Selected WorkFroms"
 msgstr ""
 
 #, fuzzy
 #| msgid "rotating-work-type-assign"
-msgid "No Employees Assigned to Rotating Work Types."
+msgid "No Employees Assigned to Rotating Work From Options."
 msgstr "Rotating Work Type Assigns"
 
-msgid "Do you want to un-archive this rotating work type assign?"
+msgid "Do you want to un-archive this rotating work from assign?"
 msgstr ""
 
-msgid "Are you sure you want to delete this rotating work type?"
+msgid "Are you sure you want to delete this rotating work from?"
 msgstr ""
 
 msgid ""
@@ -7214,7 +7214,7 @@ msgstr ""
 msgid "Are you sure you want to delete this ticket type?"
 msgstr ""
 
-msgid "Are you sure you want to delete this work type?"
+msgid "Are you sure you want to delete this work from?"
 msgstr ""
 
 #, fuzzy
@@ -7252,12 +7252,12 @@ msgstr "Update"
 msgid "Export Rotating Shift Assigns"
 msgstr "Rotating Shift Assigns"
 
-msgid "Do you want to Un-archive this rotating work type assign?"
+msgid "Do you want to Un-archive this rotating work from assign?"
 msgstr ""
 
 #, fuzzy
 #| msgid "rotating-work-type-assign"
-msgid "Export Rotating Work Type Assigns"
+msgid "Export Rotating Work From Assigns"
 msgstr "Rotating Work Type Assigns"
 
 msgid "Primary mail is not configured!"
@@ -7312,10 +7312,10 @@ msgstr ""
 msgid "Reallocate Shift."
 msgstr ""
 
-msgid "Are you sure you want to delete this work type request?"
+msgid "Are you sure you want to delete this work from request?"
 msgstr ""
 
-msgid "Export Work Type Requests"
+msgid "Export Work From Requests"
 msgstr ""
 
 msgid "There are no company leaves at the moment."
@@ -7391,7 +7391,7 @@ msgstr ""
 msgid "cancel"
 msgstr "Cancelled"
 
-msgid "Previous/ Current Work Type"
+msgid "Previous/ Current Work From"
 msgstr ""
 
 msgid "Reallocate to"
@@ -7429,29 +7429,29 @@ msgstr ""
 msgid "'s shift request"
 msgstr "My Leave Requests"
 
-msgid "There are currently no work type requests to consider."
+msgid "There are currently no work from requests to consider."
 msgstr ""
 
-msgid "Previous/Current Work Type"
+msgid "Previous/Current Work From"
 msgstr ""
 
 #, fuzzy
 #| msgid "work-type-request-view"
-msgid "'s worktype request"
+msgid "'s workfrom request"
 msgstr "Work Type Requests"
 
-msgid "Requested work type"
+msgid "Requested work from"
 msgstr ""
 
-msgid "Previous work type"
+msgid "Previous work from"
 msgstr ""
 
-msgid "Is permenent work type"
+msgid "Is permenent work from"
 msgstr ""
 
 #, fuzzy
 #| msgid "shift-request-view"
-msgid "There are no work type requests to display."
+msgid "There are no work from requests to display."
 msgstr "Shift Requests"
 
 msgid "monday"
@@ -7523,13 +7523,13 @@ msgstr ""
 msgid "Your asset request rejected!."
 msgstr ""
 
-msgid "Your work type request has been canceled."
+msgid "Your work from request has been canceled."
 msgstr ""
 
-msgid "Your work type request has been approved."
+msgid "Your work from request has been approved."
 msgstr ""
 
-msgid "Your work type request has been deleted."
+msgid "Your work from request has been deleted."
 msgstr ""
 
 msgid "Your shift request has been canceled."
@@ -7637,7 +7637,7 @@ msgstr ""
 msgid "Deduct leave from basic pay"
 msgstr ""
 
-msgid "Work type"
+msgid "Work from"
 msgstr ""
 
 msgid "Pay frequency"
@@ -7664,7 +7664,7 @@ msgstr ""
 msgid "SHIFT REQUESTS"
 msgstr ""
 
-msgid "WORK TYPE REQUESTS"
+msgid "WORK FROM REQUESTS"
 msgstr ""
 
 msgid "Single"
@@ -7769,10 +7769,10 @@ msgstr ""
 msgid "Next shift"
 msgstr ""
 
-msgid "Current work type"
+msgid "Current work from"
 msgstr ""
 
-msgid "Next work type"
+msgid "Next work from"
 msgstr ""
 
 msgid "Start date from"
@@ -7901,7 +7901,7 @@ msgstr ""
 msgid "Employee work information"
 msgstr ""
 
-msgid "Rotating work type assign"
+msgid "Rotating work from assign"
 msgstr ""
 
 msgid "Employee shift schedule"
@@ -7961,13 +7961,13 @@ msgstr "Employees"
 msgid "shift-request-view"
 msgstr "Shift Requests"
 
-msgid "work-type-request-view"
+msgid "work-from-request-view"
 msgstr "Work Type Requests"
 
 msgid "rotating-shift-assign"
 msgstr "Rotating Shift Assigns"
 
-msgid "rotating-work-type-assign"
+msgid "rotating-work-from-assign"
 msgstr "Rotating Work Type Assigns"
 
 msgid "view-payroll-dashboard"
@@ -8114,10 +8114,10 @@ msgstr "Job Position"
 msgid "job-role-view"
 msgstr "Job Role"
 
-msgid "work-type-view"
+msgid "work-from-view"
 msgstr "Work Type"
 
-msgid "rotating-work-type-view"
+msgid "rotating-work-from-view"
 msgstr "Rotating Work Type"
 
 msgid "employee-type-view"
@@ -8225,7 +8225,7 @@ msgstr "Job Position"
 msgid "job_role"
 msgstr "Job Role"
 
-msgid "work_type"
+msgid "work_from"
 msgstr "Work Type"
 
 msgid "company"
@@ -8557,7 +8557,7 @@ msgstr "Shift Requests"
 
 #, fuzzy
 #| msgid "shift-request-view"
-msgid "Work Type Request to Approve"
+msgid "Work From Request to Approve"
 msgstr "Shift Requests"
 
 #, fuzzy
@@ -8798,25 +8798,25 @@ msgstr ""
 msgid "Job role updated."
 msgstr ""
 
-msgid "Work Type has been created successfully!"
+msgid "Work From has been created successfully!"
 msgstr ""
 
-msgid "Work type updated."
+msgid "Work from updated."
 msgstr ""
 
-msgid "Rotating work type created."
+msgid "Rotating work from created."
 msgstr ""
 
-msgid "Rotating work type updated."
+msgid "Rotating work from updated."
 msgstr ""
 
-msgid "Rotating work type assigned."
+msgid "Rotating work from assigned."
 msgstr ""
 
-msgid "Rotating work type assign updated."
+msgid "Rotating work from assign updated."
 msgstr ""
 
-msgid "Rotating work type assign not found."
+msgid "Rotating work from assign not found."
 msgstr ""
 
 msgid "Already on record is active"
@@ -8830,21 +8830,21 @@ msgstr ""
 
 #, fuzzy, python-brace-format
 #| msgid "rotating-work-type-assign"
-msgid "Rotating work type assign is {}"
+msgid "Rotating work from assign is {}"
 msgstr "Rotating Work Type Assigns"
 
 #, fuzzy
 #| msgid "rotating-work-type-update"
-msgid "No rotatingworktype found matching the query."
+msgid "No rotatingworkfrom found matching the query."
 msgstr "Update"
 
 #, python-brace-format
-msgid "Rotating work type for {employee_id} already exists"
+msgid "Rotating work from for {employee_id} already exists"
 msgstr ""
 
 #, fuzzy, python-brace-format
 #| msgid "rotating-work-type-assign"
-msgid "Rotating work type for {count} employees is {message}"
+msgid "Rotating work from for {count} employees is {message}"
 msgstr "Rotating Work Type Assigns"
 
 #, python-brace-format
@@ -8852,17 +8852,17 @@ msgid "{employee} deleted."
 msgstr ""
 
 #, python-brace-format
-msgid "{rwork_type_assign} not found."
+msgid "{rwork_from_assign} not found."
 msgstr ""
 
 #, python-brace-format
-msgid "You cannot delete {rwork_type_assign}"
+msgid "You cannot delete {rwork_from_assign}"
 msgstr ""
 
-msgid "Rotating work type assign deleted."
+msgid "Rotating work from assign deleted."
 msgstr ""
 
-msgid "You cannot delete this rotating work type."
+msgid "You cannot delete this rotating work from."
 msgstr ""
 
 msgid "Employee type created."
@@ -8950,48 +8950,48 @@ msgstr "Employee"
 msgid "Employee permission assigned."
 msgstr ""
 
-msgid "Work type request added."
+msgid "Work from request added."
 msgstr ""
 
-msgid "Work type request not found."
+msgid "Work from request not found."
 msgstr ""
 
 msgid "You don't have permission"
 msgstr ""
 
-msgid "Work type request has been rejected."
+msgid "Work from request has been rejected."
 msgstr ""
 
 #, fuzzy
 #| msgid "attendance"
-msgid "Your work type request has been rejected."
+msgid "Your work from request has been rejected."
 msgstr "Attendance"
 
-msgid "No worktype request found matching the query."
+msgid "No workfrom request found matching the query."
 msgstr ""
 
-msgid "Work type request has been canceled."
+msgid "Work from request has been canceled."
 msgstr ""
 
-msgid "Work type request has been approved."
+msgid "Work from request has been approved."
 msgstr ""
 
-msgid "An approved work type request already exists during this time period."
+msgid "An approved work from request already exists during this time period."
 msgstr ""
 
-msgid "Work type request deleted."
+msgid "Work from request deleted."
 msgstr ""
 
-msgid "You cannot delete this work type request."
+msgid "You cannot delete this work from request."
 msgstr ""
 
 #, python-brace-format
-msgid "You cannot delete {employee} work type request for the date {date}."
+msgid "You cannot delete {employee} work from request for the date {date}."
 msgstr ""
 
 #, fuzzy, python-brace-format
 #| msgid "work-type-request-view"
-msgid "{} work type requests deleted."
+msgid "{} work from requests deleted."
 msgstr "Work Type Requests"
 
 #, fuzzy
@@ -9194,12 +9194,12 @@ msgstr "Employee"
 
 #, fuzzy, python-format
 #| msgid "shift-request-view"
-msgid "%(employee)s's work type request has received a comment."
+msgid "%(employee)s's work from request has received a comment."
 msgstr "Shift Requests"
 
 #, fuzzy
 #| msgid "shift-request-view"
-msgid "Your work type request has received a comment."
+msgid "Your work from request has received a comment."
 msgstr "Shift Requests"
 
 msgid "Default pagination updated."
@@ -10125,7 +10125,7 @@ msgstr ""
 
 #, fuzzy
 #| msgid "type-update"
-msgid "Work Type & Shift"
+msgid "Work From & Shift"
 msgstr "Update"
 
 #, fuzzy
@@ -11525,7 +11525,7 @@ msgstr "Leave Types"
 msgid "No interviews are scheduled for this candidate"
 msgstr ""
 
-msgid "No work type request has been created."
+msgid "No work from request has been created."
 msgstr ""
 
 msgid "Rotate every 1st day of month "
@@ -11561,7 +11561,7 @@ msgstr ""
 msgid "th day of month "
 msgstr ""
 
-msgid "No rotating work type has been assigned."
+msgid "No rotating work from has been assigned."
 msgstr ""
 
 msgid "No Shift request has been created."
@@ -12801,7 +12801,7 @@ msgstr ""
 msgid "If 'based_on' is 'shift_id', 'shift_id' is required."
 msgstr ""
 
-msgid "If 'based_on' is 'work_type_id', 'work_type_id' is required."
+msgid "If 'based_on' is 'work_from_id', 'work_from_id' is required."
 msgstr ""
 
 msgid ""
@@ -12904,12 +12904,12 @@ msgstr "Attendances"
 
 #, fuzzy
 #| msgid "shift-request-view"
-msgid "WorkType not found"
+msgid "WorkFrom not found"
 msgstr "Shift Requests"
 
 #, fuzzy
 #| msgid "shift-request-view"
-msgid "WorkTypeRequest not found"
+msgid "WorkFromRequest not found"
 msgstr "Shift Requests"
 
 #, fuzzy
@@ -12919,7 +12919,7 @@ msgstr "Job Position"
 
 #, fuzzy
 #| msgid "rotating-work-type-assign"
-msgid "RotatingWorkTypeAssign not found"
+msgid "RotatingWorkFromAssign not found"
 msgstr "Rotating Work Type Assigns"
 
 #, fuzzy
@@ -12949,7 +12949,7 @@ msgstr "Update"
 
 #, fuzzy
 #| msgid "rotating-work-type-assign"
-msgid "RotatingWorkType not found"
+msgid "RotatingWorkFrom not found"
 msgstr "Rotating Work Type Assigns"
 
 msgid "Already request exits on same date"
@@ -15474,7 +15474,7 @@ msgstr ""
 
 #, fuzzy
 #| msgid "rotating-work-type-assign"
-msgid "Set up rotating work type patterns for employees."
+msgid "Set up rotating work from patterns for employees."
 msgstr "Rotating Work Type Assigns"
 
 msgid "Configure day-wise schedules linked to each shift."
@@ -15650,7 +15650,7 @@ msgstr "Reimbursement"
 
 #, fuzzy
 #| msgid "work-type-request-view"
-msgid "Create Work Type Request"
+msgid "Create Work From Request"
 msgstr "Work Type Requests"
 
 msgid "Create Leave Request"
@@ -15963,7 +15963,7 @@ msgstr "Shift Requests"
 
 #, fuzzy
 #| msgid "shift-request-view"
-msgid "Work Type Requests to Approve"
+msgid "Work From Requests to Approve"
 msgstr "Shift Requests"
 
 #, fuzzy
@@ -17763,7 +17763,7 @@ msgstr ""
 msgid "Submit and manage your shift change requests for approval."
 msgstr ""
 
-msgid "Submit and manage requests to change your work type assignment."
+msgid "Submit and manage requests to change your work from assignment."
 msgstr ""
 
 msgid "Company-specific settings"
@@ -17990,7 +17990,7 @@ msgstr "Shift"
 
 #, fuzzy
 #| msgid "leave-allocation-request-view"
-msgid "No Comments have been added for this worktype request"
+msgid "No Comments have been added for this workfrom request"
 msgstr "Leave Allocation Requests"
 
 msgid "Theme ID is required"
@@ -21720,7 +21720,7 @@ msgstr ""
 msgid "If based on is shift, then shift must be filled."
 msgstr ""
 
-msgid "If based on is work type, then work type must be filled."
+msgid "If based on is work from, then work from must be filled."
 msgstr ""
 
 msgid "The amount per children must be filled."
@@ -26570,7 +26570,7 @@ msgstr "Company"
 
 #, fuzzy
 #| msgid "work_type"
-msgid "All work types"
+msgid "All work from options"
 msgstr "Work Type"
 
 #, fuzzy

@@ -386,7 +386,7 @@
             "modified_by": 1,
             "is_active": true,
             "question": "How can an employee request a shift change?",
-            "answer": "Employees can request a shift change through the 'Reallocate Shift' option in the Work Type & Shift tab in their profile. Admin approval is required for changes.",
+            "answer": "Employees can request a shift change through the 'Reallocate Shift' option in the Work From & Shift tab in their profile. Admin approval is required for changes.",
             "category": 1,
             "company_id": null,
             "tags": [
@@ -456,8 +456,8 @@
             "created_by": 1,
             "modified_by": 1,
             "is_active": true,
-            "question": "What is a Rotating Work Type Assign?",
-            "answer": "A Rotating Work Type Assign automates frequent changes in work types based on conditions like intervals, weekends, or specific dates.",
+            "question": "What is a Rotating Work From Assign?",
+            "answer": "A Rotating Work From Assign automates frequent changes in work from options based on conditions like intervals, weekends, or specific dates.",
             "category": 1,
             "company_id": null,
             "tags": [

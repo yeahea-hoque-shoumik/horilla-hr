@@ -1396,7 +1396,7 @@ class Summary(TemplateView):
         work_info_fields = [
             "job_position_id",
             "department_id",
-            "work_type_id",
+            "work_from_id",
             "employee_type_id",
             "job_role_id",
             "reporting_manager_id",

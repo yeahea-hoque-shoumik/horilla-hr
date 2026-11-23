@@ -152,8 +152,8 @@ EMPLOYEE_LOCATION_BY_COMPANY = {
 }
 
 # Extra shifts per branch (name, start, end) beside the 09:00-18:00 default,
-# and the work types employees are spread across -- so the attendance
-# dashboard's shift / work-type breakdowns have more than one bucket.
+# and the work from options employees are spread across -- so the attendance
+# dashboard's shift / work-from breakdowns have more than one bucket.
 EXTRA_SHIFTS = [
     ("Morning Shift", datetime.time(7, 0), datetime.time(16, 0)),
     ("Evening Shift", datetime.time(12, 0), datetime.time(21, 0)),
@@ -227,14 +227,14 @@ EMPLOYEE_TAG_SPECS = [
     ("Key Resource", "#dc2626"),
     ("On Probation", "#f59e0b"),
 ]
-# RotatingWorkType.name is unique, so each company draws its own pair.
-ROTATING_WORK_TYPE_SPECS = [
+# RotatingWorkFrom.name is unique, so each company draws its own pair.
+ROTATING_WORK_FROM_SPECS = [
     ("Office / Home Rotation", "Work From Office", "Work From Home"),
     ("Office / Hybrid Rotation", "Work From Office", "Hybrid"),
     ("Home / Remote Rotation", "Work From Home", "Remote"),
     ("Client Site / Office Rotation", "On-site (Client)", "Work From Office"),
 ]
-WORK_TYPE_NAMES = [
+WORK_FROM_NAMES = [
     "Work From Office",
     "Work From Home",
     "Hybrid",
@@ -245,7 +245,7 @@ WORK_TYPE_NAMES = [
 
 # Employee dashboard: request counts per branch.
 DASHBOARD_PENDING_SHIFT_REQUESTS = 4
-DASHBOARD_PENDING_WORK_TYPE_REQUESTS = 4
+DASHBOARD_PENDING_WORK_FROM_REQUESTS = 4
 DASHBOARD_PENDING_SHIFT_ALLOCATIONS = 3
 DASHBOARD_PENDING_DOCUMENT_REQUESTS = 5
 DASHBOARD_REQUEST_REASONS = [
@@ -1407,7 +1407,7 @@ class ExtrasMixin:
     def _admin_extras_for(self, company, employees, today, default_shift):
         """Leave balances, objectives, tasks, requests and documents for Adam
         Admin, so every widget on My Dashboard has something to show."""
-        from base.models import ShiftRequest, WorkType, WorkTypeRequest
+        from base.models import ShiftRequest, WorkFrom, WorkFromRequest
         from employee.models import (
             Employee,
             EmployeeBankDetails,
@@ -1423,9 +1423,9 @@ class ExtrasMixin:
         if not admin or not work_info or work_info.company_id_id != company.pk:
             return
 
-        work_type = WorkType.objects.filter(company_id=company).order_by("pk").first()
+        work_from = WorkFrom.objects.filter(company_id=company).order_by("pk").first()
         EmployeeWorkInformation.objects.filter(employee_id=admin).update(
-            work_type_id=work_type
+            work_from_id=work_from
         )
 
         # Leave balances, with the leaves taken / booked below counted in.
@@ -1535,13 +1535,13 @@ class ExtrasMixin:
             description="Need an earlier start for a client call schedule.",
         )
         other_type = (
-            WorkType.objects.filter(company_id=company).exclude(pk=work_type.pk).first()
+            WorkFrom.objects.filter(company_id=company).exclude(pk=work_from.pk).first()
         )
         if other_type:
-            WorkTypeRequest.objects.create(
+            WorkFromRequest.objects.create(
                 employee_id=admin,
-                work_type_id=other_type,
-                previous_work_type_id=work_type,
+                work_from_id=other_type,
+                previous_work_from_id=work_from,
                 requested_date=today + datetime.timedelta(days=6),
                 requested_till=today + datetime.timedelta(days=20),
                 description="Working from home during the office renovation.",
@@ -2315,8 +2315,8 @@ class ExtrasMixin:
             ShiftRequest,
             ShiftRequestComment,
             TrackLateComeEarlyOut,
-            WorkTypeRequest,
-            WorkTypeRequestComment,
+            WorkFromRequest,
+            WorkFromRequestComment,
         )
         from employee.models import EmployeeWorkInformation
 
@@ -2348,9 +2348,9 @@ class ExtrasMixin:
                 comment=REQUEST_COMMENTS[i % len(REQUEST_COMMENTS)],
             )
         for i, request in enumerate(
-            WorkTypeRequest.objects.filter(employee_id__in=employees)[:5]
+            WorkFromRequest.objects.filter(employee_id__in=employees)[:5]
         ):
-            WorkTypeRequestComment.objects.create(
+            WorkFromRequestComment.objects.create(
                 request_id=request,
                 employee_id=employees[i % 3],
                 comment=REQUEST_COMMENTS[(i + 1) % len(REQUEST_COMMENTS)],
@@ -2544,7 +2544,7 @@ class Command(ExtrasMixin, BaseCommand):
             self._ongoing_leave_for(employees, today, paid_type, unpaid_type)
             self._today_attendance_for(employees, today, shift)
             self._pending_attendance_request_for(employees, older_month_start)
-            self._shifts_worktypes_punctuality_for(company, employees, shift)
+            self._shifts_workfroms_punctuality_for(company, employees, shift)
             self._pending_leave_for(employees, today, unpaid_type)
             with _as_request():
                 self._employee_dashboard_for(company, employees, shift, today)
@@ -3485,10 +3485,10 @@ class Command(ExtrasMixin, BaseCommand):
                 attendance_validated=True,
             )
 
-    def _shifts_worktypes_punctuality_for(self, company, employees, default_shift):
+    def _shifts_workfroms_punctuality_for(self, company, employees, default_shift):
         """
-        Spread employees over three shifts and three work types, then rewrite
-        every existing Attendance row to match: shift_id/work_type_id follow
+        Spread employees over three shifts and three work from options, then rewrite
+        every existing Attendance row to match: shift_id/work_from_id follow
         the employee, clock-in/out follow that shift's hours, and a
         deterministic subset of days is made a late arrival (clock-in 15-70
         minutes after shift start) or an early departure (clock-out 30-90
@@ -3499,15 +3499,15 @@ class Command(ExtrasMixin, BaseCommand):
         Rows are written with .update() so no clock-in/out side effects fire.
         """
         from attendance.models import Attendance, AttendanceLateComeEarlyOut
-        from base.models import WorkType
+        from base.models import WorkFrom
         from employee.models import EmployeeWorkInformation
 
-        work_types = []
-        for wt_name in WORK_TYPE_NAMES:
-            work_type = WorkType.objects.create(work_type=wt_name)
-            work_type.company_id.add(company)
-            work_types.append(work_type)
-        self._work_masters_for(company, employees, work_types)
+        work_froms = []
+        for wt_name in WORK_FROM_NAMES:
+            work_from = WorkFrom.objects.create(work_from=wt_name)
+            work_from.company_id.add(company)
+            work_froms.append(work_from)
+        self._work_masters_for(company, employees, work_froms)
 
         shifts = [default_shift, default_shift, *self._extra_shifts.values()]
         departments = {
@@ -3521,10 +3521,10 @@ class Command(ExtrasMixin, BaseCommand):
             shift_slot = index % len(shifts)
             shift = shifts[shift_slot]
             department = departments.get(employee.pk)
-            work_type = work_types[index % len(work_types)]
+            work_from = work_froms[index % len(work_froms)]
             EmployeeWorkInformation.objects.filter(employee_id=employee).update(
                 shift_id=shift,
-                work_type_id=work_type,
+                work_from_id=work_from,
             )
             start, end = self._shift_hours[shift.pk]
             late_every = DEPARTMENT_LATE_EVERY.get(department, 7)
@@ -3563,7 +3563,7 @@ class Command(ExtrasMixin, BaseCommand):
                 worked = int((clock_out - clock_in).total_seconds())
                 Attendance.objects.filter(pk=attendance.pk).update(
                     shift_id=shift,
-                    work_type_id=work_type,
+                    work_from_id=work_from,
                     attendance_clock_in=clock_in.time(),
                     attendance_clock_out=clock_out.time(),
                     attendance_worked_hour=f"{worked // 3600:02d}:{worked % 3600 // 60:02d}",
@@ -3583,16 +3583,16 @@ class Command(ExtrasMixin, BaseCommand):
                 early_total += is_early
 
         self.stdout.write(
-            f"  Shifts/work types assigned; {late_total} late arrivals, "
+            f"  Shifts/work from options assigned; {late_total} late arrivals, "
             f"{early_total} early departures, {absent_total} absences"
         )
 
     # -- employee dashboard ------------------------------------------------------
 
-    def _work_masters_for(self, company, employees, work_types):
-        """Employee types, employee tags and rotating work types for the
-        Work Type settings tabs, and assign them across the branch."""
-        from base.models import EmployeeType, RotatingWorkType, RotatingWorkTypeAssign
+    def _work_masters_for(self, company, employees, work_froms):
+        """Employee types, employee tags and rotating work from options for the
+        Work From settings tabs, and assign them across the branch."""
+        from base.models import EmployeeType, RotatingWorkFrom, RotatingWorkFromAssign
         from employee.models import EmployeeTag, EmployeeWorkInformation
 
         types = []
@@ -3613,26 +3613,26 @@ class Command(ExtrasMixin, BaseCommand):
             if index % 3 != 2:
                 employee.employee_work_info.tags.set([tags[index % len(tags)]])
 
-        by_name = {wt.work_type: wt for wt in work_types}
+        by_name = {wt.work_from: wt for wt in work_froms}
         slot = getattr(self, "_rotation_slot", 0)
         self._rotation_slot = slot + 1
         today = datetime.date.today()
         specs = [
-            ROTATING_WORK_TYPE_SPECS[(slot * 2 + k) % len(ROTATING_WORK_TYPE_SPECS)]
+            ROTATING_WORK_FROM_SPECS[(slot * 2 + k) % len(ROTATING_WORK_FROM_SPECS)]
             for k in range(2)
         ]
         for k, (title, first, second) in enumerate(specs):
-            rotation = RotatingWorkType.objects.create(
-                name=title, work_type1=by_name[first], work_type2=by_name[second]
+            rotation = RotatingWorkFrom.objects.create(
+                name=title, work_from1=by_name[first], work_from2=by_name[second]
             )
             for employee in employees[k * 6 : k * 6 + 4]:
-                RotatingWorkTypeAssign.objects.create(
+                RotatingWorkFromAssign.objects.create(
                     employee_id=employee,
-                    rotating_work_type_id=rotation,
+                    rotating_work_from_id=rotation,
                     start_date=today - datetime.timedelta(days=3),
                     next_change_date=today + datetime.timedelta(days=4 + k),
-                    current_work_type=by_name[first],
-                    next_work_type=by_name[second],
+                    current_work_from=by_name[first],
+                    next_work_from=by_name[second],
                     based_on="after",
                     rotate_after_day=7,
                 )
@@ -3752,16 +3752,16 @@ class Command(ExtrasMixin, BaseCommand):
           UNRUN_PER_COMPANY) get a date_joining in this month. Employees in
           the payroll run keep their old joining date, so payslips are
           unaffected.
-        * Shift requests, shift allocations, work type requests and document
+        * Shift requests, shift allocations, work from requests and document
           requests (the four KPI cards): mostly pending, plus a few approved /
           canceled / rejected so each count differs from the list total.
 
-        Needs the branch's extra shifts and work types, so it must run after
-        _shifts_worktypes_punctuality_for.
+        Needs the branch's extra shifts and work from options, so it must run after
+        _shifts_workfroms_punctuality_for.
         """
         from django.utils import timezone
 
-        from base.models import ShiftRequest, WorkType, WorkTypeRequest
+        from base.models import ShiftRequest, WorkFrom, WorkFromRequest
         from employee.models import EmployeeWorkInformation
         from horilla_documents.models import Document
 
@@ -3788,7 +3788,7 @@ class Command(ExtrasMixin, BaseCommand):
             )
 
         shifts = [default_shift, *self._extra_shifts.values()]
-        work_types = list(WorkType.objects.filter(company_id=company).order_by("pk"))
+        work_froms = list(WorkFrom.objects.filter(company_id=company).order_by("pk"))
         works = {
             w.employee_id_id: w
             for w in EmployeeWorkInformation.objects.filter(employee_id__in=employees)
@@ -3798,9 +3798,9 @@ class Command(ExtrasMixin, BaseCommand):
             current = works[employee.pk].shift_id
             return next((s for s in shifts if s != current), shifts[0])
 
-        def other_work_type(employee):
-            current = works[employee.pk].work_type_id
-            return next((w for w in work_types if w != current), work_types[0])
+        def other_work_from(employee):
+            current = works[employee.pk].work_from_id
+            return next((w for w in work_froms if w != current), work_froms[0])
 
         requesters = employees[14:]
 
@@ -3839,22 +3839,22 @@ class Command(ExtrasMixin, BaseCommand):
             )
             stamp(ShiftRequest, request, month_day(i + 2))
 
-        work_type_states = [{}] * DASHBOARD_PENDING_WORK_TYPE_REQUESTS + [
+        work_from_states = [{}] * DASHBOARD_PENDING_WORK_FROM_REQUESTS + [
             {"approved": True},
             {"canceled": True},
         ]
-        for i, state in enumerate(work_type_states):
+        for i, state in enumerate(work_from_states):
             employee = requesters[(i + 3) % len(requesters)]
-            request = WorkTypeRequest.objects.create(
+            request = WorkFromRequest.objects.create(
                 employee_id=employee,
-                work_type_id=other_work_type(employee),
-                previous_work_type_id=works[employee.pk].work_type_id,
+                work_from_id=other_work_from(employee),
+                previous_work_from_id=works[employee.pk].work_from_id,
                 requested_date=month_day(i + 1) + datetime.timedelta(days=2),
                 requested_till=month_day(i + 1) + datetime.timedelta(days=20),
                 description=reason(i + 2),
                 **state,
             )
-            stamp(WorkTypeRequest, request, month_day(i + 1))
+            stamp(WorkFromRequest, request, month_day(i + 1))
 
         document_statuses = ["requested"] * DASHBOARD_PENDING_DOCUMENT_REQUESTS + [
             "approved",
@@ -3872,7 +3872,7 @@ class Command(ExtrasMixin, BaseCommand):
         self.stdout.write(
             f"  Employee dashboard: {len(joiners)} new joiners, "
             f"{len(shift_states)} shift requests, {len(allocation_states)} shift "
-            f"allocations, {len(work_type_states)} work type requests, "
+            f"allocations, {len(work_from_states)} work from requests, "
             f"{len(document_statuses)} documents"
         )
 

@@ -420,7 +420,7 @@ class BulkFeedbackFormView(views.HorillaFormView):
             "Employee|Full name": "employee.get_full_name",
             "Employee|Email": "employee.get_mail",
             "Employee|Employee Type": "employee.get_employee_type",
-            "Employee|Work Type": "employee.get_work_type",
+            "Employee|Work From": "employee.get_work_from",
             "Employee|Company": "employee.get_company",
             "Employee|Job position": "employee.get_job_position",
         }

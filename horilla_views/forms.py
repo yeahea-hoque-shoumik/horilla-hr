@@ -149,7 +149,7 @@ class DynamicBulkUpdateForm(forms.Form):
         self.request = getattribute(_thread_locals, "request")
 
         # A bulk-update field keeps its plain model field name (e.g.
-        # "rotating_work_type_id"), so Django's default `id_%s` auto_id
+        # "rotating_work_from_id"), so Django's default `id_%s` auto_id
         # collides with any other form on the same page that happens to
         # use the same field name -- e.g. the list's own filter panel,
         # which is rendered alongside this modal rather than replacing it.

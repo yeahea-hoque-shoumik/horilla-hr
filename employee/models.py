@@ -33,7 +33,7 @@ from base.models import (
     EmployeeType,
     JobPosition,
     JobRole,
-    WorkType,
+    WorkFrom,
     validate_time_format,
 )
 from employee.methods.duration_methods import format_time, strtime_seconds
@@ -293,11 +293,11 @@ class Employee(models.Model):
             return work_info.get_timezone()
         return ZoneInfo(settings.TIME_ZONE)
 
-    def get_work_type(self):
+    def get_work_from(self):
         """
-        This method is used to return the work type of the employee
+        This method is used to return the work from of the employee
         """
-        return getattr(getattr(self, "employee_work_info", None), "work_type_id", None)
+        return getattr(getattr(self, "employee_work_info", None), "work_from_id", None)
 
     def get_employee_type(self):
         """
@@ -970,12 +970,12 @@ class EmployeeWorkInformation(models.Model):
         blank=True,
         verbose_name=_("Shift"),
     )
-    work_type_id = models.ForeignKey(
-        WorkType,
+    work_from_id = models.ForeignKey(
+        WorkFrom,
         on_delete=models.PROTECT,
         null=True,
         blank=True,
-        verbose_name=_("Work Type"),
+        verbose_name=_("Work From"),
     )
 
     employee_type_id = models.ForeignKey(
@@ -1066,7 +1066,7 @@ class EmployeeWorkInformation(models.Model):
         fields_to_focus = [
             "job_position_id",
             "department_id",
-            "work_type_id",
+            "work_from_id",
             "employee_type_id",
             "job_role_id",
             "reporting_manager_id",

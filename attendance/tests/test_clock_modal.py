@@ -19,7 +19,7 @@ from base.models import (
     EmployeeShift,
     EmployeeShiftDay,
     EmployeeShiftSchedule,
-    WorkType,
+    WorkFrom,
 )
 from employee.models import EmployeeWorkInformation
 from horilla.horilla_middlewares import set_selected_company
@@ -73,10 +73,10 @@ class ClockModalBase(TestCase):
     def tearDown(self):
         set_selected_company(None)
 
-    def work_type(self, name="Office", company=None, **fields):
-        work_type = WorkType.objects.create(work_type=name, **fields)
-        work_type.company_id.add(company or self.company)
-        return work_type
+    def work_from(self, name="Office", company=None, **fields):
+        work_from = WorkFrom.objects.create(work_from=name, **fields)
+        work_from.company_id.add(company or self.company)
+        return work_from
 
     def get_modal(self, now=INSTANT):
         with mock.patch("django.utils.timezone.now", return_value=now):
@@ -117,12 +117,12 @@ class ModalDisplayTests(ClockModalBase):
 
     def test_checkout_shows_check_in_and_no_location_field(self):
         place = self.location("Head Office")
-        self.post("clock-in", at(9, "15", work_type=place.pk))
+        self.post("clock-in", at(9, "15", work_from=place.pk))
         response = self.get_modal(INSTANT + timedelta(hours=1))
         self.assertContains(response, "clockCheckInSummary")
         self.assertContains(response, "09:15 AM")
         self.assertContains(response, "Head Office")
-        self.assertNotContains(response, 'name="work_type"')
+        self.assertNotContains(response, 'name="work_from"')
 
 
 class PunchTimeTests(ClockModalBase):
@@ -211,61 +211,61 @@ class PunchTimeTests(ClockModalBase):
         self.assertEqual(attendance.attendance_worked_hour, "07:45")
 
 
-class WorkTypeChoiceTests(ClockModalBase):
-    def test_required_when_company_has_work_types(self):
-        self.work_type()
+class WorkFromChoiceTests(ClockModalBase):
+    def test_required_when_company_has_work_froms(self):
+        self.work_from()
         response = self.post("clock-in", at(9))
         self.assertContains(response, "select your work location")
         self.assertFalse(self.activities().exists())
 
-    def test_not_required_without_work_types(self):
+    def test_not_required_without_work_froms(self):
         self.post("clock-in", at(9))
-        self.assertIsNone(self.activities().get().work_type_id)
+        self.assertIsNone(self.activities().get().work_from_id)
 
     def test_saved_on_activity_and_attendance(self):
-        place = self.work_type()
-        self.post("clock-in", at(9, work_type=place.pk))
-        self.assertEqual(self.activities().get().work_type_id, place)
+        place = self.work_from()
+        self.post("clock-in", at(9, work_from=place.pk))
+        self.assertEqual(self.activities().get().work_from_id, place)
         attendance = Attendance.objects.get(employee_id=self.employee)
-        self.assertEqual(attendance.work_type_id, place)
+        self.assertEqual(attendance.work_from_id, place)
 
     def test_choice_overrides_employee_default(self):
-        default = self.work_type("Office")
-        home = self.work_type("Home")
+        default = self.work_from("Office")
+        home = self.work_from("Home")
         EmployeeWorkInformation.objects.filter(employee_id=self.employee).update(
-            work_type_id=default
+            work_from_id=default
         )
-        self.post("clock-in", at(9, work_type=home.pk))
+        self.post("clock-in", at(9, work_from=home.pk))
         attendance = Attendance.objects.get(employee_id=self.employee)
-        self.assertEqual(attendance.work_type_id, home)
+        self.assertEqual(attendance.work_from_id, home)
 
     def test_modal_lists_own_and_all_company_types_once(self):
-        self.work_type("Ministry")
-        WorkType.objects.create(work_type="Everywhere")
-        self.work_type("Foreign Site", company=self.other_company)
+        self.work_from("Ministry")
+        WorkFrom.objects.create(work_from="Everywhere")
+        self.work_from("Foreign Site", company=self.other_company)
         response = self.get_modal()
         self.assertContains(response, "Ministry", count=1)
         self.assertContains(response, "Everywhere", count=1)
         self.assertNotContains(response, "Foreign Site")
 
-    def test_other_companys_work_type_is_rejected(self):
-        self.work_type()
-        foreign = self.work_type("Other", company=self.other_company)
-        response = self.post("clock-in", at(9, work_type=foreign.pk))
+    def test_other_companys_work_from_is_rejected(self):
+        self.work_from()
+        foreign = self.work_from("Other", company=self.other_company)
+        response = self.post("clock-in", at(9, work_from=foreign.pk))
         self.assertContains(response, "not available")
         self.assertFalse(self.activities().exists())
 
-    def test_archived_work_type_is_rejected(self):
-        self.work_type()
-        closed = self.work_type("Closed", is_active=False)
-        response = self.post("clock-in", at(9, work_type=closed.pk))
+    def test_archived_work_from_is_rejected(self):
+        self.work_from()
+        closed = self.work_from("Closed", is_active=False)
+        response = self.post("clock-in", at(9, work_from=closed.pk))
         self.assertContains(response, "not available")
         self.assertFalse(self.activities().exists())
 
 
 class DevicePathTests(ClockModalBase):
     def test_device_punches_skip_modal_and_location(self):
-        self.work_type()
+        self.work_from()
         moment = INSTANT.astimezone(dt_timezone(timedelta(hours=6)))
         clock_in(
             Request(
@@ -273,7 +273,7 @@ class DevicePathTests(ClockModalBase):
             )
         )
         activity = self.activities().get()
-        self.assertIsNone(activity.work_type_id)
+        self.assertIsNone(activity.work_from_id)
         later = moment + timedelta(hours=7)
         clock_out(
             Request(

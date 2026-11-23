@@ -32,7 +32,7 @@ from attendance.methods.utils import (
 )
 from base.horilla_company_manager import HorillaCompanyManager
 from base.methods import is_company_leave, is_holiday
-from base.models import Company, EmployeeShift, EmployeeShiftDay, WorkType
+from base.models import Company, EmployeeShift, EmployeeShiftDay, WorkFrom
 from employee.models import Employee
 
 # Create your models here.
@@ -76,12 +76,12 @@ class AttendanceActivity(HorillaModel):
     clock_out_date = models.DateField(null=True, verbose_name=_("Out Date"))
     out_datetime = models.DateTimeField(null=True)
     clock_out = models.TimeField(null=True, verbose_name=_("Check Out"))
-    work_type_id = models.ForeignKey(
-        WorkType,
+    work_from_id = models.ForeignKey(
+        WorkFrom,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name=_("Work Type"),
+        verbose_name=_("Work From"),
     )
     objects = HorillaCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
@@ -233,12 +233,12 @@ class Attendance(HorillaModel):
     shift_id = models.ForeignKey(
         EmployeeShift, on_delete=models.SET_NULL, null=True, verbose_name=_("Shift")
     )
-    work_type_id = models.ForeignKey(
-        WorkType,
+    work_from_id = models.ForeignKey(
+        WorkFrom,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,  # 796
-        verbose_name=_("Work Type"),
+        verbose_name=_("Work From"),
     )
     attendance_day = models.ForeignKey(
         EmployeeShiftDay,
@@ -356,7 +356,7 @@ class Attendance(HorillaModel):
         "attendance_clock_out",
         "attendance_clock_out_date",
         "shift_id",
-        "work_type_id",
+        "work_from_id",
         "minimum_hour",
         "attendance_worked_hour",
         "attendance_overtime",
@@ -969,7 +969,7 @@ class Attendance(HorillaModel):
             "attendance_clock_out": str(self.attendance_clock_out),
             "attendance_clock_out_date": str(self.attendance_clock_out_date),
             "shift_id": self.shift_id.id if self.shift_id else "",
-            "work_type_id": self.work_type_id.id if self.work_type_id else "",
+            "work_from_id": self.work_from_id.id if self.work_from_id else "",
             "attendance_worked_hour": self.attendance_worked_hour,
             "minimum_hour": self.minimum_hour,
             "batch_attendance_id": (
@@ -1459,7 +1459,7 @@ class AttendanceLateComeEarlyOut(HorillaModel):
 
     def get_type(self):
         """
-        Display work type
+        Display work from
         """
         choices = [
             ("late_come", _("Late Arrival")),

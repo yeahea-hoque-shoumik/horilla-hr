@@ -44,7 +44,7 @@ if apps.is_installed("payroll"):
             "department": "employee_id__employee_work_info__department_id__department",
             "job_position": "employee_id__employee_work_info__job_position_id__job_position",
             "job_role": "employee_id__employee_work_info__job_role_id__job_role",
-            "work_type": "employee_id__employee_work_info__work_type_id__work_type",
+            "work_from": "employee_id__employee_work_info__work_from_id__work_from",
             "shift": "employee_id__employee_work_info__shift_id__employee_shift",
             "employee_type": "employee_id__employee_work_info__employee_type_id__employee_type",
             "experience": "employee_id__employee_work_info__experience",
@@ -61,7 +61,7 @@ if apps.is_installed("payroll"):
             "department": "employee_id__employee_work_info__department_id__department",
             "job_position": "employee_id__employee_work_info__job_position_id__job_position",
             "job_role": "employee_id__employee_work_info__job_role_id__job_role",
-            "work_type": "employee_id__employee_work_info__work_type_id__work_type",
+            "work_from": "employee_id__employee_work_info__work_from_id__work_from",
             "shift": "employee_id__employee_work_info__shift_id__employee_shift",
         },
     }
@@ -357,7 +357,7 @@ if apps.is_installed("payroll"):
                     "employee_id__employee_work_info__department_id__department",
                     "employee_id__employee_work_info__job_role_id__job_role",
                     "employee_id__employee_work_info__job_position_id__job_position",
-                    "employee_id__employee_work_info__work_type_id__work_type",
+                    "employee_id__employee_work_info__work_from_id__work_from",
                     "employee_id__employee_work_info__shift_id__employee_shift",
                     "employee_id__employee_work_info__employee_type_id__employee_type",
                     "employee_id__employee_work_info__experience",
@@ -474,12 +474,12 @@ if apps.is_installed("payroll"):
                             ]
                             else "-"
                         ),
-                        "Work Type": (
+                        "Work From": (
                             item[
-                                "employee_id__employee_work_info__work_type_id__work_type"
+                                "employee_id__employee_work_info__work_from_id__work_from"
                             ]
                             if item[
-                                "employee_id__employee_work_info__work_type_id__work_type"
+                                "employee_id__employee_work_info__work_from_id__work_from"
                             ]
                             else "-"
                         ),
@@ -547,7 +547,7 @@ if apps.is_installed("payroll"):
                     "employee_id__employee_work_info__department_id__department",
                     "employee_id__employee_work_info__job_role_id__job_role",
                     "employee_id__employee_work_info__job_position_id__job_position",
-                    "employee_id__employee_work_info__work_type_id__work_type",
+                    "employee_id__employee_work_info__work_from_id__work_from",
                     "employee_id__employee_work_info__shift_id__employee_shift",
                 )
             )
@@ -639,12 +639,12 @@ if apps.is_installed("payroll"):
                                 ]
                                 else "-"
                             ),
-                            "Work Type": (
+                            "Work From": (
                                 item[
-                                    "employee_id__employee_work_info__work_type_id__work_type"
+                                    "employee_id__employee_work_info__work_from_id__work_from"
                                 ]
                                 if item[
-                                    "employee_id__employee_work_info__work_type_id__work_type"
+                                    "employee_id__employee_work_info__work_from_id__work_from"
                                 ]
                                 else "-"
                             ),

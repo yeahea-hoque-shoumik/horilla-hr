@@ -147,9 +147,9 @@
                             <div
                                 class="oh-sticky-table__th"
                                 data-cell-index="7"
-                                data-cell-title='{% trans "Work Type" %}'
+                                data-cell-title='{% trans "Work From" %}'
                             >
-                                {% trans "Work Type" %}
+                                {% trans "Work From" %}
                             </div>
                             <div
                                 class="oh-sticky-table__th"
@@ -269,7 +269,7 @@
                                     href="{% url 'employee-view-individual' emp.id %}"
                                     style="color: inherit; text-decoration: none"
                                     class="oh-sticky-table__td"
-                                >{{ emp.employee_work_info.work_type_id }}</a>
+                                >{{ emp.employee_work_info.work_from_id }}</a>
                                 <a
                                     data-cell-index="8"
                                     href="{% url 'employee-view-individual' emp.id %}"

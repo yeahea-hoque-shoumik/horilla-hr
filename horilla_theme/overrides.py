@@ -463,7 +463,7 @@ Deduction.tax_col = tax_col
 
 Task.document_col = document_col
 
-from base.cbv.dashboard.dashboard import DashboardWorkTypeRequest, ShiftRequestToApprove
+from base.cbv.dashboard.dashboard import DashboardWorkFromRequest, ShiftRequestToApprove
 
 _shift_request_to_approve_init_orig = ShiftRequestToApprove.__init__
 
@@ -473,16 +473,16 @@ def _shift_request_to_approve_init(self, **kwargs):
     self.header_attrs = {}
 
 
-_work_type_request_to_approve_init_orig = DashboardWorkTypeRequest.__init__
+_work_from_request_to_approve_init_orig = DashboardWorkFromRequest.__init__
 
 
-def _work_type_request_to_approve_init(self, **kwargs):
-    _work_type_request_to_approve_init_orig(self, **kwargs)
+def _work_from_request_to_approve_init(self, **kwargs):
+    _work_from_request_to_approve_init_orig(self, **kwargs)
     self.header_attrs = {}
 
 
 ShiftRequestToApprove.__init__ = _shift_request_to_approve_init
-DashboardWorkTypeRequest.__init__ = _work_type_request_to_approve_init
+DashboardWorkFromRequest.__init__ = _work_from_request_to_approve_init
 
 
 if apps.is_installed("pms"):

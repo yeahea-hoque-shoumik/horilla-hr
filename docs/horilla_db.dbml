@@ -359,7 +359,7 @@ Table attendance_attendance {
   employee_id_id bigint
   modified_by_id bigint
   shift_id_id bigint
-  work_type_id_id bigint
+  work_from_id_id bigint
   batch_attendance_id_id bigint
 
   indexes {
@@ -371,7 +371,7 @@ Table attendance_attendance {
     employee_id_id [name: 'attendance_attendance_employee_id_id_a63854dc']
     modified_by_id [name: 'attendance_attendance_modified_by_id_e2e344c7']
     shift_id_id [name: 'attendance_attendance_shift_id_id_6fba51aa']
-    work_type_id_id [name: 'attendance_attendance_work_type_id_id_f370eeed']
+    work_from_id_id [name: 'attendance_attendance_work_from_id_id_f370eeed']
     attendance_date [name: 'attendance_date_idx']
     (attendance_date, attendance_validated) [name: 'attendance_date_validated_idx']
   }
@@ -714,7 +714,7 @@ Table attendance_historicalattendance {
   history_user_id bigint
   modified_by_id bigint
   shift_id_id bigint
-  work_type_id_id bigint
+  work_from_id_id bigint
 
   indexes {
     approved_by_id [name: 'attendance_historicalattendance_approved_by_id_a1eee249']
@@ -728,7 +728,7 @@ Table attendance_historicalattendance {
     id [name: 'attendance_historicalattendance_id_f6ca4b2d']
     modified_by_id [name: 'attendance_historicalattendance_modified_by_id_4d29539a']
     shift_id_id [name: 'attendance_historicalattendance_shift_id_id_f99f84a2']
-    work_type_id_id [name: 'attendance_historicalattendance_work_type_id_id_49209f61']
+    work_from_id_id [name: 'attendance_historicalattendance_work_from_id_id_49209f61']
   }
 }
 
@@ -1483,7 +1483,7 @@ Table base_historicalrotatingshiftassign_history_tags {
   }
 }
 
-Table base_historicalrotatingworktypeassign {
+Table base_historicalrotatingworkfromassign {
   id bigint [not null]
   created_at timestamptz
   is_active boolean [not null]
@@ -1505,34 +1505,34 @@ Table base_historicalrotatingworktypeassign {
   employee_id_id bigint
   history_user_id bigint
   modified_by_id bigint
-  rotating_work_type_id_id bigint
+  rotating_work_from_id_id bigint
   history_relation_id bigint [not null]
-  current_work_type_id bigint
-  next_work_type_id bigint
+  current_work_from_id bigint
+  next_work_from_id bigint
 
   indexes {
-    current_work_type_id [name: 'base_historicalrotatingwor_current_work_type_id_3209eedc']
+    current_work_from_id [name: 'base_historicalrotatingwor_current_work_from_id_3209eedc']
     history_relation_id [name: 'base_historicalrotatingwor_history_relation_id_aa9df2e0']
-    next_work_type_id [name: 'base_historicalrotatingwor_next_work_type_id_0aafd1c2']
-    rotating_work_type_id_id [name: 'base_historicalrotatingwor_rotating_work_type_id_id_1070e4ee']
-    created_by_id [name: 'base_historicalrotatingworktypeassign_created_by_id_7361b0d4']
-    employee_id_id [name: 'base_historicalrotatingworktypeassign_employee_id_id_ac747bf1']
-    history_date [name: 'base_historicalrotatingworktypeassign_history_date_59dde7ca']
-    history_user_id [name: 'base_historicalrotatingworktypeassign_history_user_id_28ca3275']
-    id [name: 'base_historicalrotatingworktypeassign_id_e461ed90']
-    modified_by_id [name: 'base_historicalrotatingworktypeassign_modified_by_id_24058264']
+    next_work_from_id [name: 'base_historicalrotatingwor_next_work_from_id_0aafd1c2']
+    rotating_work_from_id_id [name: 'base_historicalrotatingwor_rotating_work_from_id_id_1070e4ee']
+    created_by_id [name: 'base_historicalrotatingworkfromassign_created_by_id_7361b0d4']
+    employee_id_id [name: 'base_historicalrotatingworkfromassign_employee_id_id_ac747bf1']
+    history_date [name: 'base_historicalrotatingworkfromassign_history_date_59dde7ca']
+    history_user_id [name: 'base_historicalrotatingworkfromassign_history_user_id_28ca3275']
+    id [name: 'base_historicalrotatingworkfromassign_id_e461ed90']
+    modified_by_id [name: 'base_historicalrotatingworkfromassign_modified_by_id_24058264']
   }
 }
 
-Table base_historicalrotatingworktypeassign_history_tags {
+Table base_historicalrotatingworkfromassign_history_tags {
   id bigint [pk, increment]
-  historicalrotatingworktypeassign_id integer [not null]
+  historicalrotatingworkfromassign_id integer [not null]
   audittag_id bigint [not null]
 
   indexes {
-    (historicalrotatingworktypeassign_id, audittag_id) [unique]
+    (historicalrotatingworkfromassign_id, audittag_id) [unique]
     audittag_id [name: 'base_historicalrotatingwor_audittag_id_fbfad6f7']
-    historicalrotatingworktypeassign_id [name: 'base_historicalrotatingwor_historicalrotatingworktype_bbc5caa7']
+    historicalrotatingworkfromassign_id [name: 'base_historicalrotatingwor_historicalrotatingworkfrom_bbc5caa7']
   }
 }
 
@@ -1591,7 +1591,7 @@ Table base_historicalshiftrequest_history_tags {
   }
 }
 
-Table base_historicalworktyperequest {
+Table base_historicalworkfromrequest {
   id bigint [not null]
   created_at timestamptz
   is_active boolean [not null]
@@ -1601,10 +1601,10 @@ Table base_historicalworktyperequest {
   requested_date date
   requested_till date
   description text
-  is_permanent_work_type boolean [not null]
+  is_permanent_work_from boolean [not null]
   approved boolean [not null]
   canceled boolean [not null]
-  work_type_changed boolean [not null]
+  work_from_changed boolean [not null]
   history_id integer [pk, increment]
   history_date timestamptz [not null]
   history_change_reason varchar(100)
@@ -1613,32 +1613,32 @@ Table base_historicalworktyperequest {
   employee_id_id bigint
   history_user_id bigint
   modified_by_id bigint
-  previous_work_type_id_id bigint
-  work_type_id_id bigint
+  previous_work_from_id_id bigint
+  work_from_id_id bigint
   history_relation_id bigint [not null]
 
   indexes {
-    previous_work_type_id_id [name: 'base_historicalworktypereq_previous_work_type_id_id_162e234d']
-    created_by_id [name: 'base_historicalworktyperequest_created_by_id_a814446c']
-    employee_id_id [name: 'base_historicalworktyperequest_employee_id_id_8dcebf94']
-    history_date [name: 'base_historicalworktyperequest_history_date_dae1ccdb']
-    history_relation_id [name: 'base_historicalworktyperequest_history_relation_id_991a4d9d']
-    history_user_id [name: 'base_historicalworktyperequest_history_user_id_93351399']
-    id [name: 'base_historicalworktyperequest_id_bb0da676']
-    modified_by_id [name: 'base_historicalworktyperequest_modified_by_id_31a4fe5e']
-    work_type_id_id [name: 'base_historicalworktyperequest_work_type_id_id_532ab06d']
+    previous_work_from_id_id [name: 'base_historicalworkfromreq_previous_work_from_id_id_162e234d']
+    created_by_id [name: 'base_historicalworkfromrequest_created_by_id_a814446c']
+    employee_id_id [name: 'base_historicalworkfromrequest_employee_id_id_8dcebf94']
+    history_date [name: 'base_historicalworkfromrequest_history_date_dae1ccdb']
+    history_relation_id [name: 'base_historicalworkfromrequest_history_relation_id_991a4d9d']
+    history_user_id [name: 'base_historicalworkfromrequest_history_user_id_93351399']
+    id [name: 'base_historicalworkfromrequest_id_bb0da676']
+    modified_by_id [name: 'base_historicalworkfromrequest_modified_by_id_31a4fe5e']
+    work_from_id_id [name: 'base_historicalworkfromrequest_work_from_id_id_532ab06d']
   }
 }
 
-Table base_historicalworktyperequest_history_tags {
+Table base_historicalworkfromrequest_history_tags {
   id bigint [pk, increment]
-  historicalworktyperequest_id integer [not null]
+  historicalworkfromrequest_id integer [not null]
   audittag_id bigint [not null]
 
   indexes {
-    (historicalworktyperequest_id, audittag_id) [unique]
-    audittag_id [name: 'base_historicalworktypereq_audittag_id_e87dd597']
-    historicalworktyperequest_id [name: 'base_historicalworktypereq_historicalworktyperequest__0e0f338f']
+    (historicalworkfromrequest_id, audittag_id) [unique]
+    audittag_id [name: 'base_historicalworkfromreq_audittag_id_e87dd597']
+    historicalworkfromrequest_id [name: 'base_historicalworkfromreq_historicalworkfromrequest__0e0f338f']
   }
 }
 
@@ -1944,7 +1944,7 @@ Table base_rotatingshiftassign {
   }
 }
 
-Table base_rotatingworktype {
+Table base_rotatingworkfrom {
   id bigint [pk, increment]
   created_at timestamptz
   is_active boolean [not null]
@@ -1952,19 +1952,19 @@ Table base_rotatingworktype {
   additional_data jsonb
   created_by_id bigint
   modified_by_id bigint
-  work_type1_id bigint [not null]
-  work_type2_id bigint [not null]
+  work_from1_id bigint [not null]
+  work_from2_id bigint [not null]
 
   indexes {
-    created_by_id [name: 'base_rotatingworktype_created_by_id_3e26c1b7']
-    modified_by_id [name: 'base_rotatingworktype_modified_by_id_b561415c']
-    name [name: 'base_rotatingworktype_name_adfa8598_like']
-    work_type1_id [name: 'base_rotatingworktype_work_type1_id_3db498c9']
-    work_type2_id [name: 'base_rotatingworktype_work_type2_id_c8539552']
+    created_by_id [name: 'base_rotatingworkfrom_created_by_id_3e26c1b7']
+    modified_by_id [name: 'base_rotatingworkfrom_modified_by_id_b561415c']
+    name [name: 'base_rotatingworkfrom_name_adfa8598_like']
+    work_from1_id [name: 'base_rotatingworkfrom_work_from1_id_3db498c9']
+    work_from2_id [name: 'base_rotatingworkfrom_work_from2_id_c8539552']
   }
 }
 
-Table base_rotatingworktypeassign {
+Table base_rotatingworkfromassign {
   id bigint [pk, increment]
   created_at timestamptz
   is_active boolean [not null]
@@ -1978,17 +1978,17 @@ Table base_rotatingworktypeassign {
   created_by_id bigint
   employee_id_id bigint
   modified_by_id bigint
-  rotating_work_type_id_id bigint [not null]
-  current_work_type_id bigint
-  next_work_type_id bigint
+  rotating_work_from_id_id bigint [not null]
+  current_work_from_id bigint
+  next_work_from_id bigint
 
   indexes {
-    created_by_id [name: 'base_rotatingworktypeassign_created_by_id_f70083f5']
-    current_work_type_id [name: 'base_rotatingworktypeassign_current_work_type_id_011f4ef1']
-    employee_id_id [name: 'base_rotatingworktypeassign_employee_id_id_7df12772']
-    modified_by_id [name: 'base_rotatingworktypeassign_modified_by_id_617a9333']
-    next_work_type_id [name: 'base_rotatingworktypeassign_next_work_type_id_51672d14']
-    rotating_work_type_id_id [name: 'base_rotatingworktypeassign_rotating_work_type_id_id_25af494e']
+    created_by_id [name: 'base_rotatingworkfromassign_created_by_id_f70083f5']
+    current_work_from_id [name: 'base_rotatingworkfromassign_current_work_from_id_011f4ef1']
+    employee_id_id [name: 'base_rotatingworkfromassign_employee_id_id_7df12772']
+    modified_by_id [name: 'base_rotatingworkfromassign_modified_by_id_617a9333']
+    next_work_from_id [name: 'base_rotatingworkfromassign_next_work_from_id_51672d14']
+    rotating_work_from_id_id [name: 'base_rotatingworkfromassign_rotating_work_from_id_id_25af494e']
   }
 }
 
@@ -2098,59 +2098,59 @@ Table base_tracklatecomeearlyout {
   }
 }
 
-Table base_worktype {
+Table base_workfrom {
   id bigint [pk, increment]
   created_at timestamptz
   is_active boolean [not null]
-  work_type varchar(50) [not null]
+  work_from varchar(50) [not null]
   created_by_id bigint
   modified_by_id bigint
 
   indexes {
-    created_by_id [name: 'base_worktype_created_by_id_bebc20f6']
-    modified_by_id [name: 'base_worktype_modified_by_id_15d81354']
+    created_by_id [name: 'base_workfrom_created_by_id_bebc20f6']
+    modified_by_id [name: 'base_workfrom_modified_by_id_15d81354']
   }
 }
 
-Table base_worktype_company_id {
+Table base_workfrom_company_id {
   id bigint [pk, increment]
-  worktype_id bigint [not null]
+  workfrom_id bigint [not null]
   company_id bigint [not null]
 
   indexes {
-    (worktype_id, company_id) [unique]
-    company_id [name: 'base_worktype_company_id_company_id_d2d58a62']
-    worktype_id [name: 'base_worktype_company_id_worktype_id_29a81247']
+    (workfrom_id, company_id) [unique]
+    company_id [name: 'base_workfrom_company_id_company_id_d2d58a62']
+    workfrom_id [name: 'base_workfrom_company_id_workfrom_id_29a81247']
   }
 }
 
-Table base_worktyperequest {
+Table base_workfromrequest {
   id bigint [pk, increment]
   created_at timestamptz
   is_active boolean [not null]
   requested_date date
   requested_till date
   description text
-  is_permanent_work_type boolean [not null]
+  is_permanent_work_from boolean [not null]
   approved boolean [not null]
   canceled boolean [not null]
-  work_type_changed boolean [not null]
+  work_from_changed boolean [not null]
   created_by_id bigint
   employee_id_id bigint
   modified_by_id bigint
-  previous_work_type_id_id bigint
-  work_type_id_id bigint [not null]
+  previous_work_from_id_id bigint
+  work_from_id_id bigint [not null]
 
   indexes {
-    created_by_id [name: 'base_worktyperequest_created_by_id_da875da8']
-    employee_id_id [name: 'base_worktyperequest_employee_id_id_d747036a']
-    modified_by_id [name: 'base_worktyperequest_modified_by_id_cf5dcbb5']
-    previous_work_type_id_id [name: 'base_worktyperequest_previous_work_type_id_id_0187b88f']
-    work_type_id_id [name: 'base_worktyperequest_work_type_id_id_cff6cd3f']
+    created_by_id [name: 'base_workfromrequest_created_by_id_da875da8']
+    employee_id_id [name: 'base_workfromrequest_employee_id_id_d747036a']
+    modified_by_id [name: 'base_workfromrequest_modified_by_id_cf5dcbb5']
+    previous_work_from_id_id [name: 'base_workfromrequest_previous_work_from_id_id_0187b88f']
+    work_from_id_id [name: 'base_workfromrequest_work_from_id_id_cff6cd3f']
   }
 }
 
-Table base_worktyperequestcomment {
+Table base_workfromrequestcomment {
   id bigint [pk, increment]
   created_at timestamptz
   is_active boolean [not null]
@@ -2161,22 +2161,22 @@ Table base_worktyperequestcomment {
   request_id_id bigint [not null]
 
   indexes {
-    created_by_id [name: 'base_worktyperequestcomment_created_by_id_90ecf6c8']
-    employee_id_id [name: 'base_worktyperequestcomment_employee_id_id_5f0b0e04']
-    modified_by_id [name: 'base_worktyperequestcomment_modified_by_id_ac63c417']
-    request_id_id [name: 'base_worktyperequestcomment_request_id_id_802359b4']
+    created_by_id [name: 'base_workfromrequestcomment_created_by_id_90ecf6c8']
+    employee_id_id [name: 'base_workfromrequestcomment_employee_id_id_5f0b0e04']
+    modified_by_id [name: 'base_workfromrequestcomment_modified_by_id_ac63c417']
+    request_id_id [name: 'base_workfromrequestcomment_request_id_id_802359b4']
   }
 }
 
-Table base_worktyperequestcomment_files {
+Table base_workfromrequestcomment_files {
   id bigint [pk, increment]
-  worktyperequestcomment_id bigint [not null]
+  workfromrequestcomment_id bigint [not null]
   baserequestfile_id bigint [not null]
 
   indexes {
-    (worktyperequestcomment_id, baserequestfile_id) [unique]
-    worktyperequestcomment_id [name: 'base_worktyperequestcommen_worktyperequestcomment_id_4f8ea110']
-    baserequestfile_id [name: 'base_worktyperequestcomment_files_baserequestfile_id_56f0cad3']
+    (workfromrequestcomment_id, baserequestfile_id) [unique]
+    workfromrequestcomment_id [name: 'base_workfromrequestcommen_workfromrequestcomment_id_4f8ea110']
+    baserequestfile_id [name: 'base_workfromrequestcomment_files_baserequestfile_id_56f0cad3']
   }
 }
 
@@ -2527,7 +2527,7 @@ Table employee_employeeworkinformation {
   job_role_id_id bigint
   reporting_manager_id_id bigint
   shift_id_id bigint
-  work_type_id_id bigint
+  work_from_id_id bigint
 
   indexes {
     reporting_manager_id_id [name: 'employee_employeeworkinfor_reporting_manager_id_id_3f4c7fc4']
@@ -2537,7 +2537,7 @@ Table employee_employeeworkinformation {
     job_position_id_id [name: 'employee_employeeworkinformation_job_position_id_id_447a02c3']
     job_role_id_id [name: 'employee_employeeworkinformation_job_role_id_id_b7032a1b']
     shift_id_id [name: 'employee_employeeworkinformation_shift_id_id_868ad7f1']
-    work_type_id_id [name: 'employee_employeeworkinformation_work_type_id_id_e48fe5c7']
+    work_from_id_id [name: 'employee_employeeworkinformation_work_from_id_id_e48fe5c7']
   }
 }
 
@@ -2625,7 +2625,7 @@ Table employee_historicalemployeeworkinformation {
   job_role_id_id bigint
   reporting_manager_id_id bigint
   shift_id_id bigint
-  work_type_id_id bigint
+  work_from_id_id bigint
 
   indexes {
     company_id_id [name: 'employee_historicalemploye_company_id_id_cff2a07a']
@@ -2638,7 +2638,7 @@ Table employee_historicalemployeeworkinformation {
     job_position_id_id [name: 'employee_historicalemploye_job_position_id_id_f2def7a4']
     job_role_id_id [name: 'employee_historicalemploye_job_role_id_id_1ddca879']
     reporting_manager_id_id [name: 'employee_historicalemploye_reporting_manager_id_id_e9aa69e5']
-    work_type_id_id [name: 'employee_historicalemploye_work_type_id_id_bd1d8b2d']
+    work_from_id_id [name: 'employee_historicalemploye_work_from_id_id_bd1d8b2d']
     id [name: 'employee_historicalemployeeworkinformation_id_535f41ff']
     shift_id_id [name: 'employee_historicalemployeeworkinformation_shift_id_id_8e8623a6']
   }
@@ -4824,7 +4824,7 @@ Table payroll_allowance {
   per_children_fixed_amount float8
   shift_per_attendance_amount float8
   amount_per_one_hr float8
-  work_type_per_attendance_amount float8
+  work_from_per_attendance_amount float8
   has_max_limit boolean [not null]
   maximum_amount float8
   maximum_unit varchar(20)
@@ -4839,7 +4839,7 @@ Table payroll_allowance {
   created_by_id bigint
   modified_by_id bigint
   shift_id_id bigint
-  work_type_id_id bigint
+  work_from_id_id bigint
   code varchar(32) [not null]
   formula text [not null]
   if_component_code varchar(32) [not null]
@@ -4850,7 +4850,7 @@ Table payroll_allowance {
   system_key varchar(50) [not null]
 
   indexes {
-    (title, is_taxable, is_condition_based, field, condition, value, is_fixed, amount, based_on, rate, per_attendance_fixed_amount, shift_id_id, shift_per_attendance_amount, amount_per_one_hr, work_type_id_id, work_type_per_attendance_amount) [unique]
+    (title, is_taxable, is_condition_based, field, condition, value, is_fixed, amount, based_on, rate, per_attendance_fixed_amount, shift_id_id, shift_per_attendance_amount, amount_per_one_hr, work_from_id_id, work_from_per_attendance_amount) [unique]
     company_id_id [name: 'payroll_allowance_company_id_id_5912bfe7']
     created_by_id [name: 'payroll_allowance_created_by_id_1c73f9ba']
     modified_by_id [name: 'payroll_allowance_modified_by_id_947a87fd']
@@ -4858,7 +4858,7 @@ Table payroll_allowance {
     shift_id_id [name: 'payroll_allowance_shift_id_id_2a990c10']
     system_key [name: 'payroll_allowance_system_key_c32438a1']
     system_key [name: 'payroll_allowance_system_key_c32438a1_like']
-    work_type_id_id [name: 'payroll_allowance_work_type_id_id_da9a0d44']
+    work_from_id_id [name: 'payroll_allowance_work_from_id_id_da9a0d44']
   }
 }
 
@@ -4944,7 +4944,7 @@ Table payroll_contract {
   job_role_id bigint
   modified_by_id bigint
   shift_id bigint
-  work_type_id bigint
+  work_from_id bigint
   filing_status_id bigint
   salary_structure_id_id bigint
   daily_leave_amount_base varchar(20) [not null]
@@ -4964,7 +4964,7 @@ Table payroll_contract {
     modified_by_id [name: 'payroll_contract_modified_by_id_afd91aba']
     salary_structure_id_id [name: 'payroll_contract_salary_structure_id_id_94041748']
     shift_id [name: 'payroll_contract_shift_id_eda88904']
-    work_type_id [name: 'payroll_contract_work_type_id_82b0af54']
+    work_from_id [name: 'payroll_contract_work_from_id_82b0af54']
   }
 }
 
@@ -5182,7 +5182,7 @@ Table payroll_historicalcontract {
   job_role_id bigint
   modified_by_id bigint
   shift_id bigint
-  work_type_id bigint
+  work_from_id bigint
   salary_structure_id_id bigint
   daily_leave_amount_base varchar(20) [not null]
   daily_leave_amount_divisor varchar(20) [not null]
@@ -5204,7 +5204,7 @@ Table payroll_historicalcontract {
     modified_by_id [name: 'payroll_historicalcontract_modified_by_id_f9a8a752']
     salary_structure_id_id [name: 'payroll_historicalcontract_salary_structure_id_id_30170b96']
     shift_id [name: 'payroll_historicalcontract_shift_id_23264673']
-    work_type_id [name: 'payroll_historicalcontract_work_type_id_c38ff257']
+    work_from_id [name: 'payroll_historicalcontract_work_from_id_c38ff257']
   }
 }
 
@@ -7474,7 +7474,7 @@ Ref attendance_attendanc_created_by_id_621a60fa_fk_horilla_a: attendance_attenda
 Ref attendance_attendanc_employee_id_id_a63854dc_fk_employee_: attendance_attendance.employee_id_id > employee_employee.id
 Ref attendance_attendanc_modified_by_id_e2e344c7_fk_horilla_a: attendance_attendance.modified_by_id > horilla_auth_horillauser.id
 Ref attendance_attendanc_shift_id_id_6fba51aa_fk_base_empl: attendance_attendance.shift_id_id > base_employeeshift.id
-Ref attendance_attendanc_work_type_id_id_f370eeed_fk_base_work: attendance_attendance.work_type_id_id > base_worktype.id
+Ref attendance_attendanc_work_from_id_id_f370eeed_fk_base_work: attendance_attendance.work_from_id_id > base_workfrom.id
 Ref attendance_attendanc_created_by_id_c64cdac8_fk_horilla_a: attendance_attendanceactivity.created_by_id > horilla_auth_horillauser.id
 Ref attendance_attendanc_employee_id_id_387d5d6c_fk_employee_: attendance_attendanceactivity.employee_id_id > employee_employee.id
 Ref attendance_attendanc_modified_by_id_90e38a42_fk_horilla_a: attendance_attendanceactivity.modified_by_id > horilla_auth_horillauser.id
@@ -7611,15 +7611,15 @@ Ref base_employeetype_co_employeetype_id_0aa55002_fk_base_empl: base_employeetyp
 Ref base_historicalrotat_history_user_id_0e47cd81_fk_horilla_a: base_historicalrotatingshiftassign.history_user_id > horilla_auth_horillauser.id
 Ref base_historicalrotat_audittag_id_814369ae_fk_horilla_a: base_historicalrotatingshiftassign_history_tags.audittag_id > horilla_audit_audittag.id
 Ref base_historicalrotat_historicalrotatingsh_98c6b941_fk_base_hist: base_historicalrotatingshiftassign_history_tags.historicalrotatingshiftassign_id > base_historicalrotatingshiftassign.history_id
-Ref base_historicalrotat_history_user_id_28ca3275_fk_horilla_a: base_historicalrotatingworktypeassign.history_user_id > horilla_auth_horillauser.id
-Ref base_historicalrotat_audittag_id_fbfad6f7_fk_horilla_a: base_historicalrotatingworktypeassign_history_tags.audittag_id > horilla_audit_audittag.id
-Ref base_historicalrotat_historicalrotatingwo_bbc5caa7_fk_base_hist: base_historicalrotatingworktypeassign_history_tags.historicalrotatingworktypeassign_id > base_historicalrotatingworktypeassign.history_id
+Ref base_historicalrotat_history_user_id_28ca3275_fk_horilla_a: base_historicalrotatingworkfromassign.history_user_id > horilla_auth_horillauser.id
+Ref base_historicalrotat_audittag_id_fbfad6f7_fk_horilla_a: base_historicalrotatingworkfromassign_history_tags.audittag_id > horilla_audit_audittag.id
+Ref base_historicalrotat_historicalrotatingwo_bbc5caa7_fk_base_hist: base_historicalrotatingworkfromassign_history_tags.historicalrotatingworkfromassign_id > base_historicalrotatingworkfromassign.history_id
 Ref base_historicalshift_history_user_id_979ea896_fk_horilla_a: base_historicalshiftrequest.history_user_id > horilla_auth_horillauser.id
 Ref base_historicalshift_audittag_id_749e92d3_fk_horilla_a: base_historicalshiftrequest_history_tags.audittag_id > horilla_audit_audittag.id
 Ref base_historicalshift_historicalshiftreque_847ea50e_fk_base_hist: base_historicalshiftrequest_history_tags.historicalshiftrequest_id > base_historicalshiftrequest.history_id
-Ref base_historicalworkt_history_user_id_93351399_fk_horilla_a: base_historicalworktyperequest.history_user_id > horilla_auth_horillauser.id
-Ref base_historicalworkt_audittag_id_e87dd597_fk_horilla_a: base_historicalworktyperequest_history_tags.audittag_id > horilla_audit_audittag.id
-Ref base_historicalworkt_historicalworktypere_0e0f338f_fk_base_hist: base_historicalworktyperequest_history_tags.historicalworktyperequest_id > base_historicalworktyperequest.history_id
+Ref base_historicalworkt_history_user_id_93351399_fk_horilla_a: base_historicalworkfromrequest.history_user_id > horilla_auth_horillauser.id
+Ref base_historicalworkt_audittag_id_e87dd597_fk_horilla_a: base_historicalworkfromrequest_history_tags.audittag_id > horilla_audit_audittag.id
+Ref base_historicalworkt_historicalworkfromre_0e0f338f_fk_base_hist: base_historicalworkfromrequest_history_tags.historicalworkfromrequest_id > base_historicalworkfromrequest.history_id
 Ref base_holidays_company_id_id_dcd70297_fk_base_company_id: base_holidays.company_id_id > base_company.id
 Ref base_holidays_created_by_id_0ddc62ec_fk_horilla_a: base_holidays.created_by_id > horilla_auth_horillauser.id
 Ref base_holidays_modified_by_id_a4e26e62_fk_horilla_a: base_holidays.modified_by_id > horilla_auth_horillauser.id
@@ -7674,16 +7674,16 @@ Ref base_rotatingshiftas_employee_id_id_2c62486a_fk_employee_: base_rotatingshif
 Ref base_rotatingshiftas_modified_by_id_dbf1e1c7_fk_horilla_a: base_rotatingshiftassign.modified_by_id > horilla_auth_horillauser.id
 Ref base_rotatingshiftas_next_shift_id_f32a9069_fk_base_empl: base_rotatingshiftassign.next_shift_id > base_employeeshift.id
 Ref base_rotatingshiftas_rotating_shift_id_id_04b24bbb_fk_base_rota: base_rotatingshiftassign.rotating_shift_id_id > base_rotatingshift.id
-Ref base_rotatingworktyp_created_by_id_3e26c1b7_fk_horilla_a: base_rotatingworktype.created_by_id > horilla_auth_horillauser.id
-Ref base_rotatingworktyp_modified_by_id_b561415c_fk_horilla_a: base_rotatingworktype.modified_by_id > horilla_auth_horillauser.id
-Ref base_rotatingworktyp_work_type1_id_3db498c9_fk_base_work: base_rotatingworktype.work_type1_id > base_worktype.id
-Ref base_rotatingworktyp_work_type2_id_c8539552_fk_base_work: base_rotatingworktype.work_type2_id > base_worktype.id
-Ref base_rotatingworktyp_created_by_id_f70083f5_fk_horilla_a: base_rotatingworktypeassign.created_by_id > horilla_auth_horillauser.id
-Ref base_rotatingworktyp_current_work_type_id_011f4ef1_fk_base_work: base_rotatingworktypeassign.current_work_type_id > base_worktype.id
-Ref base_rotatingworktyp_employee_id_id_7df12772_fk_employee_: base_rotatingworktypeassign.employee_id_id > employee_employee.id
-Ref base_rotatingworktyp_modified_by_id_617a9333_fk_horilla_a: base_rotatingworktypeassign.modified_by_id > horilla_auth_horillauser.id
-Ref base_rotatingworktyp_next_work_type_id_51672d14_fk_base_work: base_rotatingworktypeassign.next_work_type_id > base_worktype.id
-Ref base_rotatingworktyp_rotating_work_type_i_25af494e_fk_base_rota: base_rotatingworktypeassign.rotating_work_type_id_id > base_rotatingworktype.id
+Ref base_rotatingworktyp_created_by_id_3e26c1b7_fk_horilla_a: base_rotatingworkfrom.created_by_id > horilla_auth_horillauser.id
+Ref base_rotatingworktyp_modified_by_id_b561415c_fk_horilla_a: base_rotatingworkfrom.modified_by_id > horilla_auth_horillauser.id
+Ref base_rotatingworktyp_work_from1_id_3db498c9_fk_base_work: base_rotatingworkfrom.work_from1_id > base_workfrom.id
+Ref base_rotatingworktyp_work_from2_id_c8539552_fk_base_work: base_rotatingworkfrom.work_from2_id > base_workfrom.id
+Ref base_rotatingworktyp_created_by_id_f70083f5_fk_horilla_a: base_rotatingworkfromassign.created_by_id > horilla_auth_horillauser.id
+Ref base_rotatingworktyp_current_work_from_id_011f4ef1_fk_base_work: base_rotatingworkfromassign.current_work_from_id > base_workfrom.id
+Ref base_rotatingworktyp_employee_id_id_7df12772_fk_employee_: base_rotatingworkfromassign.employee_id_id > employee_employee.id
+Ref base_rotatingworktyp_modified_by_id_617a9333_fk_horilla_a: base_rotatingworkfromassign.modified_by_id > horilla_auth_horillauser.id
+Ref base_rotatingworktyp_next_work_from_id_51672d14_fk_base_work: base_rotatingworkfromassign.next_work_from_id > base_workfrom.id
+Ref base_rotatingworktyp_rotating_work_from_i_25af494e_fk_base_rota: base_rotatingworkfromassign.rotating_work_from_id_id > base_rotatingworkfrom.id
 Ref base_setupchecklistd_company_id_5b2b68b4_fk_base_comp: base_setupchecklistdismissal.company_id > base_company.id
 Ref base_setupchecklistd_user_id_52ad56ee_fk_horilla_a: base_setupchecklistdismissal.user_id > horilla_auth_horillauser.id
 Ref base_shiftrequest_created_by_id_bea31919_fk_horilla_a: base_shiftrequest.created_by_id > horilla_auth_horillauser.id
@@ -7704,21 +7704,21 @@ Ref base_tags_modified_by_id_7e6e7fb2_fk_horilla_a: base_tags.modified_by_id > h
 Ref base_tracklatecomeea_company_id_id_8dbc4330_fk_base_comp: base_tracklatecomeearlyout.company_id_id > base_company.id
 Ref base_tracklatecomeea_created_by_id_998011af_fk_horilla_a: base_tracklatecomeearlyout.created_by_id > horilla_auth_horillauser.id
 Ref base_tracklatecomeea_modified_by_id_ddef4b5e_fk_horilla_a: base_tracklatecomeearlyout.modified_by_id > horilla_auth_horillauser.id
-Ref base_worktype_created_by_id_bebc20f6_fk_horilla_a: base_worktype.created_by_id > horilla_auth_horillauser.id
-Ref base_worktype_modified_by_id_15d81354_fk_horilla_a: base_worktype.modified_by_id > horilla_auth_horillauser.id
-Ref base_worktype_compan_worktype_id_29a81247_fk_base_work: base_worktype_company_id.worktype_id > base_worktype.id
-Ref base_worktype_company_id_company_id_d2d58a62_fk_base_company_id: base_worktype_company_id.company_id > base_company.id
-Ref base_worktyperequest_created_by_id_da875da8_fk_horilla_a: base_worktyperequest.created_by_id > horilla_auth_horillauser.id
-Ref base_worktyperequest_employee_id_id_d747036a_fk_employee_: base_worktyperequest.employee_id_id > employee_employee.id
-Ref base_worktyperequest_modified_by_id_cf5dcbb5_fk_horilla_a: base_worktyperequest.modified_by_id > horilla_auth_horillauser.id
-Ref base_worktyperequest_previous_work_type_i_0187b88f_fk_base_work: base_worktyperequest.previous_work_type_id_id > base_worktype.id
-Ref base_worktyperequest_work_type_id_id_cff6cd3f_fk_base_work: base_worktyperequest.work_type_id_id > base_worktype.id
-Ref base_worktyperequest_created_by_id_90ecf6c8_fk_horilla_a: base_worktyperequestcomment.created_by_id > horilla_auth_horillauser.id
-Ref base_worktyperequest_employee_id_id_5f0b0e04_fk_employee_: base_worktyperequestcomment.employee_id_id > employee_employee.id
-Ref base_worktyperequest_modified_by_id_ac63c417_fk_horilla_a: base_worktyperequestcomment.modified_by_id > horilla_auth_horillauser.id
-Ref base_worktyperequest_request_id_id_802359b4_fk_base_work: base_worktyperequestcomment.request_id_id > base_worktyperequest.id
-Ref base_worktyperequest_baserequestfile_id_56f0cad3_fk_base_base: base_worktyperequestcomment_files.baserequestfile_id > base_baserequestfile.id
-Ref base_worktyperequest_worktyperequestcomme_4f8ea110_fk_base_work: base_worktyperequestcomment_files.worktyperequestcomment_id > base_worktyperequestcomment.id
+Ref base_workfrom_created_by_id_bebc20f6_fk_horilla_a: base_workfrom.created_by_id > horilla_auth_horillauser.id
+Ref base_workfrom_modified_by_id_15d81354_fk_horilla_a: base_workfrom.modified_by_id > horilla_auth_horillauser.id
+Ref base_workfrom_compan_workfrom_id_29a81247_fk_base_work: base_workfrom_company_id.workfrom_id > base_workfrom.id
+Ref base_workfrom_company_id_company_id_d2d58a62_fk_base_company_id: base_workfrom_company_id.company_id > base_company.id
+Ref base_workfromrequest_created_by_id_da875da8_fk_horilla_a: base_workfromrequest.created_by_id > horilla_auth_horillauser.id
+Ref base_workfromrequest_employee_id_id_d747036a_fk_employee_: base_workfromrequest.employee_id_id > employee_employee.id
+Ref base_workfromrequest_modified_by_id_cf5dcbb5_fk_horilla_a: base_workfromrequest.modified_by_id > horilla_auth_horillauser.id
+Ref base_workfromrequest_previous_work_from_i_0187b88f_fk_base_work: base_workfromrequest.previous_work_from_id_id > base_workfrom.id
+Ref base_workfromrequest_work_from_id_id_cff6cd3f_fk_base_work: base_workfromrequest.work_from_id_id > base_workfrom.id
+Ref base_workfromrequest_created_by_id_90ecf6c8_fk_horilla_a: base_workfromrequestcomment.created_by_id > horilla_auth_horillauser.id
+Ref base_workfromrequest_employee_id_id_5f0b0e04_fk_employee_: base_workfromrequestcomment.employee_id_id > employee_employee.id
+Ref base_workfromrequest_modified_by_id_ac63c417_fk_horilla_a: base_workfromrequestcomment.modified_by_id > horilla_auth_horillauser.id
+Ref base_workfromrequest_request_id_id_802359b4_fk_base_work: base_workfromrequestcomment.request_id_id > base_workfromrequest.id
+Ref base_workfromrequest_baserequestfile_id_56f0cad3_fk_base_base: base_workfromrequestcomment_files.baserequestfile_id > base_baserequestfile.id
+Ref base_workfromrequest_workfromrequestcomme_4f8ea110_fk_base_work: base_workfromrequestcomment_files.workfromrequestcomment_id > base_workfromrequestcomment.id
 Ref biometric_biometricd_company_id_id_24f01059_fk_base_comp: biometric_biometricdevices.company_id_id > base_company.id
 Ref biometric_biometricd_created_by_id_e53d3c02_fk_horilla_a: biometric_biometricdevices.created_by_id > horilla_auth_horillauser.id
 Ref biometric_biometricd_modified_by_id_4a3ba0a1_fk_horilla_a: biometric_biometricdevices.modified_by_id > horilla_auth_horillauser.id
@@ -7761,7 +7761,7 @@ Ref employee_employeewor_job_position_id_id_447a02c3_fk_base_jobp: employee_empl
 Ref employee_employeewor_job_role_id_id_b7032a1b_fk_base_jobr: employee_employeeworkinformation.job_role_id_id > base_jobrole.id
 Ref employee_employeewor_reporting_manager_id_3f4c7fc4_fk_employee_: employee_employeeworkinformation.reporting_manager_id_id > employee_employee.id
 Ref employee_employeewor_shift_id_id_868ad7f1_fk_base_empl: employee_employeeworkinformation.shift_id_id > base_employeeshift.id
-Ref employee_employeewor_work_type_id_id_e48fe5c7_fk_base_work: employee_employeeworkinformation.work_type_id_id > base_worktype.id
+Ref employee_employeewor_work_from_id_id_e48fe5c7_fk_base_work: employee_employeeworkinformation.work_from_id_id > base_workfrom.id
 Ref employee_employeewor_employeetag_id_d877fd1d_fk_employee_: employee_employeeworkinformation_tags.employeetag_id > employee_employeetag.id
 Ref employee_employeewor_employeeworkinformat_adc704f0_fk_employee_: employee_employeeworkinformation_tags.employeeworkinformation_id > employee_employeeworkinformation.id
 Ref employee_historicalb_history_user_id_a529213d_fk_horilla_a: employee_historicalbonuspoint.history_user_id > horilla_auth_horillauser.id
@@ -8068,7 +8068,7 @@ Ref payroll_allowance_company_id_id_5912bfe7_fk_base_company_id: payroll_allowan
 Ref payroll_allowance_created_by_id_1c73f9ba_fk_horilla_a: payroll_allowance.created_by_id > horilla_auth_horillauser.id
 Ref payroll_allowance_modified_by_id_947a87fd_fk_horilla_a: payroll_allowance.modified_by_id > horilla_auth_horillauser.id
 Ref payroll_allowance_shift_id_id_2a990c10_fk_base_employeeshift_id: payroll_allowance.shift_id_id > base_employeeshift.id
-Ref payroll_allowance_work_type_id_id_da9a0d44_fk_base_worktype_id: payroll_allowance.work_type_id_id > base_worktype.id
+Ref payroll_allowance_work_from_id_id_da9a0d44_fk_base_workfrom_id: payroll_allowance.work_from_id_id > base_workfrom.id
 Ref payroll_allowance_ap_allowance_id_f50a86fd_fk_payroll_a: payroll_allowance_apply_conditions.allowance_id > payroll_allowance.id
 Ref payroll_allowance_ap_applycondition_id_56666099_fk_payroll_a: payroll_allowance_apply_conditions.applycondition_id > payroll_applycondition.id
 Ref payroll_allowance_ex_allowance_id_71401ad3_fk_payroll_a: payroll_allowance_exclude_employees.allowance_id > payroll_allowance.id
@@ -8086,7 +8086,7 @@ Ref payroll_contract_job_role_id_41e136e0_fk_base_jobrole_id: payroll_contract.j
 Ref payroll_contract_modified_by_id_afd91aba_fk_horilla_a: payroll_contract.modified_by_id > horilla_auth_horillauser.id
 Ref payroll_contract_salary_structure_id__94041748_fk_payroll_s: payroll_contract.salary_structure_id_id > payroll_salarystructure.id
 Ref payroll_contract_shift_id_eda88904_fk_base_employeeshift_id: payroll_contract.shift_id > base_employeeshift.id
-Ref payroll_contract_work_type_id_82b0af54_fk_base_worktype_id: payroll_contract.work_type_id > base_worktype.id
+Ref payroll_contract_work_from_id_82b0af54_fk_base_workfrom_id: payroll_contract.work_from_id > base_workfrom.id
 Ref payroll_deduction_company_id_id_d5546b8f_fk_base_company_id: payroll_deduction.company_id_id > base_company.id
 Ref payroll_deduction_created_by_id_433028c3_fk_horilla_a: payroll_deduction.created_by_id > horilla_auth_horillauser.id
 Ref payroll_deduction_modified_by_id_64c0dc3c_fk_horilla_a: payroll_deduction.modified_by_id > horilla_auth_horillauser.id

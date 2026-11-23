@@ -29,7 +29,7 @@ from base.models import (
     EmployeeShift,
     JobPosition,
     JobRole,
-    WorkType,
+    WorkFrom,
     validate_time_format,
 )
 from employee.methods.duration_methods import strtime_seconds
@@ -518,13 +518,13 @@ class Contract(HorillaModel):
         related_name="contracts",
         verbose_name=_("Shift"),
     )
-    work_type = models.ForeignKey(
-        WorkType,
+    work_from = models.ForeignKey(
+        WorkFrom,
         on_delete=models.PROTECT,
         null=True,
         blank=True,
         related_name="contracts",
-        verbose_name=_("Work Type"),
+        verbose_name=_("Work From"),
     )
     notice_period_in_days = models.IntegerField(
         default=30,
@@ -645,7 +645,7 @@ class Contract(HorillaModel):
                     (_("Job position"), self.job_position),
                     (_("Job role"), self.job_role),
                     (_("Shift"), self.shift),
-                    (_("Work type"), self.work_type),
+                    (_("Work from"), self.work_from),
                     (
                         _("Deduct leave from basic pay"),
                         _("Yes") if self.deduct_leave_from_basic_pay else _("No"),
@@ -1089,8 +1089,8 @@ class Contract(HorillaModel):
             if self.job_role is None:
                 self.job_role = self.employee_id.employee_work_info.job_role_id
 
-            if self.work_type is None:
-                self.work_type = self.employee_id.employee_work_info.work_type_id
+            if self.work_from is None:
+                self.work_from = self.employee_id.employee_work_info.work_from_id
 
             if self.shift is None:
                 self.shift = self.employee_id.employee_work_info.shift_id
@@ -1575,7 +1575,7 @@ class Allowance(HorillaModel):
             ("week_off_overtime", _("Week Off Overtime")),
             ("holiday_overtime", _("Holiday Overtime")),
             ("shift_id", _("Shift")),
-            ("work_type_id", _("Work Type")),
+            ("work_from_id", _("Work From")),
             ("attendance", _("Attendance")),
         ]
         based_on_choice += attendance_choices
@@ -1743,14 +1743,14 @@ class Allowance(HorillaModel):
         blank=True,
         validators=[min_zero],
     )
-    work_type_id = models.ForeignKey(
-        WorkType,
+    work_from_id = models.ForeignKey(
+        WorkFrom,
         on_delete=models.PROTECT,
         null=True,
         blank=True,
-        verbose_name=_("Work Type"),
+        verbose_name=_("Work From"),
     )
-    work_type_per_attendance_amount = models.FloatField(
+    work_from_per_attendance_amount = models.FloatField(
         null=True,
         default=0.00,
         blank=True,
@@ -1878,8 +1878,8 @@ class Allowance(HorillaModel):
             "shift_id",
             "shift_per_attendance_amount",
             "amount_per_one_hr",
-            "work_type_id",
-            "work_type_per_attendance_amount",
+            "work_from_id",
+            "work_from_per_attendance_amount",
         ]
         verbose_name = _("Allowance")
 
@@ -2061,8 +2061,8 @@ class Allowance(HorillaModel):
             "shift_id",
             "shift_per_attendance_amount",
             "amount_per_one_hr",
-            "work_type_id",
-            "work_type_per_attendance_amount",
+            "work_from_id",
+            "work_from_per_attendance_amount",
             "maximum_amount",
         ]
         for attribute in attributes_to_reset:
@@ -2159,9 +2159,9 @@ class Allowance(HorillaModel):
             )
         if self.based_on == "shift_id" and not self.shift_id:
             raise ValidationError(_("If based on is shift, then shift must be filled."))
-        if self.based_on == "work_type_id" and not self.work_type_id:
+        if self.based_on == "work_from_id" and not self.work_from_id:
             raise ValidationError(
-                _("If based on is work type, then work type must be filled.")
+                _("If based on is work from, then work from must be filled.")
             )
         if self.based_on == "children" and not self.per_children_fixed_amount:
             raise ValidationError(_("The amount per children must be filled."))
@@ -2542,7 +2542,7 @@ class Deduction(HorillaModel):
 
     def get_based_on_display(self):
         """
-        Display work type
+        Display work from
         """
         return dict(self.based_on_choice).get(self.based_on)
 
@@ -4291,7 +4291,7 @@ class PayslipAutoGenerate(models.Model):
 
     def get_generate_day_display(self):
         """
-        Display work type
+        Display work from
         """
         return dict(DAYS).get(self.generate_day)
 

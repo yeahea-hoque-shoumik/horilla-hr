@@ -2,7 +2,7 @@
 
 ## Summary
 
-This area holds the building blocks of the organisation: companies, departments, job positions, job roles, employee types, work types and tags. It also holds system-wide preferences, mail servers and mail templates, the export permission setting and the first-run setup wizard. Everything else in the system refers to these records, so they are usually set up first.
+This area holds the building blocks of the organisation: companies, departments, job positions, job roles, employee types, work from options and tags. It also holds system-wide preferences, mail servers and mail templates, the export permission setting and the first-run setup wizard. Everything else in the system refers to these records, so they are usually set up first.
 
 ## Who uses it
 
@@ -19,10 +19,10 @@ This area holds the building blocks of the organisation: companies, departments,
 - Rule: a company or employee time zone must be a real name from the international time zone list (for example "Asia/Dhaka"). Reason: not stated in the code.
 - Rule: creating a company automatically creates its announcement-expiry setting, its export-permission setting and its attendance settings. Reason: not stated in the code.
 
-### Departments, job positions, job roles, employee types, work types and tags
+### Departments, job positions, job roles, employee types, work from options and tags
 
-- These are simple lists that HR maintains. Employees are placed in a department and job position, and can have a job role, an employee type (for example permanent or contract), a work type (for example office or remote) and tags.
-- Work types are also used by shift and work-type requests; see [Shifts and work types](03-shifts-and-work-types.md).
+- These are simple lists that HR maintains. Employees are placed in a department and job position, and can have a job role, an employee type (for example permanent or contract), a work from (for example office or remote) and tags.
+- Work from options are also used by shift and work-from requests; see [Shifts and work from options](03-shifts-and-work-froms.md).
 
 ### First-run setup wizard
 
@@ -55,7 +55,7 @@ This area holds the building blocks of the organisation: companies, departments,
 
 | Action | Who |
 |---|---|
-| Create and change companies, departments, positions, roles, employee types, work types and tags | People with the matching add or change permission, such as the Admin and HR Manager **role groups** |
+| Create and change companies, departments, positions, roles, employee types, work from options and tags | People with the matching add or change permission, such as the Admin and HR Manager **role groups** |
 | Set up mail servers and mail templates | People with the mail server or mail template permissions |
 | Change who may export data | People with the export-permission setting permission |
 | Run the first-run setup wizard | Anyone who knows the setup password |

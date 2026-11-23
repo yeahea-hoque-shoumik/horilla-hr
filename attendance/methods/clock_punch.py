@@ -20,40 +20,40 @@ def _company(employee):
     return work_info.company_id if work_info else None
 
 
-def available_work_types(employee):
+def available_work_froms(employee):
     """
-    Active work types of the employee's own company, not the session's.
-    A work type with no company applies to every company.
+    Active work from options of the employee's own company, not the session's.
+    A work from with no company applies to every company.
     """
-    from base.models import WorkType
+    from base.models import WorkFrom
 
     company = _company(employee)
     if company is None:
-        return WorkType.objects.none()
+        return WorkFrom.objects.none()
     return (
-        WorkType.objects.entire()
+        WorkFrom.objects.entire()
         .filter(Q(company_id=company) | Q(company_id__isnull=True), is_active=True)
         .distinct()
-        .order_by("work_type")
+        .order_by("work_from")
     )
 
 
-def resolve_work_type(employee, raw_id):
-    """Required when the company has work types; must be one of that list."""
+def resolve_work_from(employee, raw_id):
+    """Required when the company has work from options; must be one of that list."""
     if employee is None:
         return None
-    work_types = available_work_types(employee)
-    if not work_types.exists():
+    work_froms = available_work_froms(employee)
+    if not work_froms.exists():
         return None
     if not raw_id:
         raise PunchError(_("Please select your work location."))
     try:
-        work_type = work_types.filter(pk=int(raw_id)).first()
+        work_from = work_froms.filter(pk=int(raw_id)).first()
     except (TypeError, ValueError):
-        work_type = None
-    if work_type is None:
+        work_from = None
+    if work_from is None:
         raise PunchError(_("The selected work location is not available."))
-    return work_type
+    return work_from
 
 
 def parse_punch_time(data, local_now):
@@ -96,7 +96,7 @@ def current_open_activity(employee, local_now):
             clock_out__isnull=True,
             attendance_date__in=[today - timedelta(days=1), today],
         )
-        .select_related("work_type_id")
+        .select_related("work_from_id")
         .order_by("attendance_date", "id")
         .last()
     )
@@ -108,7 +108,7 @@ def latest_open_activity(employee):
 
     return (
         AttendanceActivity.objects.filter(employee_id=employee, clock_out__isnull=True)
-        .select_related("work_type_id")
+        .select_related("work_from_id")
         .order_by("attendance_date", "id")
         .last()
     )

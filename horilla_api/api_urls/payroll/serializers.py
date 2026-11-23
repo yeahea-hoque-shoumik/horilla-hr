@@ -67,8 +67,8 @@ class ContractSerializer(serializers.ModelSerializer):
         source="department_id.department", read_only=True
     )
     shift_name = serializers.CharField(source="shift_id.employee_shift", read_only=True)
-    work_type_name = serializers.CharField(
-        source="work_type_id.work_type", read_only=True
+    work_from_name = serializers.CharField(
+        source="work_from_id.work_from", read_only=True
     )
 
     def get_employee_profile_url(self, obj):
@@ -125,7 +125,7 @@ class AllowanceSerializer(serializers.ModelSerializer):
         based_on = data.get("based_on")
         per_attendance_fixed_amount = data.get("per_attendance_fixed_amount")
         shift_id = data.get("shift_id")
-        work_type_id = data.get("work_type_id")
+        work_from_id = data.get("work_from_id")
         is_condition_based = data.get("is_condition_based")
         field = data.get("field")
         condition = data.get("condition")
@@ -155,9 +155,9 @@ class AllowanceSerializer(serializers.ModelSerializer):
                 _("If 'based_on' is 'shift_id', 'shift_id' is required.")
             )
 
-        if based_on == "work_type_id" and not work_type_id:
+        if based_on == "work_from_id" and not work_from_id:
             raise serializers.ValidationError(
-                _("If 'based_on' is 'work_type_id', 'work_type_id' is required.")
+                _("If 'based_on' is 'work_from_id', 'work_from_id' is required.")
             )
 
         if is_condition_based and (not field or not value or not condition):

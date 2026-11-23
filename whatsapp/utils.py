@@ -14,7 +14,7 @@ from django.test import RequestFactory
 from django.utils.datastructures import MultiValueDict
 
 from asset.models import AssetCategory
-from base.models import Company, EmployeeShift, WorkType
+from base.models import Company, EmployeeShift, WorkFrom
 from employee.models import Employee
 from horilla.horilla_middlewares import _thread_locals
 from whatsapp.models import WhatsappCredientials, WhatsappFlowDetails
@@ -109,7 +109,7 @@ def create_template_buttons(cred_id):
         "Leave Request",
         "Reimbursement Request",
         "Shift Request",
-        "Work Type Request",
+        "Work From Request",
     ]
 
     quick_reply_buttons = [{"type": "QUICK_REPLY", "text": btn} for btn in buttons]
@@ -197,7 +197,7 @@ def create_help_message(cred_id):
     Leave Request : Send *'leave'*
     Reimbursement Request : Send *'reimbursement'*
     Shift Request : Send *'shift'*
-    Work Type Request : Send *'work type'*
+    Work From Request : Send *'work from'*
     """
 
     payload = {
@@ -466,9 +466,9 @@ def flow_message_details(template_name, employee):
         {"id": str(shift.id), "title": shift.employee_shift}
         for shift in EmployeeShift.objects.all()
     ]
-    work_type_data = [
-        {"id": str(work_type.id), "title": work_type.work_type}
-        for work_type in WorkType.objects.all()
+    work_from_data = [
+        {"id": str(work_from.id), "title": work_from.work_from}
+        for work_from in WorkFrom.objects.all()
     ]
     asset_data = [
         {"id": str(asset.id), "title": asset.asset_category_name}
@@ -494,17 +494,17 @@ def flow_message_details(template_name, employee):
             "button": "Add Shift Request",
             "data": {"shift": shift_data},
         },
-        "work_type": {
-            "header": "Work Type Request",
-            "body": "To proceed with your work type request, Please fill out the following form",
-            "button": "Add Work Type Request",
-            "data": {"work_type": work_type_data},
+        "work_from": {
+            "header": "Work From Request",
+            "body": "To proceed with your work from request, Please fill out the following form",
+            "button": "Add Work From Request",
+            "data": {"work_from": work_from_data},
         },
         "attendance": {
             "header": "Attendnace Request",
             "body": "To proceed with your attendnace request, Please fill out the following form",
             "button": "Add Attendnace Request",
-            "data": {"shift": shift_data, "work_type": work_type_data},
+            "data": {"shift": shift_data, "work_from": work_from_data},
         },
         "bonus_point": {
             "header": "Bonus Point Redeem Request",
@@ -621,36 +621,36 @@ def shift_create(employee, flow_response):
     )
 
 
-def work_type_create(employee, flow_response):
+def work_from_create(employee, flow_response):
     """
-    Creates a work type request for the specified employee.
+    Creates a work from request for the specified employee.
 
     Args:
-        employee: Employee instance submitting the work type request.
-        flow_response: Dictionary with work type request data.
+        employee: Employee instance submitting the work from request.
+        flow_response: Dictionary with work from request data.
 
     Returns:
         Message indicating the success or failure of the request.
     """
 
-    from base.forms import WorkTypeRequestForm
-    from base.views import work_type_request as work_type_request_creation
+    from base.forms import WorkFromRequestForm
+    from base.views import work_from_request as work_from_request_creation
 
     data = {
         "employee_id": employee.id,
-        "work_type_id": flow_response["work_type"],
+        "work_from_id": flow_response["work_from"],
         "requested_date": flow_response["requested_date"],
         "requested_till": flow_response["requested_till"],
-        "is_permanent_work_type": flow_response.get("permenent_request", False),
+        "is_permanent_work_from": flow_response.get("permenent_request", False),
         "description": flow_response["description"],
     }
     return create_request(
         employee,
         flow_response,
         data,
-        WorkTypeRequestForm,
-        work_type_request_creation,
-        "Work type request",
+        WorkFromRequestForm,
+        work_from_request_creation,
+        "Work from request",
     )
 
 
@@ -768,7 +768,7 @@ def attendance_request_create(employee, flow_response):
         "employee_id": employee.id,
         "attendance_date": flow_response["attendance_date"],
         "shift_id": flow_response["shift"],
-        "work_type_id": flow_response["work_type"],
+        "work_from_id": flow_response["work_from"],
         "attendance_clock_in_date": flow_response["check_in_date"],
         "attendance_clock_in": flow_response["check_in_time"],
         "attendance_clock_out_date": flow_response["check_out_date"],

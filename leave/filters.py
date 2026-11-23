@@ -25,7 +25,7 @@ from base.models import (
     EmployeeType,
     JobPosition,
     JobRole,
-    WorkType,
+    WorkFrom,
 )
 from employee.models import Employee
 from horilla.filters import (
@@ -303,12 +303,12 @@ class LeaveRequestFilter(HorillaFilterSet):
             "search_fields": ["employee_shift"],
             "placeholder": _("Select shift..."),
         },
-        "employee_id__employee_work_info__work_type_id": {
-            "key": "leave-request-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "employee_id__employee_work_info__work_from_id": {
+            "key": "leave-request-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
     }
 
@@ -332,7 +332,7 @@ class LeaveRequestFilter(HorillaFilterSet):
             "employee_id__employee_work_info__department_id",
             "employee_id__employee_work_info__job_position_id",
             "employee_id__employee_work_info__shift_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
         ]
 
     def filter_payment(self, queryset, _name, value):

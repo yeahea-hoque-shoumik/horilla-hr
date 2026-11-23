@@ -62,24 +62,24 @@
                     {% trans "Rotating Shift" %}
                 </button>
             {% endif %}
-            {% if perms.base.view_worktype %}
+            {% if perms.base.view_workfrom %}
                 <button
                     type="button"
                     class="oh-tabs__tab employee-settings-tab-btn"
-                    data-tab-id="work-type"
-                    data-url="{% url 'employee-settings-work-type-tab' %}"
+                    data-tab-id="work-from"
+                    data-url="{% url 'employee-settings-work-from-tab' %}"
                 >
-                    {% trans "Work Type" %}
+                    {% trans "Work From" %}
                 </button>
             {% endif %}
-            {% if perms.base.view_rotatingworktype %}
+            {% if perms.base.view_rotatingworkfrom %}
                 <button
                     type="button"
                     class="oh-tabs__tab employee-settings-tab-btn"
-                    data-tab-id="rotating-work-type"
-                    data-url="{% url 'employee-settings-rotating-work-type-tab' %}"
+                    data-tab-id="rotating-work-from"
+                    data-url="{% url 'employee-settings-rotating-work-from-tab' %}"
                 >
-                    {% trans "Rotating Work Type" %}
+                    {% trans "Rotating Work From" %}
                 </button>
             {% endif %}
             {% if perms.base.view_employeetype %}

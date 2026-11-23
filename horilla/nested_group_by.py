@@ -13,7 +13,7 @@ def _ordered_keep_none(values):
     """
     Like horilla.group_by._ordered_unique, but keeps None as its own
     grouper instead of dropping it. A record with no value for the group
-    field (e.g. work_type_id left unset) is still a real group -- dropping
+    field (e.g. work_from_id left unset) is still a real group -- dropping
     it here silently excluded those rows from every level below the one
     where they went missing, while the parent's own count kept including
     them, so the tree's numbers stopped adding up with no visible group to

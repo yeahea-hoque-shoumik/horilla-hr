@@ -74,7 +74,7 @@ def manager_or_owner_permission_required(model_class, perm):
     employee in the company. On EmployeeBankDetails that let a line manager
     rewrite the account another employee's salary is paid into
     (GHSA-39gq-9wwx-p8hx). The same decorator also guards document requests and
-    work-type and shift requests, which were reachable the same way.
+    work-from and shift requests, which were reachable the same way.
 
     ``check_manager`` returns False for a target it cannot resolve, so an
     unknown or missing employee id denies rather than falls through.

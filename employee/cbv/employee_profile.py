@@ -268,7 +268,7 @@ class EmployeeRelatedDetailView(HorillaDetailedView):
         (_("Department"), "get_department"),
         (_("Company"), "employee_work_info__company_id"),
         (_("Work Location"), "employee_work_info__location"),
-        (_("Work Type"), "get_work_type"),
+        (_("Work From"), "get_work_from"),
         (_("Shift"), "get_shift"),
         (_("Reporting Manager"), "get_reporting_manager"),
         (_("Employment Type"), "get_employee_type"),
@@ -364,7 +364,7 @@ EmployeeProfileView.add_tab(
             "view": views.about_tab,
         },
         {
-            "title": _("Work Type & Shift"),
+            "title": _("Work From & Shift"),
             # "view": views.shift_tab,
             "view": WorkAndShiftTabView.as_view(),
             "accessibility": "employee.cbv.accessibility.workshift_accessibility",

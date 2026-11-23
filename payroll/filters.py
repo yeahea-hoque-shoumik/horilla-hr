@@ -22,7 +22,7 @@ from base.models import (
     EmployeeShift,
     JobPosition,
     JobRole,
-    WorkType,
+    WorkFrom,
 )
 from employee.models import Employee
 from horilla.filters import HorillaFilterSet, filter_by_name, filter_name_or_badge_terms
@@ -94,7 +94,7 @@ class ContractFilter(HorillaFilterSet):
     # HorillaFilterSet.ajax_fields (generic AJAX-loaded combobox mechanism)
     # -- every model/queryset-backed field in the modern filter panel opts
     # in here instead of pre-rendering its whole queryset as <option> tags.
-    # Note: department/job_position/job_role/shift/work_type are FK fields
+    # Note: department/job_position/job_role/shift/work_from are FK fields
     # declared directly on the Contract model itself (not traversed via
     # employee_id__employee_work_info__...), unlike most other filters in
     # this rollout.
@@ -145,12 +145,12 @@ class ContractFilter(HorillaFilterSet):
             "search_fields": ["employee_shift"],
             "placeholder": _("Select shift..."),
         },
-        "work_type": {
-            "key": "contract-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": _("Select work type..."),
+        "work_from": {
+            "key": "contract-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": _("Select work from..."),
         },
     }
 
@@ -170,7 +170,7 @@ class ContractFilter(HorillaFilterSet):
             "job_position",
             "job_role",
             "shift",
-            "work_type",
+            "work_from",
             "pay_frequency",
             "contract_status",
             "wage",
@@ -1002,7 +1002,7 @@ class ContractReGroup:
         ("employee_id__employee_work_info__department_id", _("Department")),
         ("contract_status", _("Status")),
         ("employee_id__employee_work_info__shift_id", _("Shift")),
-        ("employee_id__employee_work_info__work_type_id", _("Work Type")),
+        ("employee_id__employee_work_info__work_from_id", _("Work From")),
         ("employee_id__employee_work_info__job_role_id", _("Job Role")),
         (
             "employee_id__employee_work_info__reporting_manager_id",

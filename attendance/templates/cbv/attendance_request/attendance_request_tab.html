@@ -187,8 +187,8 @@
                                                 {% if 'shift_id' in instance.requested_fields or instance.request_type == 'create_request' %}
                                                 diff-cell
                                                 {% endif %}
-                                                {% elif cell.1 == "work_type_id" %}
-                                                {% if 'work_type_id' in instance.requested_fields or instance.request_type == 'create_request' %}
+                                                {% elif cell.1 == "work_from_id" %}
+                                                {% if 'work_from_id' in instance.requested_fields or instance.request_type == 'create_request' %}
                                                 diff-cell
                                                 {% endif %}
                                                 {% elif cell.1 == "minimum_hour" %}
@@ -623,8 +623,8 @@
                 {% if 'shift_id' in instance.requested_fields or instance.request_type == 'create_request' %}
                     diff-cell
                 {% endif %}
-            {% elif cell.1 == "work_type_id" %}
-                {% if 'work_type_id' in instance.requested_fields or instance.request_type == 'create_request' %}
+            {% elif cell.1 == "work_from_id" %}
+                {% if 'work_from_id' in instance.requested_fields or instance.request_type == 'create_request' %}
                     diff-cell
                 {% endif %}
             {% elif cell.1 == "minimum_hour" %}

@@ -63,7 +63,7 @@ if apps.is_installed("attendance"):
         "company": "employee_id__employee_work_info__company_id__company",
         "job_position": "employee_id__employee_work_info__job_position_id__job_position",
         "job_role": "employee_id__employee_work_info__job_role_id__job_role",
-        "work_type": "work_type_id__work_type",
+        "work_from": "work_from_id__work_from",
         "attendance_date": "attendance_date",
         "batch": "batch_attendance_id__title",
         "clock_in": "attendance_clock_in",
@@ -384,7 +384,7 @@ if apps.is_installed("attendance"):
                 "minimum_hour",
                 "attendance_overtime",
                 "at_work_second",
-                "work_type_id__work_type",
+                "work_from_id__work_from",
                 "shift_id__employee_shift",
                 "attendance_day__day",
                 "employee_id__gender",
@@ -441,9 +441,9 @@ if apps.is_installed("attendance"):
                     if item["employee_id__employee_work_info__job_role_id__job_role"]
                     else "-"
                 ),
-                "Work Type": (
-                    item["work_type_id__work_type"]
-                    if item["work_type_id__work_type"]
+                "Work From": (
+                    item["work_from_id__work_from"]
+                    if item["work_from_id__work_from"]
                     else "-"
                 ),
                 "Shift": (

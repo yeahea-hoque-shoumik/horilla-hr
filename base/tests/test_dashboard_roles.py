@@ -173,7 +173,7 @@ class ModernDashboardFetchInventoryTests(SimpleTestCase):
             "shift-request-view' %}?open_tab=1&status=requested&filter_applied=1", text
         )
         self.assertIn(
-            "work-type-request-view' %}?status=requested&filter_applied=1", text
+            "work-from-request-view' %}?status=requested&filter_applied=1", text
         )
         self.assertIn("request-view' %}?status=requested&filter_applied=1", text)
         self.assertIn("request-attendance-view' %}?open_tab=1", text)

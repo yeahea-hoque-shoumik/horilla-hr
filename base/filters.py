@@ -1,6 +1,6 @@
 """
 This module contains custom Django filters for filtering querysets related to Shift Requests,
-Work Type Requests, Rotating Shift and Rotating Work Type Assign.
+Work From Requests, Rotating Shift and Rotating Work From Assign.
 """
 
 import uuid
@@ -31,11 +31,11 @@ from base.models import (
     Roster,
     RotatingShift,
     RotatingShiftAssign,
-    RotatingWorkType,
-    RotatingWorkTypeAssign,
+    RotatingWorkFrom,
+    RotatingWorkFromAssign,
     ShiftRequest,
-    WorkType,
-    WorkTypeRequest,
+    WorkFrom,
+    WorkFromRequest,
 )
 from employee.models import Employee
 from horilla.filters import (
@@ -126,12 +126,12 @@ class ShiftRequestFilter(HorillaFilterSet):
             "search_fields": ["department"],
             "placeholder": __("Select department..."),
         },
-        "employee_id__employee_work_info__work_type_id": {
-            "key": "shift-request-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": __("Select work type..."),
+        "employee_id__employee_work_info__work_from_id": {
+            "key": "shift-request-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": __("Select work from..."),
         },
         "employee_id__employee_work_info__job_role_id": {
             "key": "shift-request-job-role",
@@ -185,7 +185,7 @@ class ShiftRequestFilter(HorillaFilterSet):
             "employee_id__gender",
             "employee_id__employee_work_info__job_position_id",
             "employee_id__employee_work_info__department_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
             "employee_id__employee_work_info__employee_type_id",
             "employee_id__employee_work_info__job_role_id",
             "employee_id__employee_work_info__reporting_manager_id",
@@ -229,9 +229,9 @@ class ShiftRequestFilter(HorillaFilterSet):
         )
 
 
-class WorkTypeRequestFilter(HorillaFilterSet):
+class WorkFromRequestFilter(HorillaFilterSet):
     """
-    Custom filter for Work Type Requests.
+    Custom filter for Work From Requests.
     """
 
     requested_date = django_filters.DateFilter(
@@ -272,28 +272,28 @@ class WorkTypeRequestFilter(HorillaFilterSet):
     # instead of pre-rendering its whole queryset as <option> tags.
     ajax_fields = {
         "employee_id": {
-            "key": "work-type-request-employee",
+            "key": "work-from-request-employee",
             "queryset_fn": lambda request: Employee.objects.filter(is_active=True),
             "display_fn": lambda obj: obj.get_full_name(),
             "search_fields": ["employee_first_name", "employee_last_name", "badge_id"],
             "placeholder": __("Search employee..."),
         },
-        "work_type_id": {
-            "key": "work-type-request-requested-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": __("Select work type..."),
+        "work_from_id": {
+            "key": "work-from-request-requested-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": __("Select work from..."),
         },
-        "previous_work_type_id": {
-            "key": "work-type-request-previous-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": __("Select work type..."),
+        "previous_work_from_id": {
+            "key": "work-from-request-previous-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": __("Select work from..."),
         },
         "employee_id__employee_work_info__job_position_id": {
-            "key": "work-type-request-job-position",
+            "key": "work-from-request-job-position",
             "queryset_fn": lambda request: JobPosition.objects.select_related(
                 "department_id"
             ).all(),
@@ -302,21 +302,21 @@ class WorkTypeRequestFilter(HorillaFilterSet):
             "placeholder": __("Select job position..."),
         },
         "employee_id__employee_work_info__department_id": {
-            "key": "work-type-request-department",
+            "key": "work-from-request-department",
             "queryset_fn": lambda request: Department.objects.all(),
             "display_fn": lambda obj: obj.department,
             "search_fields": ["department"],
             "placeholder": __("Select department..."),
         },
-        "employee_id__employee_work_info__work_type_id": {
-            "key": "work-type-request-work-info-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": __("Select work type..."),
+        "employee_id__employee_work_info__work_from_id": {
+            "key": "work-from-request-work-info-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": __("Select work from..."),
         },
         "employee_id__employee_work_info__job_role_id": {
-            "key": "work-type-request-job-role",
+            "key": "work-from-request-job-role",
             "queryset_fn": lambda request: JobRole.objects.select_related(
                 "job_position_id"
             ).all(),
@@ -325,21 +325,21 @@ class WorkTypeRequestFilter(HorillaFilterSet):
             "placeholder": __("Select job role..."),
         },
         "employee_id__employee_work_info__reporting_manager_id": {
-            "key": "work-type-request-reporting-manager",
+            "key": "work-from-request-reporting-manager",
             "queryset_fn": lambda request: Employee.objects.filter(is_active=True),
             "display_fn": lambda obj: obj.get_full_name(),
             "search_fields": ["employee_first_name", "employee_last_name", "badge_id"],
             "placeholder": __("Search employee..."),
         },
         "employee_id__employee_work_info__company_id": {
-            "key": "work-type-request-company",
+            "key": "work-from-request-company",
             "queryset_fn": lambda request: Company.objects.all(),
             "display_fn": lambda obj: obj.company,
             "search_fields": ["company"],
             "placeholder": __("Select company..."),
         },
         "employee_id__employee_work_info__shift_id": {
-            "key": "work-type-request-shift",
+            "key": "work-from-request-shift",
             "queryset_fn": lambda request: EmployeeShift.objects.all(),
             "display_fn": lambda obj: obj.employee_shift,
             "search_fields": ["employee_shift"],
@@ -353,20 +353,20 @@ class WorkTypeRequestFilter(HorillaFilterSet):
         """
 
         fields = "__all__"
-        model = WorkTypeRequest
+        model = WorkFromRequest
         fields = [
             "id",
             "employee_id",
             "requested_date",
-            "previous_work_type_id",
-            "work_type_id",
+            "previous_work_from_id",
+            "work_from_id",
             "employee_id__employee_first_name",
             "employee_id__employee_last_name",
             "employee_id__is_active",
             "employee_id__gender",
             "employee_id__employee_work_info__job_position_id",
             "employee_id__employee_work_info__department_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
             "employee_id__employee_work_info__employee_type_id",
             "employee_id__employee_work_info__job_role_id",
             "employee_id__employee_work_info__reporting_manager_id",
@@ -498,12 +498,12 @@ class RotatingShiftAssignFilters(HorillaFilterSet):
             "search_fields": ["job_role", "job_position_id__job_position"],
             "placeholder": __("Select job role..."),
         },
-        "employee_id__employee_work_info__work_type_id": {
-            "key": "rotating-shift-assign-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": __("Select work type..."),
+        "employee_id__employee_work_info__work_from_id": {
+            "key": "rotating-shift-assign-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": __("Select work from..."),
         },
         "employee_id__employee_work_info__reporting_manager_id": {
             "key": "rotating-shift-assign-reporting-manager",
@@ -542,7 +542,7 @@ class RotatingShiftAssignFilters(HorillaFilterSet):
             "is_active",
             "employee_id__employee_work_info__job_position_id",
             "employee_id__employee_work_info__department_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
             "employee_id__employee_work_info__employee_type_id",
             "employee_id__employee_work_info__job_role_id",
             "employee_id__employee_work_info__reporting_manager_id",
@@ -573,9 +573,9 @@ class RotatingShiftAssignFilters(HorillaFilterSet):
         )
 
 
-class RotatingWorkTypeAssignFilter(HorillaFilterSet):
+class RotatingWorkFromAssignFilter(HorillaFilterSet):
     """
-    Custom filter for Rotating Work Type Assign.
+    Custom filter for Rotating Work From Assign.
     """
 
     search = CharFilter(method=filter_by_name)
@@ -601,49 +601,49 @@ class RotatingWorkTypeAssignFilter(HorillaFilterSet):
     # instead of pre-rendering its whole queryset as <option> tags.
     ajax_fields = {
         "employee_id": {
-            "key": "rotating-work-type-assign-employee",
+            "key": "rotating-work-from-assign-employee",
             "queryset_fn": lambda request: Employee.objects.filter(is_active=True),
             "display_fn": lambda obj: obj.get_full_name(),
             "search_fields": ["employee_first_name", "employee_last_name", "badge_id"],
             "placeholder": __("Search employee..."),
         },
-        "rotating_work_type_id": {
-            "key": "rotating-work-type-assign-rotating-work-type",
-            "queryset_fn": lambda request: RotatingWorkType.objects.all(),
+        "rotating_work_from_id": {
+            "key": "rotating-work-from-assign-rotating-work-from",
+            "queryset_fn": lambda request: RotatingWorkFrom.objects.all(),
             "display_fn": lambda obj: obj.name,
             "search_fields": ["name"],
-            "placeholder": __("Select rotating work type..."),
+            "placeholder": __("Select rotating work from..."),
         },
-        "current_work_type": {
-            "key": "rotating-work-type-assign-current-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": __("Select work type..."),
+        "current_work_from": {
+            "key": "rotating-work-from-assign-current-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": __("Select work from..."),
         },
-        "next_work_type": {
-            "key": "rotating-work-type-assign-next-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": __("Select work type..."),
+        "next_work_from": {
+            "key": "rotating-work-from-assign-next-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": __("Select work from..."),
         },
         "employee_id__employee_work_info__company_id": {
-            "key": "rotating-work-type-assign-company",
+            "key": "rotating-work-from-assign-company",
             "queryset_fn": lambda request: Company.objects.all(),
             "display_fn": lambda obj: obj.company,
             "search_fields": ["company"],
             "placeholder": __("Select company..."),
         },
         "employee_id__employee_work_info__department_id": {
-            "key": "rotating-work-type-assign-department",
+            "key": "rotating-work-from-assign-department",
             "queryset_fn": lambda request: Department.objects.all(),
             "display_fn": lambda obj: obj.department,
             "search_fields": ["department"],
             "placeholder": __("Select department..."),
         },
         "employee_id__employee_work_info__job_position_id": {
-            "key": "rotating-work-type-assign-job-position",
+            "key": "rotating-work-from-assign-job-position",
             "queryset_fn": lambda request: JobPosition.objects.select_related(
                 "department_id"
             ).all(),
@@ -652,7 +652,7 @@ class RotatingWorkTypeAssignFilter(HorillaFilterSet):
             "placeholder": __("Select job position..."),
         },
         "employee_id__employee_work_info__job_role_id": {
-            "key": "rotating-work-type-assign-job-role",
+            "key": "rotating-work-from-assign-job-role",
             "queryset_fn": lambda request: JobRole.objects.select_related(
                 "job_position_id"
             ).all(),
@@ -660,22 +660,22 @@ class RotatingWorkTypeAssignFilter(HorillaFilterSet):
             "search_fields": ["job_role", "job_position_id__job_position"],
             "placeholder": __("Select job role..."),
         },
-        "employee_id__employee_work_info__work_type_id": {
-            "key": "rotating-work-type-assign-work-info-work-type",
-            "queryset_fn": lambda request: WorkType.objects.all(),
-            "display_fn": lambda obj: obj.work_type,
-            "search_fields": ["work_type"],
-            "placeholder": __("Select work type..."),
+        "employee_id__employee_work_info__work_from_id": {
+            "key": "rotating-work-from-assign-work-info-work-from",
+            "queryset_fn": lambda request: WorkFrom.objects.all(),
+            "display_fn": lambda obj: obj.work_from,
+            "search_fields": ["work_from"],
+            "placeholder": __("Select work from..."),
         },
         "employee_id__employee_work_info__reporting_manager_id": {
-            "key": "rotating-work-type-assign-reporting-manager",
+            "key": "rotating-work-from-assign-reporting-manager",
             "queryset_fn": lambda request: Employee.objects.filter(is_active=True),
             "display_fn": lambda obj: obj.get_full_name(),
             "search_fields": ["employee_first_name", "employee_last_name", "badge_id"],
             "placeholder": __("Search employee..."),
         },
         "employee_id__employee_work_info__shift_id": {
-            "key": "rotating-work-type-assign-shift",
+            "key": "rotating-work-from-assign-shift",
             "queryset_fn": lambda request: EmployeeShift.objects.all(),
             "display_fn": lambda obj: obj.employee_shift,
             "search_fields": ["employee_shift"],
@@ -689,22 +689,22 @@ class RotatingWorkTypeAssignFilter(HorillaFilterSet):
         """
 
         fields = "__all__"
-        model = RotatingWorkTypeAssign
+        model = RotatingWorkFromAssign
         fields = [
             "employee_id",
-            "rotating_work_type_id",
+            "rotating_work_from_id",
             "next_change_date",
             "start_date",
             "based_on",
             "rotate_after_day",
             "rotate_every_weekend",
             "rotate_every",
-            "current_work_type",
-            "next_work_type",
+            "current_work_from",
+            "next_work_from",
             "is_active",
             "employee_id__employee_work_info__job_position_id",
             "employee_id__employee_work_info__department_id",
-            "employee_id__employee_work_info__work_type_id",
+            "employee_id__employee_work_info__work_from_id",
             "employee_id__employee_work_info__employee_type_id",
             "employee_id__employee_work_info__job_role_id",
             "employee_id__employee_work_info__reporting_manager_id",
@@ -749,7 +749,7 @@ class ShiftRequestReGroup:
     ]
 
 
-class WorkTypeRequestReGroup:
+class WorkFromRequestReGroup:
     """
     Class to keep the field name for group by option
     """
@@ -757,8 +757,8 @@ class WorkTypeRequestReGroup:
     fields = [
         ("", "Select"),
         ("employee_id", "Employee"),
-        ("work_type_id", "Requested Work Type"),
-        ("previous_work_type_id", "Current Work Type"),
+        ("work_from_id", "Requested Work From"),
+        ("previous_work_from_id", "Current Work From"),
         ("requested_date", "Requested Date"),
         ("employee_id__employee_work_info__department_id", "Department"),
         ("employee_id__employee_work_info__job_position_id", "Job Position"),
@@ -766,7 +766,7 @@ class WorkTypeRequestReGroup:
     ]
 
 
-class RotatingWorkTypeRequestReGroup:
+class RotatingWorkFromRequestReGroup:
     """
     Class to keep the field name for group by option
     """
@@ -774,8 +774,8 @@ class RotatingWorkTypeRequestReGroup:
     fields = [
         ("", "Select"),
         ("employee_id", "Employee"),
-        ("rotating_work_type_id", "Rotating Work Type"),
-        ("current_work_type", "Current Work Type"),
+        ("rotating_work_from_id", "Rotating Work From"),
+        ("current_work_from", "Current Work From"),
         ("based_on", "Based On"),
         ("employee_id__employee_work_info__department_id", "Department"),
         ("employee_id__employee_work_info__job_role_id", "Job Role"),
@@ -878,18 +878,18 @@ class DepartmentViewFilter(HorillaFilterSet):
         ).distinct()
 
 
-class WorkTypeFilter(HorillaFilterSet):
+class WorkFromFilter(HorillaFilterSet):
 
-    search = django_filters.CharFilter(field_name="work_type", lookup_expr="icontains")
+    search = django_filters.CharFilter(field_name="work_from", lookup_expr="icontains")
 
     class Meta:
-        model = WorkType
+        model = WorkFrom
         fields = [
-            "work_type",
+            "work_from",
         ]
 
 
-class RotatingWorkTypeFilter(HorillaFilterSet):
+class RotatingWorkFromFilter(HorillaFilterSet):
 
     search = django_filters.CharFilter(method="search_method")
 
@@ -900,13 +900,13 @@ class RotatingWorkTypeFilter(HorillaFilterSet):
 
         return (
             queryset.filter(name__icontains=value)
-            | queryset.filter(work_type1__work_type__icontains=value)
-            | queryset.filter(work_type2__work_type__icontains=value)
+            | queryset.filter(work_from1__work_from__icontains=value)
+            | queryset.filter(work_from2__work_from__icontains=value)
         ).distinct()
 
     class Meta:
-        model = RotatingWorkType
-        fields = ["name", "work_type1", "work_type2"]
+        model = RotatingWorkFrom
+        fields = ["name", "work_from1", "work_from2"]
 
 
 class EmployeeTypeFilter(FilterSet):

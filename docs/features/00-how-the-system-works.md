@@ -14,7 +14,7 @@ This file explains the ideas that every feature area depends on, so the area fil
 
 | Person | What they do |
 |---|---|
-| Employee | Checks in and out; asks for leave, shift or work-type changes, attendance corrections, assets and reimbursements; raises helpdesk tickets; resigns; sees their own payslips, objectives and feedback |
+| Employee | Checks in and out; asks for leave, shift or work-from changes, attendance corrections, assets and reimbursements; raises helpdesk tickets; resigns; sees their own payslips, objectives and feedback |
 | **Reporting manager** | Approves or rejects their team's requests, validates attendance, approves overtime |
 | HR and admin roles | Set up the company, policies, leave types, shifts and payroll; run payroll; manage hiring, onboarding and exits |
 | Candidate (outside the company) | Applies through a public form, follows their application, fills in the onboarding portal |
@@ -30,12 +30,12 @@ This file explains the ideas that every feature area depends on, so the area fil
 
 ### The employee record is the centre
 
-- Each login belongs to one **employee record**, and each employee record has one set of **work information**: company, department, job position, role, shift, work type, reporting manager, employee type, joining date, salary and time zone.
+- Each login belongs to one **employee record**, and each employee record has one set of **work information**: company, department, job position, role, shift, work from, reporting manager, employee type, joining date, salary and time zone.
 - Almost every other record in the system points to an employee. The reporting manager written on an employee's work information is what makes someone a "manager" for approvals.
 
 ### Approvals
 
-- Most requests (leave, attendance, shift, work type, asset, reimbursement, resignation, extra leave days) go from requested to approved or rejected, decided by the reporting manager or by someone with the right **permission**.
+- Most requests (leave, attendance, shift, work from, asset, reimbursement, resignation, extra leave days) go from requested to approved or rejected, decided by the reporting manager or by someone with the right **permission**.
 - People who are not **superusers** cannot approve their own requests in leave, and cannot validate their own attendance or approve their own overtime (`leave/views.py`, `attendance/views/views.py`). Reason: not stated in the code.
 - Only leave requests can go through a **multi-level approval** chain, where several managers approve in turn. The only condition that chooses a chain is the number of days requested.
 

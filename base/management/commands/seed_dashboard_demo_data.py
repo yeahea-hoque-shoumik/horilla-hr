@@ -392,7 +392,7 @@ class Command(BaseCommand):
                     employee_id=employee,
                     attendance_date=day,
                     shift_id=info.shift_id,
-                    work_type_id=info.work_type_id,
+                    work_from_id=info.work_from_id,
                     attendance_day=shift_days.get(day_names[day.weekday()]),
                     attendance_clock_in_date=day,
                     attendance_clock_in=clock_in.time(),

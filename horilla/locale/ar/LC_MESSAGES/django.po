@@ -43,7 +43,7 @@ msgstr "المسمى الوظيفي"
 msgid "Department"
 msgstr "القسم"
 
-msgid "Work Type"
+msgid "Work From"
 msgstr "نوع العمل"
 
 msgid "Employee Type"
@@ -1470,7 +1470,7 @@ msgstr "اختر المسمى الوظيفي..."
 msgid "Select shift..."
 msgstr "اختر الوردية..."
 
-msgid "Select work type..."
+msgid "Select work from..."
 msgstr "اختر نوع العمل..."
 
 msgid "Clock In"
@@ -1915,7 +1915,7 @@ msgstr "البحث في: اليوم"
 msgid "Search in : Shift"
 msgstr "البحث في: الوردية"
 
-msgid "Search in : Work Type"
+msgid "Search in : Work From"
 msgstr "البحث في: نوع العمل"
 
 msgid "Search in : Department"
@@ -2148,7 +2148,7 @@ msgstr "متوسط ساعات العمل"
 msgid "Per day by department — this month"
 msgstr "يوميًا حسب القسم — هذا الشهر"
 
-msgid "Work Type Distribution"
+msgid "Work From Distribution"
 msgstr "توزيع أنواع العمل"
 
 msgid "Remote, on-site, hybrid, etc."
@@ -2292,7 +2292,7 @@ msgstr "متوسط الساعات/اليوم"
 msgid "8h target"
 msgstr "هدف 8 ساعات"
 
-msgid "No work type data"
+msgid "No work from data"
 msgstr "لا توجد بيانات أنواع العمل"
 
 msgid "No absences this month"
@@ -3471,7 +3471,7 @@ msgstr "تم تحديث يوم الراحة الأسبوعية بنجاح"
 msgid "New Weekly Off Day Created Successfully"
 msgstr "تم إنشاء يوم راحة أسبوعية جديد بنجاح"
 
-msgid "Requested Work Type"
+msgid "Requested Work From"
 msgstr "نوع العمل المطلوب"
 
 msgid "Requested Shift"
@@ -3779,19 +3779,19 @@ msgstr "تم إنشاء تعيين الوردية الدوارة بنجاح"
 msgid "You are added to rotating shift"
 msgstr "تمت إضافتك إلى وردية دوارة"
 
-msgid "Rotating Work Type"
+msgid "Rotating Work From"
 msgstr "نوع العمل الدوار"
 
 msgid "Based On"
 msgstr "مبني على"
 
-msgid "Current Work Type"
+msgid "Current Work From"
 msgstr "نوع العمل الحالي"
 
-msgid "Next Work Type"
+msgid "Next Work From"
 msgstr "نوع العمل التالي"
 
-msgid "Rotating Work Type Assign"
+msgid "Rotating Work From Assign"
 msgstr "تعيين نوع العمل الدوار"
 
 msgid "Rotating Work Assign Updated Successfully"
@@ -3800,34 +3800,34 @@ msgstr "تم تحديث تعيين العمل الدوار بنجاح"
 msgid "Rotating Work Assigned"
 msgstr "تم تعيين العمل الدوار"
 
-msgid "You are added to rotating work type"
+msgid "You are added to rotating work from"
 msgstr "تمت إضافتك إلى نوع عمل دوار"
 
 msgid "Rotating Work Assign Created"
 msgstr "تم إنشاء تعيين العمل الدوار بنجاح"
 
-msgid "Work Type 1"
+msgid "Work From 1"
 msgstr "نوع العمل 1"
 
-msgid "Work Type 2"
+msgid "Work From 2"
 msgstr "نوع العمل 2"
 
-msgid "Additional Work Types"
+msgid "Additional Work From Options"
 msgstr "أنواع عمل إضافية"
 
-msgid "Create Rotating Work Type"
+msgid "Create Rotating Work From"
 msgstr "إنشاء نوع عمل دوار"
 
-msgid "Rotating Work Type Created"
+msgid "Rotating Work From Created"
 msgstr "تم إنشاء نوع العمل الدوار"
 
-msgid "Update Rotating Work Type"
+msgid "Update Rotating Work From"
 msgstr "تحديث نوع العمل الدوار"
 
-msgid "Update Work Type"
+msgid "Update Work From"
 msgstr "تحديث نوع العمل"
 
-msgid "Rotating Work Type Updated"
+msgid "Rotating Work From Updated"
 msgstr "تم تحديث نوع العمل الدوار"
 
 msgid "Canceled"
@@ -3896,10 +3896,10 @@ msgstr "لديك طلب جديد لإعادة تخصيص الوردية للمو
 msgid "You have a new shift reallocation request from %(employee)s."
 msgstr "لديك طلب جديد لإعادة تخصيص الوردية من %(employee)s."
 
-msgid "Work type request"
+msgid "Work from request"
 msgstr "طلب نوع عمل"
 
-msgid "Rotating work type"
+msgid "Rotating work from"
 msgstr "نوع العمل الدوار"
 
 msgid "Shift request"
@@ -3908,44 +3908,44 @@ msgstr "طلب وردية"
 msgid "Shift Allocation"
 msgstr "تخصيص الوردية"
 
-msgid "Work Type Request"
+msgid "Work From Request"
 msgstr "طلب نوع عمل"
 
 msgid "Shift Request"
 msgstr "طلب وردية"
 
-msgid "Previous/current Work Type"
+msgid "Previous/current Work From"
 msgstr "نوع العمل السابق/الحالي"
 
-msgid "Work Type Requests"
+msgid "Work From Requests"
 msgstr "طلبات نوع العمل"
 
-msgid "current Work Type"
+msgid "current Work From"
 msgstr "نوع العمل الحالي"
 
-msgid "Previous Work Type"
+msgid "Previous Work From"
 msgstr "نوع العمل السابق"
 
-msgid "Is Permanent Work Type"
+msgid "Is Permanent Work From"
 msgstr "هل هو نوع عمل دائم"
 
-msgid "Create Work Type"
+msgid "Create Work From"
 msgstr "إنشاء نوع عمل"
 
-msgid "New Work Type Created"
+msgid "New Work From Created"
 msgstr "تم إنشاء نوع عمل جديد"
 
-msgid "Work Type Updated"
+msgid "Work From Updated"
 msgstr "تم تحديث نوع العمل"
 
 msgid "Request Updated Successfully"
 msgstr "تم تحديث الطلب بنجاح"
 
-msgid "Work type Request Created"
+msgid "Work from Request Created"
 msgstr "تم إنشاء طلب نوع العمل"
 
 #, python-format
-msgid "You have new work type request to validate for %(employee)s"
+msgid "You have new work from request to validate for %(employee)s"
 msgstr "لديك طلب نوع عمل جديد للتحقق منه لـ %(employee)s"
 
 msgid "You do not have access to that company."
@@ -4091,7 +4091,7 @@ msgstr "تم إنشاء الدور الوظيفي بنجاح!"
 msgid "Role already exists under %(position)s"
 msgstr "الدور موجود بالفعل ضمن %(position)s"
 
-msgid "---Choose Work Type---"
+msgid "---Choose Work From---"
 msgstr "---اختر نوع العمل---"
 
 msgid "Rotate after day"
@@ -4313,19 +4313,19 @@ msgstr "تعيينات مجموعة الشركة"
 msgid "This department already exists in this company"
 msgstr "هذا القسم موجود بالفعل في هذه الشركة"
 
-msgid "Work Types"
+msgid "Work From Options"
 msgstr "أنواع العمل"
 
-msgid "This work type already exists in this company"
+msgid "This work from already exists in this company"
 msgstr "نوع العمل هذا موجود بالفعل في هذه الشركة"
 
 msgid "All Company"
 msgstr "جميع الشركات"
 
-msgid "Rotating Work Types"
+msgid "Rotating Work From Options"
 msgstr "أنواع العمل الدوارة"
 
-msgid "Select different work type continuously"
+msgid "Select different work from continuously"
 msgstr "اختيار نوع عمل مختلف بشكل مستمر"
 
 msgid "Rotate After Day"
@@ -4337,7 +4337,7 @@ msgstr "التدوير كل عطلة نهاية أسبوع"
 msgid "Rotate Every Month"
 msgstr "التدوير كل شهر"
 
-msgid "Rotating Work Type Assigns"
+msgid "Rotating Work From Assigns"
 msgstr "تعيينات أنواع العمل الدوارة"
 
 msgid "Date must be greater than or equal to today"
@@ -4429,7 +4429,7 @@ msgstr "سجل نشر الجدول"
 msgid "Roster Publish Logs"
 msgstr "سجلات نشر الجدول"
 
-msgid "Requesting Work Type"
+msgid "Requesting Work From"
 msgstr "نوع العمل المطلوب"
 
 msgid "Permanent Request"
@@ -4441,7 +4441,7 @@ msgstr "لا يمكن حذف إدخال الطلب."
 msgid "End date must be greater than or equal to start date"
 msgstr "تاريخ الانتهاء يجب أن يكون أكبر من أو يساوي تاريخ البدء"
 
-msgid "A work type request already exists during this time period."
+msgid "A work from request already exists during this time period."
 msgstr "يوجد طلب نوع عمل معتمد بالفعل خلال هذه الفترة الزمنية."
 
 msgid "Requested till field is required."
@@ -4622,7 +4622,7 @@ msgstr "نوع الإجازة مطلوب"
 msgid "Penalty Accounts"
 msgstr "حسابات الغرامة"
 
-msgid "Your Work Type has been changed."
+msgid "Your Work From has been changed."
 msgstr "تم تغيير نوع عملك."
 
 msgid "Your shift has been changed."
@@ -4634,10 +4634,10 @@ msgstr "إشعار تغييرات الوردية"
 msgid "Shift changes notification, Requested date expired."
 msgstr "إشعار تغييرات الوردية، انتهت صلاحية التاريخ المطلوب."
 
-msgid "Work Type Changes notification"
+msgid "Work From Changes notification"
 msgstr "إشعار تغييرات نوع العمل"
 
-msgid "Work type changes notification, Requested date expired."
+msgid "Work from changes notification, Requested date expired."
 msgstr "إشعار تغييرات نوع العمل، انتهت صلاحية التاريخ المطلوب."
 
 msgid "General"
@@ -5780,43 +5780,43 @@ msgstr "خطأ"
 msgid "Are you sure you want to delete this rotating shift?"
 msgstr "هل تريد حذف الوردية الدوارة هذه؟"
 
-msgid "Add more work types.."
+msgid "Add more work from options.."
 msgstr "إضافة المزيد من أنواع العمل.."
 
-msgid "Select All Worktypes"
+msgid "Select All WorkFroms"
 msgstr "تحديد جميع أنواع العمل"
 
-msgid "Unselect All Worktypes"
+msgid "Unselect All WorkFroms"
 msgstr "إلغاء تحديد جميع أنواع العمل"
 
-msgid "Export Worktypes"
+msgid "Export WorkFroms"
 msgstr "تصدير أنواع العمل"
 
-msgid "Do you Want to archive this rotating work type assign?"
+msgid "Do you Want to archive this rotating work from assign?"
 msgstr "هل تريد أرشفة تعيين نوع العمل الدوار هذا؟"
 
-msgid "Do you Want to un-archive this rotating work type assign?"
+msgid "Do you Want to un-archive this rotating work from assign?"
 msgstr "هل تريد إلغاء أرشفة تعيين نوع العمل الدوار هذا؟"
 
-msgid "Are you sure you want to delete this rotating work type assign?"
+msgid "Are you sure you want to delete this rotating work from assign?"
 msgstr "هل تريد حذف تعيين نوع العمل الدوار هذا؟"
 
-msgid "Do you want to archive this rotating work type assign?"
+msgid "Do you want to archive this rotating work from assign?"
 msgstr "هل تريد أرشفة تعيين نوع العمل الدوار هذا؟"
 
-msgid "There are no rotating work type assigned to this employee."
+msgid "There are no rotating work from assigned to this employee."
 msgstr "لا توجد أنواع عمل دوارة معينة لهذا الموظف."
 
-msgid "Selected Worktypes"
+msgid "Selected WorkFroms"
 msgstr "أنواع العمل المحددة"
 
-msgid "No Employees Assigned to Rotating Work Types."
+msgid "No Employees Assigned to Rotating Work From Options."
 msgstr "لا يوجد موظفون معينون لأنواع العمل الدوارة."
 
-msgid "Do you want to un-archive this rotating work type assign?"
+msgid "Do you want to un-archive this rotating work from assign?"
 msgstr "هل تريد إلغاء أرشفة تعيين نوع العمل الدوار هذا؟"
 
-msgid "Are you sure you want to delete this rotating work type?"
+msgid "Are you sure you want to delete this rotating work from?"
 msgstr "هل تريد حذف نوع العمل الدوار هذا؟"
 
 msgid ""
@@ -6078,7 +6078,7 @@ msgstr "البادئة"
 msgid "Are you sure you want to delete this ticket type?"
 msgstr "هل تريد حذف نوع التذكرة هذا؟"
 
-msgid "Are you sure you want to delete this work type?"
+msgid "Are you sure you want to delete this work from?"
 msgstr "هل تريد حذف نوع العمل هذا؟"
 
 msgid "Company logo"
@@ -6108,10 +6108,10 @@ msgstr "إضافة مدير"
 msgid "Export Rotating Shift Assigns"
 msgstr "تصدير تعيينات الورديات الدوارة"
 
-msgid "Do you want to Un-archive this rotating work type assign?"
+msgid "Do you want to Un-archive this rotating work from assign?"
 msgstr "هل تريد إلغاء أرشفة تعيين نوع العمل الدوار هذا؟"
 
-msgid "Export Rotating Work Type Assigns"
+msgid "Export Rotating Work From Assigns"
 msgstr "تصدير تعيينات أنواع العمل الدوارة"
 
 msgid "Primary mail is not configured!"
@@ -6162,10 +6162,10 @@ msgstr "غير محدد"
 msgid "Reallocate Shift."
 msgstr "إعادة تخصيص وردية."
 
-msgid "Are you sure you want to delete this work type request?"
+msgid "Are you sure you want to delete this work from request?"
 msgstr "هل تريد حذف طلب نوع العمل هذا؟"
 
-msgid "Export Work Type Requests"
+msgid "Export Work From Requests"
 msgstr "تصدير طلبات نوع العمل"
 
 msgid "There are no company leaves at the moment."
@@ -6231,7 +6231,7 @@ msgstr "هل تريد إلغاء هذا الطلب؟"
 msgid "cancel"
 msgstr "إلغاء"
 
-msgid "Previous/ Current Work Type"
+msgid "Previous/ Current Work From"
 msgstr "نوع العمل السابق/ الحالي"
 
 msgid "Reallocate to"
@@ -6267,25 +6267,25 @@ msgstr " هل تريد رفض هذا الطلب؟"
 msgid "'s shift request"
 msgstr "طلب وردية لـ"
 
-msgid "There are currently no work type requests to consider."
+msgid "There are currently no work from requests to consider."
 msgstr "لا توجد طلبات نوع عمل للنظر فيها حالياً."
 
-msgid "Previous/Current Work Type"
+msgid "Previous/Current Work From"
 msgstr "نوع العمل السابق/الحالي"
 
-msgid "'s worktype request"
+msgid "'s workfrom request"
 msgstr "طلب نوع عمل لـ"
 
-msgid "Requested work type"
+msgid "Requested work from"
 msgstr "نوع العمل المطلوب"
 
-msgid "Previous work type"
+msgid "Previous work from"
 msgstr "نوع العمل السابق"
 
-msgid "Is permenent work type"
+msgid "Is permenent work from"
 msgstr "هل هو نوع عمل دائم"
 
-msgid "There are no work type requests to display."
+msgid "There are no work from requests to display."
 msgstr "لا توجد طلبات نوع عمل للعرض."
 
 msgid "monday"
@@ -6357,13 +6357,13 @@ msgstr "تمت الموافقة على طلب الأصل الخاص بك!"
 msgid "Your asset request rejected!."
 msgstr "تم رفض طلب الأصل الخاص بك!"
 
-msgid "Your work type request has been canceled."
+msgid "Your work from request has been canceled."
 msgstr "تم إلغاء طلب نوع العمل الخاص بك."
 
-msgid "Your work type request has been approved."
+msgid "Your work from request has been approved."
 msgstr "تمت الموافقة على طلب نوع العمل الخاص بك."
 
-msgid "Your work type request has been deleted."
+msgid "Your work from request has been deleted."
 msgstr "تم حذف طلب نوع العمل الخاص بك."
 
 msgid "Your shift request has been canceled."
@@ -6471,7 +6471,7 @@ msgstr "مبلغ الخصم لقيمة إجازة واحدة"
 msgid "Deduct leave from basic pay"
 msgstr "خصم الإجازة من الراتب الأساسي"
 
-msgid "Work type"
+msgid "Work from"
 msgstr "نوع العمل"
 
 msgid "Pay frequency"
@@ -6498,7 +6498,7 @@ msgstr "لوحة التحكم"
 msgid "SHIFT REQUESTS"
 msgstr "طلبات الوردية"
 
-msgid "WORK TYPE REQUESTS"
+msgid "WORK FROM REQUESTS"
 msgstr "طلبات نوع العمل"
 
 msgid "Single"
@@ -6603,10 +6603,10 @@ msgstr "تاريخ التغيير التالي"
 msgid "Next shift"
 msgstr "الوردية التالية"
 
-msgid "Current work type"
+msgid "Current work from"
 msgstr "نوع العمل الحالي"
 
-msgid "Next work type"
+msgid "Next work from"
 msgstr "نوع العمل التالي"
 
 msgid "Start date from"
@@ -6735,7 +6735,7 @@ msgstr "بوابة الانضمام للعمل S…"
 msgid "Employee work information"
 msgstr "معلومات عمل الموظف"
 
-msgid "Rotating work type assign"
+msgid "Rotating work from assign"
 msgstr "تعيين نوع العمل الدوار"
 
 msgid "Employee shift schedule"
@@ -6795,13 +6795,13 @@ msgstr "عرض الموظف"
 msgid "shift-request-view"
 msgstr "عرض طلب الوردية"
 
-msgid "work-type-request-view"
+msgid "work-from-request-view"
 msgstr "عرض طلب نوع العمل"
 
 msgid "rotating-shift-assign"
 msgstr "تعيين وردية دوارة"
 
-msgid "rotating-work-type-assign"
+msgid "rotating-work-from-assign"
 msgstr "تعيين نوع العمل الدوار"
 
 msgid "view-payroll-dashboard"
@@ -6948,10 +6948,10 @@ msgstr "عرض المسميات الوظيفية"
 msgid "job-role-view"
 msgstr "عرض الأدوار الوظيفية"
 
-msgid "work-type-view"
+msgid "work-from-view"
 msgstr "عرض أنواع العمل"
 
-msgid "rotating-work-type-view"
+msgid "rotating-work-from-view"
 msgstr "عرض أنواع العمل الدوارة"
 
 msgid "employee-type-view"
@@ -7059,7 +7059,7 @@ msgstr "المسمى الوظيفي"
 msgid "job_role"
 msgstr "الدور الوظيفي"
 
-msgid "work_type"
+msgid "work_from"
 msgstr "نوع العمل"
 
 msgid "company"
@@ -7377,7 +7377,7 @@ msgstr "مخطط الجنس"
 msgid "Shift Request to Approve"
 msgstr "طلبات الوردية للموافقة"
 
-msgid "Work Type Request to Approve"
+msgid "Work From Request to Approve"
 msgstr "طلبات نوع العمل للموافقة"
 
 msgid "Overtime to Approve"
@@ -7573,25 +7573,25 @@ msgstr "تم إنشاء المسمى الوظيفي بنجاح!"
 msgid "Job role updated."
 msgstr "تم تحديث الدور الوظيفي."
 
-msgid "Work Type has been created successfully!"
+msgid "Work From has been created successfully!"
 msgstr "تم إنشاء نوع العمل بنجاح!"
 
-msgid "Work type updated."
+msgid "Work from updated."
 msgstr "تم تحديث نوع العمل."
 
-msgid "Rotating work type created."
+msgid "Rotating work from created."
 msgstr "تم إنشاء نوع العمل الدوار."
 
-msgid "Rotating work type updated."
+msgid "Rotating work from updated."
 msgstr "تم تحديث نوع العمل الدوار."
 
-msgid "Rotating work type assigned."
+msgid "Rotating work from assigned."
 msgstr "تم تعيين نوع العمل الدوار."
 
-msgid "Rotating work type assign updated."
+msgid "Rotating work from assign updated."
 msgstr "تم تحديث تعيين نوع العمل الدوار."
 
-msgid "Rotating work type assign not found."
+msgid "Rotating work from assign not found."
 msgstr "تعيين نوع العمل الدوار غير موجود."
 
 msgid "Already on record is active"
@@ -7604,18 +7604,18 @@ msgid "archived"
 msgstr "تمت الأرشفة"
 
 #, python-brace-format
-msgid "Rotating work type assign is {}"
+msgid "Rotating work from assign is {}"
 msgstr "حالة تعيين نوع العمل الدوار هي {}"
 
-msgid "No rotatingworktype found matching the query."
+msgid "No rotatingworkfrom found matching the query."
 msgstr "لم يتم العثور على نوع عمل دوري مطابق للاستعلام."
 
 #, python-brace-format
-msgid "Rotating work type for {employee_id} already exists"
+msgid "Rotating work from for {employee_id} already exists"
 msgstr "نوع العمل الدوار لـ {employee_id} موجود بالفعل"
 
 #, python-brace-format
-msgid "Rotating work type for {count} employees is {message}"
+msgid "Rotating work from for {count} employees is {message}"
 msgstr "حالة نوع العمل الدوار لـ {count} من الموظفين هي {message}"
 
 #, python-brace-format
@@ -7623,17 +7623,17 @@ msgid "{employee} deleted."
 msgstr "تم حذف {employee}."
 
 #, python-brace-format
-msgid "{rwork_type_assign} not found."
-msgstr "تعيين نوع العمل الدوار {rwork_type_assign} غير موجود."
+msgid "{rwork_from_assign} not found."
+msgstr "تعيين نوع العمل الدوار {rwork_from_assign} غير موجود."
 
 #, python-brace-format
-msgid "You cannot delete {rwork_type_assign}"
-msgstr "لا يمكنك حذف {rwork_type_assign}"
+msgid "You cannot delete {rwork_from_assign}"
+msgstr "لا يمكنك حذف {rwork_from_assign}"
 
-msgid "Rotating work type assign deleted."
+msgid "Rotating work from assign deleted."
 msgstr "تم حذف تعيين نوع العمل الدوار."
 
-msgid "You cannot delete this rotating work type."
+msgid "You cannot delete this rotating work from."
 msgstr "لا يمكنك حذف نوع العمل الدوار هذا."
 
 msgid "Employee type created."
@@ -7714,45 +7714,45 @@ msgstr "الموظف غير موجود"
 msgid "Employee permission assigned."
 msgstr "تم تعيين صلاحيات الموظف."
 
-msgid "Work type request added."
+msgid "Work from request added."
 msgstr "تمت إضافة طلب نوع العمل."
 
-msgid "Work type request not found."
+msgid "Work from request not found."
 msgstr "طلب نوع العمل غير موجود."
 
 msgid "You don't have permission"
 msgstr "ليس لديك صلاحية"
 
-msgid "Work type request has been rejected."
+msgid "Work from request has been rejected."
 msgstr "تم رفض طلب نوع العمل."
 
-msgid "Your work type request has been rejected."
+msgid "Your work from request has been rejected."
 msgstr "تم رفض طلب نوع عملك."
 
-msgid "No worktype request found matching the query."
+msgid "No workfrom request found matching the query."
 msgstr "لم يتم العثور على طلب نوع عمل مطابق للاستعلام."
 
-msgid "Work type request has been canceled."
+msgid "Work from request has been canceled."
 msgstr "تم إلغاء طلب نوع العمل."
 
-msgid "Work type request has been approved."
+msgid "Work from request has been approved."
 msgstr "تمت الموافقة على طلب نوع العمل."
 
-msgid "An approved work type request already exists during this time period."
+msgid "An approved work from request already exists during this time period."
 msgstr "يوجد طلب نوع عمل معتمد بالفعل خلال هذه الفترة الزمنية."
 
-msgid "Work type request deleted."
+msgid "Work from request deleted."
 msgstr "تم حذف طلب نوع العمل."
 
-msgid "You cannot delete this work type request."
+msgid "You cannot delete this work from request."
 msgstr "لا يمكنك حذف طلب نوع العمل هذا."
 
 #, python-brace-format
-msgid "You cannot delete {employee} work type request for the date {date}."
+msgid "You cannot delete {employee} work from request for the date {date}."
 msgstr "لا يمكنك حذف طلب نوع العمل لـ {employee} للتاريخ {date}."
 
 #, python-brace-format
-msgid "{} work type requests deleted."
+msgid "{} work from requests deleted."
 msgstr "تم حذف {} طلب نوع عمل."
 
 msgid "Shift request added"
@@ -7914,10 +7914,10 @@ msgid "Comment not found."
 msgstr "لم يتم العثور على التعليق."
 
 #, python-format
-msgid "%(employee)s's work type request has received a comment."
+msgid "%(employee)s's work from request has received a comment."
 msgstr "تلقى طلب نوع عمل %(employee)s تعليقًا."
 
-msgid "Your work type request has received a comment."
+msgid "Your work from request has received a comment."
 msgstr "تلقى طلب نوع عملك تعليقًا."
 
 msgid "Default pagination updated."
@@ -8705,7 +8705,7 @@ msgstr "رقم الموظف"
 msgid "Date of Joining"
 msgstr "تاريخ الانضمام"
 
-msgid "Work Type & Shift"
+msgid "Work From & Shift"
 msgstr "نوع العمل والوردية"
 
 msgid "Groups & Permissions"
@@ -9843,7 +9843,7 @@ msgstr "مقابلة اليوم"
 msgid "No interviews are scheduled for this candidate"
 msgstr "لم يتم جدولة أي مقابلات لهذا المرشح"
 
-msgid "No work type request has been created."
+msgid "No work from request has been created."
 msgstr "لم يتم إنشاء أي طلب نوع عمل."
 
 msgid "Rotate every 1st day of month "
@@ -9879,7 +9879,7 @@ msgstr "تدوير كل يوم أخير من الشهر "
 msgid "th day of month "
 msgstr "اليوم الحادي عشر من الشهر "
 
-msgid "No rotating work type has been assigned."
+msgid "No rotating work from has been assigned."
 msgstr "لم يتم تعيين أي نوع عمل دوار."
 
 msgid "No Shift request has been created."
@@ -10912,7 +10912,7 @@ msgstr ""
 msgid "If 'based_on' is 'shift_id', 'shift_id' is required."
 msgstr "إذا كانت 'based_on' تساوي 'shift_id'، فإن 'shift_id' مطلوبة."
 
-msgid "If 'based_on' is 'work_type_id', 'work_type_id' is required."
+msgid "If 'based_on' is 'work_from_id', 'work_from_id' is required."
 msgstr "إذا كانت 'based_on' تساوي 'work_type_id'، فإن 'work_type_id' مطلوبة."
 
 msgid ""
@@ -10987,16 +10987,16 @@ msgstr "لم يتم العثور على الدور الوظيفي "
 msgid "Company not found "
 msgstr "لم يتم العثور على الشركة "
 
-msgid "WorkType not found"
+msgid "WorkFrom not found"
 msgstr "لم يتم العثور على WorkType"
 
-msgid "WorkTypeRequest not found"
+msgid "WorkFromRequest not found"
 msgstr "لم يتم العثور على WorkTypeRequest"
 
 msgid "you have no permission to view"
 msgstr "ليس لديك صلاحية للعرض"
 
-msgid "RotatingWorkTypeAssign not found"
+msgid "RotatingWorkFromAssign not found"
 msgstr "لم يتم العثور على RotatingWorkTypeAssign"
 
 msgid "EmployeeShift not found"
@@ -11014,7 +11014,7 @@ msgstr "لم يتم العثور على RotatingShiftAssign"
 msgid "ShiftRequest not found"
 msgstr "لم يتم العثور على ShiftRequest"
 
-msgid "RotatingWorkType not found"
+msgid "RotatingWorkFrom not found"
 msgstr "لم يتم العثور على RotatingWorkType"
 
 msgid "Already request exits on same date"
@@ -13085,7 +13085,7 @@ msgstr "أدر فئات الموظفين مثل الدائم أو المتعاق
 msgid "Set up rotating shift patterns for employees."
 msgstr "إعداد أنماط الورديات الدورية للموظفين."
 
-msgid "Set up rotating work type patterns for employees."
+msgid "Set up rotating work from patterns for employees."
 msgstr "إعداد أنماط أنواع العمل الدورية للموظفين."
 
 msgid "Configure day-wise schedules linked to each shift."
@@ -13229,7 +13229,7 @@ msgstr "إنشاء طلب أصل"
 msgid "Create Reimbursement"
 msgstr "إنشاء مطالبة"
 
-msgid "Create Work Type Request"
+msgid "Create Work From Request"
 msgstr "إنشاء طلب نوع عمل"
 
 msgid "Create Leave Request"
@@ -13466,7 +13466,7 @@ msgstr "إنشاء إعلان"
 msgid "Shift Requests to Approve"
 msgstr "طلبات الوردية للموافقة"
 
-msgid "Work Type Requests to Approve"
+msgid "Work From Requests to Approve"
 msgstr "طلبات نوع العمل للموافقة"
 
 msgid "Employee Work Information"
@@ -14910,7 +14910,7 @@ msgstr "طلبات من الزملاء لتغطية وردياتهم أو تسل
 msgid "Submit and manage your shift change requests for approval."
 msgstr "قدّم وأدر طلبات تغيير الورديات الخاصة بك للاعتماد."
 
-msgid "Submit and manage requests to change your work type assignment."
+msgid "Submit and manage requests to change your work from assignment."
 msgstr "قدّم وأدر طلبات تغيير نوع العمل المسند إليك."
 
 msgid "Company-specific settings"
@@ -15093,7 +15093,7 @@ msgstr "الأسبوع"
 msgid "Shift Roster"
 msgstr "جدول الورديات"
 
-msgid "No Comments have been added for this worktype request"
+msgid "No Comments have been added for this workfrom request"
 msgstr "لم تتم إضافة أي تعليقات لطلب نوع العمل هذا"
 
 msgid "Theme ID is required"
@@ -18201,7 +18201,7 @@ msgstr "إذا كان الأساس هو الحضور، يجب ملء المبل�
 msgid "If based on is shift, then shift must be filled."
 msgstr "إذا كان الأساس هو الوردية، يجب ملء الوردية."
 
-msgid "If based on is work type, then work type must be filled."
+msgid "If based on is work from, then work from must be filled."
 msgstr "إذا كان الأساس هو نوع العمل، يجب ملء نوع العمل."
 
 msgid "The amount per children must be filled."
@@ -22132,7 +22132,7 @@ msgstr "جميع الأدوار"
 msgid "All types"
 msgstr "جميع الأنواع"
 
-msgid "All work types"
+msgid "All work from options"
 msgstr "جميع أنواع العمل"
 
 msgid "All shifts"

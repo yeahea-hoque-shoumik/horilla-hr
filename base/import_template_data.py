@@ -139,7 +139,7 @@ IMPORT_TEMPLATES = {
         "columns": [
             "Badge ID",
             "Shift",
-            "Work type",
+            "Work from",
             "Attendance date",
             "Check-in date",
             "Check-in",

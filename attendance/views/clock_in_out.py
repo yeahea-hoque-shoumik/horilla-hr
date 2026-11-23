@@ -23,13 +23,13 @@ from django.utils.translation import gettext_lazy as _
 
 from attendance.methods.clock_punch import (
     PunchError,
-    available_work_types,
+    available_work_froms,
     current_open_activity,
     ensure_after_check_in,
     ensure_after_last_punch,
     latest_open_activity,
     parse_punch_time,
-    resolve_work_type,
+    resolve_work_from,
 )
 from attendance.methods.extra_work import (
     extra_work_applies,
@@ -150,7 +150,7 @@ def clock_in_attendance_and_activity(
     start_time,
     end_time,
     in_datetime,
-    work_type=None,
+    work_from=None,
 ):
     """
     This method is used to create attendance activity or attendance when an employee clocks-in
@@ -164,7 +164,7 @@ def clock_in_attendance_and_activity(
         minimum_hour    : minimum hour in shift schedule
         start_time      : start time in shift schedule
         end_time        : end time in shift schedule
-        work_type       : work type chosen at check-in, if any
+        work_from       : work from chosen at check-in, if any
     """
 
     # attendance activity create
@@ -188,7 +188,7 @@ def clock_in_attendance_and_activity(
         shift_day=day,
         clock_in=in_datetime,
         in_datetime=in_datetime,
-        work_type_id=work_type,
+        work_from_id=work_from,
     )
     # create attendance if not exist
     attendance = Attendance.objects.filter(
@@ -198,8 +198,8 @@ def clock_in_attendance_and_activity(
         attendance = Attendance()
         attendance.employee_id = employee
         attendance.shift_id = shift
-        attendance.work_type_id = (
-            work_type or attendance.employee_id.employee_work_info.work_type_id
+        attendance.work_from_id = (
+            work_from or attendance.employee_id.employee_work_info.work_from_id
         )
         attendance.attendance_date = attendance_date
         attendance.attendance_day = day
@@ -261,7 +261,7 @@ def _render_clock_modal(request, error="", extra_work_date=None):
     activity = current_open_activity(employee, local_now)
     mode = "out" if activity else "in"
     company = _session_company(request)
-    work_types = list(available_work_types(employee)) if mode == "in" else []
+    work_froms = list(available_work_froms(employee)) if mode == "in" else []
     needs_geo = _company_fence_on(company)
 
     if mode == "in":
@@ -279,8 +279,8 @@ def _render_clock_modal(request, error="", extra_work_date=None):
     context = {
         "mode": mode,
         "activity": activity,
-        "work_types": work_types,
-        "selected_work_type": posted.get("work_type", ""),
+        "work_froms": work_froms,
+        "selected_work_from": posted.get("work_from", ""),
         "error": error,
         "extra_work_date": extra_work_date,
         "needs_geo": needs_geo,
@@ -385,10 +385,10 @@ def clock_in(request):
                 )
 
         employee, work_info = employee_exists(request)
-        work_type = None
+        work_from = None
         if not request.__dict__.get("datetime"):
             try:
-                work_type = resolve_work_type(employee, request.POST.get("work_type"))
+                work_from = resolve_work_from(employee, request.POST.get("work_from"))
             except PunchError as error:
                 return _render_clock_modal(request, error=str(error))
             # The mobile/API clock-in already enforces a configured
@@ -446,7 +446,7 @@ def clock_in(request):
                 start_time=start_time_sec,
                 end_time=end_time_sec,
                 in_datetime=datetime_now,
-                work_type=work_type,
+                work_from=work_from,
             )
             # Refresh employee from DB so template re-evaluates is_clocked_in correctly
             employee.refresh_from_db()

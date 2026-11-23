@@ -526,10 +526,10 @@ class AttendanceRequestView(APIView):
 
         form = NewRequestForm(data=request.data)
         if form.is_valid():
-            work_type = form.cleaned_data.get("work_type_id")
+            work_from = form.cleaned_data.get("work_from_id")
 
-            if not WorkType.objects.filter(pk=getattr(work_type, "pk", None)).exists():
-                form.cleaned_data["work_type_id"] = None
+            if not WorkFrom.objects.filter(pk=getattr(work_from, "pk", None)).exists():
+                form.cleaned_data["work_from_id"] = None
 
             if form.new_instance is not None:
                 form.new_instance.save()
@@ -565,10 +565,10 @@ class AttendanceRequestView(APIView):
             instance = form.save()
             instance.employee_id = attendance.employee_id
             instance.id = attendance.id
-            work_type = form.cleaned_data.get("work_type_id")
+            work_from = form.cleaned_data.get("work_from_id")
 
-            if not WorkType.objects.filter(pk=getattr(work_type, "pk", None)).exists():
-                form.cleaned_data["work_type_id"] = None
+            if not WorkFrom.objects.filter(pk=getattr(work_from, "pk", None)).exists():
+                form.cleaned_data["work_from_id"] = None
             if attendance.request_type != "create_request":
                 attendance.requested_data = json.dumps(instance.serialize())
                 attendance.request_description = instance.request_description

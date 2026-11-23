@@ -57,7 +57,7 @@ from accessibility.models import DefaultAccessibility
 from base.backends import ConfiguredEmailBackend
 from base.decorators import (
     shift_request_change_permission,
-    work_type_request_change_permission,
+    work_from_request_change_permission,
 )
 from base.filters import (
     CompanyLeaveFilter,
@@ -65,12 +65,12 @@ from base.filters import (
     PenaltyFilter,
     RotatingShiftAssignFilters,
     RotatingShiftRequestReGroup,
-    RotatingWorkTypeAssignFilter,
-    RotatingWorkTypeRequestReGroup,
+    RotatingWorkFromAssignFilter,
+    RotatingWorkFromRequestReGroup,
     ShiftRequestFilter,
     ShiftRequestReGroup,
-    WorkTypeRequestFilter,
-    WorkTypeRequestReGroup,
+    WorkFromRequestFilter,
+    WorkFromRequestReGroup,
 )
 from base.forms import (
     AssignPermission,
@@ -102,20 +102,20 @@ from base.forms import (
     RotatingShiftAssignForm,
     RotatingShiftAssignUpdateForm,
     RotatingShiftForm,
-    RotatingWorkTypeAssignExportForm,
-    RotatingWorkTypeAssignForm,
-    RotatingWorkTypeAssignUpdateForm,
-    RotatingWorkTypeForm,
+    RotatingWorkFromAssignExportForm,
+    RotatingWorkFromAssignForm,
+    RotatingWorkFromAssignUpdateForm,
+    RotatingWorkFromForm,
     ShiftAllocationForm,
     ShiftRequestColumnForm,
     ShiftRequestCommentForm,
     ShiftRequestForm,
     TagsForm,
     UserGroupForm,
-    WorkTypeForm,
-    WorkTypeRequestColumnForm,
-    WorkTypeRequestCommentForm,
-    WorkTypeRequestForm,
+    WorkFromForm,
+    WorkFromRequestColumnForm,
+    WorkFromRequestCommentForm,
+    WorkFromRequestForm,
     find_reset_user,
 )
 from base.import_template_data import import_template_frame, write_import_xlsx
@@ -165,14 +165,14 @@ from base.models import (
     NotificationSound,
     PenaltyAccounts,
     RotatingShift,
-    RotatingWorkType,
-    RotatingWorkTypeAssign,
+    RotatingWorkFrom,
+    RotatingWorkFromAssign,
     ShiftRequest,
     ShiftRequestComment,
     Tags,
-    WorkType,
-    WorkTypeRequest,
-    WorkTypeRequestComment,
+    WorkFrom,
+    WorkFromRequest,
+    WorkFromRequestComment,
 )
 from employee.filters import EmployeeFilter
 from employee.forms import ActiontypeForm, EmployeeGeneralSettingPrefixForm
@@ -219,7 +219,7 @@ CHARTS = [
     ("department_chart", _("Department Chart")),
     ("gender_chart", _("Gender Chart")),
     ("shift_request_approve", _("Shift Request to Approve")),
-    ("work_type_request_approve", _("Work Type Request to Approve")),
+    ("work_from_request_approve", _("Work From Request to Approve")),
     ("overtime_approve", _("Overtime to Approve")),
     ("attendance_validate", _("Attendance to Validate")),
     ("leave_request_approve", _("Leave Request to Approve")),
@@ -257,7 +257,7 @@ def is_reportingmanger(request, instance):
         # caller uses this in a boolean `or` -- any truthy value (which an
         # HttpResponse is) granted access. An employee with no work info
         # record yet let ANY authenticated caller approve or cancel their
-        # shift/work-type requests.
+        # shift/work-from requests.
         return False
     return manager == employee_work_info_manager
 
@@ -1308,7 +1308,7 @@ def employee_workinfo_complete(request):
     fields_to_focus = [
         "job_position_id",
         "department_id",
-        "work_type_id",
+        "work_from_id",
         "employee_type_id",
         "job_role_id",
         "reporting_manager_id",
@@ -2679,10 +2679,10 @@ def job_role_update(request, id, **kwargs):
 
 @login_required
 @hx_request_required
-@permission_required("base.add_worktype")
-def work_type_create(request):
+@permission_required("base.add_workfrom")
+def work_from_create(request):
     """
-    This method is used to create work type
+    This method is used to create work from
     """
     dynamic = request.GET.get("dynamic")
     from base.auth_backends import resolve_company_id_for_new_record
@@ -2690,184 +2690,184 @@ def work_type_create(request):
     company_id = resolve_company_id_for_new_record(request)
     company = Company.objects.filter(id=company_id).first() if company_id else None
     initial = {"company_id": [company] if company else []}
-    form = WorkTypeForm(initial=initial)
-    work_types = WorkType.objects.all()
+    form = WorkFromForm(initial=initial)
+    work_froms = WorkFrom.objects.all()
     if request.method == "POST":
-        form = WorkTypeForm(request.POST)
+        form = WorkFromForm(request.POST)
         if form.is_valid():
             form.save()
-            form = WorkTypeForm(initial=initial)
-            messages.success(request, _("Work Type has been created successfully!"))
+            form = WorkFromForm(initial=initial)
+            messages.success(request, _("Work From has been created successfully!"))
             return HorillaRedirect(request)
 
     return render(
         request,
-        "base/work_type/work_type_form.html",
-        {"form": form, "work_types": work_types, "dynamic": dynamic},
+        "base/work_from/work_from_form.html",
+        {"form": form, "work_froms": work_froms, "dynamic": dynamic},
     )
 
 
 @login_required
-@permission_required("base.view_worktype")
-def work_type_view(request):
+@permission_required("base.view_workfrom")
+def work_from_view(request):
     """
-    This method is used to view work type
+    This method is used to view work from
     """
     selected_company = request.session.get("selected_company")
-    work_types = WorkType.objects.all()
+    work_froms = WorkFrom.objects.all()
     if selected_company and selected_company != "all":
-        work_types = work_types.filter(company_id__id=selected_company)
+        work_froms = work_froms.filter(company_id__id=selected_company)
     return render(
         request,
-        "base/work_type/work_type.html",
-        {"work_types": work_types},
+        "base/work_from/work_from.html",
+        {"work_froms": work_froms},
     )
 
 
 @login_required
 @hx_request_required
-@permission_required("base.change_worktype")
-def work_type_update(request, id, **kwargs):
+@permission_required("base.change_workfrom")
+def work_from_update(request, id, **kwargs):
     """
-    This method is used to update work type instance
+    This method is used to update work from instance
     args:
-        id : work type instance id
+        id : work from instance id
 
     """
 
-    work_type = WorkType.find(id)
-    form = WorkTypeForm(instance=work_type)
+    work_from = WorkFrom.find(id)
+    form = WorkFromForm(instance=work_from)
     if request.method == "POST":
-        form = WorkTypeForm(request.POST, instance=work_type)
+        form = WorkFromForm(request.POST, instance=work_from)
         if form.is_valid():
             form.save()
-            messages.success(request, _("Work type updated."))
+            messages.success(request, _("Work from updated."))
             return HorillaRedirect(request)
     return render(
         request,
-        "base/work_type/work_type_form.html",
-        {"form": form, "work_type": work_type},
+        "base/work_from/work_from_form.html",
+        {"form": form, "work_from": work_from},
     )
 
 
 @login_required
 @hx_request_required
-@permission_required("base.add_rotatingworktype")
-def rotating_work_type_create(request):
+@permission_required("base.add_rotatingworkfrom")
+def rotating_work_from_create(request):
     """
-    This method is used to create rotating work type   .
+    This method is used to create rotating work from   .
     """
 
-    form = RotatingWorkTypeForm()
+    form = RotatingWorkFromForm()
     if request.method == "POST":
-        form = RotatingWorkTypeForm(request.POST)
+        form = RotatingWorkFromForm(request.POST)
         if form.is_valid():
             form.save()
-            form = RotatingWorkTypeForm()
-            messages.success(request, _("Rotating work type created."))
+            form = RotatingWorkFromForm()
+            messages.success(request, _("Rotating work from created."))
             return HorillaRedirect(request)
     return render(
         request,
-        "base/rotating_work_type/htmx/rotating_work_type_form.html",
-        {"form": form, "rwork_type": RotatingWorkType.objects.all()},
+        "base/rotating_work_from/htmx/rotating_work_from_form.html",
+        {"form": form, "rwork_from": RotatingWorkFrom.objects.all()},
     )
 
 
 @login_required
-@permission_required("base.view_rotatingworktype")
-def rotating_work_type_view(request):
+@permission_required("base.view_rotatingworkfrom")
+def rotating_work_from_view(request):
     """
-    This method is used to view rotating work type   .
+    This method is used to view rotating work from   .
     """
 
     return render(
         request,
-        "base/rotating_work_type/rotating_work_type.html",
-        {"rwork_type": RotatingWorkType.objects.all()},
+        "base/rotating_work_from/rotating_work_from.html",
+        {"rwork_from": RotatingWorkFrom.objects.all()},
     )
 
 
 @login_required
 @hx_request_required
-@permission_required("base.change_rotatingworktype")
-def rotating_work_type_update(request, id, **kwargs):
+@permission_required("base.change_rotatingworkfrom")
+def rotating_work_from_update(request, id, **kwargs):
     """
-    This method is used to update rotating work type instance.
+    This method is used to update rotating work from instance.
     args:
-        id : rotating work type instance id
+        id : rotating work from instance id
 
     """
 
-    rotating_work_type = RotatingWorkType.find(id)
-    form = RotatingWorkTypeForm(instance=rotating_work_type)
+    rotating_work_from = RotatingWorkFrom.find(id)
+    form = RotatingWorkFromForm(instance=rotating_work_from)
     if request.method == "POST":
-        form = RotatingWorkTypeForm(request.POST, instance=rotating_work_type)
+        form = RotatingWorkFromForm(request.POST, instance=rotating_work_from)
         if form.is_valid():
             form.save()
-            messages.success(request, _("Rotating work type updated."))
+            messages.success(request, _("Rotating work from updated."))
             return HorillaRedirect(request)
 
     return render(
         request,
-        "base/rotating_work_type/htmx/rotating_work_type_form.html",
-        {"form": form, "r_type": rotating_work_type},
+        "base/rotating_work_from/htmx/rotating_work_from_form.html",
+        {"form": form, "r_type": rotating_work_from},
     )
 
 
 @login_required
-@manager_can_enter("base.view_rotatingworktypeassign")
-def rotating_work_type_assign(request):
+@manager_can_enter("base.view_rotatingworkfromassign")
+def rotating_work_from_assign(request):
     """
-    This method is used to assign rotating work type to employee users
+    This method is used to assign rotating work from to employee users
     """
 
-    filter = RotatingWorkTypeAssignFilter(
-        queryset=RotatingWorkTypeAssign.objects.filter(is_active=True)
+    filter = RotatingWorkFromAssignFilter(
+        queryset=RotatingWorkFromAssign.objects.filter(is_active=True)
     )
-    rwork_all = RotatingWorkTypeAssign.objects.all()
-    rwork_type_assign = filter.qs.order_by("-id")
-    rwork_type_assign = filtersubordinates(
-        request, rwork_type_assign, "base.view_rotatingworktypeassign"
+    rwork_all = RotatingWorkFromAssign.objects.all()
+    rwork_from_assign = filter.qs.order_by("-id")
+    rwork_from_assign = filtersubordinates(
+        request, rwork_from_assign, "base.view_rotatingworkfromassign"
     )
-    rwork_type_assign = rwork_type_assign.filter(employee_id__is_active=True)
+    rwork_from_assign = rwork_from_assign.filter(employee_id__is_active=True)
     assign_ids = json.dumps(
         [
             instance.id
             for instance in paginator_qry(
-                rwork_type_assign, request.GET.get("page")
+                rwork_from_assign, request.GET.get("page")
             ).object_list
         ]
     )
     return render(
         request,
-        "base/rotating_work_type/rotating_work_type_assign.html",
+        "base/rotating_work_from/rotating_work_from_assign.html",
         {
             "f": filter,
-            "rwork_type_assign": paginator_qry(
-                rwork_type_assign, request.GET.get("page")
+            "rwork_from_assign": paginator_qry(
+                rwork_from_assign, request.GET.get("page")
             ),
             "assign_ids": assign_ids,
             "rwork_all": rwork_all,
-            "gp_fields": RotatingWorkTypeRequestReGroup.fields,
+            "gp_fields": RotatingWorkFromRequestReGroup.fields,
         },
     )
 
 
 @login_required
 @hx_request_required
-@manager_can_enter("base.add_rotatingworktypeassign")
-def rotating_work_type_assign_add(request):
+@manager_can_enter("base.add_rotatingworkfromassign")
+def rotating_work_from_assign_add(request):
     """
-    This method is used to assign rotating work type
+    This method is used to assign rotating work from
     """
-    form = RotatingWorkTypeAssignForm()
+    form = RotatingWorkFromAssignForm()
     if request.GET.get("emp_id"):
         employee = request.GET.get("emp_id")
-        form = RotatingWorkTypeAssignUpdateForm(initial={"employee_id": employee})
-    form = choosesubordinates(request, form, "base.add_rotatingworktypeassign")
+        form = RotatingWorkFromAssignUpdateForm(initial={"employee_id": employee})
+    form = choosesubordinates(request, form, "base.add_rotatingworkfromassign")
     if request.method == "POST":
-        form = RotatingWorkTypeAssignForm(request.POST)
-        form = choosesubordinates(request, form, "base.add_rotatingworktypeassign")
+        form = RotatingWorkFromAssignForm(request.POST)
+        form = choosesubordinates(request, form, "base.add_rotatingworkfromassign")
         if form.is_valid():
             form.save()
             employee_ids = request.POST.getlist("employee_id")
@@ -2878,71 +2878,71 @@ def rotating_work_type_assign_add(request):
             notify.send(
                 request.user.employee_get,
                 recipient=users,
-                verb=gettext_noop("You are added to rotating work type"),
+                verb=gettext_noop("You are added to rotating work from"),
                 icon="infinite",
                 redirect=reverse("employee-profile"),
             )
 
-            messages.success(request, _("Rotating work type assigned."))
+            messages.success(request, _("Rotating work from assigned."))
             return HorillaRedirect(request)
     return render(
         request,
-        "base/rotating_work_type/htmx/rotating_work_type_assign_form.html",
+        "base/rotating_work_from/htmx/rotating_work_from_assign_form.html",
         {"form": form},
     )
 
 
 @login_required
 @hx_request_required
-@manager_can_enter("base.view_rotatingworktypeassign")
-def rotating_work_type_assign_view(request):
+@manager_can_enter("base.view_rotatingworkfromassign")
+def rotating_work_from_assign_view(request):
     """
-    This method renders template to view rotating work type objects
+    This method renders template to view rotating work from objects
     """
 
     previous_data = request.GET.urlencode()
-    rwork_type_assign = RotatingWorkTypeAssignFilter(request.GET).qs.order_by("-id")
+    rwork_from_assign = RotatingWorkFromAssignFilter(request.GET).qs.order_by("-id")
     field = request.GET.get("field")
     if not request.GET.get("is_active") or request.GET.get("is_active") in [
         "true",
         "unknown",
     ]:
-        rwork_type_assign = rwork_type_assign.filter(is_active=True)
+        rwork_from_assign = rwork_from_assign.filter(is_active=True)
     if request.GET.get("is_active") == "false":
-        rwork_type_assign = rwork_type_assign.filter(is_active=False)
-    rwork_type_assign = filtersubordinates(
-        request, rwork_type_assign, "base.view_rotatingworktypeassign"
+        rwork_from_assign = rwork_from_assign.filter(is_active=False)
+    rwork_from_assign = filtersubordinates(
+        request, rwork_from_assign, "base.view_rotatingworkfromassign"
     )
     if request.GET.get("orderby"):
-        rwork_type_assign = sortby(request, rwork_type_assign, "orderby")
-    template = "base/rotating_work_type/rotating_work_type_assign_view.html"
+        rwork_from_assign = sortby(request, rwork_from_assign, "orderby")
+    template = "base/rotating_work_from/rotating_work_from_assign_view.html"
     data_dict = parse_qs(previous_data)
-    get_key_instances(RotatingWorkTypeAssign, data_dict)
+    get_key_instances(RotatingWorkFromAssign, data_dict)
 
     if field != "" and field is not None:
-        rwork_type_assign = group_by_queryset(
-            rwork_type_assign, field, request.GET.get("page"), "page"
+        rwork_from_assign = group_by_queryset(
+            rwork_from_assign, field, request.GET.get("page"), "page"
         )
-        list_values = [entry["list"] for entry in rwork_type_assign]
+        list_values = [entry["list"] for entry in rwork_from_assign]
         id_list = []
         for value in list_values:
             for instance in value.object_list:
                 id_list.append(instance.id)
 
         assign_ids = json.dumps(list(id_list))
-        template = "base/rotating_work_type/htmx/group_by.html"
+        template = "base/rotating_work_from/htmx/group_by.html"
 
     else:
-        rwork_type_assign = paginator_qry(rwork_type_assign, request.GET.get("page"))
+        rwork_from_assign = paginator_qry(rwork_from_assign, request.GET.get("page"))
         assign_ids = json.dumps(
-            [instance.id for instance in rwork_type_assign.object_list]
+            [instance.id for instance in rwork_from_assign.object_list]
         )
 
     return render(
         request,
         template,
         {
-            "rwork_type_assign": rwork_type_assign,
+            "rwork_from_assign": rwork_from_assign,
             "pd": previous_data,
             "filter_dict": data_dict,
             "assign_ids": assign_ids,
@@ -2955,12 +2955,12 @@ def rotating_work_type_assign_view(request):
 @hx_request_required
 def rotating_work_individual_view(request, instance_id):
     """
-    This view is used render detailed view of the rotating work type assign
+    This view is used render detailed view of the rotating work from assign
     """
     request_copy = request.GET.copy()
     request_copy.pop("instances_ids", None)
     previous_data = request_copy.urlencode()
-    instance = RotatingWorkTypeAssign.objects.filter(id=instance_id).first()
+    instance = RotatingWorkFromAssign.objects.filter(id=instance_id).first()
     context = {"instance": instance, "pd": previous_data}
     assign_ids_json = request.GET.get("instances_ids")
     if assign_ids_json:
@@ -2973,10 +2973,10 @@ def rotating_work_individual_view(request, instance_id):
     context["close_hx_url"] = ""
     context["close_hx_target"] = ""
     if HTTP_REFERER and (
-        HTTP_REFERER.endswith("rotating-work-type-assign/")
+        HTTP_REFERER.endswith("rotating-work-from-assign/")
         or HTTP_REFERER.endswith("work-schedules/")
     ):
-        context["close_hx_url"] = "/rotating-work-type-assign-view"
+        context["close_hx_url"] = "/rotating-work-from-assign-view"
         context["close_hx_target"] = "#view-container"
     elif HTTP_REFERER:
         HTTP_REFERERS = [part for part in HTTP_REFERER.split("/") if part]
@@ -2986,61 +2986,61 @@ def rotating_work_individual_view(request, instance_id):
             context["close_hx_target"] = "#shift_target"
         except ValueError:
             pass
-    return render(request, "base/rotating_work_type/individual_view.html", context)
+    return render(request, "base/rotating_work_from/individual_view.html", context)
 
 
 @login_required
 @hx_request_required
-@manager_can_enter("base.change_rotatingworktypeassign")
-def rotating_work_type_assign_update(request, id):
+@manager_can_enter("base.change_rotatingworkfromassign")
+def rotating_work_from_assign_update(request, id):
     """
-    This method is used to update rotating work type instance
+    This method is used to update rotating work from instance
     """
 
-    rotating_work_type_assign_obj = RotatingWorkTypeAssign.objects.get(id=id)
-    form = RotatingWorkTypeAssignUpdateForm(instance=rotating_work_type_assign_obj)
-    form = choosesubordinates(request, form, "base.change_rotatingworktypeassign")
+    rotating_work_from_assign_obj = RotatingWorkFromAssign.objects.get(id=id)
+    form = RotatingWorkFromAssignUpdateForm(instance=rotating_work_from_assign_obj)
+    form = choosesubordinates(request, form, "base.change_rotatingworkfromassign")
     if request.method == "POST":
-        form = RotatingWorkTypeAssignUpdateForm(
-            request.POST, instance=rotating_work_type_assign_obj
+        form = RotatingWorkFromAssignUpdateForm(
+            request.POST, instance=rotating_work_from_assign_obj
         )
-        form = choosesubordinates(request, form, "base.change_rotatingworktypeassign")
+        form = choosesubordinates(request, form, "base.change_rotatingworkfromassign")
         if form.is_valid():
             form.save()
-            messages.success(request, _("Rotating work type assign updated."))
+            messages.success(request, _("Rotating work from assign updated."))
             return HorillaRedirect(request)
     return render(
         request,
-        "base/rotating_work_type/htmx/rotating_work_type_assign_update_form.html",
+        "base/rotating_work_from/htmx/rotating_work_from_assign_update_form.html",
         {"update_form": form},
     )
 
 
 @login_required
 @hx_request_required
-@manager_can_enter("base.change_rotatingworktypeassign")
-def rotating_work_type_assign_export(request):
+@manager_can_enter("base.change_rotatingworkfromassign")
+def rotating_work_from_assign_export(request):
     if request.META.get("HTTP_HX_REQUEST") == "true":
         context = {
-            "export_filter": RotatingWorkTypeAssignFilter(),
-            "export_columns": RotatingWorkTypeAssignExportForm(),
+            "export_filter": RotatingWorkFromAssignFilter(),
+            "export_columns": RotatingWorkFromAssignExportForm(),
         }
         return render(
             request,
-            "base/rotating_work_type/rotating_work_type_assign_export.html",
+            "base/rotating_work_from/rotating_work_from_assign_export.html",
             context=context,
         )
 
     return export_data(
         request=request,
-        model=RotatingWorkTypeAssign,
-        filter_class=RotatingWorkTypeAssignFilter,
-        form_class=RotatingWorkTypeAssignExportForm,
-        file_name="Rotating_work_type_assign",
+        model=RotatingWorkFromAssign,
+        filter_class=RotatingWorkFromAssignFilter,
+        form_class=RotatingWorkFromAssignExportForm,
+        file_name="Rotating_work_from_assign",
     )
 
 
-def rotating_work_type_assign_redirect(request, obj_id=None, employee_id=None):
+def rotating_work_from_assign_redirect(request, obj_id=None, employee_id=None):
     request_copy = request.GET.copy()
     request_copy.pop("instances_ids", None)
     previous_data = request_copy.urlencode()
@@ -3049,7 +3049,7 @@ def rotating_work_type_assign_redirect(request, obj_id=None, employee_id=None):
     parsed_url = urlparse(hx_current_url)
     hx_current_path = parsed_url.path.lstrip("/")
     if hx_target and hx_target == "view-container":
-        return redirect(f"/rotating-work-type-assign-view?{previous_data}")
+        return redirect(f"/rotating-work-from-assign-view?{previous_data}")
     elif hx_target and hx_target == "objectDetailsModalTarget":
         instances_ids = request.GET.get("instances_ids")
         instances_list = json.loads(instances_ids)
@@ -3080,12 +3080,12 @@ def rotating_work_type_assign_redirect(request, obj_id=None, employee_id=None):
 
     elif hx_target and hx_target == "rotating-work-container":
         if hx_current_path in (
-            "employee/rotating-work-type-assign/",
+            "employee/rotating-work-from-assign/",
             "employee/work-schedules/",
         ):
-            rwork_type_requests = RotatingWorkTypeAssign.objects.all()
+            rwork_from_requests = RotatingWorkFromAssign.objects.all()
             previous_data = request.GET.urlencode()
-            if rwork_type_requests.exists():
+            if rwork_from_requests.exists():
                 return redirect(f"/rotating-list-view?is_active=True&{previous_data}")
             else:
                 return HorillaRedirect(request)
@@ -3102,40 +3102,40 @@ def rotating_work_type_assign_redirect(request, obj_id=None, employee_id=None):
 
 @login_required
 @hx_request_required
-@manager_can_enter("base.change_rotatingworktypeassign")
-def rotating_work_type_assign_archive(request, obj_id):
+@manager_can_enter("base.change_rotatingworkfromassign")
+def rotating_work_from_assign_archive(request, obj_id):
     """
-    Archive or un-archive rotating work type assigns
+    Archive or un-archive rotating work from assigns
     """
-    rwork_type = RotatingWorkTypeAssign.find(obj_id)
-    if not rwork_type:
-        messages.error(request, _("Rotating work type assign not found."))
+    rwork_from = RotatingWorkFromAssign.find(obj_id)
+    if not rwork_from:
+        messages.error(request, _("Rotating work from assign not found."))
         return HorillaRedirect(request)
 
-    employee_id = rwork_type.employee_id.id
-    employees_rwork_types = RotatingWorkTypeAssign.objects.filter(
-        is_active=True, employee_id=rwork_type.employee_id
+    employee_id = rwork_from.employee_id.id
+    employees_rwork_froms = RotatingWorkFromAssign.objects.filter(
+        is_active=True, employee_id=rwork_from.employee_id
     )
-    rwork_type.is_active = not rwork_type.is_active
-    if rwork_type.is_active and employees_rwork_types:
+    rwork_from.is_active = not rwork_from.is_active
+    if rwork_from.is_active and employees_rwork_froms:
         messages.error(request, _("Already on record is active"))
     else:
-        rwork_type.save()
-        message = _("un-archived") if rwork_type.is_active else _("archived")
-        messages.success(request, _("Rotating work type assign is {}").format(message))
-    return rotating_work_type_assign_redirect(request, obj_id, employee_id)
+        rwork_from.save()
+        message = _("un-archived") if rwork_from.is_active else _("archived")
+        messages.success(request, _("Rotating work from assign is {}").format(message))
+    return rotating_work_from_assign_redirect(request, obj_id, employee_id)
 
 
 @login_required
-@manager_can_enter("base.change_rotatingworktypeassign")
-def rotating_work_type_assign_bulk_archive(request):
+@manager_can_enter("base.change_rotatingworkfromassign")
+def rotating_work_from_assign_bulk_archive(request):
     """
-    This method is used to archive/un-archive bulk rotating work type assigns.
+    This method is used to archive/un-archive bulk rotating work from assigns.
     """
     ids = request.POST.get("ids")
     if not ids:
         return HorillaRedirect(
-            request, message=_("No rotatingworktype found matching the query.")
+            request, message=_("No rotatingworkfrom found matching the query.")
         )
     ids = json.loads(ids)
     is_active = True
@@ -3146,53 +3146,53 @@ def rotating_work_type_assign_bulk_archive(request):
     done = failed = 0
 
     for id in ids:
-        rwork_type_assign = RotatingWorkTypeAssign.objects.filter(id=id).first()
-        if rwork_type_assign is None:
+        rwork_from_assign = RotatingWorkFromAssign.objects.filter(id=id).first()
+        if rwork_from_assign is None:
             failed += 1
             continue
-        # An employee can only have one active rotating work type assign.
+        # An employee can only have one active rotating work from assign.
         if (
             is_active
-            and RotatingWorkTypeAssign.objects.filter(
-                is_active=True, employee_id=rwork_type_assign.employee_id
+            and RotatingWorkFromAssign.objects.filter(
+                is_active=True, employee_id=rwork_from_assign.employee_id
             ).exists()
         ):
             failed += 1
             continue
-        rwork_type_assign.is_active = is_active
-        rwork_type_assign.save()
+        rwork_from_assign.is_active = is_active
+        rwork_from_assign.save()
         done += 1
 
     return with_bulk_result(JsonResponse({"message": "Success"}), done, failed)
 
 
 @login_required
-@permission_required("base.delete_rotatingworktypeassign")
-def rotating_work_type_assign_bulk_delete(request):
+@permission_required("base.delete_rotatingworkfromassign")
+def rotating_work_from_assign_bulk_delete(request):
     """
-    This method is used to archive/un-archive bulk rotating work type assigns
+    This method is used to archive/un-archive bulk rotating work from assigns
     """
     ids = request.POST.get("ids")
     if not ids:
         return HorillaRedirect(
-            request, message=_("No rotatingworktype found matching the query.")
+            request, message=_("No rotatingworkfrom found matching the query.")
         )
     ids = json.loads(ids)
     for id in ids:
         try:
-            rwork_type_assign = RotatingWorkTypeAssign.objects.get(id=id)
-            rwork_type_assign.delete()
+            rwork_from_assign = RotatingWorkFromAssign.objects.get(id=id)
+            rwork_from_assign.delete()
             messages.success(
                 request,
-                _("{employee} deleted.").format(employee=rwork_type_assign.employee_id),
+                _("{employee} deleted.").format(employee=rwork_from_assign.employee_id),
             )
-        except RotatingWorkTypeAssign.DoesNotExist:
-            messages.error(request, _("{rwork_type_assign} not found."))
+        except RotatingWorkFromAssign.DoesNotExist:
+            messages.error(request, _("{rwork_from_assign} not found."))
         except ProtectedError:
             messages.error(
                 request,
-                _("You cannot delete {rwork_type_assign}").format(
-                    rwork_type_assign=rwork_type_assign
+                _("You cannot delete {rwork_from_assign}").format(
+                    rwork_from_assign=rwork_from_assign
                 ),
             )
     return JsonResponse({"message": "Success"})
@@ -3200,25 +3200,25 @@ def rotating_work_type_assign_bulk_delete(request):
 
 @login_required
 @hx_request_required
-@permission_required("base.delete_rotatingworktypeassign")
+@permission_required("base.delete_rotatingworkfromassign")
 @require_http_methods(["POST"])
-def rotating_work_type_assign_delete(request, obj_id):
+def rotating_work_from_assign_delete(request, obj_id):
     """
-    This method is used to delete rotating work type
+    This method is used to delete rotating work from
     """
-    rotating_work_type_assign_obj = RotatingWorkTypeAssign.find(obj_id)
-    if not rotating_work_type_assign_obj:
-        messages.error(request, _("Rotating work type assign not found."))
+    rotating_work_from_assign_obj = RotatingWorkFromAssign.find(obj_id)
+    if not rotating_work_from_assign_obj:
+        messages.error(request, _("Rotating work from assign not found."))
         return HorillaRedirect(request)
 
-    employee_id = rotating_work_type_assign_obj.employee_id.id
+    employee_id = rotating_work_from_assign_obj.employee_id.id
     try:
-        rotating_work_type_assign_obj.delete()
-        messages.success(request, _("Rotating work type assign deleted."))
+        rotating_work_from_assign_obj.delete()
+        messages.success(request, _("Rotating work from assign deleted."))
     except ProtectedError:
-        messages.error(request, _("You cannot delete this rotating work type."))
+        messages.error(request, _("You cannot delete this rotating work from."))
 
-    return rotating_work_type_assign_redirect(request, obj_id, employee_id)
+    return rotating_work_from_assign_redirect(request, obj_id, employee_id)
 
 
 @login_required
@@ -3725,7 +3725,7 @@ def normalize_list(lst):
 
 @login_required
 @hx_request_required
-@manager_can_enter("base.add_rotatingworktypeassign")
+@manager_can_enter("base.add_rotatingworkfromassign")
 def rotating_shift_assign_import(request):
     if request.method == "POST":
         rotating_shift_obj_list = []
@@ -4322,99 +4322,99 @@ def employee_permission_codenames(request, emp_id):
 
 
 @login_required
-def work_type_request_view(request):
+def work_from_request_view(request):
     """
-    This method renders template to  view all work type requests
+    This method renders template to  view all work from requests
     """
     previous_data = request.GET.urlencode()
     employee = Employee.objects.filter(employee_user_id=request.user).first()
-    if request.user.has_perm("base.view_worktyperequest"):
-        work_type_requests = WorkTypeRequest.objects.all()
+    if request.user.has_perm("base.view_workfromrequest"):
+        work_from_requests = WorkFromRequest.objects.all()
     else:
-        work_type_requests = filtersubordinates(
-            request, WorkTypeRequest.objects.all(), "base.add_worktyperequest"
+        work_from_requests = filtersubordinates(
+            request, WorkFromRequest.objects.all(), "base.add_workfromrequest"
         )
-        work_type_requests = work_type_requests | WorkTypeRequest.objects.filter(
+        work_from_requests = work_from_requests | WorkFromRequest.objects.filter(
             employee_id=employee
         )
-        work_type_requests = work_type_requests.filter(employee_id__is_active=True)
+        work_from_requests = work_from_requests.filter(employee_id__is_active=True)
     requests_ids = json.dumps(
         [
             instance.id
             for instance in paginator_qry(
-                work_type_requests, request.GET.get("page")
+                work_from_requests, request.GET.get("page")
             ).object_list
         ]
     )
-    f = WorkTypeRequestFilter(request.GET, queryset=work_type_requests)
+    f = WorkFromRequestFilter(request.GET, queryset=work_from_requests)
     data_dict = parse_qs(previous_data)
-    get_key_instances(WorkTypeRequest, data_dict)
-    form = WorkTypeRequestForm()
+    get_key_instances(WorkFromRequest, data_dict)
+    form = WorkFromRequestForm()
     form = choosesubordinates(
         request,
         form,
-        "base.add_worktypereqeust",
+        "base.add_workfromreqeust",
     )
     form = include_employee_instance(request, form)
     return render(
         request,
-        "work_type_request/work_type_request_view.html",
+        "work_from_request/work_from_request_view.html",
         {
             "data": paginator_qry(f.qs, request.GET.get("page")),
             "f": f,
             "form": form,
             "filter_dict": data_dict,
             "requests_ids": requests_ids,
-            "gp_fields": WorkTypeRequestReGroup.fields,
+            "gp_fields": WorkFromRequestReGroup.fields,
         },
     )
 
 
 @login_required
-@manager_can_enter("base.view_worktyperequest")
-def work_type_request_export(request):
+@manager_can_enter("base.view_workfromrequest")
+def work_from_request_export(request):
     if request.META.get("HTTP_HX_REQUEST") == "true":
-        export_filter = WorkTypeRequestFilter()
-        export_fields = WorkTypeRequestColumnForm()
+        export_filter = WorkFromRequestFilter()
+        export_fields = WorkFromRequestColumnForm()
         context = {
             "export_fields": export_fields,
             "export_filter": export_filter,
         }
         return render(
-            request, "work_type_request/work_type_request_export.html", context=context
+            request, "work_from_request/work_from_request_export.html", context=context
         )
     return export_data(
         request,
-        WorkTypeRequest,
-        WorkTypeRequestColumnForm,
-        WorkTypeRequestFilter,
-        "Work_type_request",
+        WorkFromRequest,
+        WorkFromRequestColumnForm,
+        WorkFromRequestFilter,
+        "Work_from_request",
     )
 
 
 @login_required
 @hx_request_required
-def work_type_request_search(request):
+def work_from_request_search(request):
     """
-    This method is used to search work type request.
+    This method is used to search work from request.
     """
     employee = Employee.objects.filter(employee_user_id=request.user).first()
     previous_data = request.GET.urlencode()
     field = request.GET.get("field")
-    f = WorkTypeRequestFilter(request.GET)
+    f = WorkFromRequestFilter(request.GET)
     work_typ_requests = (
-        filtersubordinates(request, f.qs, "base.add_worktyperequest")
-        if not request.user.has_perm("base.view_worktyperequest")
+        filtersubordinates(request, f.qs, "base.add_workfromrequest")
+        if not request.user.has_perm("base.view_workfromrequest")
         else f.qs
     )
-    employee_work_requests = list(WorkTypeRequest.objects.filter(employee_id=employee))
+    employee_work_requests = list(WorkFromRequest.objects.filter(employee_id=employee))
     subordinates_work_requests = list(work_typ_requests)
     combined_requests = list(set(subordinates_work_requests + employee_work_requests))
-    combined_requests_qs = WorkTypeRequest.objects.filter(
+    combined_requests_qs = WorkFromRequest.objects.filter(
         id__in=[req.id for req in combined_requests]
     )
     work_typ_requests = sortby(request, combined_requests_qs, "orderby")
-    template = "work_type_request/htmx/requests.html"
+    template = "work_from_request/htmx/requests.html"
 
     if field != "" and field is not None:
         work_typ_requests = group_by_queryset(
@@ -4427,7 +4427,7 @@ def work_type_request_search(request):
                 id_list.append(instance.id)
 
         requests_ids = json.dumps(list(id_list))
-        template = "work_type_request/htmx/group_by.html"
+        template = "work_from_request/htmx/group_by.html"
 
     else:
         work_typ_requests = paginator_qry(work_typ_requests, request.GET.get("page"))
@@ -4436,7 +4436,7 @@ def work_type_request_search(request):
         )
 
     data_dict = parse_qs(previous_data)
-    get_key_instances(WorkTypeRequest, data_dict)
+    get_key_instances(WorkFromRequest, data_dict)
     return render(
         request,
         template,
@@ -4458,13 +4458,13 @@ def handle_wtr_close_hx_url(request):
     close_hx_target = ""
 
     if HTTP_REFERER and "/" + "/".join(HTTP_REFERER.split("/")[3:]) == "/":
-        close_hx_url = reverse("dashboard-work-type-request")
-        close_hx_target = "#WorkTypeRequestApproveBody"
+        close_hx_url = reverse("dashboard-work-from-request")
+        close_hx_target = "#WorkFromRequestApproveBody"
     elif HTTP_REFERER and HTTP_REFERER.endswith("requests/"):
         close_hx_url = f"/work-list-view?{previous_data}"
         close_hx_target = "#listContainer"
-    elif HTTP_REFERER and HTTP_REFERER.endswith("work-type-request-view/"):
-        close_hx_url = f"/work-type-request-search?{previous_data}"
+    elif HTTP_REFERER and HTTP_REFERER.endswith("work-from-request-view/"):
+        close_hx_url = f"/work-from-request-search?{previous_data}"
         close_hx_target = "#view-container"
     elif HTTP_REFERER and HTTP_REFERER.endswith("employee-profile/"):
         close_hx_url = f"/employee/shift-tab/{employee}?profile=true"
@@ -4482,35 +4482,35 @@ def handle_wtr_close_hx_url(request):
 
 @login_required
 @hx_request_required
-def work_type_request(request):
+def work_from_request(request):
     """
-    This method is used to create request for work type  .
+    This method is used to create request for work from  .
     """
     encoded_data = request.GET.urlencode()
     previous_data = unquote(encoded_data.replace("pd=", ""))
-    form = WorkTypeRequestForm()
+    form = WorkFromRequestForm()
     employee = request.user.employee_get.id
     if request.GET.get("emp_id"):
         employee = request.GET.get("emp_id")
-    form = WorkTypeRequestForm(initial={"employee_id": employee})
+    form = WorkFromRequestForm(initial={"employee_id": employee})
     form = choosesubordinates(
         request,
         form,
-        "base.add_worktyperequest",
+        "base.add_workfromrequest",
     )
     form = include_employee_instance(request, form)
 
-    f = WorkTypeRequestFilter()
+    f = WorkFromRequestFilter()
     context = {"f": f, "pd": previous_data}
     context["close_hx_url"], context["close_hx_target"] = handle_wtr_close_hx_url(
         request
     )
     if request.method == "POST":
-        form = WorkTypeRequestForm(request.POST)
+        form = WorkFromRequestForm(request.POST)
         form = choosesubordinates(
             request,
             form,
-            "base.add_worktyperequest",
+            "base.add_workfromrequest",
         )
         form = include_employee_instance(request, form)
         if form.is_valid():
@@ -4520,24 +4520,24 @@ def work_type_request(request):
                     instance.employee_id,
                     recipient=instance.employee_id.employee_work_info.reporting_manager_id.employee_user_id,
                     verb=gettext_noop(
-                        "You have new work type request to validate for %(employee)s"
+                        "You have new work from request to validate for %(employee)s"
                     ),
                     verb_params={"employee": str(instance.employee_id)},
                     icon="information",
-                    redirect=reverse("work-type-request-view") + f"?id={instance.id}",
+                    redirect=reverse("work-from-request-view") + f"?id={instance.id}",
                 )
             except Exception as error:
                 pass
-            messages.success(request, _("Work type request added."))
-            work_type_requests = WorkTypeRequest.objects.all()
-            if len(work_type_requests) == 1:
+            messages.success(request, _("Work from request added."))
+            work_from_requests = WorkFromRequest.objects.all()
+            if len(work_from_requests) == 1:
                 return HorillaRedirect(request)
-            form = WorkTypeRequestForm()
+            form = WorkFromRequestForm()
     context["form"] = form
-    return render(request, "work_type_request/request_form.html", context=context)
+    return render(request, "work_from_request/request_form.html", context=context)
 
 
-def handle_wtr_redirect(request, work_type_request):
+def handle_wtr_redirect(request, work_from_request):
     hx_request = request.META.get("HTTP_HX_REQUEST") == "true"
     if not hx_request:
         return HorillaRedirect(request)
@@ -4554,111 +4554,111 @@ def handle_wtr_redirect(request, work_type_request):
         instances_ids = request.GET.get("instances_ids")
         dashboard = request.GET.get("dashboard")
         url = reverse(
-            "work-type-request-single-view",
-            kwargs={"obj_id": work_type_request.id},
+            "work-from-request-single-view",
+            kwargs={"obj_id": work_from_request.id},
         )
         return redirect(f"{url}?instances_ids={instances_ids}&dashboard={dashboard}")
 
     if current_url == "/":
-        return redirect(reverse("dashboard-work-type-request"))
+        return redirect(reverse("dashboard-work-from-request"))
 
     if (
-        "/work-type-request-view/" in current_url
+        "/work-from-request-view/" in current_url
         or "/employee/requests/" in current_url
     ):
-        return redirect(f"/work-type-request-search?{request.GET.urlencode()}")
+        return redirect(f"/work-from-request-search?{request.GET.urlencode()}")
 
     if "/employee-view/" in current_url:
-        return redirect(f"/employee/shift-tab/{work_type_request.employee_id.id}")
+        return redirect(f"/employee/shift-tab/{work_from_request.employee_id.id}")
 
     return HorillaRedirect(request)
 
 
 @login_required
-def work_type_request_cancel(request, id):
+def work_from_request_cancel(request, id):
     """
-    This method is used to cancel work type request
+    This method is used to cancel work from request
     args:
-        id  : work type request id
+        id  : work from request id
 
     """
     is_ajax = request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest"
-    work_type_request = WorkTypeRequest.find(id)
-    if not work_type_request:
-        messages.error(request, _("Work type request not found."))
+    work_from_request = WorkFromRequest.find(id)
+    if not work_from_request:
+        messages.error(request, _("Work from request not found."))
         return JsonResponse({"result": False}) if is_ajax else HorillaRedirect(request)
 
     if not (
-        is_reportingmanger(request, work_type_request)
-        or request.user.has_perm("base.cancel_worktyperequest")
-        or work_type_request.employee_id == request.user.employee_get
-        and work_type_request.approved == False
+        is_reportingmanger(request, work_from_request)
+        or request.user.has_perm("base.cancel_workfromrequest")
+        or work_from_request.employee_id == request.user.employee_get
+        and work_from_request.approved == False
     ):
         messages.error(request, _("You don't have permission"))
         return JsonResponse({"result": False}) if is_ajax else HorillaRedirect(request)
-    work_type_request.canceled = True
-    work_type_request.approved = False
+    work_from_request.canceled = True
+    work_from_request.approved = False
     work_info = EmployeeWorkInformation.objects.filter(
-        employee_id=work_type_request.employee_id
+        employee_id=work_from_request.employee_id
     )
     if work_info.exists():
-        work_type_request.employee_id.employee_work_info.work_type_id = (
-            work_type_request.previous_work_type_id
+        work_from_request.employee_id.employee_work_info.work_from_id = (
+            work_from_request.previous_work_from_id
         )
-        work_type_request.employee_id.employee_work_info.save()
-    work_type_request.save()
-    messages.success(request, _("Work type request has been rejected."))
+        work_from_request.employee_id.employee_work_info.save()
+    work_from_request.save()
+    messages.success(request, _("Work from request has been rejected."))
     notify.send(
         request.user.employee_get,
-        recipient=work_type_request.employee_id.employee_user_id,
-        verb=gettext_noop("Your work type request has been rejected."),
-        redirect=reverse("work-type-request-view") + f"?id={work_type_request.id}",
+        recipient=work_from_request.employee_id.employee_user_id,
+        verb=gettext_noop("Your work from request has been rejected."),
+        redirect=reverse("work-from-request-view") + f"?id={work_from_request.id}",
         icon="close",
     )
     if is_ajax:
         return JsonResponse({"result": True})
-    return handle_wtr_redirect(request, work_type_request)
+    return handle_wtr_redirect(request, work_from_request)
 
 
 @login_required
-@manager_can_enter("base.change_worktyperequest")
-def work_type_request_bulk_cancel(request):
+@manager_can_enter("base.change_workfromrequest")
+def work_from_request_bulk_cancel(request):
     """
-    This method is used to cancel a bunch work type request
+    This method is used to cancel a bunch work from request
     """
     ids = request.POST.get("ids")
     if not ids:
         return HorillaRedirect(
-            request, message=_("No worktype request found matching the query.")
+            request, message=_("No workfrom request found matching the query.")
         )
     ids = json.loads(ids)
     done = failed = 0
     for id in ids:
-        work_type_request = WorkTypeRequest.objects.filter(id=id).first()
+        work_from_request = WorkFromRequest.objects.filter(id=id).first()
         if (
-            work_type_request is not None
-            and not work_type_request.canceled
+            work_from_request is not None
+            and not work_from_request.canceled
             and (
-                is_reportingmanger(request, work_type_request)
-                or request.user.has_perm("base.cancel_worktyperequest")
-                or work_type_request.employee_id == request.user.employee_get
-                and work_type_request.approved == False
+                is_reportingmanger(request, work_from_request)
+                or request.user.has_perm("base.cancel_workfromrequest")
+                or work_from_request.employee_id == request.user.employee_get
+                and work_from_request.approved == False
             )
         ):
-            work_type_request.canceled = True
-            work_type_request.approved = False
-            work_type_request.employee_id.employee_work_info.work_type_id = (
-                work_type_request.previous_work_type_id
+            work_from_request.canceled = True
+            work_from_request.approved = False
+            work_from_request.employee_id.employee_work_info.work_from_id = (
+                work_from_request.previous_work_from_id
             )
-            work_type_request.employee_id.employee_work_info.save()
-            work_type_request.save()
-            messages.success(request, _("Work type request has been canceled."))
+            work_from_request.employee_id.employee_work_info.save()
+            work_from_request.save()
+            messages.success(request, _("Work from request has been canceled."))
             notify.send(
                 request.user.employee_get,
-                recipient=work_type_request.employee_id.employee_user_id,
-                verb=gettext_noop("Your work type request has been canceled."),
-                redirect=reverse("work-type-request-view")
-                + f"?id={work_type_request.id}",
+                recipient=work_from_request.employee_id.employee_user_id,
+                verb=gettext_noop("Your work from request has been canceled."),
+                redirect=reverse("work-from-request-view")
+                + f"?id={work_from_request.id}",
                 icon="close",
             )
             done += 1
@@ -4668,39 +4668,39 @@ def work_type_request_bulk_cancel(request):
 
 
 @login_required
-def work_type_request_approve(request, id):
+def work_from_request_approve(request, id):
     """
-    This method is used to approve requested work type
+    This method is used to approve requested work from
     """
 
     is_ajax = request.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest"
-    work_type_request = WorkTypeRequest.find(id)
-    if not work_type_request:
-        messages.error(request, _("Work type request not found."))
+    work_from_request = WorkFromRequest.find(id)
+    if not work_from_request:
+        messages.error(request, _("Work from request not found."))
         return JsonResponse({"result": False}) if is_ajax else HorillaRedirect(request)
     if not (
         (
-            is_reportingmanger(request, work_type_request)
-            or request.user.has_perm("base.approve_worktyperequest")
-            or request.user.has_perm("base.change_worktyperequest")
+            is_reportingmanger(request, work_from_request)
+            or request.user.has_perm("base.approve_workfromrequest")
+            or request.user.has_perm("base.change_workfromrequest")
         )
-        and not work_type_request.approved
+        and not work_from_request.approved
     ):
         messages.error(request, _("You don't have permission"))
         return JsonResponse({"result": False}) if is_ajax else HorillaRedirect(request)
     """
     Here the request will be approved, can send mail right here
     """
-    if not work_type_request.is_any_work_type_request_exists():
-        work_type_request.approved = True
-        work_type_request.canceled = False
-        work_type_request.save()
-        messages.success(request, _("Work type request has been approved."))
+    if not work_from_request.is_any_work_from_request_exists():
+        work_from_request.approved = True
+        work_from_request.canceled = False
+        work_from_request.save()
+        messages.success(request, _("Work from request has been approved."))
         notify.send(
             request.user.employee_get,
-            recipient=work_type_request.employee_id.employee_user_id,
-            verb=gettext_noop("Your work type request has been approved."),
-            redirect=reverse("work-type-request-view") + f"?id={work_type_request.id}",
+            recipient=work_from_request.employee_id.employee_user_id,
+            verb=gettext_noop("Your work from request has been approved."),
+            redirect=reverse("work-from-request-view") + f"?id={work_from_request.id}",
             icon="checkmark",
         )
         if is_ajax:
@@ -4708,53 +4708,53 @@ def work_type_request_approve(request, id):
     else:
         messages.error(
             request,
-            _("An approved work type request already exists during this time period."),
+            _("An approved work from request already exists during this time period."),
         )
         if is_ajax:
             return JsonResponse({"result": False})
-    return handle_wtr_redirect(request, work_type_request)
+    return handle_wtr_redirect(request, work_from_request)
 
 
 @login_required
-def work_type_request_bulk_approve(request):
+def work_from_request_bulk_approve(request):
     """
-    This method is used to approve bulk of requested work type
+    This method is used to approve bulk of requested work from
     """
     ids = request.POST.get("ids")
     if not ids:
         return HorillaRedirect(
-            request, message=_("No worktype request found matching the query.")
+            request, message=_("No workfrom request found matching the query.")
         )
     ids = json.loads(ids)
     done = failed = 0
     for id in ids:
-        work_type_request = WorkTypeRequest.objects.filter(id=id).first()
+        work_from_request = WorkFromRequest.objects.filter(id=id).first()
         # A rejected (canceled) request stays rejected: bulk approve skips it.
         if (
-            work_type_request is not None
+            work_from_request is not None
             and (
-                is_reportingmanger(request, work_type_request)
-                or request.user.has_perm("base.approve_worktyperequest")
-                or request.user.has_perm("base.change_worktyperequest")
+                is_reportingmanger(request, work_from_request)
+                or request.user.has_perm("base.approve_workfromrequest")
+                or request.user.has_perm("base.change_workfromrequest")
             )
-            and not work_type_request.approved
-            and not work_type_request.canceled
+            and not work_from_request.approved
+            and not work_from_request.canceled
         ):
             # """
             # Here the request will be approved, can send mail right here
             # """
-            work_type_request.approved = True
-            employee_work_info = work_type_request.employee_id.employee_work_info
-            employee_work_info.work_type_id = work_type_request.work_type_id
+            work_from_request.approved = True
+            employee_work_info = work_from_request.employee_id.employee_work_info
+            employee_work_info.work_from_id = work_from_request.work_from_id
             employee_work_info.save()
-            work_type_request.save()
-            messages.success(request, _("Work type request has been approved."))
+            work_from_request.save()
+            messages.success(request, _("Work from request has been approved."))
             notify.send(
                 request.user.employee_get,
-                recipient=work_type_request.employee_id.employee_user_id,
-                verb=gettext_noop("Your work type request has been approved."),
-                redirect=reverse("work-type-request-view")
-                + f"?id={work_type_request.id}",
+                recipient=work_from_request.employee_id.employee_user_id,
+                verb=gettext_noop("Your work from request has been approved."),
+                redirect=reverse("work-from-request-view")
+                + f"?id={work_from_request.id}",
                 icon="checkmark",
             )
             done += 1
@@ -4765,58 +4765,58 @@ def work_type_request_bulk_approve(request):
 
 @login_required
 @hx_request_required
-@work_type_request_change_permission()
-def work_type_request_update(request, work_type_request_id):
+@work_from_request_change_permission()
+def work_from_request_update(request, work_from_request_id):
     """
-    This method is used to update work type request instance
+    This method is used to update work from request instance
     args:
-        id : work type request instance id
+        id : work from request instance id
 
     """
-    work_type_request = WorkTypeRequest.objects.get(id=work_type_request_id)
-    form = WorkTypeRequestForm(instance=work_type_request)
-    form = choosesubordinates(request, form, "base.change_worktyperequest")
+    work_from_request = WorkFromRequest.objects.get(id=work_from_request_id)
+    form = WorkFromRequestForm(instance=work_from_request)
+    form = choosesubordinates(request, form, "base.change_workfromrequest")
     form = include_employee_instance(request, form)
     if request.method == "POST":
-        form = WorkTypeRequestForm(request.POST, instance=work_type_request)
-        form = choosesubordinates(request, form, "base.change_worktyperequest")
+        form = WorkFromRequestForm(request.POST, instance=work_from_request)
+        form = choosesubordinates(request, form, "base.change_workfromrequest")
         form = include_employee_instance(request, form)
         if form.is_valid():
             form.save()
             messages.success(request, _("Request Updated Successfully"))
             return HorillaRedirect(request)
 
-    return render(request, "work_type_request/request_form.html", {"form": form})
+    return render(request, "work_from_request/request_form.html", {"form": form})
 
 
 @login_required
 @hx_request_required
 @require_http_methods(["POST"])
-def work_type_request_delete(request, obj_id):
+def work_from_request_delete(request, obj_id):
     """
-    This method is used to delete work type request
+    This method is used to delete work from request
     args:
-        id : work type request instance id
+        id : work from request instance id
 
     """
 
     try:
-        work_type_request = WorkTypeRequest.objects.get(id=obj_id)
-        employee = work_type_request.employee_id
-        messages.success(request, _("Work type request deleted."))
-        work_type_request.delete()
+        work_from_request = WorkFromRequest.objects.get(id=obj_id)
+        employee = work_from_request.employee_id
+        messages.success(request, _("Work from request deleted."))
+        work_from_request.delete()
         notify.send(
             request.user.employee_get,
             recipient=employee.employee_user_id,
-            verb=gettext_noop("Your work type request has been deleted."),
+            verb=gettext_noop("Your work from request has been deleted."),
             redirect="#",
             icon="trash",
         )
-    except WorkTypeRequest.DoesNotExist:
+    except WorkFromRequest.DoesNotExist:
         employee = None
-        messages.error(request, _("Work type request not found."))
+        messages.error(request, _("Work from request not found."))
     except ProtectedError:
-        messages.error(request, _("You cannot delete this work type request."))
+        messages.error(request, _("You cannot delete this work from request."))
 
     hx_target = request.META.get("HTTP_HX_TARGET", None)
     hx_current_url = request.META.get("HTTP_HX_CURRENT_URL", None)
@@ -4836,25 +4836,25 @@ def work_type_request_delete(request, obj_id):
         )
     # elif hx_target and hx_target == "listContainer":
     #     previous_data = request.GET.urlencode()
-    #     work_type_requests = WorkTypeRequest.objects.all()
-    #     if work_type_requests.exists():
+    #     work_from_requests = WorkFromRequest.objects.all()
+    #     if work_from_requests.exists():
     #         return redirect(f"/work-list-view?{previous_data}")
     #     else:
     #         return HttpResponse("<script>window.location.reload()</script>")
 
     elif hx_target and hx_target == "work-shift":
         if hx_current_path in (
-            "employee/work-type-request-view/",
+            "employee/work-from-request-view/",
             "employee/requests/",
         ):
-            work_type_requests = WorkTypeRequest.objects.all()
+            work_from_requests = WorkFromRequest.objects.all()
             previous_data = request.GET.urlencode()
-            if work_type_requests.exists():
+            if work_from_requests.exists():
                 return redirect(f"/work-list-view?{previous_data}")
             else:
                 return HorillaRedirect(request)
         else:
-            return redirect(f"/employeeprofileview-Work Type & Shift/{employee.id}")
+            return redirect(f"/employeeprofileview-Work From & Shift/{employee.id}")
 
     elif hx_target and hx_target == "shift_target" and employee:
         return redirect(f"/employee/shift-tab/{employee.id}")
@@ -4865,13 +4865,13 @@ def work_type_request_delete(request, obj_id):
 
 @login_required
 @hx_request_required
-def work_type_request_single_view(request, obj_id):
+def work_from_request_single_view(request, obj_id):
     """
-    This method is used to view details of an work type request
+    This method is used to view details of an work from request
     """
-    work_type_request = WorkTypeRequest.objects.filter(id=obj_id).first()
+    work_from_request = WorkFromRequest.objects.filter(id=obj_id).first()
     context = {
-        "work_type_request": work_type_request,
+        "work_from_request": work_from_request,
         "dashboard": request.GET.get("dashboard"),
     }
     requests_ids_json = request.GET.get("instances_ids")
@@ -4886,19 +4886,19 @@ def work_type_request_single_view(request, obj_id):
     )
     return render(
         request,
-        "work_type_request/htmx/work_type_request_single_view.html",
+        "work_from_request/htmx/work_from_request_single_view.html",
         context,
     )
 
 
 @login_required
-@permission_required("base.delete_worktyperequest")
+@permission_required("base.delete_workfromrequest")
 @require_http_methods(["POST"])
-def work_type_request_bulk_delete(request):
+def work_from_request_bulk_delete(request):
     """
-    This method is used to delete work type request
+    This method is used to delete work from request
     args:
-        id : work type request instance id
+        id : work from request instance id
 
     """
     ids = request.POST["ids"]
@@ -4906,31 +4906,31 @@ def work_type_request_bulk_delete(request):
     del_ids = []
     for id in ids:
         try:
-            work_type_request = WorkTypeRequest.objects.get(id=id)
-            user = work_type_request.employee_id.employee_user_id
-            work_type_request.delete()
-            del_ids.append(work_type_request)
+            work_from_request = WorkFromRequest.objects.get(id=id)
+            user = work_from_request.employee_id.employee_user_id
+            work_from_request.delete()
+            del_ids.append(work_from_request)
             notify.send(
                 request.user.employee_get,
                 recipient=user,
-                verb=gettext_noop("Your work type request has been deleted."),
+                verb=gettext_noop("Your work from request has been deleted."),
                 redirect="#",
                 icon="trash",
             )
-        except WorkTypeRequest.DoesNotExist:
-            messages.error(request, _("Work type request not found."))
+        except WorkFromRequest.DoesNotExist:
+            messages.error(request, _("Work from request not found."))
         except ProtectedError:
             messages.error(
                 request,
                 _(
-                    "You cannot delete {employee} work type request for the date {date}."
+                    "You cannot delete {employee} work from request for the date {date}."
                 ).format(
-                    employee=work_type_request.employee_id,
-                    date=work_type_request.requested_date,
+                    employee=work_from_request.employee_id,
+                    date=work_from_request.requested_date,
                 ),
             )
         result = True
-    messages.success(request, _("{} work type requests deleted.".format(len(del_ids))))
+    messages.success(request, _("{} work from requests deleted.".format(len(del_ids))))
     return JsonResponse({"result": result})
 
 
@@ -6780,22 +6780,22 @@ def shift_select_filter(request):
 
 
 @login_required
-def work_type_select(request):
+def work_from_select(request):
     page_number = request.GET.get("page")
-    work_types = WorkTypeRequest.objects.none()
+    work_froms = WorkFromRequest.objects.none()
 
     if page_number == "all":
-        if request.user.has_perm("base.view_worktyperequest"):
-            work_types = WorkTypeRequest.objects.all()
+        if request.user.has_perm("base.view_workfromrequest"):
+            work_froms = WorkFromRequest.objects.all()
         else:
-            work_types = WorkTypeRequest.objects.filter(
+            work_froms = WorkFromRequest.objects.filter(
                 employee_id__employee_user_id=request.user
-            ) | WorkTypeRequest.objects.filter(
+            ) | WorkFromRequest.objects.filter(
                 employee_id__employee_work_info__reporting_manager_id__employee_user_id=request.user
             )
 
-    work_ids = [str(work.id) for work in work_types]
-    total_count = work_types.count()
+    work_ids = [str(work.id) for work in work_froms]
+    total_count = work_froms.count()
 
     context = {"employee_ids": work_ids, "total_count": total_count}
 
@@ -6803,15 +6803,15 @@ def work_type_select(request):
 
 
 @login_required
-def work_type_select_filter(request):
+def work_from_select_filter(request):
     page_number = request.GET.get("page")
     filtered = request.GET.get("filter")
     filters = json.loads(filtered) if filtered else {}
     context = {}
 
     if page_number == "all":
-        employee_filter = WorkTypeRequestFilter(
-            filters, queryset=WorkTypeRequest.objects.all()
+        employee_filter = WorkFromRequestFilter(
+            filters, queryset=WorkFromRequest.objects.all()
         )
 
         # Get the filtered queryset
@@ -6871,18 +6871,18 @@ def rotating_shift_select_filter(request):
 
 
 @login_required
-def rotating_work_type_select(request):
+def rotating_work_from_select(request):
     page_number = request.GET.get("page")
 
     if page_number == "all":
-        if request.user.has_perm("base.view_rotatingworktypeassign"):
-            r_shifts = RotatingWorkTypeAssign.objects.filter(is_active=True)
+        if request.user.has_perm("base.view_rotatingworkfromassign"):
+            r_shifts = RotatingWorkFromAssign.objects.filter(is_active=True)
         else:
-            r_shifts = RotatingWorkTypeAssign.objects.filter(
+            r_shifts = RotatingWorkFromAssign.objects.filter(
                 employee_id__employee_work_info__reporting_manager_id__employee_user_id=request.user
             )
     else:
-        r_shifts = RotatingWorkTypeAssign.objects.all()
+        r_shifts = RotatingWorkFromAssign.objects.all()
 
     r_shift_ids = [str(r_shift.id) for r_shift in r_shifts]
     total_count = r_shifts.count()
@@ -6893,15 +6893,15 @@ def rotating_work_type_select(request):
 
 
 @login_required
-def rotating_work_type_select_filter(request):
+def rotating_work_from_select_filter(request):
     page_number = request.GET.get("page")
     filtered = request.GET.get("filter")
     filters = json.loads(filtered) if filtered else {}
     context = {}
 
     if page_number == "all":
-        employee_filter = RotatingWorkTypeAssignFilter(
-            filters, queryset=RotatingWorkTypeAssign.objects.all()
+        employee_filter = RotatingWorkFromAssignFilter(
+            filters, queryset=RotatingWorkFromAssign.objects.all()
         )
 
         # Get the filtered queryset
@@ -7526,12 +7526,12 @@ def delete_shift_comment_file(request):
 
 @login_required
 @hx_request_required
-def view_work_type_comment(request, work_type_id):
+def view_work_from_comment(request, work_from_id):
     """
     This method is used to render all the notes of the employee
     """
-    work_type_request = WorkTypeRequest.find(work_type_id)
-    comments = WorkTypeRequestComment.objects.filter(request_id=work_type_id).order_by(
+    work_from_request = WorkFromRequest.find(work_from_id)
+    comments = WorkFromRequestComment.objects.filter(request_id=work_from_id).order_by(
         "-created_at"
     )
     no_comments = False
@@ -7540,7 +7540,7 @@ def view_work_type_comment(request, work_type_id):
     if request.FILES:
         files = request.FILES.getlist("files")
         comment_id = request.GET["comment_id"]
-        comment = WorkTypeRequestComment.objects.get(id=comment_id)
+        comment = WorkFromRequestComment.objects.get(id=comment_id)
         attachments = []
         for file in files:
             file_instance = BaserequestFile()
@@ -7550,19 +7550,19 @@ def view_work_type_comment(request, work_type_id):
         comment.files.add(*attachments)
     return render(
         request,
-        "work_type_request/htmx/work_type_comment.html",
+        "work_from_request/htmx/work_from_comment.html",
         {
             "comments": comments,
             "no_comments": no_comments,
-            "request_id": work_type_id,
-            "work_type_request": work_type_request,
+            "request_id": work_from_id,
+            "work_from_request": work_from_request,
         },
     )
 
 
 @login_required
 @hx_request_required
-def delete_work_type_comment_file(request):
+def delete_work_from_comment_file(request):
     """
     Used to delete attachment
     """
@@ -7573,15 +7573,15 @@ def delete_work_type_comment_file(request):
         comment_id = int(request.GET["comment_id"])
     except (KeyError, ValueError):
         return HorillaRedirect(
-            request, message=_("Invalid Request"), redirect_to="work-type-request-view"
+            request, message=_("Invalid Request"), redirect_to="work-from-request-view"
         )
 
-    comment = WorkTypeRequestComment.find(comment_id)
+    comment = WorkFromRequestComment.find(comment_id)
     if not comment:
         return HorillaRedirect(
             request,
             message=_("Comment not found."),
-            redirect_to="work-type-request-view",
+            redirect_to="work-from-request-view",
         )
 
     script = ""
@@ -7596,7 +7596,7 @@ def delete_work_type_comment_file(request):
     else:
         messages.warning(request, _("You don't have permission"))
         script = f"""
-        <span hx-get="/view-work-type-comment/{request_id}/"
+        <span hx-get="/view-work-from-comment/{request_id}/"
             hx-trigger="load"
             hx-target="#commentContainer"
             data-target="#activitySidebar">
@@ -7633,123 +7633,123 @@ def delete_shiftrequest_comment(request, comment_id):
 
 @login_required
 @hx_request_required
-def create_worktyperequest_comment(request, worktype_id):
+def create_workfromrequest_comment(request, workfrom_id):
     """
-    This method renders form and template to create Work type request comments
+    This method renders form and template to create Work from request comments
     """
-    work_type = WorkTypeRequest.objects.filter(id=worktype_id).first()
+    work_from = WorkFromRequest.objects.filter(id=workfrom_id).first()
     emp = request.user.employee_get
-    form = WorkTypeRequestCommentForm(
-        initial={"employee_id": emp.id, "request_id": worktype_id}
+    form = WorkFromRequestCommentForm(
+        initial={"employee_id": emp.id, "request_id": workfrom_id}
     )
 
     if request.method == "POST":
-        form = WorkTypeRequestCommentForm(request.POST)
+        form = WorkFromRequestCommentForm(request.POST)
         if form.is_valid():
             form.instance.employee_id = emp
-            form.instance.request_id = work_type
+            form.instance.request_id = work_from
             form.save()
-            comments = WorkTypeRequestComment.objects.filter(
-                request_id=worktype_id
+            comments = WorkFromRequestComment.objects.filter(
+                request_id=workfrom_id
             ).order_by("-created_at")
             no_comments = False
             if not comments.exists():
                 no_comments = True
-            form = WorkTypeRequestCommentForm(
-                initial={"employee_id": emp.id, "request_id": worktype_id}
+            form = WorkFromRequestCommentForm(
+                initial={"employee_id": emp.id, "request_id": workfrom_id}
             )
             messages.success(request, _("Comment added successfully!"))
 
             work_info = EmployeeWorkInformation.objects.filter(
-                employee_id=work_type.employee_id
+                employee_id=work_from.employee_id
             )
             if work_info.exists():
                 if (
-                    work_type.employee_id.employee_work_info.reporting_manager_id
+                    work_from.employee_id.employee_work_info.reporting_manager_id
                     is not None
                 ):
-                    if request.user.employee_get.id == work_type.employee_id.id:
+                    if request.user.employee_get.id == work_from.employee_id.id:
                         rec = (
-                            work_type.employee_id.employee_work_info.reporting_manager_id.employee_user_id
+                            work_from.employee_id.employee_work_info.reporting_manager_id.employee_user_id
                         )
                         notify.send(
                             request.user.employee_get,
                             recipient=rec,
                             verb=gettext_noop(
-                                "%(employee)s's work type request has received a comment."
+                                "%(employee)s's work from request has received a comment."
                             ),
-                            verb_params={"employee": str(work_type.employee_id)},
-                            redirect=reverse("work-type-request-view")
-                            + f"?id={work_type.id}",
+                            verb_params={"employee": str(work_from.employee_id)},
+                            redirect=reverse("work-from-request-view")
+                            + f"?id={work_from.id}",
                             icon="chatbox-ellipses",
                         )
                     elif (
                         request.user.employee_get.id
-                        == work_type.employee_id.employee_work_info.reporting_manager_id.id
+                        == work_from.employee_id.employee_work_info.reporting_manager_id.id
                     ):
-                        rec = work_type.employee_id.employee_user_id
+                        rec = work_from.employee_id.employee_user_id
                         notify.send(
                             request.user.employee_get,
                             recipient=rec,
                             verb=gettext_noop(
-                                "Your work type request has received a comment."
+                                "Your work from request has received a comment."
                             ),
-                            redirect=reverse("work-type-request-view")
-                            + f"?id={work_type.id}",
+                            redirect=reverse("work-from-request-view")
+                            + f"?id={work_from.id}",
                             icon="chatbox-ellipses",
                         )
                     else:
                         rec = [
-                            work_type.employee_id.employee_user_id,
-                            work_type.employee_id.employee_work_info.reporting_manager_id.employee_user_id,
+                            work_from.employee_id.employee_user_id,
+                            work_from.employee_id.employee_work_info.reporting_manager_id.employee_user_id,
                         ]
                         notify.send(
                             request.user.employee_get,
                             recipient=rec,
                             verb=gettext_noop(
-                                "%(employee)s's work type request has received a comment."
+                                "%(employee)s's work from request has received a comment."
                             ),
-                            verb_params={"employee": str(work_type.employee_id)},
-                            redirect=reverse("work-type-request-view")
-                            + f"?id={work_type.id}",
+                            verb_params={"employee": str(work_from.employee_id)},
+                            redirect=reverse("work-from-request-view")
+                            + f"?id={work_from.id}",
                             icon="chatbox-ellipses",
                         )
                 else:
-                    rec = work_type.employee_id.employee_user_id
+                    rec = work_from.employee_id.employee_user_id
                     notify.send(
                         request.user.employee_get,
                         recipient=rec,
                         verb=gettext_noop(
-                            "Your work type request has received a comment."
+                            "Your work from request has received a comment."
                         ),
-                        redirect=reverse("work-type-request-view")
-                        + f"?id={work_type.id}",
+                        redirect=reverse("work-from-request-view")
+                        + f"?id={work_from.id}",
                         icon="chatbox-ellipses",
                     )
             return render(
                 request,
-                "work_type_request/htmx/work_type_comment.html",
+                "work_from_request/htmx/work_from_comment.html",
                 {
                     "comments": comments,
                     "no_comments": no_comments,
-                    "request_id": worktype_id,
-                    "work_type_request": work_type,
+                    "request_id": workfrom_id,
+                    "work_from_request": work_from,
                 },
             )
     return render(
         request,
-        "work_type_request/htmx/work_type_comment.html",
-        {"form": form, "request_id": worktype_id, "work_type_request": work_type},
+        "work_from_request/htmx/work_from_comment.html",
+        {"form": form, "request_id": workfrom_id, "work_from_request": work_from},
     )
 
 
 @login_required
 @hx_request_required
-def delete_worktyperequest_comment(request, comment_id):
+def delete_workfromrequest_comment(request, comment_id):
     """
-    This method is used to delete Work type request comments
+    This method is used to delete Work from request comments
     """
-    comment = WorkTypeRequestComment.find(comment_id)
+    comment = WorkFromRequestComment.find(comment_id)
     if not comment:
         return HorillaRedirect(request, message=_("Comment not found."))
 
@@ -7764,7 +7764,7 @@ def delete_worktyperequest_comment(request, comment_id):
         messages.success(request, _("Comment deleted successfully!"))
     else:
         messages.warning(request, _("You don't have permission"))
-        script = f"""<span hx-get="/view-work-type-comment/{request_id}/" hx-trigger="load" hx-target="#commentContainer" data-target="#activitySidebar"></span>"""
+        script = f"""<span hx-get="/view-work-from-comment/{request_id}/" hx-trigger="load" hx-target="#commentContainer" data-target="#activitySidebar"></span>"""
     return HttpResponse(script)
 
 

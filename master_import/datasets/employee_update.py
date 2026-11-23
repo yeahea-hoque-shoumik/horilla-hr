@@ -14,7 +14,7 @@ from base.models import (
     EmployeeType,
     JobPosition,
     JobRole,
-    WorkType,
+    WorkFrom,
 )
 from employee.methods.methods import (
     clean_badge_id,
@@ -52,7 +52,7 @@ PERSON = {
 # name column -> (work information FK, model, model's name column)
 MASTERS = {
     "Department": ("department_id", Department, "department"),
-    "Work Type": ("work_type_id", WorkType, "work_type"),
+    "Work From": ("work_from_id", WorkFrom, "work_from"),
     "Shift": ("shift_id", EmployeeShift, "employee_shift"),
     "Employee Type": ("employee_type_id", EmployeeType, "employee_type"),
 }
@@ -92,7 +92,7 @@ class EmployeeUpdater:
             "employee_work_info__department_id",
             "employee_work_info__job_position_id",
             "employee_work_info__job_role_id",
-            "employee_work_info__work_type_id",
+            "employee_work_info__work_from_id",
             "employee_work_info__shift_id",
             "employee_work_info__employee_type_id",
             "employee_work_info__reporting_manager_id",
@@ -329,7 +329,7 @@ class EmployeeUpdater:
                 getattr(info, "job_position_id", None), "job_position"
             ),
             "Job Role": _name(getattr(info, "job_role_id", None), "job_role"),
-            "Work Type": _name(getattr(info, "work_type_id", None), "work_type"),
+            "Work From": _name(getattr(info, "work_from_id", None), "work_from"),
             "Shift": _name(getattr(info, "shift_id", None), "employee_shift"),
             "Employee Type": _name(
                 getattr(info, "employee_type_id", None), "employee_type"
@@ -448,7 +448,7 @@ class EmployeeUpdater:
             "departments": set(),
             "job_positions": set(),
             "job_roles": set(),
-            "work_types": set(),
+            "work_froms": set(),
             "shifts": set(),
             "employee_types": set(),
             "salary_structures": set(),
@@ -457,7 +457,7 @@ class EmployeeUpdater:
             "Department": "departments",
             "Job Position": "job_positions",
             "Job Role": "job_roles",
-            "Work Type": "work_types",
+            "Work From": "work_froms",
             "Shift": "shifts",
             "Employee Type": "employee_types",
         }
@@ -479,8 +479,8 @@ class EmployeeUpdater:
             "job_roles": set(
                 JobRole.objects.entire().values_list("job_role", flat=True)
             ),
-            "work_types": set(
-                WorkType.objects.entire().values_list("work_type", flat=True)
+            "work_froms": set(
+                WorkFrom.objects.entire().values_list("work_from", flat=True)
             ),
             "shifts": set(
                 EmployeeShift.objects.entire().values_list("employee_shift", flat=True)

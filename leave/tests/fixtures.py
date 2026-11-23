@@ -2,7 +2,7 @@
 
 from datetime import date, timedelta
 
-from base.models import Company, EmployeeShift, Holidays, WorkType
+from base.models import Company, EmployeeShift, Holidays, WorkFrom
 from employee.models import Employee, EmployeeWorkInformation
 
 
@@ -26,8 +26,8 @@ class LeaveHolidayFixtureMixin:
         cls.shift = EmployeeShift.objects.create(employee_shift="Morning Shift")
         cls.shift.company_id.add(cls.company)
 
-        cls.work_type = WorkType.objects.create(work_type="Remote")
-        cls.work_type.company_id.add(cls.company)
+        cls.work_from = WorkFrom.objects.create(work_from="Remote")
+        cls.work_from.company_id.add(cls.company)
 
         cls.emp_a = cls._make_employee("leave_a@holiday.test", "Carol", "Leave")
         cls.emp_b = cls._make_employee("leave_b@holiday.test", "Dan", "Leave")
@@ -73,6 +73,6 @@ class LeaveHolidayFixtureMixin:
         EmployeeWorkInformation.objects.filter(employee_id=emp).update(
             company_id_id=cls.company.pk,
             shift_id_id=cls.shift.pk,
-            work_type_id_id=cls.work_type.pk,
+            work_from_id_id=cls.work_from.pk,
         )
         return emp

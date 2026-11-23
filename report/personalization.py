@@ -74,7 +74,7 @@ def filters_dict_from_request(request) -> dict:
         "employment_status",
         "department_id",
         "job_position_id",
-        "work_type_id",
+        "work_from_id",
         "shift_id",
         "company_id",
         "gender",

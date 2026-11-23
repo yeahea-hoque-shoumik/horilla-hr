@@ -16,7 +16,7 @@ from base.models import (
     EmployeeType,
     JobPosition,
     JobRole,
-    WorkType,
+    WorkFrom,
 )
 from employee.methods.methods import (
     bulk_create_department_import,
@@ -27,7 +27,7 @@ from employee.methods.methods import (
     bulk_create_shifts,
     bulk_create_user_import,
     bulk_create_work_info_import,
-    bulk_create_work_types,
+    bulk_create_work_froms,
     process_employee_records,
     set_initial_password,
 )
@@ -68,7 +68,7 @@ LIMITS = {
     "Department": (Department, "department"),
     "Job Position": (JobPosition, "job_position"),
     "Job Role": (JobRole, "job_role"),
-    "Work Type": (WorkType, "work_type"),
+    "Work From": (WorkFrom, "work_from"),
     "Shift": (EmployeeShift, "employee_shift"),
     "Employee Type": (EmployeeType, "employee_type"),
     "Location": (EmployeeWorkInformation, "location"),
@@ -258,12 +258,12 @@ class EmployeesDataset(Dataset):
             suggest="job_roles",
         ),
         Field(
-            "Work Type",
+            "Work From",
             group="Work",
             sample="Remote",
-            aliases=("worktype",),
+            aliases=("workfrom",),
             kind="suggest",
-            suggest="work_types",
+            suggest="work_froms",
         ),
         Field(
             "Shift",
@@ -380,7 +380,7 @@ class EmployeesDataset(Dataset):
             "departments": names(Department, "department"),
             "job_positions": names(JobPosition, "job_position"),
             "job_roles": names(JobRole, "job_role"),
-            "work_types": names(WorkType, "work_type"),
+            "work_froms": names(WorkFrom, "work_from"),
             "shifts": names(EmployeeShift, "employee_shift"),
             "employee_types": names(EmployeeType, "employee_type"),
             "salary_structures": sorted({t for t in structure_table()}),
@@ -646,7 +646,7 @@ class EmployeesDataset(Dataset):
             "departments": Department.objects.entire().count(),
             "job_positions": JobPosition.objects.entire().count(),
             "job_roles": JobRole.objects.entire().count(),
-            "work_types": WorkType.objects.entire().count(),
+            "work_froms": WorkFrom.objects.entire().count(),
             "shifts": EmployeeShift.objects.entire().count(),
             "employee_types": EmployeeType.objects.entire().count(),
             "salary_structures": SalaryStructure.objects.entire().count(),
@@ -670,7 +670,7 @@ class EmployeesDataset(Dataset):
             bulk_create_department_import(rows)
             bulk_create_job_position_import(rows)
             bulk_create_job_role_import(rows)
-            bulk_create_work_types(rows)
+            bulk_create_work_froms(rows)
             bulk_create_shifts(rows)
             bulk_create_employee_types(rows)
             step(88)
@@ -699,8 +699,8 @@ class EmployeesDataset(Dataset):
             "job_positions": JobPosition.objects.entire().count()
             - counts_before["job_positions"],
             "job_roles": JobRole.objects.entire().count() - counts_before["job_roles"],
-            "work_types": WorkType.objects.entire().count()
-            - counts_before["work_types"],
+            "work_froms": WorkFrom.objects.entire().count()
+            - counts_before["work_froms"],
             "shifts": EmployeeShift.objects.entire().count() - counts_before["shifts"],
             "employee_types": EmployeeType.objects.entire().count()
             - counts_before["employee_types"],

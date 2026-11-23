@@ -36,7 +36,7 @@ class EmployeeWorkInformationAdmin(SimpleHistoryAdmin):
         "job_role_id",
         "reporting_manager_id",
         "shift_id",
-        "work_type_id",
+        "work_from_id",
         "company_id",
     )
     search_fields = (

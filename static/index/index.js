@@ -1912,9 +1912,9 @@ var HLV_BULK_DELETE_MODELS = {
     "attendance-activity-bulk-delete": "attendance.attendanceactivity",
     "attendance-account-bulk-delete": "attendance.attendanceovertime",
     "late-come-early-out-bulk-delete": "attendance.attendancelatecomeearlyout",
-    "rotating-work-type-assign-bulk-delete": "base.rotatingworktypeassign",
+    "rotating-work-from-assign-bulk-delete": "base.rotatingworkfromassign",
     "rotating-shift-assign-bulk-delete": "base.rotatingshiftassign",
-    "work-type-request-bulk-delete": "base.worktyperequest",
+    "work-from-request-bulk-delete": "base.workfromrequest",
     "shift-request-bulk-delete": "base.shiftrequest",
     "holidays-bulk-delete": "base.holidays",
     "biometric-users-bulk-delete": "biometric.biometricemployees",
@@ -1946,8 +1946,8 @@ function hlvBulkDeleteModel(url) {
 var HLV_BULK_ACTIONS = {
     "shift-request-bulk-approve": "approve",
     "shift-request-bulk-cancel": "reject",
-    "work-type-request-bulk-approve": "approve",
-    "work-type-request-bulk-cancel": "reject",
+    "work-from-request-bulk-approve": "approve",
+    "work-from-request-bulk-cancel": "reject",
     "document-bulk-approve": "approve",
     "document-bulk-reject": "reject",
     "leave-requests-bulk-approve": "approve",
@@ -1964,7 +1964,7 @@ var HLV_BULK_ACTIONS = {
 // (Case-insensitive: some endpoints are called with is_active=false.)
 var HLV_BULK_ARCHIVES = {
     "rotating-shift-assign-bulk-archive": true,
-    "rotating-work-type-assign-bulk-archive": true,
+    "rotating-work-from-assign-bulk-archive": true,
     "candidate-bulk-archive": true,
     "task-all-bulk-archive": true,
     "project-bulk-archive": true,

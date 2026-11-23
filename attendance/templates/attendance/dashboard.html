@@ -1254,7 +1254,7 @@
                         </div>
                     </div>
 
-                    <!-- Attendance % (Shift / Department / Work Type) -->
+                    <!-- Attendance % (Shift / Department / Work From) -->
                     <div
                         class="am-chart-card"
                         data-chart-id="absenteeism_trend"
@@ -1280,7 +1280,7 @@
                             >
                                 <option value="shift">{% trans "Shift-wise" %}</option>
                                 <option value="department">{% trans "Department-wise" %}</option>
-                                <option value="work_type">{% trans "Work Type-wise" %}</option>
+                                <option value="work_from">{% trans "Work From-wise" %}</option>
                             </select>
                         </div>
                         <div class="am-chart-card__body am-chart-card__body--tight">
@@ -1296,7 +1296,7 @@
                         </div>
                     </div>
 
-                    <!-- Absence % (Shift / Department / Work Type) -->
+                    <!-- Absence % (Shift / Department / Work From) -->
                     <div
                         class="am-chart-card"
                         data-chart-id="absence_pct"
@@ -1322,7 +1322,7 @@
                             >
                                 <option value="shift">{% trans "Shift-wise" %}</option>
                                 <option value="department">{% trans "Department-wise" %}</option>
-                                <option value="work_type">{% trans "Work Type-wise" %}</option>
+                                <option value="work_from">{% trans "Work From-wise" %}</option>
                             </select>
                         </div>
                         <div class="am-chart-card__body am-chart-card__body--tight">
@@ -2730,16 +2730,16 @@
             // then golden-angle hues so any number of departments stays distinct.
             const DEPT_PALETTE = ['#3b82f6','#22c55e','#f59e0b','#ef4444','#a855f7','#06b6d4','#ec4899','#84cc16','#f97316','#14b8a6'];
             const deptColor = (i) => i < DEPT_PALETTE.length ? DEPT_PALETTE[i] : `hsl(${Math.round((i * 137.508) % 360)}, 65%, ${i % 2 ? 45 : 58}%)`;
-                        // ─── ATTENDANCE % (SHIFT / DEPARTMENT / WORK TYPE) ───
+                        // ─── ATTENDANCE % (SHIFT / DEPARTMENT / WORK FROM) ───
             // Shared horizontal-bar renderer: one row per group, coloured by
             // `colorFor(rate)`, label "rate% (days)" from the backend payload.
             const RATE_FILTER_PARAMS = {
                 shift: "employee_id__employee_work_info__shift_id",
                 department: "employee_id__employee_work_info__department_id",
-                work_type: "employee_id__employee_work_info__work_type_id",
+                work_from: "employee_id__employee_work_info__work_from_id",
             };
             // One entry per rate chart: its config, the rows last fetched, and the dates they cover.
-            // The chips under the chart (the shifts / departments / work types of the basis picked
+            // The chips under the chart (the shifts / departments / work from options of the basis picked
             // in the select) decide which rows are drawn.
             const rateState = {};
             function drawRateChart(key) {
@@ -2890,7 +2890,7 @@
             const ATTENDANCE_SUBTITLES = {
                 shift: '{% trans "Attendance % by shift"|escapejs %}',
                 department: '{% trans "Attendance % by department"|escapejs %}',
-                work_type: '{% trans "Attendance % by work type"|escapejs %}',
+                work_from: '{% trans "Attendance % by work from"|escapejs %}',
             };
             const attendanceLegend = createPieLegend({
                 el: document.getElementById("am-pie-legend-attendance"),
@@ -2930,13 +2930,13 @@
             attendanceSelect.addEventListener("change", loadAttendancePct);
             loadAttendancePct();
 
-            // ─── ABSENCE % (SHIFT / DEPARTMENT / WORK TYPE) ───
+            // ─── ABSENCE % (SHIFT / DEPARTMENT / WORK FROM) ───
             const absenceColor = (r) =>
                 r <= 10 ? "#22c55e" : r <= 25 ? "#f59e0b" : r < 50 ? "#f97316" : "#ef4444";
             const ABSENCE_SUBTITLES = {
                 shift: '{% trans "Absence % by shift"|escapejs %}',
                 department: '{% trans "Absence % by department"|escapejs %}',
-                work_type: '{% trans "Absence % by work type"|escapejs %}',
+                work_from: '{% trans "Absence % by work from"|escapejs %}',
             };
             const absenceSelect = document.getElementById("absence-dimension");
             function loadAbsencePct() {
