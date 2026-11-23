@@ -20,6 +20,12 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from attendance.methods.extra_work import (
+    extra_work_applies,
+    needs_extra_work_confirmation,
+    resolve_shift_day,
+    sync_extra_work_request,
+)
 from attendance.methods.utils import (
     activity_datetime,
     employee_exists,
@@ -183,6 +189,10 @@ def clock_in_attendance_and_activity(
         attendance.attendance_clock_in = now
         attendance.attendance_clock_in_date = date_today
         attendance.minimum_hour = minimum_hour
+        if extra_work_applies(employee, attendance_date):
+            attendance.is_extra_work = True
+            attendance.attendance_validated = False
+            attendance.minimum_hour = "00:00"
         attendance.save()
         # check here late come or not
 
@@ -284,34 +294,33 @@ def clock_in(request):
             date_today = local_now.date()
             if request.__dict__.get("date"):
                 date_today = request.date
-            attendance_date = date_today
-            day = date_today.strftime("%A").lower()
-            day = EmployeeShiftDay.objects.get(day=day)
             now = local_now.strftime("%H:%M")
             if request.__dict__.get("time"):
                 now = request.time.strftime("%H:%M")
             now_sec = strtime_seconds(now)
-            mid_day_sec = strtime_seconds("12:00")
-            minimum_hour, start_time_sec, end_time_sec = shift_schedule_today(
-                day=day, shift=shift
-            )
-            if start_time_sec > end_time_sec:
-                # night shift
-                # ------------------
-                # Night shift in Horilla consider a 24 hours from noon to next day noon,
-                # the shift day taken today if the attendance clocked in after 12 O clock.
-
-                if mid_day_sec > now_sec:
-                    # Here you need to create attendance for yesterday
-
-                    date_yesterday = date_today - timedelta(days=1)
-                    day_yesterday = date_yesterday.strftime("%A").lower()
-                    day_yesterday = EmployeeShiftDay.objects.get(day=day_yesterday)
-                    minimum_hour, start_time_sec, end_time_sec = shift_schedule_today(
-                        day=day_yesterday, shift=shift
-                    )
-                    attendance_date = date_yesterday
-                    day = day_yesterday
+            (
+                attendance_date,
+                day,
+                minimum_hour,
+                start_time_sec,
+                end_time_sec,
+            ) = resolve_shift_day(shift, date_today, now_sec)
+            # Device and import punches carry their own datetime: no one to ask.
+            if (
+                not request.__dict__.get("datetime")
+                and request.GET.get("confirm_extra_work") != "1"
+                and needs_extra_work_confirmation(employee, attendance_date)
+            ):
+                params = request.GET.copy()
+                params["confirm_extra_work"] = "1"
+                return render(
+                    request,
+                    "attendance/components/extra_work_confirm.html",
+                    {
+                        "attendance_date": attendance_date,
+                        "confirm_url": f"{request.path}?{params.urlencode()}",
+                    },
+                )
             attendance = clock_in_attendance_and_activity(
                 employee=employee,
                 date_today=date_today,
@@ -394,8 +403,12 @@ def clock_out_attendance_and_activity(employee, date_today, now, out_datetime=No
         attendance.attendance_overtime = overtime_calculation(attendance)
 
         # Validate the attendance as per the condition
-        attendance.attendance_validated = attendance_validate(attendance)
+        if attendance.is_extra_work:
+            attendance.attendance_validated = attendance.extra_work_approved()
+        else:
+            attendance.attendance_validated = attendance_validate(attendance)
         attendance.save()
+        sync_extra_work_request(attendance)
 
         return attendance
 

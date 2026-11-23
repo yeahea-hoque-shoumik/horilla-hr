@@ -196,7 +196,7 @@ def attendance_tab(request, pk):
     )
     attendances_ids = json.dumps([instance.id for instance in requests])
     validate_attendances = Attendance.objects.filter(
-        attendance_validated=False, employee_id=pk
+        attendance_validated=False, is_extra_work=False, employee_id=pk
     )
     validate_attendances_ids = json.dumps(
         [instance.id for instance in validate_attendances]
@@ -366,7 +366,7 @@ def attendance_view(request):
     if condition is not None and condition.minimum_overtime_to_approve is not None:
         minot = strtime_seconds(condition.minimum_overtime_to_approve)
     validate_attendances = Attendance.objects.filter(
-        attendance_validated=False, employee_id__is_active=True
+        attendance_validated=False, is_extra_work=False, employee_id__is_active=True
     )
     attendances = Attendance.objects.filter(
         attendance_validated=True, employee_id__is_active=True
@@ -1398,6 +1398,14 @@ def validate_bulk_attendance(request):
         try:
             attendance = Attendance.objects.get(id=obj_id)
 
+            if attendance.is_extra_work:
+                error_messages.append(
+                    _("{}'s {} extra work is approved through its request.").format(
+                        attendance.employee_id, attendance.attendance_date
+                    )
+                )
+                continue
+
             if attendance.is_validate_request:
                 error_messages.append(
                     _(
@@ -1471,6 +1479,11 @@ def validate_this_attendance(request, obj_id):
             if attendance.employee_id.id == request.user.employee_get.id:
                 messages.error(request, _("You cannot validate your own attendance."))
                 return attendance_view_redirect(request)
+        if attendance.is_extra_work:
+            messages.error(
+                request, _("Extra work is approved through its request.")
+            )
+            return attendance_view_redirect(request)
         attendance.attendance_validated = True
         # Recalculate worked hours from attendance activities before validation
         # to ensure Hours Account reflects actual worked time.
@@ -1523,6 +1536,11 @@ def revalidate_this_attendance(request, obj_id):
     if not attendance:
         return HorillaRedirect(
             request, message=_("No Attendance found matching the query.")
+        )
+
+    if attendance.is_extra_work:
+        return HorillaRedirect(
+            request, message=_("Extra work is changed through its request.")
         )
 
     if is_reportingmanger(request, attendance) or request.user.has_perm(

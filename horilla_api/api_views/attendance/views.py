@@ -16,6 +16,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from attendance.methods.extra_work import resolve_shift_day
 from attendance.models import (
     Attendance,
     AttendanceActivity,
@@ -155,36 +156,17 @@ class ClockInAPIView(APIView):
                 date_today = local_now.date()
                 if request.__dict__.get("date"):
                     date_today = request.date
-                attendance_date = date_today
-                day = date_today.strftime("%A").lower()
-                day = EmployeeShiftDay.objects.get(day=day)
                 now = local_now.strftime("%H:%M")
                 if request.__dict__.get("time"):
                     now = request.time.strftime("%H:%M")
                 now_sec = strtime_seconds(now)
-                mid_day_sec = strtime_seconds("12:00")
-                minimum_hour, start_time_sec, end_time_sec = shift_schedule_today(
-                    day=day, shift=shift
-                )
-                if start_time_sec > end_time_sec:
-                    # night shift
-                    # ------------------
-                    # Night shift in Horilla consider a 24 hours from noon to next day noon,
-                    # the shift day taken today if the attendance clocked in after 12 O clock.
-
-                    if mid_day_sec > now_sec:
-                        # Here you need to create attendance for yesterday
-
-                        date_yesterday = date_today - timedelta(days=1)
-                        day_yesterday = date_yesterday.strftime("%A").lower()
-                        day_yesterday = EmployeeShiftDay.objects.get(day=day_yesterday)
-                        (
-                            minimum_hour,
-                            start_time_sec,
-                            end_time_sec,
-                        ) = shift_schedule_today(day=day_yesterday, shift=shift)
-                        attendance_date = date_yesterday
-                        day = day_yesterday
+                (
+                    attendance_date,
+                    day,
+                    minimum_hour,
+                    start_time_sec,
+                    end_time_sec,
+                ) = resolve_shift_day(shift, date_today, now_sec)
                 clock_in_attendance_and_activity(
                     employee=employee,
                     date_today=date_today,
@@ -278,7 +260,9 @@ class AttendanceView(APIView):
         elif type == "validated":
             queryset = Attendance.objects.filter(attendance_validated=True)
         elif type == "non-validated":
-            queryset = Attendance.objects.filter(attendance_validated=False)
+            queryset = Attendance.objects.filter(
+                attendance_validated=False, is_extra_work=False
+            )
         else:
             queryset = Attendance.objects.all()
         user = request.user
@@ -420,6 +404,12 @@ class ValidateAttendanceView(APIView):
 
     @approver_permission_required(Attendance, "attendance.change_attendance")
     def put(self, request, pk):
+        target = Attendance.objects.filter(id=pk).first()
+        if target and target.is_extra_work:
+            return Response(
+                {"error": _("Extra work is approved through its request.")},
+                status=400,
+            )
         attendance = Attendance.objects.filter(id=pk).update(attendance_validated=True)
         attendance = Attendance.objects.filter(id=pk).first()
         try:

@@ -60,7 +60,9 @@ def attendance_search(request):
     if condition is not None and condition.minimum_overtime_to_approve is not None:
         minot = strtime_seconds(condition.minimum_overtime_to_approve)
 
-    validate_attendances = all_attendances.filter(attendance_validated=False)
+    validate_attendances = all_attendances.filter(
+        attendance_validated=False, is_extra_work=False
+    )
     attendances = all_attendances.filter(attendance_validated=True)
     ot_attendances = all_attendances.filter(
         overtime_second__gt=0,

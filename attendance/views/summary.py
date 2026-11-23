@@ -379,12 +379,17 @@ def build_monthly_summary(from_date, to_date, employee_qs):
     att_records = Attendance.objects.filter(
         employee_id__in=emp_pks,
         attendance_date__range=(from_date, to_date),
+    ).exclude(
+        # Extra work only becomes attendance once HR approves it.
+        is_extra_work=True,
+        attendance_validated=False,
     ).values(
         "employee_id_id",
         "at_work_second",
         "overtime_second",
         "minimum_hour",
         "attendance_date",
+        "is_extra_work",
     )
 
     att_dates_map = defaultdict(set)  # {emp_pk: set(dates)} — conflict detection
@@ -397,6 +402,7 @@ def build_monthly_summary(from_date, to_date, employee_qs):
     # "00:00" on days with no shift schedule (holiday/company leave) — so
     # unscheduled days are entirely overtime.
     att_date_ot_secs_map = defaultdict(dict)
+    extra_work_dates = defaultdict(set)  # {emp_pk: dates rewarded with leave}
     for _r in att_records:
         _pk = _r["employee_id_id"]
         _date = _r["attendance_date"]
@@ -416,6 +422,8 @@ def build_monthly_summary(from_date, to_date, employee_qs):
         att_date_value_map[_pk][_date] = _val
         att_date_secs_map[_pk][_date] = _worked
         att_date_ot_secs_map[_pk][_date] = _r["overtime_second"] or 0
+        if _r["is_extra_work"]:
+            extra_work_dates[_pk].add(_date)
 
     # -- 2b. Batch-load shift schedules for hours computation -----------------
     from base.models import EmployeeShiftSchedule
@@ -780,6 +788,8 @@ def build_monthly_summary(from_date, to_date, employee_qs):
         _emp_ot_secs = att_date_ot_secs_map.get(emp.pk, {})
         ot_regular_seconds = ot_week_off_seconds = ot_holiday_seconds = 0
         for _d, _wsec in _att_secs.items():
+            if _d in extra_work_dates.get(emp.pk, ()):
+                continue
             # HR has explicitly regularized this day away from its holiday/
             # week-off classification (Full Present / Half Day) — treat the
             # hours like a normal working day (regular + capped OT) instead

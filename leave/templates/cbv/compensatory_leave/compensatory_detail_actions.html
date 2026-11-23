@@ -1,9 +1,9 @@
 {% load i18n basefilters %}
 {% is_manager_of request.user instance as can_manage %}
 
-{% if perms.leave.change_compensatoryleaverequest or can_manage %}
+{% if perms.leave.change_compensatoryleaverequest or can_manage and not instance.is_extra_work_request %}
 <div class="flex items-center gap-2 flex-wrap">
-    {% if instance.status == 'requested' %}
+    {% if instance.status == 'requested' and not instance.is_extra_work_request %}
         <button
             class="oh-btn oh-btn--light-bkg flex-1 px-4 py-2 rounded-md text-xs flex items-center justify-center gap-2 transition duration-300"
             title="{% trans 'Edit' %}"
@@ -26,7 +26,7 @@
         </button>
     {% endif %}
 
-    {% if instance.status != 'approved' %}
+    {% if instance.status != 'approved' and not instance.is_extra_work_request %}
         <button
             class="oh-btn oh-btn--danger flex-1 px-4 py-2 rounded-md text-xs flex items-center justify-center gap-2 transition duration-300"
             id="delete-link"

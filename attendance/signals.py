@@ -45,6 +45,12 @@ def attendance_post_save(sender, instance, **kwargs):
         status, message = "HDP", _("Incomplete minimum hour")
     else:
         status, message = "ABS", _("Incomplete half minimum hour")
+
+    extra_work_percentage = None
+    if instance.is_extra_work and instance.attendance_validated:
+        from attendance.methods.extra_work import extra_work_record_status
+
+        status, message, extra_work_percentage = extra_work_record_status(instance)
     try:
         work_record, created = WorkRecords.objects.get_or_create(
             date=instance.attendance_date,
@@ -81,6 +87,8 @@ def attendance_post_save(sender, instance, **kwargs):
         work_record.day_percentage = (
             1.00 if at_work_second > min_hour_second / 2 else 0.50
         )
+        if extra_work_percentage is not None:
+            work_record.day_percentage = extra_work_percentage
 
     if work_record.is_leave_record:
         message = (

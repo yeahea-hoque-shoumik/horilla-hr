@@ -6046,7 +6046,12 @@ if apps.is_installed("attendance"):
         """
         try:
             comp_leave_req = CompensatoryLeaveRequest.objects.get(id=comp_id)
-            if comp_leave_req.status == "approved":
+            if comp_leave_req.is_extra_work_request:
+                messages.info(
+                    request,
+                    _("An extra work request can only be approved or rejected."),
+                )
+            elif comp_leave_req.status == "approved":
                 messages.info(
                     request,
                     _("An approved compensatory leave request cannot be deleted."),
@@ -6073,7 +6078,29 @@ if apps.is_installed("attendance"):
         """
         try:
             comp_leave_req = CompensatoryLeaveRequest.objects.get(id=comp_id)
-            if comp_leave_req.status == "requested":
+            if comp_leave_req.is_extra_work_request:
+                from attendance.methods.extra_work import (
+                    ExtraWorkError,
+                    approve_extra_work,
+                )
+
+                try:
+                    approve_extra_work(comp_leave_req, request.user)
+                except ExtraWorkError as error:
+                    messages.error(request, str(error))
+                else:
+                    messages.success(request, _("Extra work request approved."))
+                    with contextlib.suppress(Exception):
+                        notify.send(
+                            request.user.employee_get,
+                            recipient=comp_leave_req.employee_id.employee_user_id,
+                            verb=gettext_noop(
+                                "Your extra work request has been approved"
+                            ),
+                            redirect=reverse("view-compensatory-leave")
+                            + f"?id={comp_leave_req.id}",
+                        )
+            elif comp_leave_req.status == "requested":
                 comp_leave_req.status = "approved"
                 comp_leave_req.assign_compensatory_leave_type()
                 comp_leave_req.save()
@@ -6120,15 +6147,38 @@ if apps.is_installed("attendance"):
         comp_leave_req = CompensatoryLeaveRequest.objects.filter(id=comp_id).first()
         if not comp_leave_req:
             return HttpResponse()
+        if comp_leave_req.is_extra_work_request:
+            from attendance.methods.extra_work import can_decide_extra_work
+
+            allowed, error = can_decide_extra_work(request.user, comp_leave_req)
+            if not allowed:
+                messages.error(request, error)
+                return HorillaRedirect(request)
         if comp_leave_req.status == "requested" or comp_leave_req.status == "approved":
             form = CompensatoryLeaveRequestRejectForm()
             if request.method == "POST":
                 form = CompensatoryLeaveRequestRejectForm(request.POST)
                 if form.is_valid():
-                    comp_leave_req.reject_reason = form.cleaned_data["reason"]
-                    comp_leave_req.status = "rejected"
-                    comp_leave_req.exclude_compensatory_leave()
-                    comp_leave_req.save()
+                    if comp_leave_req.is_extra_work_request:
+                        from attendance.methods.extra_work import (
+                            ExtraWorkError,
+                            reject_extra_work,
+                        )
+
+                        try:
+                            reject_extra_work(
+                                comp_leave_req,
+                                request.user,
+                                form.cleaned_data["reason"],
+                            )
+                        except ExtraWorkError as error:
+                            messages.error(request, str(error))
+                            return HorillaRedirect(request)
+                    else:
+                        comp_leave_req.reject_reason = form.cleaned_data["reason"]
+                        comp_leave_req.status = "rejected"
+                        comp_leave_req.exclude_compensatory_leave()
+                        comp_leave_req.save()
                     messages.success(request, _("Compensatory Leave request rejected."))
                     with contextlib.suppress(Exception):
                         notify.send(

@@ -102,7 +102,10 @@ def get_leave_day_attendance(employee, comp_id=None):
             attendances_to_exclude |= req.attendance_id.all()
     # Filter holiday attendance excluding the attendances in attendances_to_exclude
     holiday_attendance = Attendance.objects.filter(
-        is_holiday=True, employee_id=employee, attendance_validated=True
+        is_holiday=True,
+        is_extra_work=False,
+        employee_id=employee,
+        attendance_validated=True,
     ).exclude(id__in=attendances_to_exclude.values_list("id", flat=True))
     return holiday_attendance
 

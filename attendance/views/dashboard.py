@@ -197,7 +197,7 @@ def dashboard_validate_attendances(request):
         main_dashboard = True
     page_number = request.GET.get("page")
     validate_attendances = Attendance.objects.filter(
-        attendance_validated=False, employee_id__is_active=True
+        attendance_validated=False, is_extra_work=False, employee_id__is_active=True
     )
 
     validate_attendances = filtersubordinates(

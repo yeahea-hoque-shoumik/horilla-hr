@@ -302,6 +302,7 @@ class Attendance(HorillaModel):
         max_length=18, null=True, choices=status, default="update_request"
     )
     is_holiday = models.BooleanField(default=False)
+    is_extra_work = models.BooleanField(default=False, editable=False)
     requested_data = models.JSONField(null=True, editable=False)
     approved_by = models.ForeignKey(
         Employee,
@@ -779,6 +780,20 @@ class Attendance(HorillaModel):
         )
         self.at_work_second = strtime_seconds(self.attendance_worked_hour)
         self.overtime_second = strtime_seconds(self.attendance_overtime)
+        if self.is_extra_work:
+            # Extra work is rewarded with leave days, never overtime.
+            self.attendance_overtime = "00:00"
+            self.overtime_second = 0
+
+    def extra_work_approved(self):
+        """True when this day's extra work request is approved."""
+        if not self.pk or not apps.is_installed("leave"):
+            return False
+        from leave.models import CompensatoryLeaveRequest
+
+        return CompensatoryLeaveRequest._base_manager.filter(
+            source="extra_work", status="approved", attendance_id=self.pk
+        ).exists()
 
     def handle_overtime_conditions(self):
         condition = AttendanceValidationCondition.for_shift(self.shift_id)
@@ -794,8 +809,11 @@ class Attendance(HorillaModel):
                     self.attendance_overtime = format_time(cutoff_seconds)
 
             # Auto-approve overtime if conditions are met
-            if condition.auto_approve_ot and self.overtime_second >= strtime_seconds(
-                condition.minimum_overtime_to_approve
+            if (
+                not self.is_extra_work
+                and condition.auto_approve_ot
+                and self.overtime_second
+                >= strtime_seconds(condition.minimum_overtime_to_approve)
             ):
                 self.attendance_overtime_approve = True
 
@@ -876,6 +894,10 @@ class Attendance(HorillaModel):
         self.update_attendance_overtime()
         self.adjust_minimum_hour()
         self.handle_overtime_conditions()
+        if self.is_extra_work:
+            # The extra work request is the only way to validate this day.
+            self.attendance_validated = self.extra_work_approved()
+            self.attendance_overtime_approve = False
 
         if self.attendance_overtime_approve and not old_approved_flag:
             self.approved_overtime_second = self.overtime_second
@@ -1302,6 +1324,7 @@ class AttendanceOverTime(HorillaModel):
                 ),
                 employee_id=self.employee_id,
                 attendance_validated=False,
+                is_extra_work=False,
             ).aggregate(total=Sum("at_work_second"))["total"]
             or 0
         )

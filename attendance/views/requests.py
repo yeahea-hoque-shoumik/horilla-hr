@@ -466,6 +466,11 @@ def approve_validate_attendance_request(request, attendance_id):
             request, message=_("No Attendance found matching the query.")
         )
 
+    if attendance.is_extra_work:
+        return HorillaRedirect(
+            request, message=_("Extra work is changed through its request.")
+        )
+
     prev_attendance_date = attendance.attendance_date
     prev_attendance_clock_in_date = attendance.attendance_clock_in_date
     prev_attendance_clock_in = attendance.attendance_clock_in

@@ -60,6 +60,9 @@ class CompensatoryListView(HorillaListView):
         (_("Leave Type"), "leave_type_id"),
         (_("Attendance Dates"), "compensatory_date"),
         (_("Requested Days"), "requested_days"),
+        (_("Source"), "source_display"),
+        (_("Worked"), "worked_display"),
+        (_("Full Shift"), "full_shift_display"),
         (_("Created By"), "created_by__employee_get"),
         (_("Status"), "status_display"),
         (_("Description"), "description"),
@@ -71,6 +74,9 @@ class CompensatoryListView(HorillaListView):
         (_("Leave Type"), "leave_type_id"),
         (_("Attendance Dates"), "compensatory_date"),
         (_("Requested Days"), "requested_days"),
+        (_("Source"), "source_display"),
+        (_("Worked"), "worked_display"),
+        (_("Full Shift"), "full_shift_display"),
         (_("Status"), "status_display"),
     ]
 
@@ -320,6 +326,9 @@ class CompensatoryGenericDetailView(HorillaDetailedView):
 
     body = [
         (_("Requested Days"), "requested_days"),
+        (_("Source"), "source_display"),
+        (_("Worked"), "worked_display"),
+        (_("Full Shift"), "full_shift_display"),
         (_("Leave Type"), "leave_type_id"),
         (_("Created Date"), "requested_date"),
         (_("Created By"), "created_by__employee_get"),
@@ -370,6 +379,14 @@ class CompensatoryForm(HorillaFormView):
     def form_valid(self, form: CompensatoryLeaveForm) -> HttpResponse:
         if form.is_valid():
             if form.instance.pk:
+                if form.instance.is_extra_work_request:
+                    messages.info(
+                        self.request,
+                        _("An extra work request can only be approved or rejected."),
+                    )
+                    return self.HttpResponse(
+                        "<script>window.location.reload()</script>"
+                    )
                 if form.instance.status != "requested":
                     messages.info(
                         self.request,

@@ -1509,17 +1509,24 @@ def paginator_qry(queryset, page_number):
     return queryset
 
 
-def is_holiday(date, employee=None):
+def is_holiday(date, employee=None, company=None):
     """
     Check if the given date is a holiday.
     Args:
         date (datetime.date): The date to check.
         employee: Optional Employee instance. When provided, only non-specific holidays
                   or specific holidays that include this employee are matched.
+        company: Optional Company. When provided, match that company's and shared
+                 holidays instead of the session's selected company.
     Returns:
         Holidays or bool: The Holidays object if the date is a holiday, otherwise False.
     """
-    holidays = Holidays.objects.filter(
+    source = Holidays.objects
+    if company is not None:
+        source = Holidays.objects.entire().filter(
+            Q(company_id=company) | Q(company_id__isnull=True)
+        )
+    holidays = source.filter(
         Q(start_date__lte=date, end_date__gte=date)
         | Q(recurring=True, start_date__month=date.month, start_date__day=date.day)
     )
@@ -1529,11 +1536,13 @@ def is_holiday(date, employee=None):
     return holiday if holiday else False
 
 
-def is_company_leave(input_date):
+def is_company_leave(input_date, company=None):
     """
     Check if the given date is a company leave.
     Args:
         input_date (datetime.date): The date to check.
+        company: Optional Company. When provided, match that company's and shared
+                 weekly offs instead of the session's selected company.
     Returns:
         CompanyLeaves or bool: The CompanyLeaves object if the date is a company leave, otherwise False.
     """
@@ -1546,7 +1555,12 @@ def is_company_leave(input_date):
     date_week_day = input_date.weekday()  # Get weekday (0 for Monday to 6 for Sunday)
 
     # Query for company leaves that match the week number and weekday
-    company_leave = CompanyLeaves.objects.filter(
+    source = CompanyLeaves.objects
+    if company is not None:
+        source = CompanyLeaves.objects.entire().filter(
+            Q(company_id=company) | Q(company_id__isnull=True)
+        )
+    company_leave = source.filter(
         Q(
             based_on_week=None, based_on_week_day=date_week_day
         )  # Match week-independent leaves

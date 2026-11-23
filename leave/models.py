@@ -2462,6 +2462,15 @@ if apps.is_installed("attendance"):
             max_length=30, choices=LEAVE_ALLOCATION_STATUS, default="requested"
         )
         reject_reason = models.TextField(blank=True, max_length=255)
+        source = models.CharField(
+            max_length=20,
+            choices=[("manual", _("Manual")), ("extra_work", _("Extra Work"))],
+            default="manual",
+            editable=False,
+            verbose_name=_("Source"),
+        )
+        worked_seconds = models.IntegerField(null=True, blank=True, editable=False)
+        full_shift_seconds = models.IntegerField(null=True, blank=True, editable=False)
         history = HorillaAuditLog(
             related_name="history_set",
             bases=[
@@ -2474,6 +2483,25 @@ if apps.is_installed("attendance"):
 
         class Meta:
             ordering = ["-id"]
+
+        @property
+        def is_extra_work_request(self):
+            return self.source == "extra_work"
+
+        @staticmethod
+        def _hours_label(seconds):
+            if seconds is None:
+                return "-"
+            return f"{seconds // 3600:02d}:{(seconds % 3600) // 60:02d}"
+
+        def source_display(self):
+            return self.get_source_display()
+
+        def worked_display(self):
+            return self._hours_label(self.worked_seconds)
+
+        def full_shift_display(self):
+            return self._hours_label(self.full_shift_seconds)
 
         def status_display(self):
             """
@@ -2595,7 +2623,7 @@ if apps.is_installed("attendance"):
             return f"{self.employee_id}| {self.leave_type_id}| {self.id}"
 
         def assign_compensatory_leave_type(self):
-            available_leave, created = AvailableLeave.objects.get_or_create(
+            available_leave, created = AvailableLeave.objects.entire().get_or_create(
                 employee_id=self.employee_id,
                 leave_type_id=self.leave_type_id,
             )
@@ -2603,29 +2631,34 @@ if apps.is_installed("attendance"):
             available_leave.save()
 
         def exclude_compensatory_leave(self):
-            if AvailableLeave.objects.filter(
+            balances = AvailableLeave.objects.entire()
+            if balances.filter(
                 employee_id=self.employee_id,
                 leave_type_id=self.leave_type_id,
             ).exists():
-                available_leave = AvailableLeave.objects.filter(
+                available_leave = balances.filter(
                     employee_id=self.employee_id,
                     leave_type_id=self.leave_type_id,
                 ).first()
                 if available_leave.available_days < self.requested_days:
+                    from_carryforward = (
+                        self.requested_days - available_leave.available_days
+                    )
                     available_leave.available_days = 0
                     available_leave.carryforward_days = max(
-                        0,
-                        available_leave.carryforward_days
-                        - (self.requested_days - available_leave.available_days),
+                        0, available_leave.carryforward_days - from_carryforward
                     )
                 else:
                     available_leave.available_days -= self.requested_days
                 available_leave.save()
 
         def save(self, *args, **kwargs):
-            self.leave_type_id = LeaveType.objects.filter(
-                is_compensatory_leave=True
-            ).first()
+            # Extra work keeps the type resolved from the employee's company;
+            # it can be saved with no request, so no session to scope by.
+            if not (self.is_extra_work_request and self.leave_type_id_id):
+                self.leave_type_id = LeaveType.objects.filter(
+                    is_compensatory_leave=True
+                ).first()
             super().save(*args, **kwargs)
 
 
