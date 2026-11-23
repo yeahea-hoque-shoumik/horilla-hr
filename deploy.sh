@@ -257,4 +257,4 @@ case "${1:-deploy}" in
   -h|--help|help) usage ;;
   *) usage; die "Unknown command: $1" ;;
 esac
-docker compose logs -f
+sudo docker compose logs -f
