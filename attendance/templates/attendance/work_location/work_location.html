@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+{% load i18n %}
+
+{% block content %}
+    {% include "generic/components.html" %}
+    <div id="ohMessages"></div>
+    <div id="workLocationActionResult" style="display: none"></div>
+    <div class="bg-white p-3 rounded-md shadow-card">
+        <div class="oh-inner-sidebar-content border border-[#ebebeb] rounded-md">
+            <div hx-get="{% url 'work-location-nav' %}" hx-trigger="load"></div>
+            <p class="text-xs text-gray-500 mt-1 ml-3">
+                {% trans "Employees choose from these locations when they check in. A location without coordinates has no geofence." %}
+            </p>
+            <div
+                class="oh-wrapper"
+                hx-get="{% url 'work-location-list' %}?{{ request.GET.urlencode }}"
+                hx-trigger="load"
+                id="work-location-list-host"
+            ></div>
+        </div>
+    </div>
+{% endblock content %}

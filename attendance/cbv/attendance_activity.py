@@ -68,6 +68,7 @@ class AttendanceActivityListView(HorillaListView):
         (_("Check In"), "clock_in"),
         (_("Check Out"), "clock_out"),
         (_("Out Date"), "clock_out_date"),
+        (_("Work Location"), "work_location"),
         (_("Duration (HH:MM:SS)"), "duration_format"),
     ]
 
@@ -89,6 +90,7 @@ class AttendanceActivityListView(HorillaListView):
         (_("In Date"), "clock_in_date"),
         (_("Check Out"), "clock_out"),
         (_("Out Date"), "clock_out_date"),
+        (_("Work Location"), "work_location"),
         (_("Duration (HH:MM:SS)"), "duration_format"),
     ]
     # Mirrors AttendanceActivityNavView.nested_group_by_fields -- needed

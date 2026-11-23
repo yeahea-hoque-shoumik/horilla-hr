@@ -1,0 +1,240 @@
+{% load i18n %}
+<div
+    id="clockPunchModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="clockPunchTitle"
+    data-timezone="{{ timezone_name }}"
+    data-now-ms="{{ now_ms }}"
+    data-edited="{% if time_edited %}1{% else %}0{% endif %}"
+>
+    <style>
+        #clockPunchModal { position: fixed; inset: 0; z-index: 100000; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(15, 23, 42, .5); color: #1e293b; text-align: left; font-size: 14px; }
+        #clockPunchModal * { box-sizing: border-box; }
+        #clockPunchModal .cpm-card { width: 100%; max-width: 680px; max-height: calc(100vh - 32px); overflow-y: auto; padding: 24px; border-radius: 16px; background: #fff; box-shadow: 0 20px 50px rgba(15, 23, 42, .25); }
+        #clockPunchModal .cpm-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+        #clockPunchModal h2 { margin: 0; font-size: 22px; font-weight: 700; }
+        #clockPunchModal .cpm-clock { text-align: right; font-size: 12px; color: #64748b; }
+        #clockPunchModal .cpm-clock strong { display: block; color: #0f172a; font-family: ui-monospace, Menlo, monospace; font-size: 20px; }
+        #clockPunchModal .cpm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        #clockPunchModal label, #clockPunchModal .cpm-label { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; color: #475569; font-size: 12px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
+        #clockPunchModal select { height: 42px; padding: 0 8px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; color: #0f172a; font-size: 14px; }
+        #clockPunchModal .cpm-location { width: 100%; }
+        #clockPunchModal .cpm-time { display: flex; align-items: center; gap: 6px; }
+        #clockPunchModal .cpm-time select { flex: 1; min-width: 0; }
+        #clockPunchModal .cpm-now { padding: 2px 8px; border-radius: 999px; background: #dcfce7; color: #15803d; font-size: 11px; text-transform: none; letter-spacing: 0; }
+        #clockPunchModal .cpm-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; padding: 14px; border-radius: 10px; background: #f1f5f9; }
+        #clockPunchModal .cpm-summary span { display: block; margin-bottom: 2px; color: #64748b; font-size: 11px; text-transform: uppercase; }
+        #clockPunchModal .cpm-summary strong { font-weight: 600; overflow-wrap: anywhere; }
+        #clockPunchModal .cpm-alert { margin-bottom: 16px; padding: 10px 12px; border-radius: 8px; line-height: 1.45; }
+        #clockPunchModal .cpm-error { background: #fee2e2; color: #b91c1c; }
+        #clockPunchModal .cpm-notice { background: #fef3c7; color: #92400e; }
+        #clockPunchModal .cpm-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 24px; }
+        #clockPunchModal .cpm-btn { min-height: 42px; padding: 0 20px; border: 0; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+        #clockPunchModal .cpm-cancel { background: #e2e8f0; color: #334155; }
+        #clockPunchModal .cpm-submit { min-width: 160px; background: #059669; color: #fff; }
+        #clockPunchModal .cpm-submit.cpm-out { background: #ea580c; }
+        #clockPunchModal .cpm-submit:disabled { cursor: wait; opacity: .7; }
+        @media (max-width: 600px) {
+            #clockPunchModal .cpm-grid, #clockPunchModal .cpm-summary { grid-template-columns: 1fr; }
+            #clockPunchModal .cpm-head { flex-direction: column; }
+            #clockPunchModal .cpm-clock { text-align: left; }
+            #clockPunchModal .cpm-actions .cpm-btn { flex: 1; }
+        }
+    </style>
+
+    <div class="cpm-card">
+        <div class="cpm-head">
+            <h2 id="clockPunchTitle">
+                {% if mode == "out" %}{% trans "Check Out" %}{% else %}{% trans "Check In" %}{% endif %}
+            </h2>
+            <div class="cpm-clock">
+                {{ timezone_name }}
+                <strong data-clock-now>{{ local_now|date:"h:i:s A" }}</strong>
+                {{ local_now|date:"D, d M Y" }}
+            </div>
+        </div>
+
+        {% if error %}<div class="cpm-alert cpm-error" role="alert">{{ error }}</div>{% endif %}
+        {% if extra_work_date %}
+            <div id="clockExtraWorkNotice" class="cpm-alert cpm-notice">
+                {% blocktrans with date=extra_work_date|date:"d M Y" %}{{ date }} is a holiday or weekly off for you. Your work will be sent to HR as an extra work request when you check out.{% endblocktrans %}
+            </div>
+        {% endif %}
+
+        {% if mode == "out" and activity %}
+            <div class="cpm-summary" id="clockCheckInSummary">
+                <div><span>{% trans "Checked in" %}</span><strong>{{ activity.clock_in|time:"h:i A" }}</strong></div>
+                <div><span>{% trans "Date" %}</span><strong>{{ activity.clock_in_date|date:"d M Y" }}</strong></div>
+                <div><span>{% trans "Work from" %}</span><strong>{{ activity.work_location.name|default:"-" }}</strong></div>
+            </div>
+        {% endif %}
+
+        <form
+            hx-post="{{ submit_url }}"
+            hx-trigger="clock-submit"
+            hx-target="#attendance-activity-container"
+            hx-swap="innerHTML"
+            hx-disabled-elt="#clockPunchModal .cpm-submit"
+            data-needs-geo="{% if needs_geo %}1{% else %}0{% endif %}"
+        >
+            {% csrf_token %}
+            <input type="hidden" name="latitude" />
+            <input type="hidden" name="longitude" />
+            {% if extra_work_date %}
+                <input type="hidden" name="confirm_extra_work" value="{{ extra_work_date|date:'Y-m-d' }}" />
+            {% endif %}
+
+            <div class="cpm-grid">
+                {% if mode == "in" and locations %}
+                    <div>
+                        <label for="clockWorkLocation">{% trans "Work from" %}</label>
+                        <select id="clockWorkLocation" class="cpm-location" name="work_location" required>
+                            <option value="">{% trans "Select your location" %}</option>
+                            {% for location in locations %}
+                                <option
+                                    value="{{ location.pk }}"
+                                    data-fence="{% if location.has_fence %}1{% else %}0{% endif %}"
+                                    {% if location.pk|stringformat:"s" == selected_location %}selected{% endif %}
+                                >{{ location.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% endif %}
+                <div>
+                    <div class="cpm-label">
+                        <span>
+                            {% if mode == "out" %}{% trans "Check-out time" %}{% else %}{% trans "Check-in time" %}{% endif %}
+                        </span>
+                        <span class="cpm-now" data-now-badge {% if time_edited %}hidden{% endif %}>{% trans "Now" %}</span>
+                    </div>
+                    <div class="cpm-time">
+                        <select name="punch_hour" aria-label="{% trans 'Hour' %}">
+                            {% for value in hour_options %}
+                                <option value="{{ value }}" {% if value == selected_hour %}selected{% endif %}>{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                        <span>:</span>
+                        <select name="punch_minute" aria-label="{% trans 'Minute' %}">
+                            {% for value in minute_options %}
+                                <option value="{{ value }}" {% if value == selected_minute %}selected{% endif %}>{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                        <select name="punch_period" aria-label="{% trans 'AM or PM' %}">
+                            <option value="AM" {% if selected_period == "AM" %}selected{% endif %}>AM</option>
+                            <option value="PM" {% if selected_period == "PM" %}selected{% endif %}>PM</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cpm-actions">
+                <button type="button" class="cpm-btn cpm-cancel" data-clock-cancel>{% trans "Cancel" %}</button>
+                <button type="submit" class="cpm-btn cpm-submit{% if mode == 'out' %} cpm-out{% endif %}">
+                    {% if mode == "out" %}{% trans "Check Out" %}{% else %}{% trans "Check In" %}{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    (function () {
+        var root = document.getElementById("clockPunchModal");
+        if (!root) return;
+        document.querySelectorAll("#clockPunchModal").forEach(function (node) {
+            if (node !== root) node.remove();
+        });
+        // The header can create a stacking context that traps a fixed overlay.
+        if (root.parentNode !== document.body) document.body.appendChild(root);
+
+        var form = root.querySelector("form");
+        var hour = form.elements.punch_hour;
+        var minute = form.elements.punch_minute;
+        var period = form.elements.punch_period;
+        var location = form.elements.work_location;
+        var badge = root.querySelector("[data-now-badge]");
+        var clock = root.querySelector("[data-clock-now]");
+        var edited = root.dataset.edited === "1";
+        var offset = Number(root.dataset.nowMs) - Date.now();
+        var formatter = null;
+        try {
+            formatter = new Intl.DateTimeFormat("en-US", {
+                timeZone: root.dataset.timezone,
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true,
+            });
+        } catch (_) {}
+
+        if (window.__clockModalTimer) clearInterval(window.__clockModalTimer);
+        if (window.__clockModalKey) document.removeEventListener("keydown", window.__clockModalKey);
+
+        function close() {
+            clearInterval(window.__clockModalTimer);
+            document.removeEventListener("keydown", window.__clockModalKey);
+            root.remove();
+        }
+        function tick() {
+            if (!formatter) return;
+            var parts = {};
+            formatter.formatToParts(new Date(Date.now() + offset)).forEach(function (part) {
+                parts[part.type] = part.value;
+            });
+            clock.textContent = parts.hour + ":" + parts.minute + ":" + parts.second + " " + parts.dayPeriod;
+            if (!edited) {
+                hour.value = parts.hour;
+                minute.value = parts.minute;
+                period.value = parts.dayPeriod;
+            }
+        }
+        function needsGeo() {
+            if (location) {
+                var option = location.options[location.selectedIndex];
+                return Boolean(option && option.dataset.fence === "1");
+            }
+            return form.dataset.needsGeo === "1";
+        }
+        function send() {
+            htmx.trigger(form, "clock-submit");
+        }
+
+        window.__clockModalKey = function (event) {
+            if (event.key === "Escape") close();
+        };
+        document.addEventListener("keydown", window.__clockModalKey);
+        window.__clockModalTimer = setInterval(tick, 1000);
+        tick();
+
+        [hour, minute, period].forEach(function (field) {
+            field.addEventListener("change", function () {
+                edited = true;
+                if (badge) badge.hidden = true;
+            });
+        });
+        root.querySelector("[data-clock-cancel]").addEventListener("click", close);
+        root.addEventListener("clockModalDone", close);
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            if (!form.reportValidity()) return;
+            form.elements.latitude.value = "";
+            form.elements.longitude.value = "";
+            // The server fails closed when a fence applies and no position arrives.
+            if (!needsGeo() || !navigator.geolocation) {
+                send();
+                return;
+            }
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    form.elements.latitude.value = position.coords.latitude;
+                    form.elements.longitude.value = position.coords.longitude;
+                    send();
+                },
+                send,
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        });
+        if (window.htmx) htmx.process(root);
+        (location || hour).focus();
+    })();
+</script>

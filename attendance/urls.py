@@ -22,6 +22,7 @@ from attendance.cbv import (
     ip_restriction,
     late_come_and_early_out,
     my_attendances,
+    work_location,
 )
 from attendance.views import clock_in_out
 from attendance.views import dashboard as attendance_dashboard
@@ -329,6 +330,7 @@ urlpatterns = [
         search.own_attendance_sort,
         name="own-attendance-filter",
     ),
+    path("clock-modal/", clock_in_out.clock_modal, name="clock-modal"),
     path("clock-in/", clock_in_out.clock_in, name="clock-in"),
     path("clock-out/", clock_in_out.clock_out, name="clock-out"),
     path(
@@ -808,6 +810,36 @@ urlpatterns = [
         "enable-disable-check-in/",
         views.enable_disable_check_in,
         name="enable-disable-check-in",
+    ),
+    path(
+        "work-location-view/",
+        work_location.work_location_view,
+        name="work-location-view",
+    ),
+    path(
+        "work-location-nav/",
+        work_location.WorkLocationNavView.as_view(),
+        name="work-location-nav",
+    ),
+    path(
+        "work-location-list/",
+        work_location.WorkLocationListView.as_view(),
+        name="work-location-list",
+    ),
+    path(
+        "work-location-create/",
+        work_location.WorkLocationCreateView.as_view(),
+        name="work-location-create",
+    ),
+    path(
+        "work-location-update/<int:pk>/",
+        work_location.WorkLocationUpdateView.as_view(),
+        name="work-location-update",
+    ),
+    path(
+        "work-location-archive/<int:pk>/",
+        work_location.work_location_archive,
+        name="work-location-archive",
     ),
     path(
         "grace-settings-view/",

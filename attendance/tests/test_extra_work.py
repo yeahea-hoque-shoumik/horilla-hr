@@ -18,6 +18,7 @@ from attendance.methods.extra_work import (
 from attendance.methods.utils import Request, strtime_seconds
 from attendance.models import (
     Attendance,
+    AttendanceActivity,
     AttendanceGeneralSetting,
     AttendanceOverTime,
     WorkRecords,
@@ -346,45 +347,51 @@ class ClockInConfirmationTests(ExtraWorkBase):
             name="Bank", start_date=MONDAY, end_date=MONDAY, company_id=self.company
         )
 
-    def _web_clock_in(self, query=""):
+    def _web_clock_in(self, confirm=False):
         client = Client()
+        data = {"confirm_extra_work": MONDAY.isoformat()} if confirm else {}
         with mock.patch("django.utils.timezone.now", return_value=MONDAY_10AM_UTC):
             client.force_login(self.user)
-            return client.get(
-                reverse("clock-in") + query, HTTP_HX_REQUEST="true"
-            )
+            return client.post(reverse("clock-in"), data, HTTP_HX_REQUEST="true")
 
-    def test_first_punch_shows_modal_and_creates_nothing(self):
+    def test_first_punch_shows_notice_and_creates_nothing(self):
         response = self._web_clock_in()
-        self.assertContains(response, "extraWorkConfirm")
-        self.assertContains(response, "confirm_extra_work=1")
+        self.assertContains(response, "clockExtraWorkNotice")
+        self.assertContains(response, MONDAY.isoformat())
         self.assertFalse(Attendance.objects.filter(employee_id=self.employee).exists())
 
     def test_confirmation_clocks_in(self):
-        response = self._web_clock_in("?confirm_extra_work=1")
-        self.assertNotContains(response, "extraWorkConfirm")
+        response = self._web_clock_in(confirm=True)
+        self.assertNotContains(response, "clockExtraWorkNotice")
         attendance = Attendance.objects.get(employee_id=self.employee)
         self.assertTrue(attendance.is_extra_work)
 
-    def test_geolocation_is_kept_on_confirm_url(self):
-        response = self._web_clock_in("?latitude=23.8&longitude=90.4")
-        self.assertContains(response, "latitude=23.8")
-        self.assertContains(response, "longitude=90.4")
+    def test_modal_shows_day_off_notice_before_submit(self):
+        client = Client()
+        with mock.patch("django.utils.timezone.now", return_value=MONDAY_10AM_UTC):
+            client.force_login(self.user)
+            response = client.get(reverse("clock-modal"), HTTP_HX_REQUEST="true")
+        self.assertContains(response, "clockExtraWorkNotice")
+        self.assertFalse(Attendance.objects.filter(employee_id=self.employee).exists())
 
-    def test_working_day_has_no_modal(self):
+    def test_working_day_has_no_notice(self):
         Holidays.objects.all().delete()
         response = self._web_clock_in()
-        self.assertNotContains(response, "extraWorkConfirm")
+        self.assertNotContains(response, "clockExtraWorkNotice")
         self.assertTrue(Attendance.objects.filter(employee_id=self.employee).exists())
 
-    def test_repeat_punch_has_no_modal(self):
-        self._web_clock_in("?confirm_extra_work=1")
+    def test_repeat_punch_has_no_notice(self):
+        self._web_clock_in(confirm=True)
+        AttendanceActivity.objects.filter(employee_id=self.employee).update(
+            clock_out=time(0, 1),
+            clock_out_date=MONDAY - timedelta(days=1),
+        )
         Attendance.objects.filter(employee_id=self.employee).update(
             attendance_clock_out=time(11),
             attendance_clock_out_date=MONDAY,
         )
         response = self._web_clock_in()
-        self.assertNotContains(response, "extraWorkConfirm")
+        self.assertNotContains(response, "clockExtraWorkNotice")
 
     def test_mobile_punch_has_no_prompt_and_creates_request(self):
         client = APIClient()
