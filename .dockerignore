@@ -92,6 +92,7 @@ CODEBASE_INDEX.md
 
 # Claude/AI
 .claude/
+aidlc/
 
 # Deploy backups: database dumps and secrets must never be copied into the image
 backups/

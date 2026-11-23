@@ -12,8 +12,9 @@
 #                                             With --db-user, the password is taken from
 #                                             DB_PASSWORD or asked for (hidden).
 #   ./deploy.sh setup-db                      Create Horilla's user + database in postgres_db
-#   ./deploy.sh [--skip-backup]               Check .env, back up the DB, stop, rebuild
-#                                             (no cache), start, verify, follow logs
+#   ./deploy.sh [--skip-backup] [--fresh]     Check .env, build while the site stays up,
+#                                             back up the DB, swap containers, verify,
+#                                             follow logs. --fresh ignores the build cache.
 #   ./deploy.sh status                        Show containers
 #   ./deploy.sh logs [service]                Follow logs
 #   ./deploy.sh stop                          Stop the stack (data is kept)
@@ -138,24 +139,31 @@ wait_for_web() {
 }
 
 cmd_deploy() {
-  local skip_backup=0
-  case "${1:-}" in
-    "") ;;
-    --skip-backup) skip_backup=1 ;;
-    *) die "Unknown option: $1" ;;
-  esac
+  local skip_backup=0 build_args=(--pull)
+  while [ "$#" -gt 0 ]; do
+    case "$1" in
+      --skip-backup) skip_backup=1 ;;
+      --fresh) build_args+=(--no-cache) ;;
+      *) die "Unknown option: $1" ;;
+    esac
+    shift
+  done
 
   command -v docker >/dev/null && docker compose version >/dev/null 2>&1 \
     || die "Docker with the Compose plugin is required."
   check_env
+
+  # Build first: the old version keeps serving, and a failed build changes
+  # nothing. --pull plus the weekly APT_CACHE_BUST keeps cached layers current.
+  step "Building images"
+  "${COMPOSE[@]}" build "${build_args[@]}" \
+    --build-arg "APT_CACHE_BUST=$(date -u +%G-W%V)"
+
+  # Back up after the build so the dump is as close to the cutover as possible.
   if [ "$skip_backup" -eq 0 ]; then backup_db; fi
 
   step "Stopping the current stack"
   "${COMPOSE[@]}" down --remove-orphans
-
-  # --no-cache: always rebuild from scratch so no stale layer survives.
-  step "Building images"
-  "${COMPOSE[@]}" build --no-cache --pull
 
   # Migrations and collectstatic run in the web container's entrypoint.
   step "Starting the stack"
@@ -240,7 +248,7 @@ EOF
 
 case "${1:-deploy}" in
   deploy) shift || true; cmd_deploy "$@" ;;
-  --skip-backup) cmd_deploy "$@" ;;
+  --skip-backup|--fresh) cmd_deploy "$@" ;;
   init-env) shift; cmd_init_env "$@" ;;
   setup-db) cmd_setup_db ;;
   status) "${COMPOSE[@]}" ps ;;

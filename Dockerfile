@@ -13,7 +13,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # with that day's base image until something else bumped it. This is what
 # Docker CI's Trivy gate (--ignore-unfixed, CRITICAL) caught: a fixed
 # perl-base existed in Debian's repos and was not in the image.
-RUN apt-get update \
+#
+# APT_CACHE_BUST: deploy.sh passes the ISO week, so cached deploys are fast but
+# OS and Python packages are still refreshed at least once a week.
+ARG APT_CACHE_BUST=none
+RUN echo "Package refresh: ${APT_CACHE_BUST}" \
+    && apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
         build-essential \
@@ -46,8 +51,12 @@ ARG SPACY_MODEL_VERSION=3.8.0
 
 # gunicorn and psycopg2-binary are pinned in requirements.txt -- do not repeat
 # them here, an unpinned CLI copy silently overrides the pin.
-RUN pip install --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+#
+# The BuildKit cache mount keeps downloaded wheels between builds without adding
+# them to the image, so a requirements change only fetches what changed.
+RUN --mount=type=cache,id=horilla-pip,target=/root/.cache/pip,sharing=locked \
+    pip install --upgrade pip \
+    && pip install -r requirements.txt
 
 # Separate step on purpose: chaining this onto the install with || would report
 # a failed pip run as a version mismatch and send the next person the wrong way.
@@ -66,7 +75,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 #
 # `upgrade` first -- see the builder stage's comment. This is the stage
 # Trivy actually scans, so it is the one the CI gate needs.
-RUN apt-get update \
+ARG APT_CACHE_BUST=none
+RUN echo "Package refresh: ${APT_CACHE_BUST}" \
+    && apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
         libpq5 \
