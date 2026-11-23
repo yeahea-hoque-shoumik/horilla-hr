@@ -467,15 +467,6 @@
                                                             >{% trans "Grace Time" %}</a>
                                                         {% endif %}
                                                     </div>
-                                                    {% if perms.attendance.view_worklocation %}
-                                                        <div class="oh-input-group">
-                                                            <a
-                                                                id="workLocationSettings"
-                                                                href="{% url 'work-location-view' %}"
-                                                                class="oh-inner-sidebar__link oh-dropdown__link"
-                                                            >{% trans "Work Locations" %}</a>
-                                                        </div>
-                                                    {% endif %}
                                                     {% if biometric_app_exists %}
                                                         {% if perms.base.view_biometricattendance %}
                                                             <div class="oh-input-group">

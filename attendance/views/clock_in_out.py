@@ -23,13 +23,13 @@ from django.utils.translation import gettext_lazy as _
 
 from attendance.methods.clock_punch import (
     PunchError,
-    available_work_locations,
+    available_work_types,
     current_open_activity,
     ensure_after_check_in,
     ensure_after_last_punch,
     latest_open_activity,
     parse_punch_time,
-    resolve_work_location,
+    resolve_work_type,
 )
 from attendance.methods.extra_work import (
     extra_work_applies,
@@ -150,7 +150,7 @@ def clock_in_attendance_and_activity(
     start_time,
     end_time,
     in_datetime,
-    work_location=None,
+    work_type=None,
 ):
     """
     This method is used to create attendance activity or attendance when an employee clocks-in
@@ -164,6 +164,7 @@ def clock_in_attendance_and_activity(
         minimum_hour    : minimum hour in shift schedule
         start_time      : start time in shift schedule
         end_time        : end time in shift schedule
+        work_type       : work type chosen at check-in, if any
     """
 
     # attendance activity create
@@ -187,7 +188,7 @@ def clock_in_attendance_and_activity(
         shift_day=day,
         clock_in=in_datetime,
         in_datetime=in_datetime,
-        work_location=work_location,
+        work_type_id=work_type,
     )
     # create attendance if not exist
     attendance = Attendance.objects.filter(
@@ -197,13 +198,14 @@ def clock_in_attendance_and_activity(
         attendance = Attendance()
         attendance.employee_id = employee
         attendance.shift_id = shift
-        attendance.work_type_id = attendance.employee_id.employee_work_info.work_type_id
+        attendance.work_type_id = (
+            work_type or attendance.employee_id.employee_work_info.work_type_id
+        )
         attendance.attendance_date = attendance_date
         attendance.attendance_day = day
         attendance.attendance_clock_in = now
         attendance.attendance_clock_in_date = date_today
         attendance.minimum_hour = minimum_hour
-        attendance.work_location = work_location
         if extra_work_applies(employee, attendance_date):
             attendance.is_extra_work = True
             attendance.attendance_validated = False
@@ -259,16 +261,10 @@ def _render_clock_modal(request, error="", extra_work_date=None):
     activity = current_open_activity(employee, local_now)
     mode = "out" if activity else "in"
     company = _session_company(request)
-    locations = list(available_work_locations(employee)) if mode == "in" else []
+    work_types = list(available_work_types(employee)) if mode == "in" else []
+    needs_geo = _company_fence_on(company)
 
-    if mode == "out":
-        needs_geo = (
-            activity.work_location.has_fence
-            if activity.work_location
-            else _company_fence_on(company)
-        )
-    else:
-        needs_geo = not locations and _company_fence_on(company)
+    if mode == "in":
         if extra_work_date is None and not request.POST:
             attendance_date = resolve_shift_day(
                 work_info.shift_id,
@@ -283,8 +279,8 @@ def _render_clock_modal(request, error="", extra_work_date=None):
     context = {
         "mode": mode,
         "activity": activity,
-        "locations": locations,
-        "selected_location": posted.get("work_location", ""),
+        "work_types": work_types,
+        "selected_work_type": posted.get("work_type", ""),
         "error": error,
         "extra_work_date": extra_work_date,
         "needs_geo": needs_geo,
@@ -389,18 +385,16 @@ def clock_in(request):
                 )
 
         employee, work_info = employee_exists(request)
-        work_location = None
+        work_type = None
         if not request.__dict__.get("datetime"):
             try:
-                work_location = resolve_work_location(
-                    employee, request.POST.get("work_location")
-                )
+                work_type = resolve_work_type(employee, request.POST.get("work_type"))
             except PunchError as error:
                 return _render_clock_modal(request, error=str(error))
             # The mobile/API clock-in already enforces a configured
             # geo-fence; this view didn't, so an employee outside the fence
             # could still punch in from a browser.
-            geofence_error = geofence_denial_web(request, company, work_location)
+            geofence_error = geofence_denial_web(request, company)
             if geofence_error:
                 return _render_clock_modal(request, error=geofence_error)
 
@@ -452,7 +446,7 @@ def clock_in(request):
                 start_time=start_time_sec,
                 end_time=end_time_sec,
                 in_datetime=datetime_now,
-                work_location=work_location,
+                work_type=work_type,
             )
             # Refresh employee from DB so template re-evaluates is_clocked_in correctly
             employee.refresh_from_db()
@@ -674,12 +668,7 @@ def clock_out(request):
         local_now = employee_localtime(employee)
         if not request.__dict__.get("datetime"):
             open_activity = latest_open_activity(employee)
-            # Check-out has no location choice: the check-in's location applies.
-            geofence_error = geofence_denial_web(
-                request,
-                company,
-                open_activity.work_location if open_activity else None,
-            )
+            geofence_error = geofence_denial_web(request, company)
             if geofence_error:
                 return _render_clock_modal(request, error=geofence_error)
             try:

@@ -184,7 +184,7 @@ def get_client_ip(request):
     return ip or request.META.get("REMOTE_ADDR")
 
 
-def geofence_denial_web(request, company, location=None):
+def geofence_denial_web(request, company):
     """
     The web clock-in/out views' counterpart to
     horilla_api...attendance.views.geofence_denial(): that one reads
@@ -197,9 +197,6 @@ def geofence_denial_web(request, company, location=None):
     enabled but can't be evaluated (no coordinates submitted, or the browser
     denied location access) should block the punch, not silently allow it.
 
-    A selected work location replaces the company fence: its own coordinates
-    apply, and a location without coordinates has no fence.
-
     Returns an error message to show the employee, or None if the punch may
     proceed.
     """
@@ -207,19 +204,13 @@ def geofence_denial_web(request, company, location=None):
 
     from geofencing.models import GeoFencing
 
-    if location is not None:
-        if not location.has_fence:
-            return None
-        fence_point = (location.latitude, location.longitude)
-        radius = location.radius_in_meters
-    else:
-        if company is None:
-            return None
-        fence = GeoFencing.objects.filter(company_id=company).first()
-        if fence is None or not fence.start:
-            return None
-        fence_point = (fence.latitude, fence.longitude)
-        radius = fence.radius_in_meters
+    if company is None:
+        return None
+    fence = GeoFencing.objects.filter(company_id=company).first()
+    if fence is None or not fence.start:
+        return None
+    fence_point = (fence.latitude, fence.longitude)
+    radius = fence.radius_in_meters
 
     params = request.POST if getattr(request, "method", "") == "POST" else request.GET
     try:

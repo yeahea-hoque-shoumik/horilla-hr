@@ -13,7 +13,6 @@ from datetime import date, datetime, timedelta
 import pandas as pd
 from django.apps import apps
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models, transaction
 from django.db.models import F, Q, Sum
 from django.urls import reverse
@@ -49,87 +48,6 @@ _validate_time_in_minutes = validate_time_in_minutes
 # Create your models here.
 
 
-class WorkLocation(HorillaModel):
-    """
-    A place employees can choose when checking in. Coordinates are optional:
-    a location without them (for example Home) has no geofence.
-    """
-
-    name = models.CharField(max_length=100, verbose_name=_("Name"))
-    company_id = models.ForeignKey(
-        Company,
-        on_delete=models.CASCADE,
-        related_name="work_locations",
-        verbose_name=_("Company"),
-    )
-    latitude = models.FloatField(
-        null=True,
-        blank=True,
-        validators=[MinValueValidator(-90), MaxValueValidator(90)],
-        verbose_name=_("Latitude"),
-    )
-    longitude = models.FloatField(
-        null=True,
-        blank=True,
-        validators=[MinValueValidator(-180), MaxValueValidator(180)],
-        verbose_name=_("Longitude"),
-    )
-    radius_in_meters = models.PositiveIntegerField(
-        null=True,
-        blank=True,
-        validators=[MinValueValidator(1)],
-        verbose_name=_("Radius (meters)"),
-    )
-    objects = HorillaCompanyManager("company_id")
-
-    class Meta:
-        verbose_name = _("Work Location")
-        verbose_name_plural = _("Work Locations")
-        ordering = ["name"]
-        constraints = [
-            models.UniqueConstraint(
-                fields=["company_id", "name"],
-                name="unique_work_location_per_company",
-            )
-        ]
-
-    def __str__(self) -> str:
-        return self.name
-
-    def clean(self):
-        super().clean()
-        values = (self.latitude, self.longitude, self.radius_in_meters)
-        if any(value is not None for value in values) and any(
-            value is None for value in values
-        ):
-            raise ValidationError(
-                _("Enter latitude, longitude and radius together, or leave all empty.")
-            )
-
-    @property
-    def has_fence(self):
-        return self.latitude is not None and self.longitude is not None and bool(
-            self.radius_in_meters
-        )
-
-    def fence_col(self):
-        if self.has_fence:
-            return f"{self.latitude}, {self.longitude} ({self.radius_in_meters} m)"
-        return _("No geofence")
-
-    def status_col(self):
-        return _("Active") if self.is_active else _("Archived")
-
-    def get_instance_id(self):
-        return self.pk
-
-    def action_col(self):
-        return render_template(
-            path="cbv/settings/work_location_action.html",
-            context={"instance": self},
-        )
-
-
 class AttendanceActivity(HorillaModel):
     """
     AttendanceActivity model
@@ -158,13 +76,12 @@ class AttendanceActivity(HorillaModel):
     clock_out_date = models.DateField(null=True, verbose_name=_("Out Date"))
     out_datetime = models.DateTimeField(null=True)
     clock_out = models.TimeField(null=True, verbose_name=_("Check Out"))
-    work_location = models.ForeignKey(
-        WorkLocation,
+    work_type_id = models.ForeignKey(
+        WorkType,
         null=True,
         blank=True,
-        on_delete=models.PROTECT,
-        related_name="activities",
-        verbose_name=_("Work Location"),
+        on_delete=models.SET_NULL,
+        verbose_name=_("Work Type"),
     )
     objects = HorillaCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
@@ -322,14 +239,6 @@ class Attendance(HorillaModel):
         blank=True,
         on_delete=models.SET_NULL,  # 796
         verbose_name=_("Work Type"),
-    )
-    work_location = models.ForeignKey(
-        WorkLocation,
-        null=True,
-        blank=True,
-        on_delete=models.PROTECT,
-        related_name="attendances",
-        verbose_name=_("Work Location"),
     )
     attendance_day = models.ForeignKey(
         EmployeeShiftDay,

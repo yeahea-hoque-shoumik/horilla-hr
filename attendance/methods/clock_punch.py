@@ -7,6 +7,7 @@ and then follow the same storage path as an automatic punch.
 
 from datetime import datetime, timedelta
 
+from django.db.models import Q
 from django.utils.translation import gettext as _
 
 
@@ -19,36 +20,40 @@ def _company(employee):
     return work_info.company_id if work_info else None
 
 
-def available_work_locations(employee):
-    """Active locations of the employee's own company, not the session's."""
-    from attendance.models import WorkLocation
+def available_work_types(employee):
+    """
+    Active work types of the employee's own company, not the session's.
+    A work type with no company applies to every company.
+    """
+    from base.models import WorkType
 
     company = _company(employee)
     if company is None:
-        return WorkLocation.objects.none()
+        return WorkType.objects.none()
     return (
-        WorkLocation.objects.entire()
-        .filter(company_id=company, is_active=True)
-        .order_by("name")
+        WorkType.objects.entire()
+        .filter(Q(company_id=company) | Q(company_id__isnull=True), is_active=True)
+        .distinct()
+        .order_by("work_type")
     )
 
 
-def resolve_work_location(employee, raw_id):
-    """Required when the company has locations; must be one of that list."""
+def resolve_work_type(employee, raw_id):
+    """Required when the company has work types; must be one of that list."""
     if employee is None:
         return None
-    locations = available_work_locations(employee)
-    if not locations.exists():
+    work_types = available_work_types(employee)
+    if not work_types.exists():
         return None
     if not raw_id:
         raise PunchError(_("Please select your work location."))
     try:
-        location = locations.filter(pk=int(raw_id)).first()
+        work_type = work_types.filter(pk=int(raw_id)).first()
     except (TypeError, ValueError):
-        location = None
-    if location is None:
+        work_type = None
+    if work_type is None:
         raise PunchError(_("The selected work location is not available."))
-    return location
+    return work_type
 
 
 def parse_punch_time(data, local_now):
@@ -91,7 +96,7 @@ def current_open_activity(employee, local_now):
             clock_out__isnull=True,
             attendance_date__in=[today - timedelta(days=1), today],
         )
-        .select_related("work_location")
+        .select_related("work_type_id")
         .order_by("attendance_date", "id")
         .last()
     )
@@ -103,7 +108,7 @@ def latest_open_activity(employee):
 
     return (
         AttendanceActivity.objects.filter(employee_id=employee, clock_out__isnull=True)
-        .select_related("work_location")
+        .select_related("work_type_id")
         .order_by("attendance_date", "id")
         .last()
     )

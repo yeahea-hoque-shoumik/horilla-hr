@@ -3,8 +3,6 @@
 from datetime import date, datetime, time, timedelta, timezone as dt_timezone
 from unittest import mock
 
-from django.contrib.auth.models import Permission
-from django.core.exceptions import ValidationError
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 
@@ -14,7 +12,6 @@ from attendance.models import (
     AttendanceActivity,
     AttendanceGeneralSetting,
     AttendanceLateComeEarlyOut,
-    WorkLocation,
 )
 from attendance.views.clock_in_out import clock_in, clock_out
 from base.models import (
@@ -22,6 +19,7 @@ from base.models import (
     EmployeeShift,
     EmployeeShiftDay,
     EmployeeShiftSchedule,
+    WorkType,
 )
 from employee.models import EmployeeWorkInformation
 from horilla.horilla_middlewares import set_selected_company
@@ -75,12 +73,10 @@ class ClockModalBase(TestCase):
     def tearDown(self):
         set_selected_company(None)
 
-    def location(self, name="Head Office", company=None, fence=False, **fields):
-        if fence:
-            fields.update(latitude=23.8103, longitude=90.4125, radius_in_meters=200)
-        return WorkLocation.objects.create(
-            name=name, company_id=company or self.company, **fields
-        )
+    def work_type(self, name="Office", company=None, **fields):
+        work_type = WorkType.objects.create(work_type=name, **fields)
+        work_type.company_id.add(company or self.company)
+        return work_type
 
     def get_modal(self, now=INSTANT):
         with mock.patch("django.utils.timezone.now", return_value=now):
@@ -121,12 +117,12 @@ class ModalDisplayTests(ClockModalBase):
 
     def test_checkout_shows_check_in_and_no_location_field(self):
         place = self.location("Head Office")
-        self.post("clock-in", at(9, "15", work_location=place.pk))
+        self.post("clock-in", at(9, "15", work_type=place.pk))
         response = self.get_modal(INSTANT + timedelta(hours=1))
         self.assertContains(response, "clockCheckInSummary")
         self.assertContains(response, "09:15 AM")
         self.assertContains(response, "Head Office")
-        self.assertNotContains(response, 'name="work_location"')
+        self.assertNotContains(response, 'name="work_type"')
 
 
 class PunchTimeTests(ClockModalBase):
@@ -215,79 +211,61 @@ class PunchTimeTests(ClockModalBase):
         self.assertEqual(attendance.attendance_worked_hour, "07:45")
 
 
-class LocationTests(ClockModalBase):
-    def test_required_when_company_has_locations(self):
-        self.location()
+class WorkTypeChoiceTests(ClockModalBase):
+    def test_required_when_company_has_work_types(self):
+        self.work_type()
         response = self.post("clock-in", at(9))
         self.assertContains(response, "select your work location")
         self.assertFalse(self.activities().exists())
 
-    def test_not_required_without_locations(self):
+    def test_not_required_without_work_types(self):
         self.post("clock-in", at(9))
-        self.assertIsNone(self.activities().get().work_location)
+        self.assertIsNone(self.activities().get().work_type_id)
 
     def test_saved_on_activity_and_attendance(self):
-        place = self.location()
-        self.post("clock-in", at(9, work_location=place.pk))
-        self.assertEqual(self.activities().get().work_location, place)
+        place = self.work_type()
+        self.post("clock-in", at(9, work_type=place.pk))
+        self.assertEqual(self.activities().get().work_type_id, place)
         attendance = Attendance.objects.get(employee_id=self.employee)
-        self.assertEqual(attendance.work_location, place)
+        self.assertEqual(attendance.work_type_id, place)
 
-    def test_other_companys_location_is_rejected(self):
-        self.location()
-        foreign = self.location("Other", company=self.other_company)
-        response = self.post("clock-in", at(9, work_location=foreign.pk))
+    def test_choice_overrides_employee_default(self):
+        default = self.work_type("Office")
+        home = self.work_type("Home")
+        EmployeeWorkInformation.objects.filter(employee_id=self.employee).update(
+            work_type_id=default
+        )
+        self.post("clock-in", at(9, work_type=home.pk))
+        attendance = Attendance.objects.get(employee_id=self.employee)
+        self.assertEqual(attendance.work_type_id, home)
+
+    def test_modal_lists_own_and_all_company_types_once(self):
+        self.work_type("Ministry")
+        WorkType.objects.create(work_type="Everywhere")
+        self.work_type("Foreign Site", company=self.other_company)
+        response = self.get_modal()
+        self.assertContains(response, "Ministry", count=1)
+        self.assertContains(response, "Everywhere", count=1)
+        self.assertNotContains(response, "Foreign Site")
+
+    def test_other_companys_work_type_is_rejected(self):
+        self.work_type()
+        foreign = self.work_type("Other", company=self.other_company)
+        response = self.post("clock-in", at(9, work_type=foreign.pk))
         self.assertContains(response, "not available")
         self.assertFalse(self.activities().exists())
 
-    def test_archived_location_is_rejected(self):
-        self.location()
-        closed = self.location("Closed", is_active=False)
-        response = self.post("clock-in", at(9, work_location=closed.pk))
+    def test_archived_work_type_is_rejected(self):
+        self.work_type()
+        closed = self.work_type("Closed", is_active=False)
+        response = self.post("clock-in", at(9, work_type=closed.pk))
         self.assertContains(response, "not available")
         self.assertFalse(self.activities().exists())
-
-    def test_partial_fence_is_invalid(self):
-        place = WorkLocation(name="Bad", company_id=self.company, latitude=23.8)
-        with self.assertRaises(ValidationError):
-            place.full_clean()
-
-
-class FenceTests(ClockModalBase):
-    def test_inside_location_fence(self):
-        place = self.location(fence=True)
-        self.post("clock-in", at(9, work_location=place.pk, **INSIDE))
-        self.assertEqual(self.activities().count(), 1)
-
-    def test_outside_location_fence(self):
-        place = self.location(fence=True)
-        response = self.post("clock-in", at(9, work_location=place.pk, **OUTSIDE))
-        self.assertContains(response, "outside the permitted")
-        self.assertFalse(self.activities().exists())
-
-    def test_missing_coordinates_fail_closed(self):
-        place = self.location(fence=True)
-        response = self.post("clock-in", at(9, work_location=place.pk))
-        self.assertContains(response, "Could not verify")
-        self.assertFalse(self.activities().exists())
-
-    def test_location_without_fence_needs_no_coordinates(self):
-        self.location(fence=True)
-        home = self.location("Home")
-        self.post("clock-in", at(9, work_location=home.pk))
-        self.assertEqual(self.activities().get().work_location, home)
-
-    def test_checkout_uses_check_in_location_fence(self):
-        place = self.location(fence=True)
-        self.post("clock-in", at(9, work_location=place.pk, **INSIDE))
-        response = self.post("clock-out", at(9, "30", **OUTSIDE))
-        self.assertContains(response, "outside the permitted")
-        self.assertIsNone(self.activities().get().clock_out)
 
 
 class DevicePathTests(ClockModalBase):
     def test_device_punches_skip_modal_and_location(self):
-        self.location(fence=True)
+        self.work_type()
         moment = INSTANT.astimezone(dt_timezone(timedelta(hours=6)))
         clock_in(
             Request(
@@ -295,7 +273,7 @@ class DevicePathTests(ClockModalBase):
             )
         )
         activity = self.activities().get()
-        self.assertIsNone(activity.work_location)
+        self.assertIsNone(activity.work_type_id)
         later = moment + timedelta(hours=7)
         clock_out(
             Request(
@@ -304,54 +282,3 @@ class DevicePathTests(ClockModalBase):
         )
         activity.refresh_from_db()
         self.assertEqual(activity.clock_out, time(17))
-
-
-class SettingsTests(ClockModalBase):
-    def _grant(self, *codenames):
-        self.user.user_permissions.add(
-            *Permission.objects.filter(
-                content_type__app_label="attendance", codename__in=codenames
-            )
-        )
-
-    def test_page_needs_permission(self):
-        response = self.client.get(reverse("work-location-view"))
-        self.assertNotEqual(response.status_code, 200)
-
-    def test_archive_toggles_location(self):
-        self._grant("view_worklocation", "change_worklocation")
-        place = self.location()
-        response = self.client.post(
-            reverse("work-location-archive", args=[place.pk]), HTTP_HX_REQUEST="true"
-        )
-        self.assertEqual(response.status_code, 200)
-        place.refresh_from_db()
-        self.assertFalse(place.is_active)
-
-    def test_archived_location_can_be_restored(self):
-        self._grant("view_worklocation", "change_worklocation")
-        place = self.location(is_active=False)
-        response = self.client.post(
-            reverse("work-location-archive", args=[place.pk]), HTTP_HX_REQUEST="true"
-        )
-        self.assertEqual(response.status_code, 200)
-        place.refresh_from_db()
-        self.assertTrue(place.is_active)
-
-    def test_archive_needs_permission(self):
-        place = self.location()
-        self.client.post(
-            reverse("work-location-archive", args=[place.pk]), HTTP_HX_REQUEST="true"
-        )
-        place.refresh_from_db()
-        self.assertTrue(place.is_active)
-
-    def test_list_renders(self):
-        self._grant("view_worklocation")
-        self.location("Listed Office")
-        self.location("Archived Office", is_active=False)
-        response = self.client.get(
-            reverse("work-location-list"), HTTP_HX_REQUEST="true"
-        )
-        self.assertContains(response, "Listed Office")
-        self.assertContains(response, "Archived Office")

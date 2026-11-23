@@ -66,7 +66,7 @@
             <div class="cpm-summary" id="clockCheckInSummary">
                 <div><span>{% trans "Checked in" %}</span><strong>{{ activity.clock_in|time:"h:i A" }}</strong></div>
                 <div><span>{% trans "Date" %}</span><strong>{{ activity.clock_in_date|date:"d M Y" }}</strong></div>
-                <div><span>{% trans "Work from" %}</span><strong>{{ activity.work_location.name|default:"-" }}</strong></div>
+                <div><span>{% trans "Work from" %}</span><strong>{{ activity.work_type_id.work_type|default:"-" }}</strong></div>
             </div>
         {% endif %}
 
@@ -86,17 +86,16 @@
             {% endif %}
 
             <div class="cpm-grid">
-                {% if mode == "in" and locations %}
+                {% if mode == "in" and work_types %}
                     <div>
-                        <label for="clockWorkLocation">{% trans "Work from" %}</label>
-                        <select id="clockWorkLocation" class="cpm-location" name="work_location" required>
+                        <label for="clockWorkType">{% trans "Work from" %}</label>
+                        <select id="clockWorkType" class="cpm-location" name="work_type" required>
                             <option value="">{% trans "Select your location" %}</option>
-                            {% for location in locations %}
+                            {% for work_type in work_types %}
                                 <option
-                                    value="{{ location.pk }}"
-                                    data-fence="{% if location.has_fence %}1{% else %}0{% endif %}"
-                                    {% if location.pk|stringformat:"s" == selected_location %}selected{% endif %}
-                                >{{ location.name }}</option>
+                                    value="{{ work_type.pk }}"
+                                    {% if work_type.pk|stringformat:"s" == selected_work_type %}selected{% endif %}
+                                >{{ work_type.work_type }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -151,7 +150,7 @@
         var hour = form.elements.punch_hour;
         var minute = form.elements.punch_minute;
         var period = form.elements.punch_period;
-        var location = form.elements.work_location;
+        var workType = form.elements.work_type;
         var badge = root.querySelector("[data-now-badge]");
         var clock = root.querySelector("[data-clock-now]");
         var edited = root.dataset.edited === "1";
@@ -189,10 +188,6 @@
             }
         }
         function needsGeo() {
-            if (location) {
-                var option = location.options[location.selectedIndex];
-                return Boolean(option && option.dataset.fence === "1");
-            }
             return form.dataset.needsGeo === "1";
         }
         function send() {
@@ -235,6 +230,6 @@
             );
         });
         if (window.htmx) htmx.process(root);
-        (location || hour).focus();
+        (workType || hour).focus();
     })();
 </script>

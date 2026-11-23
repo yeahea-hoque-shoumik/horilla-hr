@@ -83,11 +83,6 @@ SUBMENUS = [
         "redirect": reverse_lazy("grace-time-view"),
         "accessibility": "attendance.sidebar.validation_condition_accessibility",
     },
-    {
-        "menu": _("Work Locations"),
-        "redirect": reverse_lazy("work-location-view"),
-        "accessibility": "attendance.sidebar.work_location_accessibility",
-    },
 ]
 
 
@@ -148,10 +143,6 @@ def monthly_summary_accessibility(request, submenu, user_perms, *args, **kwargs)
 
 def validation_condition_accessibility(request, submenu, user_perms, *args, **kwargs):
     return request.user.has_perm("attendance.view_attendancevalidationcondition")
-
-
-def work_location_accessibility(request, submenu, user_perms, *args, **kwargs):
-    return request.user.has_perm("attendance.view_worklocation")
 
 
 def biometric_accessibility(request, submenu, user_perms, *args, **kwargs):

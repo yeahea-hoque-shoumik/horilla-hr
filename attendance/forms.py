@@ -48,7 +48,6 @@ from attendance.models import (
     AttendanceValidationCondition,
     BatchAttendance,
     GraceTime,
-    WorkLocation,
     WorkRecords,
     attendance_date_validate,
     strtime_seconds,
@@ -99,7 +98,6 @@ class AttendanceUpdateForm(BaseModelForm):
             "attendance_overtime",
             "is_active",
             "is_holiday",
-            "work_location",
         ]
         model = Attendance
         widgets = {
@@ -248,7 +246,6 @@ class AttendanceForm(BaseModelForm):
             "attendance_overtime",
             "is_active",
             "is_holiday",
-            "work_location",
         ]
         widgets = {
             "attendance_clock_in": DateTimeInput(attrs={"type": "time"}),
@@ -431,7 +428,7 @@ class AttendanceActivityForm(BaseModelForm):
 
         model = AttendanceActivity
         fields = "__all__"
-        exclude = ["work_location"]
+        exclude = ["work_type_id"]
         widgets = {
             "clock_in": DateTimeInput(attrs={"type": "time"}),
             "clock_out": DateTimeInput(attrs={"type": "time"}),
@@ -1102,24 +1099,6 @@ class GraceTimeForm(BaseModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["company_id"].required = True
-
-
-class WorkLocationForm(BaseModelForm):
-    """
-    Form for creating or updating a work location
-    """
-
-    cols = {
-        "name": 12,
-        "company_id": 12,
-        "latitude": 6,
-        "longitude": 6,
-        "radius_in_meters": 12,
-    }
-
-    class Meta:
-        model = WorkLocation
-        fields = ["name", "company_id", "latitude", "longitude", "radius_in_meters"]
 
 
 class GraceTimeAssignForm(forms.Form):

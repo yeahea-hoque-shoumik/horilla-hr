@@ -23,7 +23,6 @@ from attendance.models import (
     AttendanceOverTime,
     AttendanceValidationCondition,
     GraceTime,
-    WorkLocation,
     strtime_seconds,
 )
 from base.filters import FilterSet
@@ -1247,16 +1246,6 @@ class AttendanceBreakpointFilter(FilterSet):
             "overtime_cutoff",
             "company_id",
         ]
-
-
-class WorkLocationFilter(HorillaFilterSet):
-    """Search and filter work locations."""
-
-    search = django_filters.CharFilter(field_name="name", lookup_expr="icontains")
-
-    class Meta:
-        model = WorkLocation
-        fields = ["company_id", "is_active"]
 
 
 class GraceTimeFilter(HorillaFilterSet):
