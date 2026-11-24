@@ -4,6 +4,7 @@
 <style>
     #id_machine_ip_parent_div,
     #id_port_parent_div,
+    #id_serial_number_parent_div,
     #id_zk_password_parent_div,
     #id_bio_username_parent_div,
     #id_bio_password_parent_div,
@@ -35,7 +36,14 @@
             "#id_api_key_parent_div",
             "#id_api_secret_parent_div",
             "#id_anviz_request_id_parent_div",
+            "#id_serial_number_parent_div",
         ]
+        var machineIpLabel = $("label[for='id_machine_ip']");
+        if (machineIpLabel.data("default-text") === undefined) {
+            machineIpLabel.data("default-text", machineIpLabel.text());
+        }
+        machineIpLabel.text(machineIpLabel.data("default-text"));
+        $("input[name='machine_ip']").attr("placeholder", "");
 
         // Hide all elements initially
         $(allElements.join(', ')).hide();
@@ -58,6 +66,13 @@
                 if (!$("input[name='api_url']").val()) {
                     $("input[name='api_url']").val("https://api.etimeoffice.com/api/");
                 }
+                break;
+            case "zkpush":
+                $("#id_serial_number_parent_div, #id_machine_ip_parent_div").show();
+                machineIpLabel.text("{% trans 'Allowed Source IPs (optional)' %}");
+                $("input[name='machine_ip']").attr(
+                    "placeholder", "{% trans 'e.g. 203.0.113.10, 198.51.100.0/24' %}"
+                );
                 break;
             default:
                 // No elements need to be shown for unknown machine types

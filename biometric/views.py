@@ -793,6 +793,38 @@ def test_dahua_connection(device):
         )
 
 
+def test_push_device_connection(device):
+    """
+    A push device cannot be called; report when it last contacted Horilla.
+    """
+    if not device.last_push_at:
+        return render_connection_response(
+            _("No contact yet"),
+            _(
+                "The device has not connected. In the Cloud Server (ADMS) "
+                "settings of the device, set the server address and port of "
+                "this Horilla site and check that the serial number matches."
+            ),
+            "warning",
+        )
+    age = django_timezone.now() - device.last_push_at
+    last_seen = django_timezone.localtime(device.last_push_at).strftime(
+        "%Y-%m-%d %H:%M"
+    )
+    if age > timedelta(minutes=5):
+        return render_connection_response(
+            _("Device offline"),
+            _("Last contact was at %(time)s.") % {"time": last_seen},
+            "warning",
+        )
+    return render_connection_response(
+        _("Connection Successful"),
+        _("The device is connected. Last contact was at %(time)s.")
+        % {"time": last_seen},
+        "success",
+    )
+
+
 def test_etimeoffice_connection(device):
     """Test connection for e-TimeOffice device."""
     now = datetime.now()
@@ -858,6 +890,8 @@ def biometric_device_test(request, device_id):
             script = test_dahua_connection(device)
         elif device.machine_type == "etimeoffice":
             script = test_etimeoffice_connection(device)
+        elif device.is_push_device():
+            script = test_push_device_connection(device)
         else:
             script = render_connection_response(
                 "Connection unsuccessful",
@@ -932,7 +966,13 @@ def biometric_device_fetch_logs(request, device_id=None):
     if not device:
         return HttpResponse("Device not found.", status=404)
     script = ""
-    if device.machine_type == "zk":
+    if device.is_push_device():
+        script = render_connection_response(
+            _("Nothing to fetch"),
+            _("This device sends its logs to Horilla as punches happen."),
+            "info",
+        )
+    elif device.machine_type == "zk":
         attendance_count, error_message = zk_biometric_attendance_logs(device)
         if isinstance(attendance_count, int):
             script = render_connection_response(

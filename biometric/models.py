@@ -4,6 +4,8 @@ This module contains Django models for managing biometric devices
 and employee attendance within a company.
 """
 
+import ipaddress
+import re
 import uuid
 
 import requests
@@ -11,6 +13,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
 from django.db import models
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from base.horilla_company_manager import HorillaCompanyManager
@@ -55,7 +59,10 @@ class BiometricDevices(HorillaModel):
         ("cosec", _("Matrix COSEC Biometric")),
         ("dahua", _("Dahua Biometric")),
         ("etimeoffice", _("e-Time Office")),
+        ("zkpush", _("ZKTeco SenseFace 2A (ADMS Push)")),
     ]
+    # Types whose device connects to Horilla, instead of Horilla to the device.
+    PUSH_DEVICE_TYPES = ("zkpush",)
     BIO_DEVICE_DIRECTION = [
         ("in", _("In Device")),
         ("out", _("Out Device")),
@@ -92,6 +99,21 @@ class BiometricDevices(HorillaModel):
     api_secret = models.CharField(
         max_length=100, null=True, blank=True, verbose_name=_("API Secret")
     )
+    serial_number = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        unique=True,
+        verbose_name=_("Serial Number"),
+        help_text=_(
+            "Serial number (SN) shown in the device's System Info. Push devices "
+            "identify themselves with it."
+        ),
+    )
+    push_attlog_stamp = models.CharField(
+        max_length=50, null=True, blank=True, editable=False
+    )
+    last_push_at = models.DateTimeField(null=True, blank=True, editable=False)
     api_token = models.CharField(max_length=500, null=True, blank=True)
     api_expires = models.CharField(max_length=100, null=True, blank=True)
     is_live = models.BooleanField(default=False, verbose_name=_("Is Live"))
@@ -134,8 +156,33 @@ class BiometricDevices(HorillaModel):
             )
         elif self.machine_type == "anviz":
             return f"{_('API Url')} : {self.api_url}"
+        elif self.is_push_device():
+            last_seen = (
+                timezone.localtime(self.last_push_at).strftime("%Y-%m-%d %H:%M")
+                if self.last_push_at
+                else _("Never")
+            )
+            return format_html(
+                "{} : {}<br>{} : {}",
+                _("Serial Number"),
+                self.serial_number,
+                _("Last Contact"),
+                last_seen,
+            )
         else:
             return ""
+
+    def is_push_device(self):
+        """True when the device pushes its logs to Horilla."""
+        return self.machine_type in self.PUSH_DEVICE_TYPES
+
+    def allowed_source_networks(self):
+        """
+        Networks a push device may connect from, parsed from machine_ip.
+        Empty means any address.
+        """
+        values = [v for v in re.split(r"[\s,]+", self.machine_ip or "") if v]
+        return [ipaddress.ip_network(value, strict=False) for value in values]
 
     def render_live_capture_html(self):
         """
@@ -258,6 +305,18 @@ class BiometricDevices(HorillaModel):
             if not self.bio_password:
                 required_fields["bio_password"] = _(
                     "The Password is required for the selected biometric device."
+                )
+
+        if self.is_push_device():
+            if not self.serial_number:
+                required_fields["serial_number"] = _(
+                    "The Serial Number is required for push devices."
+                )
+            try:
+                self.allowed_source_networks()
+            except ValueError:
+                required_fields["machine_ip"] = _(
+                    "Enter IP addresses or network prefixes separated by commas."
                 )
 
         if self.machine_type == "anviz":
@@ -401,3 +460,57 @@ class COSECAttendanceArguments(models.Model):
 
     def __str__(self):
         return f"{self.device_id} - {self.last_fetch_roll_ovr_count} - {self.last_fetch_seq_number}"
+
+
+class BiometricPushLog(models.Model):
+    """
+    One attendance record pushed by an ADMS push device.
+
+    Devices resend records after a reconnect or a stamp reset, so the
+    (device, user, time) constraint makes each punch apply once.
+    """
+
+    RESULT_CHOICES = [
+        ("clock_in", _("Check-In")),
+        ("clock_out", _("Check-Out")),
+        ("unmatched", _("No Matching Employee")),
+        ("ignored", _("Ignored")),
+        ("failed", _("Failed")),
+    ]
+
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    device_id = models.ForeignKey(
+        BiometricDevices,
+        on_delete=models.CASCADE,
+        related_name="push_logs",
+        verbose_name=_("Device"),
+    )
+    user_id = models.CharField(max_length=100, verbose_name=_("Device User ID"))
+    punch_time = models.DateTimeField(verbose_name=_("Punch Time"))
+    status_code = models.IntegerField(null=True, blank=True)
+    verify_code = models.IntegerField(null=True, blank=True)
+    employee_id = models.ForeignKey(
+        Employee,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name=_("Employee"),
+    )
+    result = models.CharField(max_length=20, choices=RESULT_CHOICES)
+    message = models.CharField(max_length=255, blank=True, default="")
+    created_at = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+
+    class Meta:
+        verbose_name = _("Biometric Push Log")
+        verbose_name_plural = _("Biometric Push Logs")
+        ordering = ["-punch_time"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["device_id", "user_id", "punch_time"],
+                name="unique_biometric_push_punch",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.device_id} - {self.user_id} - {self.punch_time}"

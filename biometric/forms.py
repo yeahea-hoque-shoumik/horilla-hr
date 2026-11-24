@@ -35,6 +35,7 @@ class BiometricDeviceForm(ModelForm):
         "machine_type": 12,
         "machine_ip": 12,
         "port": 12,
+        "serial_number": 12,
         "cosec_username": 12,
         "cosec_password": 12,
         "anviz_request_id": 12,

@@ -24,8 +24,9 @@
             {% trans "Test" %}
         </a>
 
-        <!-- Schedule / Unschedule -->
-        {% if device.is_scheduler %}
+        <!-- Schedule / Unschedule: push devices send logs on their own -->
+        {% if device.is_push_device %}
+        {% elif device.is_scheduler %}
             <a
                 hx-confirm="{% trans 'Do you want to unschedule the device attendance fetching?' %}"
                 hx-post="{% url 'biometric-device-unschedule' device.id %}"

@@ -28,6 +28,10 @@ class BiometricConfig(AppConfig):
         urlpatterns.append(
             path("biometric/", include("biometric.urls")),
         )
+        # ADMS push devices call these fixed paths, outside /biometric/.
+        urlpatterns.append(
+            path("iclock/", include("biometric.adms_urls")),
+        )
 
         from biometric import sidebar
 
