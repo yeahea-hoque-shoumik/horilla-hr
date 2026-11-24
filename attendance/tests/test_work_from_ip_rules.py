@@ -248,6 +248,7 @@ class SettingsTests(IPRuleBase):
     def test_invalid_ip_is_rejected(self):
         response = self.save({"is_restricted": "on", "ip_addresses": "not-an-ip"})
         self.assertContains(response, "not a valid IP")
+        self.assertNotContains(response, "Add at least one IP")
         self.assertFalse(AttendanceWorkFromIPRule.objects.exists())
 
     def test_restricted_needs_an_ip(self):

@@ -3501,6 +3501,11 @@ class AttendanceWorkFromIPRuleForm(forms.ModelForm):
             self.instance.allowed_ips = cleaned_data["ip_addresses"]
         return cleaned_data
 
+    def _post_clean(self):
+        # With invalid IPs the model would also report an empty list.
+        if not self.has_error("ip_addresses"):
+            super()._post_clean()
+
 
 class AttendanceAllowedIPUpdateForm(ModelForm):
     ip_address = forms.CharField(max_length=30, label="IP Address")
