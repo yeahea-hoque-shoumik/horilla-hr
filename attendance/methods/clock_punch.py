@@ -5,10 +5,19 @@ Times are chosen on the employee's current local date, in their own timezone,
 and then follow the same storage path as an automatic punch.
 """
 
+import ipaddress
 from datetime import datetime, timedelta
 
 from django.db.models import Q
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
+
+CHECK_IN_NETWORK_ERROR = gettext_lazy(
+    "Check-In Restricted: Your current network is not authorized "
+)
+CHECK_OUT_NETWORK_ERROR = gettext_lazy(
+    "Check-Out Restricted: Your current network is not authorized"
+)
 
 
 class PunchError(Exception):
@@ -20,14 +29,10 @@ def _company(employee):
     return work_info.company_id if work_info else None
 
 
-def available_work_froms(employee):
-    """
-    Active work from options of the employee's own company, not the session's.
-    A work from with no company applies to every company.
-    """
+def work_froms_for_company(company):
+    """Active work from options of a company, including all-company options."""
     from base.models import WorkFrom
 
-    company = _company(employee)
     if company is None:
         return WorkFrom.objects.none()
     return (
@@ -36,6 +41,11 @@ def available_work_froms(employee):
         .distinct()
         .order_by("work_from")
     )
+
+
+def available_work_froms(employee):
+    """Options of the employee's own company, not the session's."""
+    return work_froms_for_company(_company(employee))
 
 
 def resolve_work_from(employee, raw_id):
@@ -101,6 +111,55 @@ def ensure_work_from_allowed(employee, work_from, on_date):
             _("You are not allowed to work from %(work_from)s.")
             % {"work_from": work_from.work_from}
         )
+
+
+def _ip_in_networks(ip, networks):
+    try:
+        address = ipaddress.ip_address(ip)
+    except ValueError:
+        return False
+    for network in networks:
+        try:
+            if address in ipaddress.ip_network(network, strict=False):
+                return True
+        except (TypeError, ValueError):
+            continue
+    return False
+
+
+def is_network_allowed(request, employee, work_from, fallback_company=None):
+    """
+    Check the caller's IP for this work from.
+
+    The employee's company decides, so switching the session company cannot
+    avoid a restriction. fallback_company only covers an employee without one.
+    A pair rule wins; without one the company's allowed list applies.
+    """
+    from attendance.methods.utils import get_client_ip
+    from base.models import AttendanceAllowedIP, AttendanceWorkFromIPRule
+
+    company = _company(employee) or fallback_company
+    # entire(): the default manager filters by the session's selected company.
+    restriction = (
+        AttendanceAllowedIP.objects.entire().filter(company_id=company).first()
+    )
+    if restriction is None or not restriction.is_enabled:
+        return True
+
+    rule = None
+    if company is not None and work_from is not None:
+        rule = (
+            AttendanceWorkFromIPRule.objects.entire()
+            .filter(company_id=company, work_from_id=work_from)
+            .first()
+        )
+    if rule is None:
+        allowed_ips = (restriction.additional_data or {}).get("allowed_ips", [])
+    elif rule.is_restricted:
+        allowed_ips = rule.allowed_ips or []
+    else:
+        return True
+    return _ip_in_networks(get_client_ip(request), allowed_ips)
 
 
 def parse_punch_time(data, local_now):

@@ -217,6 +217,7 @@
                     <div hx-get="{% url 'allowed-ips-list' %}" hx-trigger="load">
                     </div>
                 {% endif %}
+                <div class="p-4" hx-get="{% url 'work-from-ip-rules' %}" hx-trigger="load"></div>
             {% endif %}
         </div>
     {% endif %}

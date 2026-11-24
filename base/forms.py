@@ -45,6 +45,7 @@ from base.models import (
     AnnouncementExpire,
     Attachment,
     AttendanceAllowedIP,
+    AttendanceWorkFromIPRule,
     BaserequestFile,
     Company,
     CompanyLeaves,
@@ -3469,6 +3470,36 @@ class AttendanceAllowedIPForm(forms.ModelForm):
             instance.save()
 
         return instance
+
+
+class AttendanceWorkFromIPRuleForm(forms.ModelForm):
+    ip_addresses = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={"rows": 3, "class": "form-control oh-input"}),
+        label=_("Allowed IP Addresses or Network Prefixes"),
+        help_text=_("Separate multiple values with commas or new lines."),
+    )
+
+    class Meta:
+        model = AttendanceWorkFromIPRule
+        fields = ["is_restricted"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["ip_addresses"].initial = "\n".join(self.instance.allowed_ips or [])
+
+    def clean_ip_addresses(self):
+        values = re.split(r"[\s,]+", self.cleaned_data.get("ip_addresses", "").strip())
+        cleaned_ips = list(dict.fromkeys(value for value in values if value))
+        for value in cleaned_ips:
+            validate_ip_or_cidr(value)
+        return cleaned_ips
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if "ip_addresses" in cleaned_data:
+            self.instance.allowed_ips = cleaned_data["ip_addresses"]
+        return cleaned_data
 
 
 class AttendanceAllowedIPUpdateForm(ModelForm):

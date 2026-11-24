@@ -4,7 +4,6 @@ clock_in_out.py
 This module is used register endpoints to the check-in check-out functionalities
 """
 
-import ipaddress
 import logging
 
 from django.shortcuts import render
@@ -22,6 +21,8 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from attendance.methods.clock_punch import (
+    CHECK_IN_NETWORK_ERROR,
+    CHECK_OUT_NETWORK_ERROR,
     PunchError,
     available_work_froms,
     effective_work_from,
@@ -29,6 +30,7 @@ from attendance.methods.clock_punch import (
     current_open_activity,
     ensure_after_check_in,
     ensure_after_last_punch,
+    is_network_allowed,
     latest_open_activity,
     parse_punch_time,
     resolve_work_from,
@@ -45,7 +47,6 @@ from attendance.methods.utils import (
     employee_localtime,
     format_time,
     geofence_denial_web,
-    get_client_ip,
     overtime_calculation,
     shift_schedule_today,
     strtime_seconds,
@@ -63,7 +64,7 @@ from base.context_processors import (
     timerunner_enabled,
 )
 from base.middleware import resolve_user_timezone
-from base.models import AttendanceAllowedIP, Company, EmployeeShiftDay
+from base.models import Company, EmployeeShiftDay
 from horilla.decorators import hx_request_required, login_required
 from horilla.horilla_middlewares import _thread_locals
 
@@ -353,43 +354,6 @@ def clock_in(request):
         and attendance_general_settings.enable_check_in
         or request.__dict__.get("datetime")
     ):
-        allowed_attendance_ips = AttendanceAllowedIP.objects.filter(
-            company_id=company
-        ).first()
-
-        if (
-            not request.__dict__.get("datetime")
-            and allowed_attendance_ips
-            and allowed_attendance_ips.is_enabled
-        ):
-            # get_client_ip() only trusts X-Forwarded-For as far as the
-            # deployment's declared proxy count -- taking the client-supplied
-            # header at face value let anyone claim to be on the office
-            # network.
-            ip = get_client_ip(request)
-
-            allowed_ips = (allowed_attendance_ips.additional_data or {}).get(
-                "allowed_ips", []
-            )
-            ip_allowed = False
-            for allowed_ip in allowed_ips:
-                try:
-                    if ipaddress.ip_address(ip) in ipaddress.ip_network(
-                        allowed_ip, strict=False
-                    ):
-                        ip_allowed = True
-                        break
-                except ValueError:
-                    continue
-
-            if not ip_allowed:
-                return _render_clock_modal(
-                    request,
-                    error=_(
-                        "Check-In Restricted: Your current network is not authorized "
-                    ),
-                )
-
         employee, work_info = employee_exists(request)
         work_from = None
         if not request.__dict__.get("datetime"):
@@ -397,6 +361,8 @@ def clock_in(request):
                 work_from = resolve_work_from(employee, request.POST.get("work_from"))
             except PunchError as error:
                 return _render_clock_modal(request, error=str(error))
+            if not is_network_allowed(request, employee, work_from, company):
+                return _render_clock_modal(request, error=CHECK_IN_NETWORK_ERROR)
             # The mobile/API clock-in already enforces a configured
             # geo-fence; this view didn't, so an employee outside the fence
             # could still punch in from a browser.
@@ -636,49 +602,16 @@ def clock_out(request):
         and attendance_general_settings.enable_check_in
         or request.__dict__.get("datetime")
     ):
-        allowed_attendance_ips = AttendanceAllowedIP.objects.filter(
-            company_id=company
-        ).first()
-
-        if (
-            not request.__dict__.get("datetime")
-            and allowed_attendance_ips
-            and allowed_attendance_ips.is_enabled
-        ):
-            # get_client_ip() only trusts X-Forwarded-For as far as the
-            # deployment's declared proxy count -- taking the client-supplied
-            # header at face value let anyone claim to be on the office
-            # network.
-            ip = get_client_ip(request)
-
-            allowed_ips = (allowed_attendance_ips.additional_data or {}).get(
-                "allowed_ips", []
-            )
-            ip_allowed = False
-            for allowed_ip in allowed_ips:
-                try:
-                    if ipaddress.ip_address(ip) in ipaddress.ip_network(
-                        allowed_ip, strict=False
-                    ):
-                        ip_allowed = True
-                        break
-                except ValueError:
-                    continue
-
-            if not ip_allowed:
-                return _render_clock_modal(
-                    request,
-                    error=_(
-                        "Check-Out Restricted: Your current network is not authorized"
-                    ),
-                )
-
         # Same single clock read in the employee's zone as clock_in, so both
         # sides agree on the date the punch belongs to.
         employee, work_info = employee_exists(request)
         local_now = employee_localtime(employee)
         if not request.__dict__.get("datetime"):
             open_activity = latest_open_activity(employee)
+            # The option chosen at check-in, so it cannot be switched to pass.
+            work_from = open_activity.work_from_id if open_activity else None
+            if not is_network_allowed(request, employee, work_from, company):
+                return _render_clock_modal(request, error=CHECK_OUT_NETWORK_ERROR)
             geofence_error = geofence_denial_web(request, company)
             if geofence_error:
                 return _render_clock_modal(request, error=geofence_error)

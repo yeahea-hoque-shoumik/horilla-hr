@@ -876,6 +876,21 @@ urlpatterns = [
         name="edit-allowed-ip",
     ),
     path(
+        "settings/work-from-ip-rules/",
+        views.work_from_ip_rules,
+        name="work-from-ip-rules",
+    ),
+    path(
+        "settings/work-from-ip-rules/<int:work_from_id>/",
+        views.work_from_ip_rule_edit,
+        name="work-from-ip-rule-edit",
+    ),
+    path(
+        "settings/work-from-ip-rules/<int:work_from_id>/delete/",
+        views.work_from_ip_rule_delete,
+        name="work-from-ip-rule-delete",
+    ),
+    path(
         "settings/add-remove-ip-fields/",
         add_remove_dynamic_fields,
         name="add-remove-ip-fields",

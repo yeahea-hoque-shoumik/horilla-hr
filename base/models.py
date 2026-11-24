@@ -2856,6 +2856,74 @@ class AttendanceAllowedIP(models.Model):
         return f"AttendanceAllowedIP ({company}) - {'enabled' if self.is_enabled else 'disabled'}"
 
 
+class AttendanceWorkFromIPRule(models.Model):
+    """
+    IP rule for one company and work from pair.
+
+    No rule means the company's AttendanceAllowedIP list applies. A rule with
+    is_restricted off allows any network for that work from.
+    """
+
+    company_id = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name="attendance_work_from_ip_rules",
+        verbose_name=_("Company"),
+    )
+    work_from_id = models.ForeignKey(
+        WorkFrom,
+        on_delete=models.CASCADE,
+        related_name="attendance_ip_rules",
+        verbose_name=_("Work From"),
+    )
+    is_restricted = models.BooleanField(
+        default=True, verbose_name=_("Restrict by IP")
+    )
+    allowed_ips = models.JSONField(
+        default=list, blank=True, verbose_name=_("Allowed IPs")
+    )
+
+    objects = HorillaCompanyManager(related_company_field="company_id")
+
+    class Meta:
+        verbose_name = _("Attendance Work From IP Rule")
+        verbose_name_plural = _("Attendance Work From IP Rules")
+        constraints = [
+            models.UniqueConstraint(
+                fields=["company_id", "work_from_id"],
+                name="unique_work_from_ip_rule_per_company",
+            )
+        ]
+
+    def clean(self):
+        super().clean()
+        for ip in self.allowed_ips or []:
+            try:
+                ipaddress.ip_network(ip, strict=False)
+            except (TypeError, ValueError):
+                raise ValidationError(
+                    _("Invalid IP address or network prefix: %(ip)s") % {"ip": ip}
+                )
+        if self.is_restricted and not self.allowed_ips:
+            raise ValidationError(_("Add at least one IP address or network prefix."))
+        if (
+            self.company_id_id
+            and self.work_from_id_id
+            and not WorkFrom.objects.entire()
+            .filter(
+                Q(company_id=self.company_id_id) | Q(company_id__isnull=True),
+                pk=self.work_from_id_id,
+            )
+            .exists()
+        ):
+            raise ValidationError(
+                _("This work from is not available for this company.")
+            )
+
+    def __str__(self):
+        return f"{self.company_id} - {self.work_from_id}"
+
+
 class TrackLateComeEarlyOut(HorillaModel):
     is_enable = models.BooleanField(
         default=True,

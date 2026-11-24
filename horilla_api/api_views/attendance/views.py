@@ -17,9 +17,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from attendance.methods.clock_punch import (
+    CHECK_IN_NETWORK_ERROR,
+    CHECK_OUT_NETWORK_ERROR,
     PunchError,
     effective_work_from,
     ensure_work_from_allowed,
+    is_network_allowed,
+    latest_open_activity,
     resolve_work_from,
 )
 from attendance.methods.extra_work import resolve_shift_day
@@ -186,6 +190,11 @@ class ClockInAPIView(APIView):
                     ensure_work_from_allowed(employee, work_from, attendance_date)
                 except PunchError as error:
                     return Response({"error": str(error)}, status=400)
+                if not is_network_allowed(request, employee, work_from):
+                    return Response(
+                        {"error": str(CHECK_IN_NETWORK_ERROR).strip()},
+                        status=status.HTTP_403_FORBIDDEN,
+                    )
                 clock_in_attendance_and_activity(
                     employee=employee,
                     date_today=date_today,
@@ -225,6 +234,14 @@ class ClockOutAPIView(APIView):
         if denial is not None:
             return denial
         if request.user.employee_get.check_online():
+            employee = request.user.employee_get
+            open_activity = latest_open_activity(employee)
+            work_from = open_activity.work_from_id if open_activity else None
+            if not is_network_allowed(request, employee, work_from):
+                return Response(
+                    {"error": str(CHECK_OUT_NETWORK_ERROR)},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
             local_now = employee_localtime(request.user.employee_get)
             current_date = local_now.date()
             current_time = local_now.time()

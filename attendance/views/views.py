@@ -38,7 +38,7 @@ from django.db import transaction
 from django.db.models import ProtectedError
 from django.forms import ValidationError
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone as django_timezone
@@ -100,9 +100,14 @@ from attendance.models import (
     GraceTime,
     WorkRecords,
 )
+from attendance.methods.clock_punch import work_froms_for_company
 from attendance.views.handle_attendance_errors import handle_attendance_errors
 from attendance.views.process_attendance_data import process_attendance_data
-from base.forms import AttendanceAllowedIPForm, TrackLateComeEarlyOutForm
+from base.forms import (
+    AttendanceAllowedIPForm,
+    AttendanceWorkFromIPRuleForm,
+    TrackLateComeEarlyOutForm,
+)
 from base.methods import (
     choosesubordinates,
     closest_numbers,
@@ -116,6 +121,7 @@ from base.methods import (
 )
 from base.models import (
     AttendanceAllowedIP,
+    AttendanceWorkFromIPRule,
     EmployeeShiftSchedule,
     Holidays,
     TrackLateComeEarlyOut,
@@ -3418,6 +3424,79 @@ def create_allowed_ips(request):
     return render(
         request, "attendance/ip_restriction/restrict_form.html", {"form": form}
     )
+
+
+@login_required
+@hx_request_required
+@permission_required("attendance.add_attendance")
+def work_from_ip_rules(request):
+    """
+    List the active company's work from options with their IP rule.
+    """
+    company = get_session_company(request)
+    rules = {
+        rule.work_from_id_id: rule
+        for rule in AttendanceWorkFromIPRule.objects.entire().filter(
+            company_id=company
+        )
+    }
+    rows = [
+        {"work_from": work_from, "rule": rules.get(work_from.pk)}
+        for work_from in work_froms_for_company(company)
+    ]
+    return render(
+        request,
+        "attendance/ip_restriction/work_from_rules.html",
+        {"company": company, "rows": rows},
+    )
+
+
+@login_required
+@hx_request_required
+@permission_required("attendance.change_attendance")
+def work_from_ip_rule_edit(request, work_from_id):
+    """
+    Create or update the IP rule of one work from in the active company.
+    """
+    company = get_session_company(request)
+    work_from = get_object_or_404(work_froms_for_company(company), pk=work_from_id)
+    instance = AttendanceWorkFromIPRule.objects.entire().filter(
+        company_id=company, work_from_id=work_from
+    ).first() or AttendanceWorkFromIPRule(company_id=company, work_from_id=work_from)
+    form = AttendanceWorkFromIPRuleForm(
+        request.POST if request.method == "POST" else None, instance=instance
+    )
+    if request.method == "POST" and form.is_valid():
+        AttendanceWorkFromIPRule.objects.entire().update_or_create(
+            company_id=company,
+            work_from_id=work_from,
+            defaults={
+                "is_restricted": form.cleaned_data["is_restricted"],
+                "allowed_ips": form.cleaned_data["ip_addresses"],
+            },
+        )
+        messages.success(request, _("IP rule saved successfully"))
+        return HorillaRedirect(request)
+    return render(
+        request,
+        "attendance/ip_restriction/work_from_rule_form.html",
+        {"form": form, "work_from": work_from},
+    )
+
+
+@login_required
+@permission_required("attendance.delete_attendance")
+@require_http_methods(["POST"])
+def work_from_ip_rule_delete(request, work_from_id):
+    """
+    Remove a work from's IP rule so the company's allowed list applies again.
+    """
+    company = get_session_company(request)
+    AttendanceWorkFromIPRule.objects.entire().filter(
+        company_id=company, work_from_id=work_from_id
+    ).delete()
+    messages.success(request, _("Work from now uses the company IP list"))
+    return redirect("allowed-ips")
 
 
 @login_required

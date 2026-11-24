@@ -11,6 +11,7 @@ from base.models import (
     Announcement,
     Attachment,
     AttendanceAllowedIP,
+    AttendanceWorkFromIPRule,
     Company,
     CompanyGroupAssignment,
     CompanyLeaves,
@@ -75,4 +76,5 @@ admin.site.register(CompanyLeaves)
 admin.site.register(PenaltyAccounts)
 admin.site.register(MultipleApprovalCondition)
 admin.site.register(AttendanceAllowedIP)
+admin.site.register(AttendanceWorkFromIPRule)
 admin.site.register(DefaultExportPermission)

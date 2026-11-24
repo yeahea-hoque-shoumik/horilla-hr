@@ -1,0 +1,50 @@
+{% load i18n %}
+<div class="oh-modal__dialog-header pb-0">
+    <h2 class="oh-modal__dialog-title">
+        {% blocktrans with name=work_from.work_from %}IP Rule: {{ name }}{% endblocktrans %}
+    </h2>
+    <button class="oh-modal__close" aria-label="{% trans 'Close' %}">
+        <ion-icon name="close-outline" role="img" class="md hydrated" aria-label="{% trans 'close outline' %}"></ion-icon>
+    </button>
+</div>
+<div class="oh-modal__dialog-body">
+    <form
+        class="oh-profile-section"
+        hx-post="{% url 'work-from-ip-rule-edit' work_from.pk %}"
+        hx-target="#objectDetailsModalW25Target"
+    >
+        {{ form.non_field_errors }}
+        <div class="flex items-center justify-between mb-3">
+            <label class="oh-label mb-0" for="workFromIpRestricted">{% trans "Restrict by IP" %}</label>
+            <label class="toggle-label">
+                <input
+                    type="checkbox"
+                    name="is_restricted"
+                    id="workFromIpRestricted"
+                    class="toggle-input"
+                    data-widget="style-widget"
+                    onchange="document.getElementById('workFromIpField').style.display = this.checked ? '' : 'none';"
+                    {% if form.is_restricted.value %}checked{% endif %}
+                >
+                <div class="toggle-switch"></div>
+            </label>
+        </div>
+        <div
+            class="oh-input__group"
+            id="workFromIpField"
+            {% if not form.is_restricted.value %}style="display: none"{% endif %}
+        >
+            <label class="oh-label required-star" for="{{ form.ip_addresses.id_for_label }}">
+                {{ form.ip_addresses.label }}
+            </label>
+            {{ form.ip_addresses }}
+            <small class="text-xs text-gray-500">{{ form.ip_addresses.help_text }}</small>
+            {{ form.ip_addresses.errors }}
+        </div>
+        <div class="oh-modal__dialog-footer p-0 mt-3">
+            <button type="submit" class="oh-btn oh-btn--secondary oh-btn--shadow">
+                {% trans "Save" %}
+            </button>
+        </div>
+    </form>
+</div>

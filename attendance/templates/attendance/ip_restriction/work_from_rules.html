@@ -1,0 +1,71 @@
+{% load i18n %}
+<h3 class="text-sm font-medium">{% trans "IP Rules by Work From" %}</h3>
+<p class="text-xs text-gray-500 mt-1 mb-3">
+    {% trans "A rule overrides the company list above for that work from. Without a rule, the company list applies." %}
+</p>
+{% if not company %}
+    <p class="text-sm text-gray-500">{% trans "Select a company to configure work from IP rules." %}</p>
+{% elif not rows %}
+    <p class="text-sm text-gray-500">{% trans "No active work from options for this company." %}</p>
+{% else %}
+    <div class="overflow-x-auto border border-[#ebebeb] rounded-md">
+        <table class="w-full text-sm text-left">
+            <thead class="bg-[#f3f3f3] text-[#333]">
+                <tr>
+                    <th class="px-3 py-2 font-medium">{% trans "Work From" %}</th>
+                    <th class="px-3 py-2 font-medium">{% trans "Rule" %}</th>
+                    <th class="px-3 py-2 font-medium">{% trans "Allowed IPs" %}</th>
+                    <th class="px-3 py-2 font-medium text-right">{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    <tr class="border-t border-[#ebebeb]">
+                        <td class="px-3 py-2">{{ row.work_from.work_from }}</td>
+                        <td class="px-3 py-2">
+                            {% if not row.rule %}
+                                {% trans "Company list" %}
+                            {% elif row.rule.is_restricted %}
+                                {% trans "Restricted" %}
+                            {% else %}
+                                {% trans "Any network" %}
+                            {% endif %}
+                        </td>
+                        <td class="px-3 py-2 break-all">
+                            {% if row.rule.is_restricted %}{{ row.rule.allowed_ips|join:", " }}{% else %}-{% endif %}
+                        </td>
+                        <td class="px-3 py-2">
+                            <div class="flex justify-end gap-2">
+                                <a
+                                    hx-get="{% url 'work-from-ip-rule-edit' row.work_from.pk %}"
+                                    hx-target="#objectDetailsModalW25Target"
+                                    data-toggle="oh-modal-toggle"
+                                    data-target="#objectDetailsModalW25"
+                                    role="button"
+                                    class="oh-btn oh-btn--light-bkg"
+                                    title="{% trans 'Edit' %}"
+                                    aria-label="{% trans 'Edit' %}"
+                                ><ion-icon name="create-outline"></ion-icon></a>
+                                {% if row.rule %}
+                                    <form
+                                        action="{% url 'work-from-ip-rule-delete' row.work_from.pk %}"
+                                        method="post"
+                                        onsubmit="return confirm('{% trans "Use the company IP list for this work from?"|escapejs %}');"
+                                    >
+                                        {% csrf_token %}
+                                        <button
+                                            type="submit"
+                                            class="oh-btn oh-btn--danger"
+                                            title="{% trans 'Remove rule' %}"
+                                            aria-label="{% trans 'Remove rule' %}"
+                                        ><ion-icon name="trash-outline"></ion-icon></button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
