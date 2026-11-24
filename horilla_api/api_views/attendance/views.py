@@ -16,6 +16,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from attendance.methods.clock_punch import (
+    PunchError,
+    effective_work_from,
+    ensure_work_from_allowed,
+    resolve_work_from,
+)
 from attendance.methods.extra_work import resolve_shift_day
 from attendance.models import (
     Attendance,
@@ -167,6 +173,19 @@ class ClockInAPIView(APIView):
                     start_time_sec,
                     end_time_sec,
                 ) = resolve_shift_day(shift, date_today, now_sec)
+                payload = request.data if hasattr(request.data, "get") else {}
+                raw_work_from = payload.get("work_from")
+                try:
+                    if raw_work_from in (None, ""):
+                        # Older app versions send nothing: use the effective default.
+                        work_from = effective_work_from(employee) or resolve_work_from(
+                            employee, None
+                        )
+                    else:
+                        work_from = resolve_work_from(employee, raw_work_from)
+                    ensure_work_from_allowed(employee, work_from, attendance_date)
+                except PunchError as error:
+                    return Response({"error": str(error)}, status=400)
                 clock_in_attendance_and_activity(
                     employee=employee,
                     date_today=date_today,
@@ -178,6 +197,7 @@ class ClockInAPIView(APIView):
                     start_time=start_time_sec,
                     end_time=end_time_sec,
                     in_datetime=datetime_now,
+                    work_from=work_from,
                 )
                 return Response({"message": "Clocked-In"}, status=200)
             return Response(

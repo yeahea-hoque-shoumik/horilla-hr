@@ -193,7 +193,10 @@ APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
 # MIDDLEWARE
 # ========================================
 MIDDLEWARE = [
-    # First, so every log line emitted while handling the request -- including
+    # Before everything that reads the client IP. Inactive unless
+    # TRUSTED_PROXY_IPS is set.
+    "horilla.client_ip.TrustedProxyClientIPMiddleware",
+    # Next, so every log line emitted while handling the request -- including
     # ones from middleware below -- carries the correlation id.
     "horilla.observability.RequestIDMiddleware",
     # Second: reads the request body before anything else consumes the stream,
@@ -659,6 +662,14 @@ AXES_IPWARE_PROXY_COUNT = env.int("AXES_PROXY_COUNT", default=None)
 AXES_IPWARE_META_PRECEDENCE_ORDER = (
     ["HTTP_X_FORWARDED_FOR"] if AXES_IPWARE_PROXY_COUNT else []
 ) + ["REMOTE_ADDR"]
+
+# Cloudflare Tunnel connector address(es) or CIDR ranges. When set,
+# TrustedProxyClientIPMiddleware puts CF-Connecting-IP in REMOTE_ADDR and drops
+# client-supplied forwarding headers, so REMOTE_ADDR is the only source to read.
+TRUSTED_PROXY_IPS = env.list("TRUSTED_PROXY_IPS", default=[])
+if TRUSTED_PROXY_IPS:
+    AXES_IPWARE_PROXY_COUNT = None
+    AXES_IPWARE_META_PRECEDENCE_ORDER = ["REMOTE_ADDR"]
 
 
 # ========================================

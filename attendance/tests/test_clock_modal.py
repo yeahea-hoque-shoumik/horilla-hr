@@ -5,6 +5,7 @@ from unittest import mock
 
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
+from rest_framework.test import APIClient
 
 from attendance.methods.utils import Request
 from attendance.models import (
@@ -125,6 +126,9 @@ class ModalDisplayTests(ClockModalBase):
 
     def test_checkout_shows_check_in_and_no_location_field(self):
         place = self.work_from("Head Office")
+        EmployeeWorkInformation.objects.filter(employee_id=self.employee).update(
+            work_from_id=place
+        )
         self.post("clock-in", at(9, "15", work_from=place.pk))
         response = self.get_modal(INSTANT + timedelta(hours=1))
         self.assertContains(response, "clockCheckInSummary")
@@ -347,6 +351,72 @@ class WorkFromChoiceTests(ClockModalBase):
         closed = self.work_from("Closed", is_active=False)
         response = self.post("clock-in", at(9, work_from=closed.pk))
         self.assertContains(response, "not available")
+        self.assertFalse(self.activities().exists())
+
+
+class ApiWorkFromTests(ClockModalBase):
+    def api_post(self, data=None):
+        client = APIClient()
+        # A fresh user, as on a real request: self.user caches its work info.
+        client.force_authenticate(type(self.user).objects.get(pk=self.user.pk))
+        with mock.patch("django.utils.timezone.now", return_value=INSTANT):
+            return client.post(reverse("api-check-in"), data or {}, format="json")
+
+    def approve(self, work_from):
+        WorkFromRequest.objects.bulk_create(
+            [
+                WorkFromRequest(
+                    employee_id=self.employee,
+                    work_from_id=work_from,
+                    requested_date=TODAY,
+                    requested_till=TODAY,
+                    description="test",
+                    approved=True,
+                )
+            ]
+        )
+
+    def test_omitted_uses_company_default(self):
+        response = self.api_post()
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertEqual(
+            self.activities().get().work_from_id, self.company.default_work_from
+        )
+
+    def test_omitted_prefers_employee_default(self):
+        home = self.work_from("Home")
+        EmployeeWorkInformation.objects.filter(employee_id=self.employee).update(
+            work_from_id=home
+        )
+        self.assertEqual(self.api_post().status_code, 200)
+        self.assertEqual(self.activities().get().work_from_id, home)
+
+    def test_change_without_request_is_rejected(self):
+        home = self.work_from("Home")
+        response = self.api_post({"work_from": home.pk})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(
+            response.json()["error"], "You are not allowed to work from Home."
+        )
+        self.assertFalse(self.activities().exists())
+
+    def test_change_with_approved_request_is_saved(self):
+        home = self.work_from("Home")
+        self.approve(home)
+        response = self.api_post({"work_from": home.pk})
+        self.assertEqual(response.status_code, 200, response.content)
+        self.assertEqual(self.activities().get().work_from_id, home)
+
+    def test_other_company_option_is_rejected(self):
+        foreign = self.work_from("Foreign", company=self.other_company)
+        self.approve(foreign)
+        response = self.api_post({"work_from": foreign.pk})
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(self.activities().exists())
+
+    def test_invalid_value_is_rejected(self):
+        response = self.api_post({"work_from": "abc"})
+        self.assertEqual(response.status_code, 400)
         self.assertFalse(self.activities().exists())
 
 

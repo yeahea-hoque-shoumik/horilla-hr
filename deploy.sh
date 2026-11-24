@@ -230,7 +230,7 @@ ALLOWED_HOSTS=${domain},localhost
 CSRF_TRUSTED_ORIGINS=https://${domain}
 TIME_ZONE=Asia/Kolkata
 SECURE_SSL_REDIRECT=False
-AXES_PROXY_COUNT=1
+TRUSTED_PROXY_IPS=${TRUSTED_PROXY_IPS:-192.168.0.132}
 
 # Password for the first-run database setup page.
 DB_INIT_PASSWORD=$(random_string 48)
